@@ -1,54 +1,22 @@
 export const words = [
   {
-    en: "apple",
-    uk: "яблуко",
+    en: "quantity",
+    uk: "кількість",
   },
   {
-    en: "two",
-    uk: "два",
+    en: "decrease",
+    uk: "зменшувати",
   },
   {
-    en: "apple",
-    uk: "яблуко",
+    en: "increase",
+    uk: "збільшувати",
   },
   {
-    en: "two",
-    uk: "два",
+    en: "required",
+    uk: "обов'язковий",
   },
   {
-    en: "two",
-    uk: "два",
-  },
-  {
-    en: "apple",
-    uk: "яблуко",
-  },
-  {
-    en: "two",
-    uk: "два",
-  },
-  {
-    en: "two",
-    uk: "два",
-  },
-  {
-    en: "apple",
-    uk: "яблуко",
-  },
-  {
-    en: "two",
-    uk: "два",
-  },
-  {
-    en: "two",
-    uk: "два",
-  },
-  {
-    en: "apple",
-    uk: "яблуко",
-  },
-  {
-    en: "two",
-    uk: "два",
+    en: "digit",
+    uk: "цифра",
   },
 ];
