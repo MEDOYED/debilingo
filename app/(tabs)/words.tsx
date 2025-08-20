@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
+import { Colors } from "@/constants/Colors";
 import { words } from "@/constants/words";
 
 export default function TabThreeScreen() {
@@ -21,8 +22,8 @@ export default function TabThreeScreen() {
 
 const s = StyleSheet.create({
   container: {
-    marginTop: 40,
-    color: "white",
+    paddingTop: 40,
+    marginBottom: 80,
   },
 
   text: {
@@ -33,9 +34,8 @@ const s = StyleSheet.create({
 
   card: {
     flexDirection: "row",
-    // gridTemplateColumns: "1fr 1fr",
     padding: 10,
-    backgroundColor: "#954bc4",
+    backgroundColor: Colors.dark.tabIconDefault,
     marginBottom: 20,
     borderRadius: 8,
     marginHorizontal: 10,
@@ -44,7 +44,6 @@ const s = StyleSheet.create({
   cardText: {
     flex: 1,
     color: "white",
-    textAlign: "center",
     fontSize: 20,
   },
 });
