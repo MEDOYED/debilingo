@@ -1,9 +1,13 @@
+import { ArrowLongRight } from "@/shared/ui/icons";
+
 import "./app.scss";
 
 function App() {
   return (
     <>
-      <div></div>
+      <div>
+        <ArrowLongRight />
+      </div>
     </>
   );
 }
