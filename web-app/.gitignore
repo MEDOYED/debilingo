@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# Storybook build output
+*storybook.log
+storybook-static
+
+# Storybook cache
+.storybook/.cache/
