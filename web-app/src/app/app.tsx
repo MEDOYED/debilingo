@@ -1,19 +1,10 @@
-import { ArrowLongRight } from "@/shared/ui/icons";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router/router";
 
-import "./app.scss";
+import "./styles/app.scss";
 
 function App() {
-  return (
-    <>
-      <div>
-        <ArrowLongRight
-          color="#7d039b"
-          size={60}
-          strokeWidth={2}
-        />
-      </div>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
