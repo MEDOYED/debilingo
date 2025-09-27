@@ -32,7 +32,7 @@
       "@/features/*": ["src/features/*"],
       "@/pages/*": ["src/pages/*"],
       "@/shared/*": ["src/shared/*"],
-      "@/widgets/*": ["src/types/*"]
+      "@/widgets/*": ["src/widgets/*"]
     }
   },
   "include": ["src"]

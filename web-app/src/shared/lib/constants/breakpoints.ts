@@ -1,0 +1,8 @@
+export const BREAKPOINTS = {
+  MOBILE_MAX: 767, // до 767px
+  TABLET_PORTRAIT_MIN: 768, // від 768px
+  TABLET_PORTRAIT_MAX: 1023, // до 1023px
+  TABLET_LANDSCAPE_MIN: 1024, // від 1024px
+  TABLET_LANDSCAPE_MAX: 1279, // від 1024px
+  DESKTOP_MIN: 1280, // від 1280px
+} as const;

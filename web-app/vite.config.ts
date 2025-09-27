@@ -1,28 +1,26 @@
 /// <reference types="vitest/config" />
-import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
-const dirname =
-  typeof __dirname !== "undefined"
-    ? __dirname
-    : path.dirname(fileURLToPath(import.meta.url));
+import react from "@vitejs/plugin-react";
+import path from "path";
+import { fileURLToPath } from "url";
+import { defineConfig } from "vite";
 
-// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": "/src",
-      "@/app": "/src/app",
-      "@/entities": "/src/entities",
-      "@/features": "/src/features",
-      "@/pages": "/src/pages",
-      "@/shared": "/src/shared",
-      "@/widgets": "/src/widgets",
+      "@": path.resolve(__dirname, "src"),
+      "@/app": path.resolve(__dirname, "src/app"),
+      "@/entities": path.resolve(__dirname, "src/entities"),
+      "@/features": path.resolve(__dirname, "src/features"),
+      "@/pages": path.resolve(__dirname, "src/pages"),
+      "@/shared": path.resolve(__dirname, "src/shared"),
+      "@/widgets": path.resolve(__dirname, "src/widgets"),
     },
   },
+
   test: {
     projects: [
       {
@@ -31,7 +29,7 @@ export default defineConfig({
           // The plugin will run tests for the stories defined in your Storybook config
           // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
           storybookTest({
-            configDir: path.join(dirname, ".storybook"),
+            configDir: path.join(__dirname, ".storybook"),
           }),
         ],
         test: {
