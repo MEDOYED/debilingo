@@ -20,6 +20,13 @@ export default defineConfig({
       "@/widgets": path.resolve(__dirname, "src/widgets"),
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // additionalData: `@import "@/shared/styles/_variables.scss";`,
+      },
+    },
+  },
 
   test: {
     projects: [
