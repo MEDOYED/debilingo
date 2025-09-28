@@ -1,1 +1,1 @@
-export { default as DictionaryAdd } from "./dictionary-add";
+export { DictionaryAdd } from "./dictionary-add";
