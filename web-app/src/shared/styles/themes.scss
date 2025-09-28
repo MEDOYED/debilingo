@@ -1,0 +1,29 @@
+@use "./variables" as *;
+
+.indigo-theme {
+  --color-50: $indigo-50;
+  --color-100: $indigo-100;
+  --color-200: $indigo-200;
+  --color-300: $indigo-300;
+  --color-400: $indigo-400;
+  --color-500: $indigo-500;
+  --color-600: $indigo-600;
+  --color-700: $indigo-700;
+  --color-800: $indigo-800;
+  --color-900: $indigo-900;
+  --color-950: $indigo-950;
+}
+
+.zink-theme {
+  --color-50: oklch(98.5% 0 0);
+  --color-100: oklch(96.7% 0.001 286.375);
+  --color-200: oklch(92% 0.004 286.32);
+  --color-300: oklch(87.1% 0.006 286.286);
+  --color-400: oklch(70.5% 0.015 286.067);
+  --color-500: oklch(55.2% 0.016 285.938);
+  --color-600: oklch(44.2% 0.017 285.786);
+  --color-700: oklch(37% 0.013 285.805);
+  --color-800: oklch(27.4% 0.006 286.033);
+  --color-900: oklch(21% 0.006 285.885);
+  --color-950: oklch(14.1% 0.005 285.823);
+}
