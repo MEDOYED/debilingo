@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { DictionaryAdd } from "@/shared/ui/icons";
+import { ArrowLongRight, DictionaryAdd } from "@/shared/ui/icons";
 
 const MobileNavigation = () => {
   return (
@@ -14,7 +14,7 @@ const MobileNavigation = () => {
 
         <li>
           <Link to="/profile">
-            <DictionaryAdd />
+            <ArrowLongRight />
           </Link>
         </li>
       </ul>

@@ -5,7 +5,7 @@ export interface ArrowLongRightProps {
   strokeWidth?: number;
 }
 
-const ArrowLongRight = ({
+export const ArrowLongRight = ({
   className = "",
   size = 24,
   color = "currentColor",
@@ -30,5 +30,3 @@ const ArrowLongRight = ({
     </svg>
   );
 };
-
-export default ArrowLongRight;

@@ -1,1 +1,1 @@
-export { default as ArrowLongRight } from "./arrow-long-right";
+export { ArrowLongRight } from "./arrow-long-right";
