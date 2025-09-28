@@ -31,14 +31,21 @@ export const useDeviceType = () => {
     };
   }, []);
 
-  const isMobile = width <= BREAKPOINTS.MOBILE_MAX;
+  // 0px - 1023px
+  const isMobile = width <= BREAKPOINTS.TABLET_PORTRAIT_MAX;
+
+  // 768px - 1023px
   const isTabletPortrait =
     width >= BREAKPOINTS.TABLET_PORTRAIT_MIN &&
     width <= BREAKPOINTS.TABLET_PORTRAIT_MAX;
+
+  // 1024px - 1279px
   const isTabletLandscape =
     width > BREAKPOINTS.TABLET_PORTRAIT_MAX &&
     width <= BREAKPOINTS.TABLET_LANDSCAPE_MAX;
-  const isDesktop = width > BREAKPOINTS.DESKTOP_MIN;
+
+  //1024px amd more
+  const isDesktop = width >= BREAKPOINTS.TABLET_LANDSCAPE_MIN;
 
   return {
     isMobile,
