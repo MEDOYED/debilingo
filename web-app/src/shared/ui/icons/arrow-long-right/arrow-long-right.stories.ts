@@ -1,4 +1,4 @@
-import ArrowLongRight from "./arrow-long-right";
+import { ArrowLongRight } from "./arrow-long-right";
 
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ArrowLongRightProps } from "./arrow-long-right";
