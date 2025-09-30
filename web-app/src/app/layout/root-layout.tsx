@@ -1,12 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { MobileRootLayout } from "./mobile-root-layout/mobile-root-layout";
+import { DesktopRootLayout } from "./desktop-root-layout/desktop-root-layout";
 
-import { Navigation } from "@/widgets/layout/navigation";
+import { useDeviceType } from "@/shared/lib/hooks";
 
 const RootLayout = () => {
+  const {isMobile} = useDeviceType()
   return (
     <div>
-      <Outlet />
-      <Navigation />
+      
+      {isMobile ? <MobileRootLayout /> : <DesktopRootLayout /> }
     </div>
   );
 };
