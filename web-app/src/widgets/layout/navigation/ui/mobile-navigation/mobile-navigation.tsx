@@ -1,30 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 
 import { cn } from "@/shared/lib/utils/classnames/classnames";
-import { DictionaryAdd, Gamepad, Home, Trophy } from "@/shared/ui/icons";
+import { navigationListData } from "../../model/constants/navigation-list-data";
 
 import s from "./mobile-navigation.module.scss";
 
-const navigationListData = [
-  {
-    to: "/dictionary",
-    icon: <DictionaryAdd />,
-  },
-  {
-    to: "/training",
-    icon: <Gamepad />,
-  },
-  {
-    to: "/",
-    icon: <Home />,
-  },
-  {
-    to: "/rating",
-    icon: <Trophy />,
-  },
-];
-
-const MobileNavigation = () => {
+export const MobileNavigation = () => {
   const location = useLocation();
   console.log(location.pathname);
 
@@ -48,5 +29,3 @@ const MobileNavigation = () => {
     </nav>
   );
 };
-
-export default MobileNavigation;
