@@ -5,6 +5,25 @@ import { DictionaryAdd, Gamepad, Home, Trophy } from "@/shared/ui/icons";
 
 import s from "./mobile-navigation.module.scss";
 
+const navigationListData = [
+  {
+    to: "/dictionary",
+    icon: <DictionaryAdd />,
+  },
+  {
+    to: "/training",
+    icon: <Gamepad />,
+  },
+  {
+    to: "/",
+    icon: <Home />,
+  },
+  {
+    to: "/rating",
+    icon: <Trophy />,
+  },
+];
+
 const MobileNavigation = () => {
   const location = useLocation();
   console.log(location.pathname);
@@ -15,37 +34,16 @@ const MobileNavigation = () => {
       aria-label="Головна навігація"
     >
       <ul className={s.list}>
-        <li
-          className={cn(s.listItem, {
-            [s.active]: location.pathname === "/dictionary",
-          })}
-        >
-          <Link to="/dictionary">
-            <DictionaryAdd />
-          </Link>
-        </li>
-
-        <li className={s.listItem}>
-          <Link to="/training">
-            <Gamepad />
-          </Link>
-        </li>
-
-        <li
-          className={cn(s.listItem, {
-            [s.active]: location.pathname === "/",
-          })}
-        >
-          <Link to="/">
-            <Home />
-          </Link>
-        </li>
-
-        <li className={s.listItem}>
-          <Link to="/rating">
-            <Trophy />
-          </Link>
-        </li>
+        {navigationListData.map((item, index) => (
+          <li
+            className={cn(s.listItem, {
+              [s.active]: location.pathname === item.to,
+            })}
+            key={index}
+          >
+            <Link to={item.to}>{item.icon}</Link>
+          </li>
+        ))}
       </ul>
     </nav>
   );
