@@ -1,0 +1,1 @@
+export { Trophy } from "./trophy";
