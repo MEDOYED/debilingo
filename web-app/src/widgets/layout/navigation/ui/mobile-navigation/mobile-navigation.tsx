@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { DictionaryAdd, Gamepad, Home, Trophy } from "@/shared/ui/icons";
 
 import s from "./mobile-navigation.module.scss";
 
 const MobileNavigation = () => {
+  const location = useLocation();
+  console.log(location.pathname);
+
   return (
     <nav
       className={s.navigation}
