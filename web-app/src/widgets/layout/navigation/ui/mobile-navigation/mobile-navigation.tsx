@@ -1,11 +1,6 @@
 import { Link } from "react-router-dom";
 
-import {
-  ArrowLongRight,
-  DictionaryAdd,
-  Gamepad,
-  Home,
-} from "@/shared/ui/icons";
+import { DictionaryAdd, Gamepad, Home, Trophy } from "@/shared/ui/icons";
 
 import s from "./mobile-navigation.module.scss";
 
@@ -35,14 +30,8 @@ const MobileNavigation = () => {
         </li>
 
         <li className={s.listItem}>
-          <Link to="/profile">
-            <ArrowLongRight />
-          </Link>
-        </li>
-
-        <li className={s.listItem}>
-          <Link to="/profile">
-            <ArrowLongRight />
+          <Link to="/rating">
+            <Trophy />
           </Link>
         </li>
       </ul>
