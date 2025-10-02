@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 import { ArrowLongRight } from "@/shared/ui/icons";
 
-import s from "./desktop-navigation.module.scss"
+import s from "./desktop-navigation.module.scss";
 
-const DesktopNavigation = () => {
-  return ( 
+export const DesktopNavigation = () => {
+  return (
     <nav className={s.navigation}>
       <ul>
         <li>
@@ -21,7 +21,5 @@ const DesktopNavigation = () => {
         </li>
       </ul>
     </nav>
-  )
+  );
 };
-
-export default DesktopNavigation;
