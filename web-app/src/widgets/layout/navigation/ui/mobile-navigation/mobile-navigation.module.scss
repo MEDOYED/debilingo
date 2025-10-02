@@ -3,7 +3,6 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 10px 0px 7px;
   background-color: var(--color-500);
 }
 
@@ -14,11 +13,13 @@
 }
 
 .listItem {
+  padding-top: 10px;
+  padding-bottom: 10px;
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
 .active {
-  background-color: var(--color-700);
+  background-color: var(--color-600);
 }

@@ -15,16 +15,25 @@ export const MobileNavigation = () => {
       aria-label="Головна навігація"
     >
       <ul className={s.list}>
-        {navigationListData.map((item, index) => (
-          <li
-            className={cn(s.listItem, {
-              [s.active]: location.pathname === item.to,
-            })}
-            key={index}
-          >
-            <Link to={item.to}>{item.icon}</Link>
-          </li>
-        ))}
+        {navigationListData.map((item, index) => {
+          const Icon = item.icon;
+
+          return (
+            <li
+              className={cn(s.listItem, {
+                [s.active]: location.pathname === item.to,
+              })}
+              key={index}
+            >
+              <Link
+                to={item.to}
+                aria-label={item.label}
+              >
+                <Icon color="var(--color-300)" />
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );
