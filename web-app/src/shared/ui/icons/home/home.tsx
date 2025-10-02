@@ -1,7 +1,7 @@
 export interface HomeProps {
-  className: string;
-  color: string;
-  size: number;
+  className?: string;
+  color?: string;
+  size?: number;
 }
 
 export const Home = ({

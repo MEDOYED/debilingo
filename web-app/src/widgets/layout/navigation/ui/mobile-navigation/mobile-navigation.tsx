@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 
-import { ArrowLongRight, DictionaryAdd, Gamepad } from "@/shared/ui/icons";
+import {
+  ArrowLongRight,
+  DictionaryAdd,
+  Gamepad,
+  Home,
+} from "@/shared/ui/icons";
 
 import s from "./mobile-navigation.module.scss";
 
@@ -25,7 +30,7 @@ const MobileNavigation = () => {
 
         <li className={s.listItem}>
           <Link to="/">
-            <ArrowLongRight />
+            <Home />
           </Link>
         </li>
 
