@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
+import { cn } from "@/shared/lib/utils/classnames/classnames";
 import { DictionaryAdd, Gamepad, Home, Trophy } from "@/shared/ui/icons";
 
 import s from "./mobile-navigation.module.scss";
@@ -14,7 +15,11 @@ const MobileNavigation = () => {
       aria-label="Головна навігація"
     >
       <ul className={s.list}>
-        <li className={s.listItem}>
+        <li
+          className={cn(s.listItem, {
+            [s.active]: location.pathname === "/dictionary",
+          })}
+        >
           <Link to="/dictionary">
             <DictionaryAdd />
           </Link>
@@ -26,7 +31,11 @@ const MobileNavigation = () => {
           </Link>
         </li>
 
-        <li className={s.listItem}>
+        <li
+          className={cn(s.listItem, {
+            [s.active]: location.pathname === "/",
+          })}
+        >
           <Link to="/">
             <Home />
           </Link>
