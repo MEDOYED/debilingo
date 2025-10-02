@@ -1,0 +1,20 @@
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0px 7px;
+  background-color: var(--color-500);
+}
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.listItem {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
