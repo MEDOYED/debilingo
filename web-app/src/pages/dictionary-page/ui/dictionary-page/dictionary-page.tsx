@@ -1,3 +1,9 @@
+import { HeaderDictionaryPage } from "../header-dictionary-page/header-dictionary-page";
+
 export const DictionaryPage = () => {
-  return <div>DictionaryPage</div>;
+  return (
+    <div>
+      <HeaderDictionaryPage />
+    </div>
+  );
 };
