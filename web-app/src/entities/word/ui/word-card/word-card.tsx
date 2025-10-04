@@ -7,10 +7,10 @@ interface WordCardProps {
 
 export const WordCard = ({ enWord, ukWord }: WordCardProps) => {
   return (
-    <article>
-      <div>
-        <div className={s.englishWord}>{enWord}</div>
+    <article className={s.card}>
+      <div className={s.word}>
         <div className={s.ukrainianWord}>{ukWord}</div>
+        <div className={s.englishWord}>{enWord}</div>
       </div>
     </article>
   );

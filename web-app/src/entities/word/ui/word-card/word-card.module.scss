@@ -1,0 +1,20 @@
+.card {
+  border: 1px solid var(--color-300);
+  border-radius: 5px;
+  background-color: var(--color-200);
+
+  padding: 5px 10px;
+}
+
+.word {
+  display: flex;
+  gap: 10px;
+}
+
+.ukrainianWord {
+  width: 50%;
+}
+
+.englishWord {
+  width: 50%;
+}
