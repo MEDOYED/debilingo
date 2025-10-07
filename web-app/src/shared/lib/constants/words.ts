@@ -1,14 +1,38 @@
 export const WORDS = [
   {
-    en: "new",
-    uk: "новий",
+    en: "pride",
+    uk: "гордість",
   },
   {
-    en: "new",
-    uk: "новий",
+    en: "circumference",
+    uk: "окружність",
   },
   {
-    en: "new",
-    uk: "новий",
+    en: "thickness",
+    uk: "товщина",
+  },
+  {
+    en: "turned on",
+    uk: "enabled",
+  },
+  {
+    en: "swear",
+    uk: "присягати",
+  },
+  {
+    en: "uncover",
+    uk: "розкривати",
+  },
+  {
+    en: "decently",
+    uk: "пристойно",
+  },
+  {
+    en: "decent",
+    uk: "пристойний",
+  },
+  {
+    en: "entire",
+    uk: "весь",
   },
 ];
