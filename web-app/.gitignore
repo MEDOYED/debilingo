@@ -30,3 +30,4 @@ storybook-static
 
 # Storybook cache
 .storybook/.cache/
+.env
