@@ -1,17 +1,17 @@
 import { Outlet } from "react-router-dom";
 
-import { Navigation } from "@/widgets/layout/navigation";
+import { Navigation } from "@/widgets/navigation";
 
-import s from "./desktop-root-layout.module.scss"
+import s from "./desktop-root-layout.module.scss";
 
 export const DesktopRootLayout = () => {
-    return (
-        <div>
-            <Navigation />
+  return (
+    <div>
+      <Navigation />
 
-            <div className={s.outletWrapper}>
-                <Outlet />
-            </div>
-        </div>
-    )
-}
+      <div className={s.outletWrapper}>
+        <Outlet />
+      </div>
+    </div>
+  );
+};

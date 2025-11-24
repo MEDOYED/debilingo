@@ -16,8 +16,6 @@ export const MobileNavigation = () => {
     >
       <ul className={s.list}>
         {navigationListData.map((item, index) => {
-          const Icon = item.icon;
-
           return (
             <li
               className={cn(s.listItem, {
@@ -26,10 +24,11 @@ export const MobileNavigation = () => {
               key={index}
             >
               <Link
+                className={s.link}
                 to={item.to}
                 aria-label={item.label}
               >
-                <Icon color="var(--color-300)" />
+                {item.icon}
               </Link>
             </li>
           );

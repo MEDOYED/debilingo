@@ -13,13 +13,17 @@
 }
 
 .listItem {
-  padding-top: 10px;
-  padding-bottom: 10px;
   width: 100%;
-  display: flex;
-  justify-content: center;
 }
 
 .active {
   background-color: var(--color-600);
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }

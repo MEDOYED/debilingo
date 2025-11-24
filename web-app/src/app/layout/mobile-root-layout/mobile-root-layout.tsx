@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom";
 
-import { Navigation } from "@/widgets/layout/navigation";
+import { Navigation } from "@/widgets/navigation";
 
 export const MobileRootLayout = () => {
-    return (
-        <div>
-            <Outlet />
-            <Navigation />
-        </div>
-    )
-}
+  return (
+    <div>
+      <Outlet />
+      <Navigation />
+    </div>
+  );
+};
