@@ -301,7 +301,7 @@ export const MoneyActivityCalendar = () => {
               type="number"
               min="0"
               max="100000"
-              step="100"
+              step="1"
               value={moneyInput}
               onChange={(e) => setMoneyInput(e.target.value)}
               placeholder="Enter amount (e.g., 600 for $600)"
