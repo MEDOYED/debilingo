@@ -1,13 +1,13 @@
 export interface DailyActivity {
   id: string;
   date: string;
-  word_count: number;
+  money_count: number;
   user_id: string;
   created_at: string;
 }
 
 export interface CreateActivityRequest {
-  word_count: number;
+  money_count: number;
   date?: string;
 }
 

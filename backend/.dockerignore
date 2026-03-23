@@ -1,0 +1,33 @@
+# Залежності (встановимо заново в контейнері)
+  node_modules
+
+  # Білд артефакти (створимо заново в контейнері)
+  dist
+
+  # Git
+  .git
+  .gitignore
+
+  # Змінні середовища (НЕ повинні потрапити в образ!)
+  .env
+  .env.*
+
+  # Логи
+  npm-debug.log*
+  yarn-debug.log*
+  yarn-error.log*
+
+  # IDE
+  .vscode
+  .idea
+
+  # Документація
+  README.md
+  *.md
+
+  # Тести
+  *.test.ts
+  *.spec.ts
+
+  # TypeScript конфіг (не потрібен в production)
+  tsconfig.json

@@ -1,11 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
 export interface DayActivity {
   id: string;
   date: string;
-  word_count: number;
+  money_count: number;
   user_id: string;
   created_at: string;
 }
@@ -17,7 +18,7 @@ export interface ActivityStats {
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   timeout: 10000,
 });
@@ -28,16 +29,16 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response) {
       // Server responded with error status
-      console.error('API Error:', error.response.data);
-      throw new Error(error.response.data.message || 'An error occurred');
+      console.error("API Error:", error.response.data);
+      throw new Error(error.response.data.message || "An error occurred");
     } else if (error.request) {
       // Request made but no response
-      console.error('Network Error:', error.request);
-      throw new Error('Network error. Please check your connection.');
+      console.error("Network Error:", error.request);
+      throw new Error("Network error. Please check your connection.");
     } else {
       // Something else happened
-      console.error('Error:', error.message);
-      throw new Error('An unexpected error occurred');
+      console.error("Error:", error.message);
+      throw new Error("An unexpected error occurred");
     }
   }
 );
@@ -47,10 +48,10 @@ apiClient.interceptors.response.use(
  */
 export const getActivity = async (): Promise<DayActivity[]> => {
   try {
-    const response = await apiClient.get<DayActivity[]>('/activity');
+    const response = await apiClient.get<DayActivity[]>("/activity");
     return response.data;
   } catch (error) {
-    console.error('Failed to fetch activity:', error);
+    console.error("Failed to fetch activity:", error);
     throw error;
   }
 };
@@ -60,12 +61,12 @@ export const getActivity = async (): Promise<DayActivity[]> => {
  */
 export const addActivity = async (wordCount: number): Promise<DayActivity> => {
   try {
-    const response = await apiClient.post<DayActivity>('/activity', {
-      word_count: wordCount,
+    const response = await apiClient.post<DayActivity>("/activity", {
+      money_count: wordCount,
     });
     return response.data;
   } catch (error) {
-    console.error('Failed to add activity:', error);
+    console.error("Failed to add activity:", error);
     throw error;
   }
 };
@@ -75,10 +76,10 @@ export const addActivity = async (wordCount: number): Promise<DayActivity> => {
  */
 export const getStats = async (): Promise<ActivityStats> => {
   try {
-    const response = await apiClient.get<ActivityStats>('/stats');
+    const response = await apiClient.get<ActivityStats>("/stats");
     return response.data;
   } catch (error) {
-    console.error('Failed to fetch stats:', error);
+    console.error("Failed to fetch stats:", error);
     throw error;
   }
 };

@@ -8,7 +8,7 @@ import styles from "./money-activity-calendar.module.scss";
 
 interface DayActivity {
   date: string;
-  word_count: number; // stores dollars amount
+  money_count: number; // stores dollars amount
 }
 
 interface ActivityData {
@@ -48,7 +48,7 @@ export const MoneyActivityCalendar = () => {
 
       const dataMap: ActivityData = {};
       activities.forEach((activity: DayActivity) => {
-        dataMap[activity.date] = activity.word_count; // word_count stores dollars
+        dataMap[activity.date] = activity.money_count; // money_count stores dollars
       });
 
       setActivityData(dataMap);
