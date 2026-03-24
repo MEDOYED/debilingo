@@ -19,12 +19,14 @@ Backend API server for the Debilingo word learning tracker application.
 ## Installation
 
 1. **Install dependencies:**
+
    ```bash
    cd backend
    npm install
    ```
 
 2. **Set up environment variables:**
+
    ```bash
    cp .env.example .env
    ```
@@ -41,11 +43,13 @@ Backend API server for the Debilingo word learning tracker application.
 ## Database Setup (Supabase)
 
 1. **Create a Supabase project:**
+
    - Go to [https://app.supabase.com](https://app.supabase.com)
    - Click "New Project"
    - Fill in project details and wait for setup to complete
 
 2. **Create the database table:**
+
    - Go to your project dashboard
    - Click on "SQL Editor" in the sidebar
    - Run this SQL query:
@@ -101,17 +105,20 @@ Backend API server for the Debilingo word learning tracker application.
 ## Running the Server
 
 ### Development mode (with hot reload):
+
 ```bash
 npm run dev
 ```
 
 ### Production mode:
+
 ```bash
 npm run build
 npm start
 ```
 
 ### Type checking:
+
 ```bash
 npm run type-check
 ```
@@ -119,12 +126,15 @@ npm run type-check
 ## API Endpoints
 
 ### 1. Get Activity Data
+
 ```http
 GET /api/activity
 ```
+
 Returns all activity data for the last year.
 
 **Response:**
+
 ```json
 [
   {
@@ -138,6 +148,7 @@ Returns all activity data for the last year.
 ```
 
 ### 2. Add Activity
+
 ```http
 POST /api/activity
 Content-Type: application/json
@@ -149,6 +160,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "id": "uuid",
@@ -160,11 +172,13 @@ Content-Type: application/json
 ```
 
 ### 3. Get Statistics
+
 ```http
 GET /api/stats
 ```
 
 **Response:**
+
 ```json
 {
   "total": 230
@@ -172,11 +186,13 @@ GET /api/stats
 ```
 
 ### 4. Health Check
+
 ```http
 GET /health
 ```
 
 **Response:**
+
 ```json
 {
   "status": "ok",
@@ -187,6 +203,7 @@ GET /health
 ## Error Handling
 
 All errors follow this format:
+
 ```json
 {
   "success": false,
@@ -220,19 +237,23 @@ backend/
 ## Troubleshooting
 
 ### "Missing Supabase environment variables"
+
 - Make sure you created `.env` file from `.env.example`
 - Check that `SUPABASE_URL` and `SUPABASE_ANON_KEY` are set correctly
 
 ### "Supabase connection test failed"
+
 - Verify your Supabase credentials are correct
 - Make sure the `daily_activity` table exists
 - Check that RLS policies are configured
 
 ### CORS errors
+
 - Verify `FRONTEND_URL` in `.env` matches your frontend URL
 - Default is `http://localhost:5173` for Vite
 
 ### Port already in use
+
 - Change `PORT` in `.env` to a different port (e.g., 3002)
 - Make sure to update the frontend API URL accordingly
 
@@ -246,3 +267,5 @@ backend/
 ## License
 
 MIT
+
+trigger deploy 1
