@@ -1,0 +1,51 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches: [main, dev]
+
+env:
+  GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set service name
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "SERVICE_NAME=debilingo-backend" >> $GITHUB_ENV
+          else
+            echo "SERVICE_NAME=debilingo-backend-dev" >> $GITHUB_ENV
+          fi
+          echo "Service will be deployed as: $SERVICE_NAME"
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy $SERVICE_NAME \
+            --source . \
+            --region us-central1 \
+            --platform managed \
+            --allow-unauthenticated \
+            --set-env-vars="SUPABASE_URL=$SUPABASE_URL,SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY,JWT_SECRET=$JWT_SECRET"
+
+      - name: Output URL
+        run: |
+          echo "===== Deployment complete ====="
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Service: $SERVICE_NAME"
