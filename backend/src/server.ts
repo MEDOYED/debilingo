@@ -17,7 +17,11 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 app.use(
   cors({
-    origin: ["http://localhost:1414", "https://debilingo-dev.vercel.app"],
+    origin: [
+      "http://localhost:1414",
+      "https://debilingo-dev.vercel.app",
+      "https://debilingo-main.vercel.app",
+    ],
     credentials: true,
   })
 );
