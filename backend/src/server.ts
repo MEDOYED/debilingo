@@ -1,8 +1,13 @@
-import express, { Request, Response, NextFunction } from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import activityRoutes from './routes/activity.js';
-import { testConnection } from './config/supabase.js';
+import cors from "cors";
+import dotenv from "dotenv";
+import express, { NextFunction, Request, Response } from "express";
+
+import activityRoutes from "./routes/activity.js";
+import authRoutes from "./routes/authRoutes.js";
+import dictionaryRoutes from "./routes/dictionaryRoutes.js";
+import wordRoutes from "./routes/wordRoutes.js";
+
+import { testConnection } from "./config/supabase.js";
 
 dotenv.config();
 
@@ -10,10 +15,12 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: ["http://localhost:1414", "https://debilingo-dev.vercel.app"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,32 +32,35 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // Health check endpoint
-app.get('/health', (req: Request, res: Response) => {
+app.get("/health", (req: Request, res: Response) => {
   res.json({
-    status: 'ok',
+    status: "ok",
     timestamp: new Date().toISOString(),
   });
 });
 
 // API Routes
-app.use('/api', activityRoutes);
+app.use("/api", activityRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/dictionaries", dictionaryRoutes);
+app.use("/api", wordRoutes);
 
 // 404 handler
 app.use((req: Request, res: Response) => {
   res.status(404).json({
     success: false,
-    error: 'Route not found',
+    error: "Route not found",
     path: req.path,
   });
 });
 
 // Global error handler
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error('Global error handler:', err);
+  console.error("Global error handler:", err);
   res.status(500).json({
     success: false,
-    error: 'Internal server error',
-    message: process.env.NODE_ENV === 'development' ? err.message : undefined,
+    error: "Internal server error",
+    message: process.env.NODE_ENV === "development" ? err.message : undefined,
   });
 });
 
@@ -60,19 +70,21 @@ const startServer = async () => {
     // Test Supabase connection
     const connected = await testConnection();
     if (!connected) {
-      console.warn('⚠ Warning: Supabase connection test failed. The server will start but database operations may fail.');
+      console.warn(
+        "⚠ Warning: Supabase connection test failed. The server will start but database operations may fail."
+      );
     }
 
     app.listen(PORT, () => {
-      console.log('='.repeat(50));
+      console.log("=".repeat(50));
       console.log(`🚀 Server running on port ${PORT}`);
       console.log(`📍 API endpoint: http://localhost:${PORT}/api`);
       console.log(`🏥 Health check: http://localhost:${PORT}/health`);
-      console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-      console.log('='.repeat(50));
+      console.log(`🌍 Environment: ${process.env.NODE_ENV || "development"}`);
+      console.log("=".repeat(50));
     });
   } catch (error) {
-    console.error('Failed to start server:', error);
+    console.error("Failed to start server:", error);
     process.exit(1);
   }
 };
@@ -80,12 +92,12 @@ const startServer = async () => {
 startServer();
 
 // Graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('SIGTERM received, shutting down gracefully...');
+process.on("SIGTERM", () => {
+  console.log("SIGTERM received, shutting down gracefully...");
   process.exit(0);
 });
 
-process.on('SIGINT', () => {
-  console.log('SIGINT received, shutting down gracefully...');
+process.on("SIGINT", () => {
+  console.log("SIGINT received, shutting down gracefully...");
   process.exit(0);
 });

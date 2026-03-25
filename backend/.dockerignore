@@ -29,5 +29,3 @@
   *.test.ts
   *.spec.ts
 
-  # TypeScript конфіг (не потрібен в production)
-  tsconfig.json
