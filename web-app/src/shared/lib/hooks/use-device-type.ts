@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { BREAKPOINTS } from "@/shared/lib/constants";
+import { BREAKPOINTS } from "@shared/lib/constants";
 
 export const useDeviceType = () => {
   const [width, setWidth] = useState(0);
