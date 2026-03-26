@@ -1,2 +1,8 @@
 @use "@/shared/styles/reset.scss";
 @use "@/shared/styles/themes.scss";
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}

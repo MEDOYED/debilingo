@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+
+import { cn } from "@shared/lib/styles";
 import {
   addActivity,
   getActivity,
   getStats,
 } from "../../../../shared/api/activityService";
-import styles from "./money-activity-calendar.module.scss";
+import s from "./money-activity-calendar.module.scss";
 
 interface DayActivity {
   date: string;
@@ -22,7 +24,13 @@ interface TooltipData {
   y: number;
 }
 
-export const MoneyActivityCalendar = () => {
+type MoneyActivityCalendarProps = {
+  className?: string;
+};
+
+export const MoneyActivityCalendar = ({
+  className,
+}: MoneyActivityCalendarProps) => {
   const [activityData, setActivityData] = useState<ActivityData>({});
   const [totalEarned, setTotalEarned] = useState<number>(0);
   const [moneyInput, setMoneyInput] = useState<string>("");
@@ -190,26 +198,26 @@ export const MoneyActivityCalendar = () => {
 
   if (isLoading) {
     return (
-      <div className={styles.container}>
-        <div className={styles.loading}>Loading activity data...</div>
+      <div className={s.moneyActivityCalendar}>
+        <div className={s.loading}>Loading activity data...</div>
       </div>
     );
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h2 className={styles.title}>
+    <div className={cn(s.moneyActivityCalendar, className)}>
+      <div className={s.header}>
+        <h2 className={s.title}>
           ${totalEarned.toLocaleString()} earned in the last year
         </h2>
       </div>
 
-      <div className={styles.calendarWrapper}>
-        <div className={styles.dayLabels}>
+      <div className={s.calendarWrapper}>
+        <div className={s.dayLabels}>
           {[0, 1, 2, 3, 4, 5, 6].map((day) => (
             <div
               key={day}
-              className={styles.dayLabel}
+              className={s.dayLabel}
             >
               {day === 1
                 ? dayLabels[0]
@@ -222,12 +230,12 @@ export const MoneyActivityCalendar = () => {
           ))}
         </div>
 
-        <div className={styles.calendarContent}>
-          <div className={styles.monthLabels}>
+        <div className={s.calendarContent}>
+          <div className={s.monthLabels}>
             {months.map((month, idx) => (
               <div
                 key={idx}
-                className={styles.monthLabel}
+                className={s.monthLabel}
                 style={{ gridColumn: month.weekIndex + 1 }}
               >
                 {month.name}
@@ -235,11 +243,11 @@ export const MoneyActivityCalendar = () => {
             ))}
           </div>
 
-          <div className={styles.weeksGrid}>
+          <div className={s.weeksGrid}>
             {weeks.map((week, weekIdx) => (
               <div
                 key={weekIdx}
-                className={styles.week}
+                className={s.week}
               >
                 {week.map((date, dayIdx) => {
                   const dateStr = formatDate(date);
@@ -252,7 +260,7 @@ export const MoneyActivityCalendar = () => {
                   return (
                     <div
                       key={dayIdx}
-                      className={`${styles.day} ${styles[`level${level}`]} ${isToday ? styles.today : ""} ${isFuture ? styles.future : ""}`}
+                      className={`${s.day} ${s[`level${level}`]} ${isToday ? s.today : ""} ${isFuture ? s.future : ""}`}
                       onMouseEnter={(e) =>
                         handleMouseEnter(date, dollarAmount, e)
                       }
@@ -261,7 +269,7 @@ export const MoneyActivityCalendar = () => {
                       data-hundreds={hundreds}
                     >
                       {hundreds > 0 && (
-                        <span className={styles.dayNumber}>{hundreds}</span>
+                        <span className={s.dayNumber}>{hundreds}</span>
                       )}
                     </div>
                   );
@@ -272,27 +280,27 @@ export const MoneyActivityCalendar = () => {
         </div>
       </div>
 
-      <div className={styles.legend}>
-        <span className={styles.legendText}>Less</span>
+      <div className={s.legend}>
+        <span className={s.legendText}>Less</span>
         {[0, 1, 2, 3, 4].map((level) => (
           <div
             key={level}
-            className={`${styles.legendBox} ${styles[`level${level}`]}`}
+            className={`${s.legendBox} ${s[`level${level}`]}`}
           />
         ))}
-        <span className={styles.legendText}>More</span>
+        <span className={s.legendText}>More</span>
       </div>
 
-      <div className={styles.inputSection}>
-        <h3 className={styles.inputTitle}>Log Today's Earnings</h3>
+      <div className={s.inputSection}>
+        <h3 className={s.inputTitle}>Log Today's Earnings</h3>
         <form
           onSubmit={handleSubmit}
-          className={styles.form}
+          className={s.form}
         >
-          <div className={styles.inputGroup}>
+          <div className={s.inputGroup}>
             <label
               htmlFor="moneyAmount"
-              className={styles.label}
+              className={s.label}
             >
               Amount earned today ($):
             </label>
@@ -305,13 +313,13 @@ export const MoneyActivityCalendar = () => {
               value={moneyInput}
               onChange={(e) => setMoneyInput(e.target.value)}
               placeholder="Enter amount (e.g., 600 for $600)"
-              className={styles.input}
+              className={s.input}
               disabled={isSubmitting}
             />
           </div>
           <button
             type="submit"
-            className={styles.submitButton}
+            className={s.submitButton}
             disabled={isSubmitting || !moneyInput}
           >
             {isSubmitting ? "Saving..." : "Save Earnings"}
@@ -319,7 +327,7 @@ export const MoneyActivityCalendar = () => {
         </form>
 
         {message && (
-          <div className={`${styles.message} ${styles[message.type]}`}>
+          <div className={`${s.message} ${s[message.type]}`}>
             {message.text}
           </div>
         )}
@@ -327,7 +335,7 @@ export const MoneyActivityCalendar = () => {
 
       {tooltip && (
         <div
-          className={styles.tooltip}
+          className={s.tooltip}
           style={{
             left: `${tooltip.x}px`,
             top: `${tooltip.y}px`,

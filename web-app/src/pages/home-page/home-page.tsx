@@ -1,3 +1,5 @@
+import { cn } from "@shared/lib/styles";
+
 import { MoneyActivityCalendar } from "@widgets/money-activity-calendar";
 import { UserProfileCard } from "@widgets/user-profile-card";
 
@@ -42,12 +44,12 @@ export const HomePage = () => {
     loadDictionaries();
   };
   return (
-    <div className={s.pageHome}>
+    <div className={cn(s.pageHome, "container")}>
       <div className={s.leftCol}>
         <UserProfileCard />
       </div>
 
-      <MoneyActivityCalendar />
+      <MoneyActivityCalendar className={s.MoneyActivityCalendar} />
 
       <div>
         <div>

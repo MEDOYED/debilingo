@@ -1,26 +1,41 @@
-type Mods = Record<string, boolean | string | undefined>;
+type ClassValue =
+  | string
+  | number
+  | boolean
+  | undefined
+  | null
+  | ClassValue[]
+  | { [key: string]: any };
 
-/**
- * Утиліта для формування className з урахуванням CSS модулів
- * @param cls - основний клас
- * @param mods - об'єкт з модифікаторами {className: boolean}
- * @param additional - масив додаткових класів
- * @returns string - сформований className
- *
- * @example
- * cn(styles.button, { [styles.disabled]: true }, [styles.large])
- * // 'button disabled large'
- */
-export function cn(
-  cls: string,
-  mods: Mods = {},
-  additional: Array<string | undefined> = []
-): string {
-  return [
-    cls,
-    ...additional.filter(Boolean),
-    ...Object.entries(mods)
-      .filter(([_, value]) => Boolean(value))
-      .map(([className]) => className),
-  ].join(" ");
+export function cn(...args: ClassValue[]): string {
+  const classes: string[] = [];
+
+  args.forEach((arg) => {
+    // Пропускаємо falsy значення (undefined, null, false, 0, '')
+    if (!arg) return;
+
+    const argType = typeof arg;
+
+    // Рядки та числа додаємо напряму
+    if (argType === "string" || argType === "number") {
+      classes.push(String(arg));
+    }
+    // Масиви обробляємо рекурсивно
+    else if (Array.isArray(arg)) {
+      const inner = cn(...arg);
+      if (inner) {
+        classes.push(inner);
+      }
+    }
+    // Об'єкти - беремо ключі, де значення truthy
+    else if (argType === "object") {
+      Object.entries(arg as Record<string, any>).forEach(([key, value]) => {
+        if (value) {
+          classes.push(key);
+        }
+      });
+    }
+  });
+
+  return classes.join(" ");
 }

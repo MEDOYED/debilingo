@@ -1,9 +1,5 @@
-.container {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+.moneyActivityCalendar {
+  max-width: 990px;
 }
 
 .header {
@@ -291,7 +287,7 @@
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 100%;
     left: 50%;
@@ -303,10 +299,6 @@
 
 // Responsive Design
 @media (max-width: 768px) {
-  .container {
-    padding: 16px;
-  }
-
   .calendarWrapper {
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
