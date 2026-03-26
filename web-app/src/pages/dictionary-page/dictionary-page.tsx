@@ -1,8 +1,8 @@
 // import { WordList } from "@/widgets/word-list";
 // import { HeaderDictionaryPage } from "../header-dictionary-page/header-dictionary-page";
 
-import type { Word } from "@/shared/api/wordApi";
-import { createWord, deleteWord, getWords } from "@/shared/api/wordApi";
+import type { Word } from "@shared/api/wordApi";
+import { createWord, deleteWord, getWords } from "@shared/api/wordApi";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -212,12 +212,3 @@ export const DictionaryPage = () => {
     </div>
   );
 };
-
-//   return (
-//     <div className={s.dictionaryPage}>
-//       <HeaderDictionaryPage />
-
-//       <WordList />
-//     </div>
-//   );
-// };
