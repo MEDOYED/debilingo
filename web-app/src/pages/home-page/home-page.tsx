@@ -1,12 +1,12 @@
-import { MoneyActivityCalendar } from "@/widgets/money-activity-calendar";
-import { UserProfileCard } from "@/widgets/user-profile-card";
+import { MoneyActivityCalendar } from "@widgets/money-activity-calendar";
+import { UserProfileCard } from "@widgets/user-profile-card";
 
-import type { Dictionary } from "@/shared/api/dictionaryApi";
+import type { Dictionary } from "@shared/api/dictionaryApi";
 import {
   createDictionary,
   deleteDictionary,
   getDictionaries,
-} from "@/shared/api/dictionaryApi";
+} from "@shared/api/dictionaryApi";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
