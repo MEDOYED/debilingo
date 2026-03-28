@@ -1,0 +1,119 @@
+@use "typefaces" as *;
+
+/// Material Design 3 emphasized type scale map.
+///
+/// Same as baseline type scale but with heavier font weights.
+/// Used for active states or elements requiring extra emphasis.
+///
+/// @type Map
+/// @link https://m3.material.io/styles/typography/type-scale-tokens Type scale tokens
+/// @group Typography
+$md-sys-typescale-emphasized: (
+  "display-large": (
+    "font": $md-ref-typeface-brand,
+    "size": 57px,
+    "weight": 500,
+    "line-height": 1.123,
+    "tracking": -0.25px,
+  ),
+  "display-medium": (
+    "font": $md-ref-typeface-brand,
+    "size": 45px,
+    "weight": 500,
+    "line-height": 1.156,
+    "tracking": 0,
+  ),
+  "display-small": (
+    "font": $md-ref-typeface-brand,
+    "size": 36px,
+    "weight": 500,
+    "line-height": 1.222,
+    "tracking": 0,
+  ),
+  "headline-large": (
+    "font": $md-ref-typeface-brand,
+    "size": 32px,
+    "weight": 500,
+    "line-height": 1.25,
+    "tracking": 0,
+  ),
+  "headline-medium": (
+    "font": $md-ref-typeface-brand,
+    "size": 28px,
+    "weight": 500,
+    "line-height": 1.286,
+    "tracking": 0,
+  ),
+  "headline-small": (
+    "font": $md-ref-typeface-brand,
+    "size": 24px,
+    "weight": 500,
+    "line-height": 1.333,
+    "tracking": 0,
+  ),
+  "title-large": (
+    "font": $md-ref-typeface-brand,
+    "size": 22px,
+    "weight": 500,
+    "line-height": 1.273,
+    "tracking": 0,
+  ),
+  "title-medium": (
+    "font": $md-ref-typeface-brand,
+    "size": 16px,
+    "weight": 700,
+    "line-height": 1.5,
+    "tracking": 0,
+  ),
+  "title-small": (
+    "font": $md-ref-typeface-brand,
+    "size": 14px,
+    "weight": 700,
+    "line-height": 1.429,
+    "tracking": 0.1px,
+  ),
+
+  "body-large": (
+    "font": $md-ref-typeface-plain,
+    "size": 16px,
+    "weight": 500,
+    "line-height": 1.5,
+    "tracking": 0.5px,
+  ),
+  "body-medium": (
+    "font": $md-ref-typeface-plain,
+    "size": 16px,
+    "weight": 500,
+    "line-height": 1.25,
+    "tracking": 0.25px,
+  ),
+  "body-small": (
+    "font": $md-ref-typeface-plain,
+    "size": 12px,
+    "weight": 500,
+    "line-height": 1.333,
+    "tracking": 0.4px,
+  ),
+
+  "label-large": (
+    "font": $md-ref-typeface-plain,
+    "size": 14px,
+    "weight": 700,
+    "line-height": 1.429,
+    "tracking": 0.1px,
+  ),
+  "label-medium": (
+    "font": $md-ref-typeface-plain,
+    "size": 12px,
+    "weight": 700,
+    "line-height": 1.333,
+    "tracking": 0.5px,
+  ),
+  "label-small": (
+    "font": $md-ref-typeface-plain,
+    "size": 11px,
+    "weight": 700,
+    "line-height": 1.455,
+    "tracking": 0.5px,
+  ),
+);

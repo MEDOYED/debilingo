@@ -1,0 +1,14 @@
+@use "./tokens/" as t;
+@use "./lib/responsive-design/_fluid-scale.scss" as fs;
+
+.container {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1450px;
+  padding-inline: fs.fluid-scale(
+    t.$md-sys-spacing-2,
+    t.$md-sys-spacing-6,
+    t.$md-sys-viewport-compact,
+    t.$md-sys-viewport-medium
+  );
+}

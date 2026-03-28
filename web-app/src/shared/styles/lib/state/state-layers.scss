@@ -1,0 +1,51 @@
+@use "../../tokens/" as t;
+
+/// Apply Material Design 3 state layers to interactive elements.
+///
+/// Creates a pseudo-element overlay that responds to hover, focus, and press
+/// interactions. Opacity values follow MD3 state layer specs.
+///
+/// @param {Color} $color [var(--md-sys-color-primary)] - Overlay color
+/// @param {Length} $border-radius [0] - Match the element's border radius
+///
+/// @example scss
+///   .button {
+///     @include state-layers(var(--md-sys-color-on-surface), t.$md-sys-shape-corner-value-extra-extra-large);
+///   }
+///
+/// @group States
+/// @output position, ::before pseudo-element with hover/focus/active states
+@mixin state-layers($color: var(--md-sys-color-primary), $border-radius: 0) {
+  position: relative;
+
+  &::before {
+    content: "";
+    pointer-events: none;
+
+    position: absolute;
+    inset: 0;
+
+    opacity: 0;
+    border-radius: $border-radius;
+
+    background: $color;
+
+    @include t.effects("fast");
+    transition-property: opacity;
+  }
+
+  &:hover {
+    &::before {
+      opacity: t.$md-sys-state-hover-state-layer-opacity;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: 2px;
+  }
+
+  &:active::before {
+    opacity: t.$md-sys-state-pressed-state-layer-opacity;
+  }
+}

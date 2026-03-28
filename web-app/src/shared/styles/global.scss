@@ -1,0 +1,40 @@
+@use "config.scss" as conf;
+@use "./tokens/" as t;
+
+* {
+  transition-property: background-color, color;
+  @include t.effects("slow");
+}
+
+body.modalOpen {
+  overflow: hidden;
+}
+
+body {
+  overflow-x: hidden;
+
+  // padding-top: conf.$app-bar-height;
+
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+}
+
+.Container {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1450px;
+}
+
+button,
+a {
+  cursor: pointer;
+
+  // minimum btns size for accessibility
+  min-width: 48px;
+  min-height: 48px;
+
+  &:focus-visible {
+    outline: 2px solid var(--md-sys-color-outline);
+    outline-offset: 2px;
+  }
+}

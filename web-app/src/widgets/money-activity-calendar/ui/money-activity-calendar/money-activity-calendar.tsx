@@ -136,9 +136,9 @@ export const MoneyActivityCalendar = ({
   const getActivityLevel = (dollars: number): number => {
     const hundreds = dollarsToHundreds(dollars);
     if (hundreds === 0) return 0;
-    if (hundreds <= 5) return 1;
-    if (hundreds <= 15) return 2;
-    if (hundreds <= 30) return 3;
+    if (hundreds <= 2) return 1;
+    if (hundreds <= 5) return 2;
+    if (hundreds <= 10) return 3;
     return 4;
   };
 
@@ -206,89 +206,87 @@ export const MoneyActivityCalendar = ({
 
   return (
     <div className={cn(s.moneyActivityCalendar, className)}>
-      <div className={s.header}>
-        <h2 className={s.title}>
-          ${totalEarned.toLocaleString()} earned in the last year
-        </h2>
-      </div>
+      <div className={s.calendarWithCaprionWrapper}>
+        <div className={s.calendarWrapper}>
+          <div className={s.dayLabels}>
+            {[0, 1, 2, 3, 4, 5, 6].map((day) => (
+              <div
+                key={day}
+                className={s.dayLabel}
+              >
+                {day === 1
+                  ? dayLabels[0]
+                  : day === 3
+                    ? dayLabels[1]
+                    : day === 5
+                      ? dayLabels[2]
+                      : ""}
+              </div>
+            ))}
+          </div>
 
-      <div className={s.calendarWrapper}>
-        <div className={s.dayLabels}>
-          {[0, 1, 2, 3, 4, 5, 6].map((day) => (
-            <div
-              key={day}
-              className={s.dayLabel}
-            >
-              {day === 1
-                ? dayLabels[0]
-                : day === 3
-                  ? dayLabels[1]
-                  : day === 5
-                    ? dayLabels[2]
-                    : ""}
+          <div className={s.calendarContent}>
+            <div className={s.monthLabels}>
+              {months.map((month, idx) => (
+                <div
+                  key={idx}
+                  className={s.monthLabel}
+                  style={{ gridColumn: month.weekIndex + 1 }}
+                >
+                  {month.name}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <div className={s.calendarContent}>
-          <div className={s.monthLabels}>
-            {months.map((month, idx) => (
-              <div
-                key={idx}
-                className={s.monthLabel}
-                style={{ gridColumn: month.weekIndex + 1 }}
-              >
-                {month.name}
-              </div>
-            ))}
-          </div>
+            <div className={s.weeksGrid}>
+              {weeks.map((week, weekIdx) => (
+                <div
+                  key={weekIdx}
+                  className={s.week}
+                >
+                  {week.map((date, dayIdx) => {
+                    const dateStr = formatDate(date);
+                    const dollarAmount = activityData[dateStr] || 0;
+                    const hundreds = dollarsToHundreds(dollarAmount);
+                    const level = getActivityLevel(dollarAmount);
+                    const isToday = formatDate(new Date()) === dateStr;
+                    const isFuture = date > new Date();
 
-          <div className={s.weeksGrid}>
-            {weeks.map((week, weekIdx) => (
-              <div
-                key={weekIdx}
-                className={s.week}
-              >
-                {week.map((date, dayIdx) => {
-                  const dateStr = formatDate(date);
-                  const dollarAmount = activityData[dateStr] || 0;
-                  const hundreds = dollarsToHundreds(dollarAmount);
-                  const level = getActivityLevel(dollarAmount);
-                  const isToday = formatDate(new Date()) === dateStr;
-                  const isFuture = date > new Date();
-
-                  return (
-                    <div
-                      key={dayIdx}
-                      className={`${s.day} ${s[`level${level}`]} ${isToday ? s.today : ""} ${isFuture ? s.future : ""}`}
-                      onMouseEnter={(e) =>
-                        handleMouseEnter(date, dollarAmount, e)
-                      }
-                      onMouseLeave={handleMouseLeave}
-                      data-date={dateStr}
-                      data-hundreds={hundreds}
-                    >
-                      {hundreds > 0 && (
-                        <span className={s.dayNumber}>{hundreds}</span>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            ))}
+                    return (
+                      <div
+                        key={dayIdx}
+                        className={`${s.day} ${s[`level${level}`]} ${isToday ? s.today : ""} ${isFuture ? s.future : ""}`}
+                        onMouseEnter={(e) =>
+                          handleMouseEnter(date, dollarAmount, e)
+                        }
+                        onMouseLeave={handleMouseLeave}
+                        data-date={dateStr}
+                        data-hundreds={hundreds}
+                      ></div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className={s.legend}>
-        <span className={s.legendText}>Less</span>
-        {[0, 1, 2, 3, 4].map((level) => (
-          <div
-            key={level}
-            className={`${s.legendBox} ${s[`level${level}`]}`}
-          />
-        ))}
-        <span className={s.legendText}>More</span>
+        <div className={s.caption}>
+          <h2 className={s.title}>
+            ${totalEarned.toLocaleString()} earned in the last year
+          </h2>
+
+          <div className={s.legend}>
+            <span className={s.legendText}>Less</span>
+            {[0, 1, 2, 3, 4].map((level) => (
+              <div
+                key={level}
+                className={`${s.legendBox} ${s[`level${level}`]}`}
+              />
+            ))}
+            <span className={s.legendText}>More</span>
+          </div>
+        </div>
       </div>
 
       <div className={s.inputSection}>

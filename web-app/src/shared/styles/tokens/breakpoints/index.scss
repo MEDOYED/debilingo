@@ -1,0 +1,74 @@
+////
+/// Material Design 3 breakpoint system.
+///
+/// Provides window size class breakpoints for responsive layout and
+/// realistic viewport widths for fluid scaling calculations.
+///
+/// @group Breakpoints
+/// @example scss
+///   .hero {
+///     font-size: 36px;
+///
+///     @media (min-width: $md-ref-breakpoint-medium-min) {
+///       font-size: 48px;
+///     }
+///   }
+///
+/// @link https://m3.material.io/foundations/layout/applying-layout/window-size-classes Window size classes
+////
+
+/// Compact breakpoint min (0px) - Phones in portrait
+/// @type Number
+$md-ref-breakpoint-compact-min: 0px;
+
+/// Compact breakpoint max (599px) - Phones in portrait
+/// @type Number
+$md-ref-breakpoint-compact-max: 599px;
+
+/// Medium breakpoint min (600px) - Tablets in portrait
+/// @type Number
+$md-ref-breakpoint-medium-min: 600px;
+
+/// Medium breakpoint max (839px) - Tablets in portrait
+/// @type Number
+$md-ref-breakpoint-medium-max: 839px;
+
+/// Expanded breakpoint min (840px) - Tablets in landscape
+/// @type Number
+$md-ref-breakpoint-expanded-min: 840px;
+
+/// Expanded breakpoint max (1199px) - Tablets in landscape
+/// @type Number
+$md-ref-breakpoint-expanded-max: 1199px;
+
+/// Large breakpoint min (1200px) - Desktop
+/// @type Number
+$md-ref-breakpoint-large-min: 1200px;
+
+/// Large breakpoint max (1599px) - Desktop
+/// @type Number
+$md-ref-breakpoint-large-max: 1599px;
+
+/// Extra-large breakpoint min (1600px) - Wide screens
+/// @type Number
+$md-ref-breakpoint-extra-large-min: 1600px;
+
+/// Realistic compact viewport width (280px) - Small phones
+/// @type Number
+$md-sys-viewport-compact: 280px;
+
+/// Realistic medium viewport width (720px) - Tablets
+/// @type Number
+$md-sys-viewport-medium: 720px;
+
+/// Realistic expanded viewport width (1024px) - Tablets landscape
+/// @type Number
+$md-sys-viewport-expanded: 1024px;
+
+/// Realistic large viewport width (1440px) - Standard desktop
+/// @type Number
+$md-sys-viewport-large: 1440px;
+
+/// Realistic extra-large viewport width (1920px) - Full HD
+/// @type Number
+$md-sys-viewport-extra-large: 1920px;

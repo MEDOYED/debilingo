@@ -53,10 +53,11 @@ export const HomePage = () => {
 
       <div>
         <div>
-          <h1>My Dictionaries</h1>
+          <h1>Мої словники</h1>
           <button onClick={() => setShowForm(!showForm)}>
             Create Dictionary
           </button>
+
           {showForm && (
             <form onSubmit={handleCreate}>
               <input
