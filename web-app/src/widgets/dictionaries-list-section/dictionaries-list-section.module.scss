@@ -1,0 +1,64 @@
+.section {
+}
+
+.titleRow {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 32px;
+}
+
+.list {
+  display: flex;
+  gap: 15px;
+}
+
+.card {
+  background-color: var(--md-sys-color-surface-container-low);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  width: 300px;
+  height: 200px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &:hover {
+    border: 1px solid var(--md-sys-color-outline);
+    transform: translateY(-2px);
+  }
+}
+
+.cardForDeletion {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: var(--md-sys-color-error);
+  color: var(--md-sys-color-on-error);
+  border-color: var(--md-sys-color-on-error);
+}
+
+.cardLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 15px;
+  height: 100%;
+}
+
+.card__title {
+  font-size: 24px;
+  display: flex;
+  gap: 6px;
+}
+
+.btnsWrapper {
+  display: flex;
+  margin-top: auto;
+}
