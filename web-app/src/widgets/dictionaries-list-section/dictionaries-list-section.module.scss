@@ -3,9 +3,17 @@
 
 .titleRow {
   display: flex;
+  flex-wrap: wrap;
   gap: 30px;
-  align-items: center;
   margin-bottom: 20px;
+  justify-content: center;
+
+}
+
+@media (min-width: 768px) {
+  .titleRow{
+    justify-content: start;
+  }
 }
 
 .sectionTitle {
@@ -14,14 +22,19 @@
 
 .list {
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 15px;
+  margin-bottom: 15px;
 }
 
 .card {
   background-color: var(--md-sys-color-surface-container-low);
   border: 1px solid var(--md-sys-color-outline-variant);
-  width: 300px;
-  height: 200px;
+  // width: 300px;
+  // height: 200px;
+  width: auto;
+  height: auto;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
