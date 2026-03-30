@@ -2,32 +2,27 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 5px;
 }
 
-@media (min-width: 768px){
-.pageHome{
-  padding: 15px;
-}
+@media (min-width: 768px) {
+  .pageHome {
+    padding: 15px;
+  }
 }
 
-.leftCol {
+.UserProfileCard {
   width: 100%;
   max-width: 400px;
 }
 
-.rightCol{
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
 .MoneyActivityCalendar {
-  margin-bottom: 20px;
-  width: 70%;
+  display: flex;
+  margin: 0 auto 20px auto;
+  width: 1020px;
+  max-width: 90vw;
 }
 
-.dictionaries{
+.dictionaries {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
