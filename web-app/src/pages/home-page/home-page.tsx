@@ -9,14 +9,16 @@ import s from "./home-page.module.scss";
 
 export const HomePage = () => {
   return (
-    <div className={cn(s.pageHome, "container")}>
+    <div className={cn(s.pageHome)}>
       <div className={s.leftCol}>
         <UserProfileCard />
       </div>
-
-      <MoneyActivityCalendar className={s.MoneyActivityCalendar} />
-
-      <DictionariesListSection />
+      <div className={s.rightCol}>
+        <MoneyActivityCalendar className={s.MoneyActivityCalendar} />
+      </div>
+      <div className={s.dictionaries}>
+        <DictionariesListSection />
+      </div>
     </div>
   );
 };
