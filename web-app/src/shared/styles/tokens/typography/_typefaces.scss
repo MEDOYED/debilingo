@@ -1,0 +1,51 @@
+////
+/// defines reference typeface tokens
+///
+/// @group typography
+////
+
+@font-face {
+  font-family: "Kode Mono";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/KodeMono-VariableFont_wght.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Tektur";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("/fonts/Tektur-VariableFont_wdth,wght.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src:
+    local("Noto Sans"),
+    local("NotoSans"),
+    url("/fonts/NotoSans-VariableFont_wdth,wght.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src:
+    local("Noto Sans Italic"),
+    local("NotoSans-Italic"),
+    url("/fonts/NotoSans-Italic-VariableFont_wdth,wght.woff2") format("woff2");
+}
+
+/// Used for display, headline, title type scales
+/// @type String
+$md-ref-typeface-brand: "Kode Mono", "Tektur", monospace;
+
+/// Used for body and label type scales
+/// @type String
+$md-ref-typeface-plain: "Noto Sans", sans-serif;

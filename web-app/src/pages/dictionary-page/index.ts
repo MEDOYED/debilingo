@@ -1,1 +1,1 @@
-export { DictionaryPage } from "./ui/dictionary-page/dictionary-page";
+export { DictionaryPage } from "./dictionary-page";

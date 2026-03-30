@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { ArrowLongRight } from "@/shared/ui/icons";
+import { ArrowLongRight } from "@shared/ui/icons";
 
 import s from "./desktop-navigation.module.scss";
 

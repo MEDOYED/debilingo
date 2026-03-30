@@ -1,0 +1,87 @@
+.button {
+  // display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  // padding: 15px 30px;
+  // font-size: 20px;
+  border-radius: 50px;
+  transition: background-color 0.2s ease;
+
+  // todo [13.03]: change font-weight to 500
+  font-weight: bold;
+
+  &.primary {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+
+    &:hover {
+      background-color: var(--md-sys-color-on-primary-container);
+    }
+  }
+
+  &.secondary {
+    background-color: var(--md-sys-color-secondary);
+    color: var(--md-sys-color-on-secondary);
+
+    &:hover {
+      background-color: var(--md-sys-color-on-secondary-container);
+    }
+  }
+
+  &.tertiary {
+    background-color: var(--md-sys-color-tertiary);
+    color: var(--md-sys-color-on-tertiary);
+
+    &:hover {
+      background-color: var(--md-sys-color-on-tertiary-container);
+    }
+  }
+
+  &.error {
+    background-color: var(--md-sys-color-error-container);
+    color: var(--md-sys-color-on-error-container);
+
+    &:hover {
+      background-color: color-mix(
+        in srgb,
+        var(--md-sys-color-error-container),
+        transparent 15%
+      );
+    }
+  }
+
+  &.small {
+    height: 40px;
+    padding: 10px 20px;
+    font-size: 14px;
+    line-height: 20px;
+    gap: 4px;
+  }
+
+  &.medium {
+    height: 48px;
+    padding: 12px 24px;
+    font-size: 16px;
+    line-height: 24px;
+    gap: 6px;
+  }
+
+  &.large {
+    height: 56px;
+    padding: 14px 28px;
+    font-size: 20px;
+    line-height: 26px;
+    gap: 8px;
+  }
+
+  &:active {
+    scale: 0.95;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

@@ -1,0 +1,25 @@
+////
+/// Material Design 3 design token system.
+///
+/// Central import for all design tokens including colors, typography,
+/// spacing, shape, elevation, motion, state layers, and breakpoints.
+///
+/// @example scss
+///   @use '@shared/styles/tokens' as t;
+///
+///   .button {
+///     @include t.typescale('label-large');
+///     padding: t.$md-sys-spacing-4;
+///     border-radius: t.$md-sys-shape-corner-value-medium;
+///   }
+///
+/// @link https://m3.material.io/foundations/design-tokens/overview Design tokens overview
+////
+
+@forward "elevation/";
+@forward "motion/";
+@forward "shape/";
+@forward "spacing";
+@forward "typography/";
+@forward "state-layer/";
+@forward "breakpoints/";

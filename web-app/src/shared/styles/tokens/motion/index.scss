@@ -1,0 +1,135 @@
+////
+/// Material Design 3 motion system.
+///
+/// Provides duration and easing tokens for animations and transitions.
+/// Spatial motion uses spring easing, effects motion uses standard easing.
+///
+/// @group Motion
+/// @link https://m3.material.io/styles/motion/overview/specs Motion tokens
+////
+
+@use "./tokens" as *;
+
+/// Apply spatial motion timing for transform, position, size, or rotation.
+///
+/// Uses spring-based easing.
+///
+/// @param {String} $speed ['default'] - 'fast', 'default', or 'slow'
+///
+/// @example scss
+///   .button {
+///     transition-property: transform;
+///     @include spatial('fast');
+///   }
+///
+/// @throw Error if speed is not 'fast', 'default', or 'slow'
+///
+/// @group Motion
+/// @output transition-duration, transition-timing-function
+@mixin spatial($speed: "default") {
+  @if $speed == "fast" {
+    transition-duration: $md-sys-motion-spring-fast-spatial-duration;
+    transition-timing-function: $md-sys-motion-spring-fast-spatial-easing;
+  } @else if $speed == "default" {
+    transition-duration: $md-sys-motion-spring-default-spatial-duration;
+    transition-timing-function: $md-sys-motion-spring-default-spatial-easing;
+  } @else if $speed == "slow" {
+    transition-duration: $md-sys-motion-spring-slow-spatial-duration;
+    transition-timing-function: $md-sys-motion-spring-slow-spatial-easing;
+  } @else {
+    @error "Unknown motion speed: #{$speed}. Valid speeds: 'fast', 'default', 'slow'";
+  }
+}
+
+/// Apply spatial motion timing for custom animations.
+///
+/// Uses spring-based easing.
+///
+/// @param {String} $speed ['default'] - 'fast', 'default', or 'slow'
+///
+/// @example scss
+///   .button {
+///     @include spatial-animation('fast');
+///     animation-name: myAnimation;
+///   }
+///
+/// @throw Error if speed is not 'fast', 'default', or 'slow'
+///
+/// @group Motion
+/// @output animation-duration, animation-timing-function
+@mixin spatial-animation($speed: "default") {
+  @if $speed == "fast" {
+    animation-duration: $md-sys-motion-spring-fast-spatial-duration;
+    animation-timing-function: $md-sys-motion-spring-fast-spatial-easing;
+  } @else if $speed == "default" {
+    animation-duration: $md-sys-motion-spring-default-spatial-duration;
+    animation-timing-function: $md-sys-motion-spring-default-spatial-easing;
+  } @else if $speed == "slow" {
+    animation-duration: $md-sys-motion-spring-slow-spatial-duration;
+    animation-timing-function: $md-sys-motion-spring-slow-spatial-easing;
+  } @else {
+    @error "Unknown motion speed: #{$speed}. Valid speeds: 'fast', 'default', 'slow'";
+  }
+}
+
+/// Apply effects motion timing for color, opacity, and filters.
+///
+/// Uses standard easing without bounce.
+///
+/// @param {String} $speed ['default'] - 'fast', 'default', or 'slow'
+///
+/// @example scss
+///   .menu {
+///     transition-property: opacity;
+///     @include effects('default');
+///   }
+///
+/// @throw Error if speed is not 'fast', 'default', or 'slow'
+///
+/// @group Motion
+/// @output transition-duration, transition-timing-function
+@mixin effects($speed: "default") {
+  @if $speed == "fast" {
+    transition-duration: $md-sys-motion-spring-fast-effects-duration;
+    transition-timing-function: $md-sys-motion-spring-fast-effects-easing;
+  } @else if $speed == "default" {
+    transition-duration: $md-sys-motion-spring-default-effects-duration;
+    transition-timing-function: $md-sys-motion-spring-default-effects-easing;
+  } @else if $speed == "slow" {
+    transition-duration: $md-sys-motion-spring-slow-effects-duration;
+    transition-timing-function: $md-sys-motion-spring-slow-effects-easing;
+  } @else {
+    @error "Unknown motion speed: #{$speed}. Valid speeds: 'fast', 'default', 'slow'";
+  }
+}
+
+/// Apply effects motion timing for custom animations.
+///
+/// Uses standard easing without bounce.
+///
+/// @param {String} $speed ['default'] - 'fast', 'default', or 'slow'
+///
+/// @example scss
+///   .menu {
+///     @include effects-animation('default');
+///     animation-name: myAnimation;
+///   }
+///
+/// @throw Error if speed is not 'fast', 'default', or 'slow'
+///
+/// @group Motion
+/// @output animation-duration, animation-timing-function
+@mixin effects-animation($speed: "default") {
+  @if $speed == "fast" {
+    animation-duration: $md-sys-motion-spring-fast-effects-duration;
+    animation-timing-function: $md-sys-motion-spring-fast-effects-easing;
+  } @else if $speed == "default" {
+    animation-duration: $md-sys-motion-spring-default-effects-duration;
+    animation-timing-function: $md-sys-motion-spring-default-effects-easing;
+  } @else if $speed == "slow" {
+    animation-duration: $md-sys-motion-spring-slow-effects-duration;
+    animation-timing-function: $md-sys-motion-spring-slow-effects-easing;
+  } @else {
+    @error "Unknown motion speed: #{$speed}. Valid speeds: 'fast', 'default', 'slow'";
+  }
+}

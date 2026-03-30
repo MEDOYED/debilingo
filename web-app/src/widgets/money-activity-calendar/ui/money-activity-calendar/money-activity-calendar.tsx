@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+
+import { cn } from "@shared/lib/styles";
 import {
   addActivity,
   getActivity,
   getStats,
 } from "../../../../shared/api/activityService";
-import styles from "./money-activity-calendar.module.scss";
+import s from "./money-activity-calendar.module.scss";
 
 interface DayActivity {
   date: string;
@@ -22,7 +24,13 @@ interface TooltipData {
   y: number;
 }
 
-export const MoneyActivityCalendar = () => {
+type MoneyActivityCalendarProps = {
+  className?: string;
+};
+
+export const MoneyActivityCalendar = ({
+  className,
+}: MoneyActivityCalendarProps) => {
   const [activityData, setActivityData] = useState<ActivityData>({});
   const [totalEarned, setTotalEarned] = useState<number>(0);
   const [moneyInput, setMoneyInput] = useState<string>("");
@@ -128,9 +136,9 @@ export const MoneyActivityCalendar = () => {
   const getActivityLevel = (dollars: number): number => {
     const hundreds = dollarsToHundreds(dollars);
     if (hundreds === 0) return 0;
-    if (hundreds <= 5) return 1;
-    if (hundreds <= 15) return 2;
-    if (hundreds <= 30) return 3;
+    if (hundreds <= 2) return 1;
+    if (hundreds <= 5) return 2;
+    if (hundreds <= 10) return 3;
     return 4;
   };
 
@@ -190,109 +198,107 @@ export const MoneyActivityCalendar = () => {
 
   if (isLoading) {
     return (
-      <div className={styles.container}>
-        <div className={styles.loading}>Loading activity data...</div>
+      <div className={s.moneyActivityCalendar}>
+        <div className={s.loading}>Loading activity data...</div>
       </div>
     );
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h2 className={styles.title}>
-          ${totalEarned.toLocaleString()} earned in the last year
-        </h2>
-      </div>
+    <div className={cn(s.moneyActivityCalendar, className)}>
+      <div className={s.calendarWithCaprionWrapper}>
+        <div className={s.calendarWrapper}>
+          <div className={s.dayLabels}>
+            {[0, 1, 2, 3, 4, 5, 6].map((day) => (
+              <div
+                key={day}
+                className={s.dayLabel}
+              >
+                {day === 1
+                  ? dayLabels[0]
+                  : day === 3
+                    ? dayLabels[1]
+                    : day === 5
+                      ? dayLabels[2]
+                      : ""}
+              </div>
+            ))}
+          </div>
 
-      <div className={styles.calendarWrapper}>
-        <div className={styles.dayLabels}>
-          {[0, 1, 2, 3, 4, 5, 6].map((day) => (
-            <div
-              key={day}
-              className={styles.dayLabel}
-            >
-              {day === 1
-                ? dayLabels[0]
-                : day === 3
-                  ? dayLabels[1]
-                  : day === 5
-                    ? dayLabels[2]
-                    : ""}
+          <div className={s.calendarContent}>
+            <div className={s.monthLabels}>
+              {months.map((month, idx) => (
+                <div
+                  key={idx}
+                  className={s.monthLabel}
+                  style={{ gridColumn: month.weekIndex + 1 }}
+                >
+                  {month.name}
+                </div>
+              ))}
             </div>
-          ))}
+
+            <div className={s.weeksGrid}>
+              {weeks.map((week, weekIdx) => (
+                <div
+                  key={weekIdx}
+                  className={s.week}
+                >
+                  {week.map((date, dayIdx) => {
+                    const dateStr = formatDate(date);
+                    const dollarAmount = activityData[dateStr] || 0;
+                    const hundreds = dollarsToHundreds(dollarAmount);
+                    const level = getActivityLevel(dollarAmount);
+                    const isToday = formatDate(new Date()) === dateStr;
+                    const isFuture = date > new Date();
+
+                    return (
+                      <div
+                        key={dayIdx}
+                        className={`${s.day} ${s[`level${level}`]} ${isToday ? s.today : ""} ${isFuture ? s.future : ""}`}
+                        onMouseEnter={(e) =>
+                          handleMouseEnter(date, dollarAmount, e)
+                        }
+                        onMouseLeave={handleMouseLeave}
+                        data-date={dateStr}
+                        data-hundreds={hundreds}
+                      ></div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className={styles.calendarContent}>
-          <div className={styles.monthLabels}>
-            {months.map((month, idx) => (
-              <div
-                key={idx}
-                className={styles.monthLabel}
-                style={{ gridColumn: month.weekIndex + 1 }}
-              >
-                {month.name}
-              </div>
-            ))}
-          </div>
+        <div className={s.caption}>
+          <h2 className={s.title}>
+            ${totalEarned.toLocaleString()} earned in the last year
+          </h2>
 
-          <div className={styles.weeksGrid}>
-            {weeks.map((week, weekIdx) => (
+          <div className={s.legend}>
+            <span className={s.legendText}>Less</span>
+            {[0, 1, 2, 3, 4].map((level) => (
               <div
-                key={weekIdx}
-                className={styles.week}
-              >
-                {week.map((date, dayIdx) => {
-                  const dateStr = formatDate(date);
-                  const dollarAmount = activityData[dateStr] || 0;
-                  const hundreds = dollarsToHundreds(dollarAmount);
-                  const level = getActivityLevel(dollarAmount);
-                  const isToday = formatDate(new Date()) === dateStr;
-                  const isFuture = date > new Date();
-
-                  return (
-                    <div
-                      key={dayIdx}
-                      className={`${styles.day} ${styles[`level${level}`]} ${isToday ? styles.today : ""} ${isFuture ? styles.future : ""}`}
-                      onMouseEnter={(e) =>
-                        handleMouseEnter(date, dollarAmount, e)
-                      }
-                      onMouseLeave={handleMouseLeave}
-                      data-date={dateStr}
-                      data-hundreds={hundreds}
-                    >
-                      {hundreds > 0 && (
-                        <span className={styles.dayNumber}>{hundreds}</span>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+                key={level}
+                className={`${s.legendBox} ${s[`level${level}`]}`}
+              />
             ))}
+            <span className={s.legendText}>More</span>
           </div>
         </div>
       </div>
 
-      <div className={styles.legend}>
-        <span className={styles.legendText}>Less</span>
-        {[0, 1, 2, 3, 4].map((level) => (
-          <div
-            key={level}
-            className={`${styles.legendBox} ${styles[`level${level}`]}`}
-          />
-        ))}
-        <span className={styles.legendText}>More</span>
-      </div>
-
-      <div className={styles.inputSection}>
-        <h3 className={styles.inputTitle}>Log Today's Earnings</h3>
+      <div className={s.inputSection}>
+        <h3 className={s.inputTitle}>Log Today's Earnings</h3>
         <form
           onSubmit={handleSubmit}
-          className={styles.form}
+          className={s.form}
         >
-          <div className={styles.inputGroup}>
+          <div className={s.inputGroup}>
             <label
               htmlFor="moneyAmount"
-              className={styles.label}
+              className={s.label}
             >
               Amount earned today ($):
             </label>
@@ -305,13 +311,13 @@ export const MoneyActivityCalendar = () => {
               value={moneyInput}
               onChange={(e) => setMoneyInput(e.target.value)}
               placeholder="Enter amount (e.g., 600 for $600)"
-              className={styles.input}
+              className={s.input}
               disabled={isSubmitting}
             />
           </div>
           <button
             type="submit"
-            className={styles.submitButton}
+            className={s.submitButton}
             disabled={isSubmitting || !moneyInput}
           >
             {isSubmitting ? "Saving..." : "Save Earnings"}
@@ -319,7 +325,7 @@ export const MoneyActivityCalendar = () => {
         </form>
 
         {message && (
-          <div className={`${styles.message} ${styles[message.type]}`}>
+          <div className={`${s.message} ${s[message.type]}`}>
             {message.text}
           </div>
         )}
@@ -327,7 +333,7 @@ export const MoneyActivityCalendar = () => {
 
       {tooltip && (
         <div
-          className={styles.tooltip}
+          className={s.tooltip}
           style={{
             left: `${tooltip.x}px`,
             top: `${tooltip.y}px`,

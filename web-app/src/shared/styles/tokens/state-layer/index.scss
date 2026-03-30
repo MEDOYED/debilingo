@@ -1,0 +1,37 @@
+////
+/// Material Design 3 state layer system.
+///
+/// Opacity values for interaction states. State layers are semi-transparent
+/// overlays that appear on components during user interaction.
+///
+/// @group State Layer
+/// @example scss
+///   .button {
+///     &::before {
+///       opacity: 0;
+///       background: var(--md-sys-color-on-primary);
+///     }
+///
+///     &:hover::before {
+///       opacity: $md-sys-state-hover-state-layer-opacity;
+///     }
+///   }
+///
+/// @link https://m3.material.io/foundations/interaction/states/state-layers State layers
+////
+
+/// Dragged state opacity (16%)
+/// @type Number
+$md-sys-state-dragged-state-layer-opacity: 0.16;
+
+/// Pressed/active state opacity (10%)
+/// @type Number
+$md-sys-state-pressed-state-layer-opacity: 0.1;
+
+/// Focused state opacity (10%)
+/// @type Number
+$md-sys-state-focus-state-layer-opacity: 0.1;
+
+/// Hover state opacity (8%)
+/// @type Number
+$md-sys-state-hover-state-layer-opacity: 0.08;

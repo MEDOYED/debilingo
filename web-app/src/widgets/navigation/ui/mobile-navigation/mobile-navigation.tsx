@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-import { cn } from "@/shared/lib/utils/classnames/classnames";
+import { cn } from "@shared/lib/styles";
 import { navigationListData } from "../../model/constants/navigation-list-data";
 
 import s from "./mobile-navigation.module.scss";

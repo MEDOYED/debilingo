@@ -1,0 +1,45 @@
+////
+/// Material Design 3 elevation system.
+///
+/// Provides box shadow tokens for component elevation.
+///
+/// @group Elevation
+/// @link https://m3.material.io/styles/elevation/tokens Elevation tokens
+////
+
+@use "tokens" as elevation-tokens;
+
+/// Apply elevation box shadow.
+///
+/// @param {Number} $level - Elevation level from 0 to 5
+///
+/// @example scss
+///   .card {
+///     @include elevation(1);
+///
+///     &:hover {
+///       @include elevation(2);
+///     }
+///   }
+///
+/// @throw Error if level is not between 0-5
+///
+/// @group Elevation
+/// @output box-shadow
+@mixin elevation($level) {
+  @if $level == 0 {
+    box-shadow: elevation-tokens.$md-sys-elevation-0;
+  } @else if $level == 1 {
+    box-shadow: elevation-tokens.$md-sys-elevation-1;
+  } @else if $level == 2 {
+    box-shadow: elevation-tokens.$md-sys-elevation-2;
+  } @else if $level == 3 {
+    box-shadow: elevation-tokens.$md-sys-elevation-3;
+  } @else if $level == 4 {
+    box-shadow: elevation-tokens.$md-sys-elevation-4;
+  } @else if $level == 5 {
+    box-shadow: elevation-tokens.$md-sys-elevation-5;
+  } @else {
+    @error "Unknown elevation level: #{$level}. Valid: 0-5";
+  }
+}

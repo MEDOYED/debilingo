@@ -1,0 +1,84 @@
+////
+/// Spacing scale based on 4px base unit.
+///
+/// Use for padding, margin, gap, and layout spacing.
+///
+/// @group Spacing
+/// @example scss
+///   .card {
+///     padding: spacing.$md-sys-spacing-4;        // 16px
+///     margin-bottom: spacing.$md-sys-spacing-6;  // 24px
+///   }
+////
+
+/// Base unit for spacing scale
+/// @type Number
+$spacing-base: 4px;
+
+/// 4px
+/// @type Number
+$md-sys-spacing-1: $spacing-base;
+
+/// 8px
+/// @type Number
+$md-sys-spacing-2: $spacing-base * 2;
+
+/// 12px
+/// @type Number
+$md-sys-spacing-3: $spacing-base * 3;
+
+/// 16px
+/// @type Number
+$md-sys-spacing-4: $spacing-base * 4;
+
+/// 20px
+/// @type Number
+$md-sys-spacing-5: $spacing-base * 5;
+
+/// 24px
+/// @type Number
+$md-sys-spacing-6: $spacing-base * 6;
+
+/// 32px
+/// @type Number
+$md-sys-spacing-8: $spacing-base * 8;
+
+/// 40px
+/// @type Number
+$md-sys-spacing-10: $spacing-base * 10;
+
+/// 48px
+/// @type Number
+$md-sys-spacing-12: $spacing-base * 12;
+
+/// 64px
+/// @type Number
+$md-sys-spacing-16: $spacing-base * 16;
+
+/// 80px
+/// @type Number
+$md-sys-spacing-20: $spacing-base * 20;
+
+/// 96px
+/// @type Number
+$md-sys-spacing-24: $spacing-base * 24;
+
+/// 128px
+/// @type Number
+$md-sys-spacing-32: $spacing-base * 32;
+
+/// 160px
+/// @type Number
+$md-sys-spacing-40: $spacing-base * 40;
+
+/// 200px
+/// @type Number
+$md-sys-spacing-50: $spacing-base * 50;
+
+/// 240px
+/// @type Number
+$md-sys-spacing-60: $spacing-base * 60;
+
+/// 280px
+/// @type Number
+$md-sys-spacing-70: $spacing-base * 70;

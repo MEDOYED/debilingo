@@ -1,0 +1,22 @@
+@use "../../tokens/" as t;
+@use "../responsive-design/_fluid-scale.scss" as fs;
+
+@mixin projects-layout {
+  display: flex;
+  align-items: start;
+  gap: fs.fluid-scale(
+    t.$md-sys-spacing-3,
+    t.$md-sys-spacing-20,
+    t.$md-ref-breakpoint-expanded-min,
+    t.$md-sys-viewport-large
+  );
+
+  > * {
+    width: 100%;
+  }
+
+  @media (max-width: t.$md-ref-breakpoint-medium-max) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

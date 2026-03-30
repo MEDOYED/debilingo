@@ -1,4 +1,4 @@
-import { DictionaryAdd, Gamepad, Home, Trophy } from "@/shared/ui/icons";
+import { DictionaryAdd, Gamepad, Home, Trophy } from "@shared/ui/icons";
 
 import type { ReactNode } from "react";
 
