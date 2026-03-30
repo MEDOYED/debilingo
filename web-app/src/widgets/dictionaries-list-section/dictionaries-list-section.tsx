@@ -123,8 +123,8 @@ export const DictionariesListSection = () => {
             </li>
           );
         })}
-
-        {isOpenCardCreateDictionary && <AddDictionaryCard />}
+        {isOpenCardCreateDictionary && <AddDictionaryCard />}{" "}{/* Краще перенести у верх списку, бо на телефоні це не зручно,
+         якщо є вже декілька словників то потрібно буде скролити до низу для того щоб додати ще */}
       </ul>
     </section>
   );
