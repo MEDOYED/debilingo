@@ -1,8 +1,11 @@
+$card-height: 200px;
+$card-width: 300px;
+
 .card {
   background-color: var(--md-sys-color-surface-container-low);
   border: 1px solid var(--md-sys-color-outline-variant);
-  width: auto;
-  height: auto;
+  width: $card-width;
+  height: $card-height;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
