@@ -1,12 +1,35 @@
 .pageHome {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+  padding: 5px;
 }
 
-.MoneyActivityCalendar {
-  margin-bottom: 50px;
+@media (min-width: 768px){
+.pageHome{
+  padding: 15px;
+}
 }
 
 .leftCol {
-  width: 400px;
+
+  width: 100%;
+  max-width: 400px;
+}
+
+.rightCol{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.MoneyActivityCalendar {
+  margin-bottom: 20px;
+  width: 70%;
+}
+
+.dictionaries{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
 }
