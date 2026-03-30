@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
-  margin: 0 auto;
   gap: 15px;
   height: 190px;
 
@@ -150,6 +149,8 @@
 .caption {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap:10px;
   width: 100%;
 }
 
@@ -191,7 +192,8 @@
   height: 100%;
   box-sizing: border-box;
   align-items: stretch;
-  min-width: 270px;
+  // min-width: 270px;
+  min-width: 20%;
 }
 
 .inputTitle {
