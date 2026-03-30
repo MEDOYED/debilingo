@@ -10,13 +10,11 @@ import s from "./home-page.module.scss";
 export const HomePage = () => {
   return (
     <div className={cn(s.pageHome, "container")}>
-      <div className={s.leftCol}>
-        <UserProfileCard />
-      </div>
+      <UserProfileCard className={s.UserProfileCard} />
 
       <MoneyActivityCalendar className={s.MoneyActivityCalendar} />
 
-      <DictionariesListSection />
+      <DictionariesListSection className={s.dictionaries} />
     </div>
   );
 };

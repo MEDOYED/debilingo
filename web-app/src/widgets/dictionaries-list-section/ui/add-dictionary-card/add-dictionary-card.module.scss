@@ -1,8 +1,10 @@
+@use "../../styles//common.module.scss" as *;
+
 .cardAddDictionary {
   gap: 5px;
-
   justify-content: space-between;
-  height: 200px;
+  width: $card-width;
+  height: $card-height;
 }
 
 .btnsWrapper {

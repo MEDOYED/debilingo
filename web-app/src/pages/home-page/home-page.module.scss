@@ -1,12 +1,23 @@
 .pageHome {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.UserProfileCard {
+  width: 100%;
+  max-width: 400px;
 }
 
 .MoneyActivityCalendar {
-  margin-bottom: 50px;
+  display: flex;
+  margin: 0 auto 20px auto;
+  width: 1020px;
+  max-width: 90vw;
 }
 
-.leftCol {
-  width: 400px;
+.dictionaries {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
 }

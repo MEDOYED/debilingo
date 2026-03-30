@@ -12,7 +12,13 @@ import { AddDictionaryCard } from "./ui/add-dictionary-card/add-dictionary-card"
 
 import s from "./dictionaries-list-section.module.scss";
 
-export const DictionariesListSection = () => {
+type DictionariesListSectionProps = {
+  className?: string;
+};
+
+export const DictionariesListSection = ({
+  className,
+}: DictionariesListSectionProps) => {
   const { dictionaries, setDictionaries } = useDictionariesStore();
   const [idDeleteCardOpen, setIdDeleteCardOpen] = useState<null | string>(null);
 
@@ -35,7 +41,7 @@ export const DictionariesListSection = () => {
   };
 
   return (
-    <section className={s.section}>
+    <section className={cn(s.section, className)}>
       <div className={s.titleRow}>
         <h2 className={s.sectionTitle}>Мої словники:</h2>
 
@@ -49,6 +55,8 @@ export const DictionariesListSection = () => {
       </div>
 
       <ul className={s.list}>
+        {isOpenCardCreateDictionary && <AddDictionaryCard />}
+
         {dictionaries.map((dictionary) => {
           if (idDeleteCardOpen === dictionary.id) {
             return (
@@ -123,8 +131,6 @@ export const DictionariesListSection = () => {
             </li>
           );
         })}
-
-        {isOpenCardCreateDictionary && <AddDictionaryCard />}
       </ul>
     </section>
   );
