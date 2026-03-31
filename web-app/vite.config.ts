@@ -2,7 +2,7 @@
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import react from "@vitejs/plugin-react";
 import path from "path";
-import { fileURLToPath } from "url";
+import { fileURLToPath, pathToFileURL } from "url";
 import { defineConfig } from "vite";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -26,7 +26,58 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        // additionalData: `@import "@/shared/styles/_variables.scss";`,
+        importers: [
+          {
+            findFileUrl(url) {
+              // Handle path aliases (@shared, @widgets, etc.)
+              if (url.startsWith("@shared/")) {
+                return new URL(
+                  url.replace("@shared/", "src/shared/"),
+                  pathToFileURL(__dirname + "/")
+                );
+              }
+              if (url.startsWith("@widgets/")) {
+                return new URL(
+                  url.replace("@widgets/", "src/widgets/"),
+                  pathToFileURL(__dirname + "/")
+                );
+              }
+              if (url.startsWith("@pages/")) {
+                return new URL(
+                  url.replace("@pages/", "src/pages/"),
+                  pathToFileURL(__dirname + "/")
+                );
+              }
+              if (url.startsWith("@features/")) {
+                return new URL(
+                  url.replace("@features/", "src/features/"),
+                  pathToFileURL(__dirname + "/")
+                );
+              }
+              if (url.startsWith("@entities/")) {
+                return new URL(
+                  url.replace("@entities/", "src/entities/"),
+                  pathToFileURL(__dirname + "/")
+                );
+              }
+              if (url.startsWith("@app/")) {
+                return new URL(
+                  url.replace("@app/", "src/app/"),
+                  pathToFileURL(__dirname + "/")
+                );
+              }
+              if (url.startsWith("@/")) {
+                return new URL(
+                  url.replace("@/", "src/"),
+                  pathToFileURL(__dirname + "/")
+                );
+              }
+
+              // Let Sass handle other URLs normally
+              return null;
+            },
+          },
+        ],
       },
     },
   },

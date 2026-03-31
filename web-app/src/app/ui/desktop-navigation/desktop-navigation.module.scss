@@ -1,0 +1,11 @@
+@use "@shared/styles/config" as *;
+
+.navigation {
+  background-color: aqua;
+
+  position: fixed;
+  width: $desktop-left-sidebar-width;
+  height: 100vh;
+  background-color: var(--md-sys-color-surface-container-lowest);
+  border-right: 1px solid var(--md-sys-color-outline-variant);
+}

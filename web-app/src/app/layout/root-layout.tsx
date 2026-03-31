@@ -1,11 +1,24 @@
-import { DesktopRootLayout } from "./desktop-root-layout/desktop-root-layout";
-import { MobileRootLayout } from "./mobile-root-layout/mobile-root-layout";
+import { Outlet } from "react-router-dom";
+
+import { DesktopNavigation } from "../ui/desktop-navigation/desktop-navigation";
+// import { DesktopNavigation } from "@app/ui/desktop-navigation/desktop-navigation";
+import { MobileBottomBar } from "@app/ui/mobile-bottom-bar/ui/mobile-bottom-bar";
 
 import { useDeviceType } from "@shared/lib/hooks";
 
+import s from "./root-layout.module.scss";
+
 const RootLayout = () => {
   const { isMobile } = useDeviceType();
-  return <div>{isMobile ? <MobileRootLayout /> : <DesktopRootLayout />}</div>;
+  return (
+    <div>
+      {!isMobile && <DesktopNavigation />}
+      <div className={s.outlet}>
+        <Outlet />
+      </div>
+      {isMobile && <MobileBottomBar />}
+    </div>
+  );
 };
 
 export default RootLayout;

@@ -28,7 +28,11 @@
 }
 
 .active {
-  background-color: var(--md-sys-color-surface-bright);
+  background-color: color-mix(
+    in srgb,
+    var(--md-sys-color-tertiary),
+    transparent 83%
+  );
 }
 
 .link {

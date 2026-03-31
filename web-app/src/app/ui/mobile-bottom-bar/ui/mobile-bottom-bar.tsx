@@ -1,11 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 
 import { cn } from "@shared/lib/styles";
-import { navigationListData } from "../../model/constants/navigation-list-data";
+import { navigationListData } from "../config/navigation-list-data";
 
-import s from "./mobile-navigation.module.scss";
+import s from "./mobile-bottom-bar.module.scss";
 
-export const MobileNavigation = () => {
+export const MobileBottomBar = () => {
   const location = useLocation();
   console.log(location.pathname);
 

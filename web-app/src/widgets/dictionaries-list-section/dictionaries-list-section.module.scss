@@ -1,6 +1,8 @@
 @use "./styles/common.module.scss" as *;
 
 .section {
+  display: flex;
+  flex-direction: column;
 }
 
 .titleRow {
@@ -23,10 +25,13 @@
 
 .list {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 15px;
+
+  @media (max-width: 1360px) {
+    justify-content: center;
+  }
 }
 
 .card {
