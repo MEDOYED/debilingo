@@ -1,0 +1,89 @@
+.pageRegister {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-background);
+}
+
+.registerContainer {
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px;
+  border-radius: 20px;
+  background: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+}
+
+.registerTitle {
+  font-size: 24px;
+  text-align: center;
+}
+
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.registerInput {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: large;
+  background: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline);
+  color: var(--md-sys-color-on-surface);
+  &:focus {
+    outline: none;
+    border-color: var(--md-sys-color-primary);
+  }
+}
+
+.passwordInput {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: large;
+  background: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline);
+  color: var(--md-sys-color-on-surface);
+  &:focus {
+    outline: none;
+    border-color: var(--md-sys-color-primary);
+  }
+}
+
+.registerButton {
+  margin-top: 8px;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.registerError {
+  color: var(--md-sys-color-error);
+  font-size: 14px;
+}
+
+.registerFooter {
+  text-align: center;
+  font-size: 14px;
+
+  color: var(--md-sys-color-on-surface-variant);
+
+  a {
+    color: var(--md-sys-color-primary);
+    text-decoration: none;
+  }
+}
