@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-import { Navigation } from "@widgets/navigation";
+import { Navigation } from "@app/ui/mobile-bottom-bar";
 
 export const MobileRootLayout = () => {
   return (

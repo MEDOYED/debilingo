@@ -1,0 +1,10 @@
+@use "@shared/styles/config" as *;
+
+.outlet {
+  padding-left: calc($desktop-left-sidebar-width + 10px);
+
+  @media (max-width: 1023px) {
+    padding-left: 0;
+    padding-bottom: calc($mobile-navigation-bottombar-height + 10px);
+  }
+}
