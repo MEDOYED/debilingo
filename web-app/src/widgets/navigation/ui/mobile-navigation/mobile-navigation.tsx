@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-import { cn } from "@/shared/lib/utils/classnames/classnames";
+import { cn } from "@shared/lib/styles";
 import { navigationListData } from "../../model/constants/navigation-list-data";
 
 import s from "./mobile-navigation.module.scss";
@@ -15,6 +15,8 @@ export const MobileNavigation = () => {
       aria-label="Головна навігація"
     >
       <ul className={s.list}>
+        {/* burger icon in future that will be open navigation-modal */}
+        <li className={cn(s.listItem, s.bugerIcon)}>B</li>
         {navigationListData.map((item, index) => {
           return (
             <li
@@ -28,7 +30,7 @@ export const MobileNavigation = () => {
                 to={item.to}
                 aria-label={item.label}
               >
-                {item.icon}
+                <item.Icon className={s.icon} />
               </Link>
             </li>
           );

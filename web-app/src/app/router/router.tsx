@@ -1,11 +1,11 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
-import { DictionaryPage } from "@/pages/dictionary-page";
-import { HomePage } from "@/pages/home-page";
-import { LoginPage } from "@/pages/login-page";
-import { RatingPage } from "@/pages/rating-page";
-import { RegisterPage } from "@/pages/register-page";
-import { TrainingPage } from "@/pages/training-page";
+import { DictionaryPage } from "@pages/dictionary-page";
+import { HomePage } from "@pages/home-page";
+import { LoginPage } from "@pages/login-page";
+import { RatingPage } from "@pages/rating-page";
+import { RegisterPage } from "@pages/register-page";
+import { TrainingPage } from "@pages/training-page";
 
 import RootLayout from "../layout/root-layout";
 // import { ProtectedRoute } from "./protected-route";

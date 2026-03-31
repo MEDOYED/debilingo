@@ -1,0 +1,18 @@
+////
+/// Material Design 3 color system.
+///
+/// CSS custom properties for theme colors. Automatically switches between
+/// light and dark themes based on `data-theme` attribute on `<html>`.
+///
+/// @group Colors
+/// @example scss
+///   .card {
+///     background: var(--md-sys-color-surface-container);
+///     color: var(--md-sys-color-on-surface);
+///   }
+///
+/// @link https://m3.material.io/styles/color/roles Color roles
+////
+
+@forward "./_light-blue.scss";
+@forward "./_dark-blue.scss";

@@ -1,0 +1,49 @@
+////
+/// Material Design 3 shape system.
+///
+/// Border radius tokens for component corners.
+///
+/// @group Shape
+/// @example scss
+///   .card {
+///     border-radius: shape.$md-sys-shape-corner-value-medium;
+///   }
+///
+/// @link https://m3.material.io/styles/shape/shape-scale-tokens Shape tokens
+////
+
+/// No border radius (0px)
+/// @type Number
+$md-sys-shape-corner-value-none: 0;
+
+/// 4px
+/// @type Number
+$md-sys-shape-corner-value-extra-small: 4px;
+
+/// 8px
+/// @type Number
+$md-sys-shape-corner-value-small: 8px;
+
+/// 12px
+/// @type Number
+$md-sys-shape-corner-value-medium: 12px;
+
+/// 16px
+/// @type Number
+$md-sys-shape-corner-value-large: 16px;
+
+/// 20px
+/// @type Number
+$md-sys-shape-corner-value-large-increased: 20px;
+
+/// 28px
+/// @type Number
+$md-sys-shape-corner-value-extra-large: 28px;
+
+/// 32px
+/// @type Number
+$md-sys-shape-corner-value-extra-large-increased: 32px;
+
+/// 48px
+/// @type Number
+$md-sys-shape-corner-value-extra-extra-large: 48px;

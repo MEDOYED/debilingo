@@ -1,0 +1,152 @@
+////
+/// Material Design 3 typography scale.
+///
+/// Provides baseline and emphasized type scales with predefined font sizes,
+/// weights, line heights, and letter spacing.
+///
+/// @group typography
+/// @link https://m3.material.io/styles/typography/type-scale-tokens Type scale tokens
+////
+
+@use "typefaces" as *;
+@use "baseline-type-scale" as *;
+@use "emphasized-type-scale" as *;
+
+@use "sass:map";
+@use "sass:list";
+
+/// Apply Material Design 3 typography scale.
+///
+/// Sets font-family, font-size, font-weight, line-height, and letter-spacing.
+///
+/// @param {String} $style - Type scale name (display-large, headline-medium, body-small, etc.)
+///
+/// @example scss
+///   .hero-title {
+///     @include typescale('display-large');
+///   }
+///
+/// @throw Error if type scale name is unknown
+///
+/// @group typography
+/// @output font-family, font-size, font-weight, line-height, letter-spacing
+/// @require {Variable} $md-sys-typescale
+@mixin typescale($style) {
+  $scale: map.get($md-sys-typescale, $style);
+
+  @if $scale {
+    font-family: map.get($scale, "font");
+    font-size: map.get($scale, "size");
+    font-weight: map.get($scale, "weight");
+    line-height: map.get($scale, "line-height");
+    letter-spacing: map.get($scale, "tracking");
+  } @else {
+    @error "Unknown type scale: #{$style}";
+  }
+}
+
+/// Apply emphasized typography scale.
+///
+/// Same as typescale() but with heavier font weights.
+///
+/// @param {String} $style - Type scale name
+///
+/// @example scss
+///   .active-tab {
+///     @include typescale-emphasized('label-large');
+///   }
+///
+/// @throw Error if type scale name is unknown
+///
+/// @group typography
+/// @output font-family, font-size, font-weight, line-height, letter-spacing
+/// @require {Variable} $md-sys-typescale-emphasized
+@mixin typescale-emphasized($style) {
+  $scale: map.get($md-sys-typescale-emphasized, $style);
+
+  @if $scale {
+    font-family: map.get($scale, "font");
+    font-size: map.get($scale, "size");
+    font-weight: map.get($scale, "weight");
+    line-height: map.get($scale, "line-height");
+    letter-spacing: map.get($scale, "tracking");
+  } @else {
+    @error "Unknown emphasized type scale: #{$style}";
+  }
+}
+
+/// Get a specific property value from the typography scale.
+///
+/// Retrieves individual values from the typescale map without applying
+/// all typography properties
+///
+/// @param {String} $style - Type scale name (display-large, headline-medium, etc.)
+/// @param {String} $property ['size'] - Property key: 'size', 'font', 'weight', 'line-height', 'tracking'
+///
+/// @return {*} Property value (Number for size/weight/tracking, String for font)
+///
+/// @example scss - Default property (size)
+///   $size: get-typescale-value('display-large');
+///   // Returns: 57px
+///
+/// @example scss - Get font family
+///   $font: get-typescale-value('display-large', 'font');
+///
+/// @throw Error if property name is unknown
+/// @throw Error if type scale name is unknown
+///
+/// @group Typography
+/// @require {Variable} $md-sys-typescale
+@function get-typescale-value($style, $property: "size") {
+  $scale: map.get($md-sys-typescale, $style);
+
+  @if not $scale {
+    @error "Unknown type scale: #{$style}. Valid scales: display-large, display-medium, display-small, headline-large, headline-medium, headline-small, title-large, title-medium, title-small, body-large, body-medium, body-small, label-large, label-medium, label-small";
+  }
+
+  $valid-properties: ("size", "font", "weight", "line-height", "tracking");
+
+  @if not list.index($valid-properties, $property) {
+    @error "Unknown property: #{$property}. Valid properties: #{$valid-properties}";
+  }
+
+  @return map.get($scale, $property);
+}
+
+/// Get a specific property value from the emphasized typography scale.
+///
+/// Retrieves individual values from the emphasized typescale map without applying
+/// all typography properties
+///
+/// @param {String} $style - Type scale name (display-large, headline-medium, etc.)
+/// @param {String} $property ['size'] - Property key: 'size', 'font', 'weight', 'line-height', 'tracking'
+///
+/// @return {*} Property value (Number for size/weight/tracking, String for font)
+///
+/// @example scss - Default property (size)
+///   $size: get-typescale-emphasized-value('display-large');
+///   // Returns: 57px
+///
+/// @example scss - Get font family
+///   $font: get-typescale-emphasized-value('display-large', 'font');
+///
+/// @throw Error if property name is unknown
+/// @throw Error if type scale name is unknown
+///
+/// @group Typography
+/// @require {Variable} $md-sys-typescale-emphasized
+@function get-typescale-emphasized-value($style, $property: "size") {
+  $scale: map.get($md-sys-typescale-emphasized, $style);
+
+  @if not $scale {
+    @error "Unknown type scale: #{$style}. Valid scales: display-large, display-medium, display-small, headline-large, headline-medium, headline-small, title-large, title-medium, title-small, body-large, body-medium, body-small, label-large, label-medium, label-small";
+  }
+
+  $valid-properties: ("size", "font", "weight", "line-height", "tracking");
+
+  @if not list.index($valid-properties, $property) {
+    @error "Unknown property: #{$property}. Valid properties: #{$valid-properties}";
+  }
+
+  @return map.get($scale, $property);
+}

@@ -1,32 +1,33 @@
-import { DictionaryAdd, Gamepad, Home, Trophy } from "@/shared/ui/icons";
+import { DictionaryAdd, Gamepad, Home, Trophy } from "@shared/ui/icons";
 
-import type { ReactNode } from "react";
+import type { IconProps } from "@shared/types";
 
 interface NavigationItem {
   to: string;
-  icon: ReactNode;
+  Icon: React.ComponentType<IconProps>;
   label: string;
 }
 
 export const navigationListData: NavigationItem[] = [
   {
+    to: "/",
+    Icon: Home,
+    label: "Home page",
+  },
+  {
     to: "/dictionary",
-    icon: <DictionaryAdd color="var(--color-300)" />,
+    Icon: DictionaryAdd,
     label: "Dictionary page",
   },
   {
     to: "/training",
-    icon: <Gamepad color="var(--color-300)" />,
+    Icon: Gamepad,
     label: "Training page",
   },
-  {
-    to: "/",
-    icon: <Home color="var(--color-300)" />,
-    label: "Home page",
-  },
+
   {
     to: "/rating",
-    icon: <Trophy color="var(--color-300)" />,
+    Icon: Trophy,
     label: "Rating page",
   },
 ];

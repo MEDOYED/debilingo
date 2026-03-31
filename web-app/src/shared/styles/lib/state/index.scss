@@ -1,0 +1,11 @@
+////
+/// Material Design 3 interaction states.
+///
+/// Mixins for implementing state layers and focus indicators on interactive
+/// components. Handles hover, focus, and pressed states automatically.
+///
+/// @group States
+/// @link https://m3.material.io/foundations/interaction/states/state-layers State layers
+////
+
+@forward "./state-layers.scss";

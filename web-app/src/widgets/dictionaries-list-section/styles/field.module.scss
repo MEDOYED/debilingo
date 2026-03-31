@@ -1,0 +1,57 @@
+// якщо інпут у фокусі то до лейбла приміняється інший колір
+.label:has(.input:focus) {
+  color: var(--md-sys-color-tertiary);
+}
+
+.label {
+  color: var(--md-sys-color-on-surface-variant);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 16px;
+
+  &.labelError {
+    color: var(--md-sys-color-error-container);
+  }
+
+  &.labelError > * {
+    color: var(--md-sys-color-on-surface-variant);
+  }
+}
+
+.input {
+  width: 100%;
+  border-radius: 3px;
+
+  background-color: var(--md-sys-color-surface-container-highest);
+  color: var(--md-sys-color-on-surface);
+  border: 1px solid var(--md-sys-color-outline);
+
+  font-size: 18px;
+  padding: 3px 15px;
+  outline: none;
+
+  &::placeholder {
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  &:focus {
+    background-color: var(--md-sys-color-tertiary-container);
+    border-color: var(
+      --md-sys-color-tertiary
+    ); /* Змінюємо колір рамки при фокусі */
+  }
+
+  /* Стилі для автозаповнення */
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-text-fill-color: var(
+      --md-sys-color-on-surface
+    ) !important; /* Колір тексту в інпуті коли ми вибрали з випадаючого меню підсказку*/
+    -webkit-box-shadow: 0 0 0px 1000px
+      var(--md-sys-color-surface-container-highest) inset !important; /* Колір фону */
+    transition: background-color 5000s ease-in-out 0s; /* Вимкнення анімації зміни фону */
+  }
+}
