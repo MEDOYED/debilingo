@@ -1,0 +1,86 @@
+@use "../../shared/styles/tokens/spacing" as spacing;
+
+.pageLogin {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-background);
+}
+
+.loginContainer {
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px;
+  border-radius: 20px;
+  background: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+}
+
+.loginTitle {
+  font-size: 24px;
+  text-align: center;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: spacing.$md-sys-spacing-4;
+}
+
+.loginPasswordInput {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: large;
+  background: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline);
+  color: var(--md-sys-color-on-surface);
+  &:focus {
+    outline: none;
+    border-color: var(--md-sys-color-primary);
+  }
+}
+
+.inputErrorsContainer {
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+
+  .loginError {
+    color: var(--md-sys-color-error);
+    font-size: 14px;
+    margin-top: 5px;
+  }
+}
+
+.loginButton {
+  margin-top: 8px;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.loginFooter {
+  text-align: center;
+  font-size: 14px;
+
+  color: var(--md-sys-color-on-surface-variant);
+
+  .registerLink {
+    color: var(--md-sys-color-primary);
+    text-decoration: none;
+  }
+}
