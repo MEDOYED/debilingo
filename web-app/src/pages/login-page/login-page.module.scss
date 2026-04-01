@@ -46,6 +46,19 @@
   }
 }
 
+.inputErrorsContainer {
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+
+  .loginError {
+    color: var(--md-sys-color-error);
+    font-size: 14px;
+    margin-top: 5px;
+  }
+}
+
 .loginButton {
   margin-top: 8px;
   padding: 14px;
@@ -58,12 +71,6 @@
   &:hover {
     opacity: 0.9;
   }
-}
-
-.loginError {
-  color: var(--md-sys-color-error);
-  font-size: 14px;
-  margin-top: 5px;
 }
 
 .loginFooter {
