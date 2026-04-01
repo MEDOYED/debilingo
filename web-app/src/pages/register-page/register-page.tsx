@@ -29,29 +29,20 @@ export const RegisterPage = () => {
           onSubmit={handleSubmit}
         >
           <input
-            className={s.registerInput}
+            className={s.registerPasswordInput}
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <br />
           <input
-            className={s.passwordInput}
+            className={s.registerPasswordInput}
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {error && (
-            <p
-              className={s.registerError}
-            >
-              {error}
-            </p>
-          )}
-
-          <br />
+          {error && <p className={s.registerError}>{error}</p>}
           <button
             className={s.registerButton}
             type="submit"
