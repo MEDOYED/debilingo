@@ -36,14 +36,17 @@ export const LoginPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <input
-            className={s.loginPasswordInput}
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {error && <p className={s.loginError}>{error}</p>}
+          <div className={s.inputErrorsContainer}>
+            <input
+              className={s.loginPasswordInput}
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {error && <p className={s.loginError}>{error}</p>}
+          </div>
+
           <button
             className={s.loginButton}
             type="submit"
