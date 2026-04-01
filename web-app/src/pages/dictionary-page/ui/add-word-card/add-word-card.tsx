@@ -40,7 +40,7 @@ export const AddWordCardModal = () => {
   const handleSubmit = async () => {
     const newWords = await createWord(newWordData);
 
-    setWords([...words, newWords]);
+    setWords([newWords, ...words]);
 
     resetFields();
     closeCardCreateWord();

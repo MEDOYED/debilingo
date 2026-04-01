@@ -1,3 +1,21 @@
+@use "./styles/variables.module.scss" as var;
+
 .dictionaryPage {
-  padding-top: 70px;
+  padding-top: calc(
+    var.$dictionary-top-bar-height + var.$language-row-height + 10px
+  );
+}
+
+.wordsList {
+  display: flex;
+  flex-direction: column;
+  // gap: 20px;
+}
+
+.wordCard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  padding: 20px 0;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
 }
