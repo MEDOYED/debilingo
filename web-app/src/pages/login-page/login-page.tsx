@@ -30,28 +30,20 @@ export const LoginPage = () => {
           onSubmit={handleSubmit}
         >
           <input
-            className={s.loginInput}
+            className={s.loginPasswordInput}
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <br />
           <input
-            className={s.passwordInput}
+            className={s.loginPasswordInput}
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {error && (
-            <p
-              className={s.loginError}
-            >
-              {error}
-            </p>
-          )}
-          <br />
+          {error && <p className={s.loginError}>{error}</p>}
           <button
             className={s.loginButton}
             type="submit"
@@ -60,7 +52,13 @@ export const LoginPage = () => {
           </button>
         </form>
         <p className={s.loginFooter}>
-          Already have an account? <Link to="/register">Register</Link>
+          Already have an account?{" "}
+          <Link
+            className={s.registerLink}
+            to="/register"
+          >
+            Register
+          </Link>
         </p>
       </div>
     </div>
