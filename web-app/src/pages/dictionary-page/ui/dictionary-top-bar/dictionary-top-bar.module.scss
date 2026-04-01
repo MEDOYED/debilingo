@@ -1,0 +1,30 @@
+@use "@shared/styles/config" as conf;
+@use "../../styles/variables.module.scss" as var;
+
+.topBarOverlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: conf.$desktop-left-sidebar-width;
+  padding: 8px 15px 0 15px;
+  backdrop-filter: blur(4px);
+  height: var.$dictionary-top-bar-height;
+
+  @media (max-width: 1023px) {
+    left: 0;
+  }
+}
+
+.topBar {
+  top: 15px;
+  right: 15px;
+  border-radius: 20px;
+
+  background-color: var(--md-sys-color-surface-container-lowest);
+}
+
+.buttonNewWord {
+  font-size: 30px !important;
+  display: flex;
+  margin-left: auto;
+}
