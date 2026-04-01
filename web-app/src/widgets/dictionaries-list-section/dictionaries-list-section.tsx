@@ -103,7 +103,14 @@ export const DictionariesListSection = ({
                   <span>{dictionary.secondary_language}</span>
                 </h3>
 
-                <p className={s.card__summary}>Кількість слів:</p>
+                {/* <p className={s.card__summary}>Кількість слів:</p> */}
+
+                <FilledButton
+                  as="nav-link"
+                  to={`/dictionary-v1/${dictionary.id}`}
+                >
+                  v1
+                </FilledButton>
 
                 <div className={s.btnsWrapper}>
                   <TextButton
