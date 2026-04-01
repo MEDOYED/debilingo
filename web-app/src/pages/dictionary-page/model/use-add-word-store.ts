@@ -1,21 +1,28 @@
 import { create } from "zustand";
 
+import type { Word } from "@shared/api/wordApi";
+
 type Store = {
   isOpenCardCreateWord: boolean;
 
   mainLanguageWord: string;
-  Translation: string;
-  definition: string;
-  example: string;
+  translations: string[];
+  definitions: string[];
+  examples: string[];
+  note: string;
+
+  words: Word[];
+  setWords: (newWords: Word[]) => void;
 
   toggleIsOpenCardCreateWord: () => void;
   closeCardCreateWord: () => void;
   openCardCreateWord: () => void;
 
   setMainLanguageWord: (mainLanguageWordValue: string) => void;
-  setTranslation: (TranslationValue: string) => void;
-  setDefinition: (newDefinitionValue: string) => void;
-  setExample: (newExampleValue: string) => void;
+  setTranslation: (TranslationValue: string[]) => void;
+  setDefinition: (newDefinitionValue: string[]) => void;
+  setExample: (newExampleValue: string[]) => void;
+  setNote: (newNoteValue: string) => void;
 
   resetFields: () => void;
 };
@@ -23,9 +30,11 @@ type Store = {
 export const useAddWordStore = create<Store>((set) => ({
   isOpenCardCreateWord: false,
   mainLanguageWord: "",
-  Translation: "",
-  definition: "",
-  example: "",
+  translations: [],
+  definitions: [],
+  examples: [],
+  words: [],
+  note: "",
 
   toggleIsOpenCardCreateWord: () => {
     set((prev) => ({
@@ -53,28 +62,41 @@ export const useAddWordStore = create<Store>((set) => ({
 
   setTranslation: (TranslationValue) => {
     set({
-      Translation: TranslationValue,
+      translations: TranslationValue,
     });
   },
 
   setDefinition: (newDefinitionValue) => {
     set({
-      definition: newDefinitionValue,
+      definitions: newDefinitionValue,
     });
   },
 
   setExample: (newExampleValue) => {
     set({
-      example: newExampleValue,
+      examples: newExampleValue,
+    });
+  },
+
+  setNote: (newNoteValue) => {
+    set({
+      note: newNoteValue,
+    });
+  },
+
+  setWords: (newWords) => {
+    set({
+      words: newWords,
     });
   },
 
   resetFields: () => {
     set({
       mainLanguageWord: "",
-      Translation: "",
-      definition: "",
-      example: "",
+      translations: [],
+      definitions: [],
+      examples: [],
+      note: "",
     });
   },
 }));

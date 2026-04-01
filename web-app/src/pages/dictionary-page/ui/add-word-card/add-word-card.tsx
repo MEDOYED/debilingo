@@ -1,31 +1,49 @@
+import { useParams } from "react-router-dom";
+
+import { createWord } from "@shared/api/wordApi";
+import { FilledButton, TextButton } from "@shared/ui/buttons";
+
 import { useAddWordStore } from "../../model/use-add-word-store";
 
 import field from "@shared/styles/components/field.module.scss";
-import { FilledButton, TextButton } from "@shared/ui/buttons";
 import s from "./add-word-card.module.scss";
 
 export const AddWordCardModal = () => {
+  const { dictId } = useParams();
+
   const {
     isOpenCardCreateWord,
     closeCardCreateWord,
     mainLanguageWord,
-    Translation,
-    definition,
-    example,
+    translations,
+    definitions,
+    examples,
+    note,
     resetFields,
     setMainLanguageWord,
     setTranslation,
     setDefinition,
     setExample,
+    words,
+    setWords,
   } = useAddWordStore();
 
-  const handleSubit = () => {
-    console.log("mainLanguageWord: ", mainLanguageWord);
-    console.log("Translation: ", Translation);
-    console.log("definition: ", definition);
-    console.log("example: ", example);
+  const newWordData = {
+    dictionary_id: dictId || "",
+    source_word: mainLanguageWord,
+    note: note,
+    translations,
+    definitions,
+    examples,
+  };
+
+  const handleSubmit = async () => {
+    const newWords = await createWord(newWordData);
+
+    setWords([...words, newWords]);
 
     resetFields();
+    closeCardCreateWord();
   };
 
   if (!isOpenCardCreateWord) return null;
@@ -58,8 +76,8 @@ export const AddWordCardModal = () => {
             <input
               className={field.input}
               type="text"
-              value={Translation}
-              onChange={(e) => setTranslation(e.target.value)}
+              value={translations[0] || ""}
+              onChange={(e) => setTranslation([e.target.value])}
             />
           </label>
         </div>
@@ -73,8 +91,8 @@ export const AddWordCardModal = () => {
           <input
             className={field.input}
             type="text"
-            value={definition}
-            onChange={(e) => setDefinition(e.target.value)}
+            value={definitions[0] || ""}
+            onChange={(e) => setDefinition([e.target.value])}
             name=""
             id=""
           />
@@ -89,8 +107,8 @@ export const AddWordCardModal = () => {
           <input
             className={field.input}
             type="text"
-            value={example}
-            onChange={(e) => setExample(e.target.value)}
+            value={examples[0] || ""}
+            onChange={(e) => setExample([e.target.value])}
             name=""
             id=""
           />
@@ -107,7 +125,7 @@ export const AddWordCardModal = () => {
 
           <FilledButton
             as="button"
-            onClick={handleSubit}
+            onClick={handleSubmit}
             variant="primary"
             size="small"
           >
