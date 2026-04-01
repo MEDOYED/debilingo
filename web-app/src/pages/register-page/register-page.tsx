@@ -35,14 +35,17 @@ export const RegisterPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <input
-            className={s.registerPasswordInput}
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {error && <p className={s.registerError}>{error}</p>}
+          <div className={s.inputErrorsContainer}>
+            <input
+              className={s.registerPasswordInput}
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {error && <p className={s.registerError}>{error}</p>}
+          </div>
+
           <button
             className={s.registerButton}
             type="submit"
