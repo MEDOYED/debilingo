@@ -55,7 +55,7 @@ export const LoginPage = () => {
           </button>
         </form>
         <p className={s.loginFooter}>
-          Already have an account?{" "}
+          Don't have an account?{" "}
           <Link
             className={s.registerLink}
             to="/register"
