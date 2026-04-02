@@ -23,7 +23,7 @@ export const RegisterPage = () => {
   return (
     <div className={cn(s.pageRegister, "container")}>
       <div className={s.registerContainer}>
-        <h1 className={s.registerTitle}>Register</h1>
+        <h1 className={s.registerTitle}>Реєстрація</h1>
         <form
           className={s.registerForm}
           onSubmit={handleSubmit}
@@ -32,6 +32,7 @@ export const RegisterPage = () => {
             className={s.registerPasswordInput}
             type="email"
             placeholder="Email"
+            name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -39,7 +40,8 @@ export const RegisterPage = () => {
             <input
               className={s.registerPasswordInput}
               type="password"
-              placeholder="Password"
+              name="password"
+              placeholder="Пароль"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -50,11 +52,11 @@ export const RegisterPage = () => {
             className={s.registerButton}
             type="submit"
           >
-            Register
+            Зареєструватися
           </button>
         </form>
         <p className={s.registerFooter}>
-          Already have an account? <Link to="/login">Login</Link>
+          Вже маєте обліковий запис? <Link to="/login">Вхід</Link>
         </p>
       </div>
     </div>
