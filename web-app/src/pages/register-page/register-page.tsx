@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../../shared/api/authApi";
+import { cn } from "@shared/lib/styles";
+
+import s from "./register-page.module.scss";
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
@@ -18,29 +21,42 @@ export const RegisterPage = () => {
     }
   };
   return (
-    <div>
-      <h1>Register</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <br />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br />
-        <button type="submit">Register</button>
-      </form>
-      <p>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
+    <div className={cn(s.pageRegister, "container")}>
+      <div className={s.registerContainer}>
+        <h1 className={s.registerTitle}>Register</h1>
+        <form
+          className={s.registerForm}
+          onSubmit={handleSubmit}
+        >
+          <input
+            className={s.registerPasswordInput}
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <div className={s.inputErrorsContainer}>
+            <input
+              className={s.registerPasswordInput}
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {error && <p className={s.registerError}>{error}</p>}
+          </div>
+
+          <button
+            className={s.registerButton}
+            type="submit"
+          >
+            Register
+          </button>
+        </form>
+        <p className={s.registerFooter}>
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
+      </div>
     </div>
   );
 };
