@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { useAddWordStore } from "./model/use-add-word-store";
-import { useLanguageRowStore } from "./model/use-language-row-store";
 import { AddWordCardModal } from "./ui/add-word-card/add-word-card";
 import { DictionaryTopBar } from "./ui/dictionary-top-bar/dictionary-top-bar";
 import { Spoiler } from "./ui/spoiler/spoiler";
@@ -18,7 +17,6 @@ export const DictionaryPage = () => {
   const { dictId } = useParams();
 
   const { setWords, words } = useAddWordStore();
-  const { openMainLanguageCol } = useLanguageRowStore();
 
   useEffect(() => {
     const loadWords = async () => {
@@ -29,10 +27,6 @@ export const DictionaryPage = () => {
 
     loadWords();
   }, [dictId]);
-
-  const handleReval = () => {
-    openMainLanguageCol();
-  };
 
   return (
     <div className="container">
@@ -47,7 +41,7 @@ export const DictionaryPage = () => {
               className={s.wordCard}
               key={word.id}
             >
-              <Spoiler onReveal={handleReval}>{word.source_word}</Spoiler>
+              <Spoiler>{word.source_word}</Spoiler>
 
               <span>{word.translations[0]?.text}</span>
             </li>

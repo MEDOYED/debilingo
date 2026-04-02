@@ -2,3 +2,8 @@
   display: grid;
   grid-template-columns: 1fr 30px 1fr;
 }
+
+.colWrapper {
+  display: flex;
+  align-items: center;
+}

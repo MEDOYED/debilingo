@@ -1,29 +1,42 @@
 import { TextButton } from "@shared/ui/buttons";
-import { EyeIcon } from "@shared/ui/icons";
+import { ArrowsRightLeft, EyeIcon, EyeSlash } from "@shared/ui/icons";
 
 import { useLanguageRowStore } from "../../model/use-language-row-store";
 
 import s from "./language-row.module.scss";
 
 export const LanguageRow = () => {
-  const { hideMainLanguageCol } = useLanguageRowStore();
+  const { hideMainLanguageCol, openMainLanguageCol, isMainLanguageColVisible } =
+    useLanguageRowStore();
 
   return (
     <div className={s.languageRow}>
-      <div>
+      <div className={s.colWrapper}>
         <span className={s.mainLanguage}>Слово</span>
-        <TextButton
-          as="button"
-          onClick={hideMainLanguageCol}
-        >
-          <EyeIcon />
-        </TextButton>
+
+        {isMainLanguageColVisible ? (
+          <TextButton
+            as="button"
+            onClick={hideMainLanguageCol}
+          >
+            <EyeIcon />
+          </TextButton>
+        ) : (
+          <TextButton
+            as="button"
+            onClick={openMainLanguageCol}
+          >
+            <EyeSlash />
+          </TextButton>
+        )}
       </div>
 
       {/* change direction */}
-      <div>{"->"}</div>
+      <div className={s.colWrapper}>
+        <ArrowsRightLeft />
+      </div>
 
-      <div>
+      <div className={s.colWrapper}>
         <span className={s.mainLanguage}>Переклад</span>
       </div>
     </div>

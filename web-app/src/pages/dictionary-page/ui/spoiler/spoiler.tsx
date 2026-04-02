@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@shared/lib/styles";
 
+import { useLanguageRowStore } from "@pages/dictionary-page/model/use-language-row-store";
 import s from "./spoiler.module.scss";
 
 interface SpoilerProps {
@@ -16,7 +17,22 @@ export const Spoiler = ({
   className = "",
   onReveal,
 }: SpoilerProps) => {
-  const [revealed, setRevealed] = useState(false);
+  const { isMainLanguageColVisible } = useLanguageRowStore();
+
+  const [isIndividuallyRevealed, setIsIndividuallyRevealed] = useState(false);
+
+  const revealed = isMainLanguageColVisible || isIndividuallyRevealed;
+
+  // const [revealed, setRevealed] = useState(isMainLanguageColVisible);
+
+  useEffect(() => {
+    if (isMainLanguageColVisible) {
+      setIsIndividuallyRevealed(false);
+    }
+  }, [isMainLanguageColVisible]);
+
+  console.log("revealed: ", revealed);
+
   const containerRef = useRef<HTMLSpanElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number | null>(null);
@@ -136,12 +152,13 @@ export const Spoiler = ({
   }, [revealed]);
 
   const handleClick = () => {
-    if (revealed) return;
-    setRevealed(true);
+    if (isMainLanguageColVisible) return; // Клік працює тільки коли глобально приховано
+    if (revealed) return; // Якщо вже відкрито - нічого не робимо
+
+    setIsIndividuallyRevealed(true);
     if (animationRef.current) {
       cancelAnimationFrame(animationRef.current);
     }
-    onReveal?.();
   };
 
   return (
