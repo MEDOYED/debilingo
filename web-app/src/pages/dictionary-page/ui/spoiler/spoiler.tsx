@@ -9,14 +9,9 @@ import s from "./spoiler.module.scss";
 interface SpoilerProps {
   children: ReactNode;
   className?: string;
-  onReveal?: () => void; // optional callback when revealed
 }
 
-export const Spoiler = ({
-  children,
-  className = "",
-  onReveal,
-}: SpoilerProps) => {
+export const Spoiler = ({ children, className = "" }: SpoilerProps) => {
   const { isMainLanguageColVisible } = useLanguageRowStore();
 
   const [isIndividuallyRevealed, setIsIndividuallyRevealed] = useState(false);
