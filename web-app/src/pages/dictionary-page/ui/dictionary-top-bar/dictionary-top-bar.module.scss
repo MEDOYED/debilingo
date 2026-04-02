@@ -9,6 +9,7 @@
   padding: 8px 15px 0 15px;
   backdrop-filter: blur(4px);
   height: var.$dictionary-top-bar-height;
+  z-index: 100;
 
   @media (max-width: 1023px) {
     left: 0;

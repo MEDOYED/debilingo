@@ -59,6 +59,24 @@
   }
 }
 
+.loginPasswordInput {
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--md-sys-color-surface-container-high) inset;
+    -webkit-text-fill-color: var(--md-sys-color-on-surface);
+    transition: background-color 9999s ease-in-out 0s;
+  }
+
+  &:-moz-autofill {
+    box-shadow: 0 0 0 1000px var(--md-sys-color-surface-container-high) inset;
+    -moz-text-fill-color: var(--md-sys-color-on-surface);
+  }
+
+  &:-internal-autofill-selected {
+    background-color: var(--md-sys-color-surface-container-high) !important;
+    color: var(--md-sys-color-on-surface) !important;
+  }
+}
+
 .loginButton {
   margin-top: 8px;
   padding: 14px;
