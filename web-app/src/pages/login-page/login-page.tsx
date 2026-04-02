@@ -23,7 +23,7 @@ export const LoginPage = () => {
   return (
     <div className={cn(s.pageLogin, "container")}>
       <div className={s.loginContainer}>
-        <h1 className={s.loginTitle}>Login</h1>
+        <h1 className={s.loginTitle}>Вхід</h1>
 
         <form
           className={s.loginForm}
@@ -32,6 +32,7 @@ export const LoginPage = () => {
           <input
             className={s.loginPasswordInput}
             type="email"
+            name="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -40,7 +41,8 @@ export const LoginPage = () => {
             <input
               className={s.loginPasswordInput}
               type="password"
-              placeholder="Password"
+              name="password"
+              placeholder="Пароль"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -51,16 +53,16 @@ export const LoginPage = () => {
             className={s.loginButton}
             type="submit"
           >
-            Login
+            Війти
           </button>
         </form>
         <p className={s.loginFooter}>
-          Don't have an account?{" "}
+          Немає облікового запису?{" "}
           <Link
             className={s.registerLink}
             to="/register"
           >
-            Register
+            Зареєструватися
           </Link>
         </p>
       </div>
