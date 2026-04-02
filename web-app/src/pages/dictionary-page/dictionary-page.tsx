@@ -1,19 +1,24 @@
 import { getWords } from "@shared/api/wordApi";
 import { cn } from "@shared/lib/styles";
 
+// import { useEffect } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { useAddWordStore } from "./model/use-add-word-store";
+import { useLanguageRowStore } from "./model/use-language-row-store";
 import { AddWordCardModal } from "./ui/add-word-card/add-word-card";
 import { DictionaryTopBar } from "./ui/dictionary-top-bar/dictionary-top-bar";
+import { Spoiler } from "./ui/spoiler/spoiler";
 
 import s from "./dictionary-page.module.scss";
+import { LanguageRow } from "./ui/language-row/language-row";
 
 export const DictionaryPage = () => {
   const { dictId } = useParams();
 
   const { setWords, words } = useAddWordStore();
+  const { openMainLanguageCol } = useLanguageRowStore();
 
   useEffect(() => {
     const loadWords = async () => {
@@ -25,10 +30,16 @@ export const DictionaryPage = () => {
     loadWords();
   }, [dictId]);
 
+  const handleReval = () => {
+    openMainLanguageCol();
+  };
+
   return (
     <div className="container">
       <main className={cn(s.dictionaryPage)}>
         <DictionaryTopBar />
+
+        <LanguageRow />
 
         <ul className={s.wordsList}>
           {words.map((word) => (
@@ -36,7 +47,8 @@ export const DictionaryPage = () => {
               className={s.wordCard}
               key={word.id}
             >
-              <span>{word.source_word}</span>
+              <Spoiler onReveal={handleReval}>{word.source_word}</Spoiler>
+
               <span>{word.translations[0]?.text}</span>
             </li>
           ))}
