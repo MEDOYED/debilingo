@@ -1,5 +1,8 @@
 export { ArrowLongRight } from "./arrow-long-right";
+export { ArrowsRightLeft } from "./arrows-right-left/arrows-right-left";
 export { DictionaryAdd } from "./dictionary-add";
+export { EyeIcon } from "./eye-icon/eye-icon";
+export { EyeSlash } from "./eye-slash/eye-slash";
 export { Gamepad } from "./gamepad";
 export { Home } from "./home";
 export { Trash } from "./trash/trash";
