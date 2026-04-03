@@ -3,28 +3,29 @@ import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@shared/lib/styles";
 
-import { useLanguageRowStore } from "@pages/dictionary-page/model/use-language-row-store";
+// import { useLanguageRowStore } from "@pages/dictionary-page/model/use-language-row-store";
 import s from "./spoiler.module.scss";
 
 interface SpoilerProps {
   children: ReactNode;
   className?: string;
+  isVisible: boolean;
 }
 
-export const Spoiler = ({ children, className = "" }: SpoilerProps) => {
-  const { isMainLanguageColVisible } = useLanguageRowStore();
+export const Spoiler = ({ children, className = "",isVisible }: SpoilerProps) => {
+  // const { isMainLanguageColVisible } = useLanguageRowStore();
 
   const [isIndividuallyRevealed, setIsIndividuallyRevealed] = useState(false);
 
-  const revealed = isMainLanguageColVisible || isIndividuallyRevealed;
+  const revealed = /*(isMainLanguageColVisible */ isVisible || isIndividuallyRevealed;
 
   // const [revealed, setRevealed] = useState(isMainLanguageColVisible);
 
-  useEffect(() => {
-    if (isMainLanguageColVisible) {
-      setIsIndividuallyRevealed(false);
-    }
-  }, [isMainLanguageColVisible]);
+  // useEffect(() => {
+  //   if (isMainLanguageColVisible) {
+  //     setIsIndividuallyRevealed(false);
+  //   }
+  // }, [isMainLanguageColVisible]);
 
   console.log("revealed: ", revealed);
 
@@ -147,7 +148,7 @@ export const Spoiler = ({ children, className = "" }: SpoilerProps) => {
   }, [revealed]);
 
   const handleClick = () => {
-    if (isMainLanguageColVisible) return; // Клік працює тільки коли глобально приховано
+    if (isVisible) return; // Клік працює тільки коли глобально приховано
     if (revealed) return; // Якщо вже відкрито - нічого не робимо
 
     setIsIndividuallyRevealed(true);
