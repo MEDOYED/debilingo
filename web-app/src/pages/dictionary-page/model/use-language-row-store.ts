@@ -37,19 +37,19 @@ export const useLanguageRowStore = create<Store>((set) => ({
 
   toggleIsTranslationColVisible: () => {
     set((prev) => ({
-      isMainLanguageColVisible: !prev.isMainLanguageColVisible,
+      isTranslationColVisible: !prev.isMainLanguageColVisible,
     }));
   },
 
   hideTranslationCol: () => {
     set(() => ({
-      isMainLanguageColVisible: false,
+      isTranslationColVisible: false,
     }));
   },
 
   openTranslationCol: () => {
     set(() => ({
-      isMainLanguageColVisible: true,
+      isTranslationColVisible: true,
     }));
   },
 }));
