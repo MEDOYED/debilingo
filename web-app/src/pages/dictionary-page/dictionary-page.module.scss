@@ -23,9 +23,22 @@
 .wordCard {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-areas: "main translate";
 
   padding: 20px 0;
   border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.reverseRow {
+  grid-template-areas: "translation main";
+}
+
+.mainCol {
+  grid-area: main;
+}
+
+.translateCol {
+  grid-area: translation;
 }
 
 // .spoiler {
