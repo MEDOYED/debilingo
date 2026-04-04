@@ -12,20 +12,25 @@ interface SpoilerProps {
   isVisible: boolean;
 }
 
-export const Spoiler = ({ children, className = "",isVisible }: SpoilerProps) => {
+export const Spoiler = ({
+  children,
+  className = "",
+  isVisible,
+}: SpoilerProps) => {
   // const { isMainLanguageColVisible } = useLanguageRowStore();
 
   const [isIndividuallyRevealed, setIsIndividuallyRevealed] = useState(false);
 
-  const revealed = /*(isMainLanguageColVisible */ isVisible || isIndividuallyRevealed;
+  const revealed =
+    /*(isMainLanguageColVisible */ isVisible || isIndividuallyRevealed;
 
   // const [revealed, setRevealed] = useState(isMainLanguageColVisible);
 
-  // useEffect(() => {
-  //   if (isMainLanguageColVisible) {
-  //     setIsIndividuallyRevealed(false);
-  //   }
-  // }, [isMainLanguageColVisible]);
+  useEffect(() => {
+    if (isVisible) {
+      setIsIndividuallyRevealed(false);
+    }
+  }, [isVisible]);
 
   console.log("revealed: ", revealed);
 
