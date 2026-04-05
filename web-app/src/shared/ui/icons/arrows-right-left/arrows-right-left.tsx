@@ -1,14 +1,16 @@
 import type { IconProps } from "@shared/types";
 
-type ArrowsRightLeftProps = Pick<IconProps, "className" | "size">;
+type ArrowsRightLeftProps = Pick<IconProps, "className" | "size" | "onClick">;
 
 export const ArrowsRightLeft = ({
   className,
   size = 24,
+  onClick,
 }: ArrowsRightLeftProps) => {
   return (
     <svg
       className={className}
+      onClick={onClick}
       width={size}
       height={size}
       xmlns="http://www.w3.org/2000/svg"
