@@ -10,8 +10,8 @@ export const useSwitchColStore = create<Store>((set) => ({
   isReversed: false,
 
   toggleReverse: () => {
-    set((col) => ({
-      isReversed: !col.isReversed,
+    set((prev) => ({
+      isReversed: !prev.isReversed,
     }));
   },
 }));
