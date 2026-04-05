@@ -1,14 +1,5 @@
 @use "./styles/variables.module.scss" as var;
 
-// @keyframes spoilerParticles {
-//   0% {
-//     background-position: 0 0;
-//   }
-//   100% {
-//     background-position: 30px 30px;
-//   }
-// }
-
 .dictionaryPage {
   padding-top: calc(
     var.$dictionary-top-bar-height + var.$language-row-height + 10px
@@ -23,32 +14,16 @@
 .wordCard {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-areas: "main translation";
 
   padding: 20px 0;
   border-bottom: 1px solid var(--md-sys-color-outline-variant);
+
+  &.reverseRow {
+    grid-template-areas: "translation main";
+  }
 }
 
-// .spoiler {
-// }
-
-// .spoilerOverlay {
-// position: absolute;
-// inset: 0;
-// background-image: radial-gradient(
-//   circle,
-//   rgba(255, 255, 255, 0.9) 0.8px,
-//   transparent 1px
-// );
-// background-size: 5px 5px;
-// animation: spoilerParticles 1.8s linear infinite;
-// pointer-events: none;
-// z-index: 1;
-
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   z-index: 1;
-//   pointer-events: none;
-// }
+.mainCol {
+  grid-area: main;
+}
