@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@shared/lib/styles";
 
-// import { useLanguageRowStore } from "@pages/dictionary-page/model/use-language-row-store";
 import s from "./spoiler.module.scss";
 
 interface SpoilerProps {
@@ -17,14 +16,9 @@ export const Spoiler = ({
   className = "",
   isVisible,
 }: SpoilerProps) => {
-  // const { isMainLanguageColVisible } = useLanguageRowStore();
-
   const [isIndividuallyRevealed, setIsIndividuallyRevealed] = useState(false);
 
-  const revealed =
-    /*(isMainLanguageColVisible */ isVisible || isIndividuallyRevealed;
-
-  // const [revealed, setRevealed] = useState(isMainLanguageColVisible);
+  const revealed = isVisible || isIndividuallyRevealed;
 
   useEffect(() => {
     if (isVisible) {
@@ -86,7 +80,6 @@ export const Spoiler = ({
 
     ctx.fillStyle = "#2a2a2a";
     ctx.clearRect(0, 0, w, h);
-    // ctx.fillRect(0, 0, w, h);
 
     const particles = particlesRef.current;
 
