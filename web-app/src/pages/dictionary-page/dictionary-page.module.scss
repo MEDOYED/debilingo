@@ -14,7 +14,7 @@
 .wordCard {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-areas: "main translate";
+  grid-template-areas: "main translation";
 
   padding: 20px 0;
   border-bottom: 1px solid var(--md-sys-color-outline-variant);
