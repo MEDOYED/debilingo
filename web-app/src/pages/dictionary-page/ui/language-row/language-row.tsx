@@ -1,11 +1,11 @@
 import { TextButton } from "@shared/ui/buttons";
+import { cn } from "@shared/lib/styles";
 import { ArrowsRightLeft, EyeIcon, EyeSlash } from "@shared/ui/icons";
 
 import { useLanguageRowStore } from "../../model/use-language-row-store";
+import { useSwitchColStore } from "../../model/use-switch-col-store";
 
 import s from "./language-row.module.scss";
-import { cn } from "@shared/lib/styles";
-import { useSwitchColStore } from "@pages/dictionary-page/model/use-switch-col-store";
 
 export const LanguageRow = () => {
   const { hideMainLanguageCol, openMainLanguageCol, isMainLanguageColVisible } =
