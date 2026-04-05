@@ -1,19 +1,19 @@
-import { getWords } from "@shared/api/wordApi";
-import { cn } from "@shared/lib/styles";
-
-// import { useEffect } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
+import { getWords } from "@shared/api/wordApi";
+import { cn } from "@shared/lib/styles";
+
 import { useAddWordStore } from "./model/use-add-word-store";
+import { useLanguageRowStore } from "./model/use-language-row-store";
+import { useSwitchColStore } from "./model/use-switch-col-store";
+
 import { AddWordCardModal } from "./ui/add-word-card/add-word-card";
 import { DictionaryTopBar } from "./ui/dictionary-top-bar/dictionary-top-bar";
 import { Spoiler } from "./ui/spoiler/spoiler";
+import { LanguageRow } from "./ui/language-row/language-row";
 
 import s from "./dictionary-page.module.scss";
-import { LanguageRow } from "./ui/language-row/language-row";
-import { useLanguageRowStore } from "./model/use-language-row-store";
-import { useSwitchColStore } from "./model/use-switch-col-store";
 
 export const DictionaryPage = () => {
   const { dictId } = useParams();
