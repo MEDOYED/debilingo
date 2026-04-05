@@ -14,7 +14,7 @@ export const LanguageRow = () => {
   const { hideTranslationCol, openTranslationCol, isTranslationColVisible } =
     useLanguageRowStore();
 
-    const {isReversed,toggleReverse} = useSwitchColStore()
+  const { isReversed, toggleReverse } = useSwitchColStore();
 
   return (
     <div className={cn(s.languageRow, isReversed && s.reverseRow)}>
@@ -39,12 +39,10 @@ export const LanguageRow = () => {
       </div>
 
       {/* change direction */}
-      <div
-        onClick={toggleReverse}
+      <ArrowsRightLeft
         className={s.switchCol}
-      >
-        <ArrowsRightLeft />
-      </div>
+        onClick={toggleReverse}
+      />
 
       <div className={s.translateCol}>
         <div className={s.colWrapper}>
