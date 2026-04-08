@@ -1,15 +1,15 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { supabase } from "../config/supabase.js";
+import { AuthRequest } from "../middleware/authMiddleware.js";
 import { CreateActivityRequest } from "../types/activity.js";
-
-// Temporary user ID - in production, this would come from authentication
-const DEFAULT_USER_ID = "00000000-0000-0000-0000-000000000000";
 
 /**
  * Get all activity data for the last year
  */
-export const getActivity = async (req: Request, res: Response): Promise<void> => {
+export const getActivity = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
+    const userId = req.userId;
+
     const oneYearAgo = new Date();
     oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
     const oneYearAgoStr = oneYearAgo.toISOString().split("T")[0];
@@ -17,7 +17,7 @@ export const getActivity = async (req: Request, res: Response): Promise<void> =>
     const { data, error } = await supabase
       .from("daily_activity")
       .select("*")
-      .eq("user_id", DEFAULT_USER_ID)
+      .eq("user_id", userId)
       .gte("date", oneYearAgoStr)
       .order("date", { ascending: true });
 
@@ -45,8 +45,10 @@ export const getActivity = async (req: Request, res: Response): Promise<void> =>
  * Add or update activity for a specific date (defaults to today)
  * Note: money_count field stores dollar amounts
  */
-export const addActivity = async (req: Request, res: Response): Promise<void> => {
+export const addActivity = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
+    const userId = req.userId;
+
     const { money_count, date } = req.body as CreateActivityRequest;
 
     // Validation - money_count stores dollar amounts
@@ -64,7 +66,7 @@ export const addActivity = async (req: Request, res: Response): Promise<void> =>
     const { data: existing, error: fetchError } = await supabase
       .from("daily_activity")
       .select("*")
-      .eq("user_id", DEFAULT_USER_ID)
+      .eq("user_id", userId)
       .eq("date", activityDate)
       .single();
 
@@ -105,7 +107,7 @@ export const addActivity = async (req: Request, res: Response): Promise<void> =>
       const { data, error } = await supabase
         .from("daily_activity")
         .insert({
-          user_id: DEFAULT_USER_ID,
+          user_id: userId,
           date: activityDate,
           money_count: money_count,
         })
@@ -137,8 +139,10 @@ export const addActivity = async (req: Request, res: Response): Promise<void> =>
 /**
  * Get total statistics for the last year
  */
-export const getStats = async (req: Request, res: Response): Promise<void> => {
+export const getStats = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
+    const userId = req.userId;
+
     const oneYearAgo = new Date();
     oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
     const oneYearAgoStr = oneYearAgo.toISOString().split("T")[0];
@@ -146,7 +150,7 @@ export const getStats = async (req: Request, res: Response): Promise<void> => {
     const { data, error } = await supabase
       .from("daily_activity")
       .select("money_count")
-      .eq("user_id", DEFAULT_USER_ID)
+      .eq("user_id", userId)
       .gte("date", oneYearAgoStr);
 
     if (error) {
