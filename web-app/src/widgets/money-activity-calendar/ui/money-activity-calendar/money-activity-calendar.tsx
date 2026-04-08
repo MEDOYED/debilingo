@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 
 import { cn } from "@shared/lib/styles";
-import {
-  addActivity,
-  getActivity,
-  getStats,
-} from "../../../../shared/api/activityService";
+
+import { addActivity, getActivity, getStats } from "../../api/activityService";
 import s from "./money-activity-calendar.module.scss";
 
 interface DayActivity {

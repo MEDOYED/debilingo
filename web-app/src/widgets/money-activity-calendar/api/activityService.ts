@@ -23,6 +23,16 @@ const apiClient = axios.create({
   timeout: 10000,
 });
 
+// add token for each request
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 // Add response interceptor for error handling
 apiClient.interceptors.response.use(
   (response) => response,
