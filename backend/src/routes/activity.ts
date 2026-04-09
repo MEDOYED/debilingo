@@ -1,8 +1,11 @@
 import { Router } from "express";
 import { body } from "express-validator";
 import { addActivity, getActivity, getStats } from "../controllers/activityController.js";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = Router();
+
+router.use(authMiddleware);
 
 /**
  * GET /api/activity
