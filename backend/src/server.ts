@@ -44,9 +44,9 @@ app.get("/health", (req: Request, res: Response) => {
 });
 
 // API Routes
-app.use("/api", activityRoutes);
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes); // має бути першим, щоб authMiddleware не застосовувався до цього роуту
 app.use("/api/dictionaries", dictionaryRoutes);
+app.use("/api", activityRoutes);
 app.use("/api", wordRoutes);
 
 // 404 handler
