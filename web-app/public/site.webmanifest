@@ -1,0 +1,25 @@
+{
+  "name": "Debilingo",
+  "short_name": "Debilingo",
+  "description": "Dictionary game and study",
+  "start_url": "/?standalone=true",
+  "display": "standalone",
+
+  "background_color": "#0e1415",
+  "theme_color": "#0e1415",
+  "orientation": "any",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/img/profile-logos/logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/profile-logos/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

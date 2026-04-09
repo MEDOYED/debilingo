@@ -1,4 +1,5 @@
-import profileLogo from "../../../../public/img/profile-logos/1.jpeg";
+import profileLogo from "/img/profile-logos/logo.webp";
+// import profileLogo from "../../../../public/img/profile-logos/1.jpeg";
 
 import s from "./user-profile-card.module.scss";
 
