@@ -1,8 +1,13 @@
+@use "../../../../shared/styles/tokens/colors/" as colors;
 .languageRow {
   display: grid;
+  position: fixed;
+  width: 94%;
   grid-template-columns: 1fr 30px 1fr;
   grid-template-areas: "main switch translation";
   align-items: center;
+  background-color: var(--md-sys-color-background);
+  z-index: 3;
 }
 
 .colWrapper {
@@ -22,7 +27,7 @@
   grid-area: switch;
   cursor: pointer;
 }
-
+ 
 .translateCol {
   grid-area: translation;
 }
