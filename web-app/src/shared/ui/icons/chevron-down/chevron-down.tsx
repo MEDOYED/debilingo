@@ -1,4 +1,5 @@
 import type { IconProps } from "@shared/types";
+
 type ChevronDownProps = Pick<IconProps, "className" | "size" | "onClick">;
 
 export const ChevronDown = ({
