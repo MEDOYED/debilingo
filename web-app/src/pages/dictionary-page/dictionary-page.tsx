@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { cn } from "@shared/lib/styles";
 import { getWords } from "@shared/api/wordApi";
-import { ChevronDown } from "@shared/ui/icons/chevron-down/chevron-down";
+import { ChevronDown } from "@shared/ui/icons";
 
 import { useAddWordStore } from "./model/use-add-word-store";
 import { useLanguageRowStore } from "./model/use-language-row-store";
@@ -16,12 +16,12 @@ import { LanguageRow } from "./ui/language-row/language-row";
 
 import s from "./dictionary-page.module.scss";
 
-type Status = "opening" | "open" | "closing" | null;
+type Status = "opening" | "expanded" | "closing" | "unexpanded";
 
 export const DictionaryPage = () => {
   const { dictId } = useParams();
   const [openWordId, setOpenWordId] = useState<string | null>(null);
-  const [status, setStatus] = useState<Status>(null);
+  const [status, setStatus] = useState<Status>("unexpanded");
 
   const { isMainLanguageColVisible, isTranslationColVisible } =
     useLanguageRowStore();
@@ -42,11 +42,11 @@ export const DictionaryPage = () => {
     if (openWordId === id) {
       setStatus("closing");
       setOpenWordId(null);
-      setStatus(null);
+      setStatus('unexpanded');
     } else {
       setOpenWordId(id);
       setStatus("opening");
-      setTimeout(() => setStatus("open"), 500);
+      setTimeout(() => setStatus("expanded"), 500);
     }
   };
 
