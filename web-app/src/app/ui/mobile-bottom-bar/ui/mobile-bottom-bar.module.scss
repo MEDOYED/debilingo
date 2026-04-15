@@ -6,8 +6,9 @@
   left: 0;
   width: 100%;
   background-color: var(--md-sys-color-surface-container);
-  height: conf.$mobile-navigation-bottombar-height;
+  height: calc(conf.$mobile-navigation-bottombar-height + env(safe-area-inset-bottom));
   z-index: 100;
+  // padding-bottom: env(safe-area-inset-bottom);
 }
 
 .list {
