@@ -17,7 +17,7 @@ export const LoginPage = () => {
       localStorage.setItem("token", data.token);
       navigate("/");
     } catch (err: any) {
-      setError(err.response?.data?.error || "Registration failed");
+      setError(err.response?.data?.error || "Login failed");
     }
   };
   return (
