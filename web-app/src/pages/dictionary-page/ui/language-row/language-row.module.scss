@@ -1,12 +1,15 @@
+@use "../../styles/variables.module.scss" as var;
+
 .languageRow {
   display: grid;
   position: fixed;
-  width: 94%;
+  width: calc(100% - 20px);
   grid-template-columns: 1fr 30px 1fr;
   grid-template-areas: "main switch translation";
   align-items: center;
   background-color: var(--md-sys-color-background);
   z-index: 3;
+  height: var.$language-row-height;
 }
 
 .colWrapper {
@@ -25,8 +28,10 @@
 .switchCol {
   grid-area: switch;
   cursor: pointer;
+  width: 100%;
+  justify-items: center;
 }
- 
+
 .translateCol {
   grid-area: translation;
 }
