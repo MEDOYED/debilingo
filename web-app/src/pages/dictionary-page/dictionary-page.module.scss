@@ -1,29 +1,70 @@
 @use "./styles/variables.module.scss" as var;
 
 .dictionaryPage {
-  padding-top: calc(
-    var.$dictionary-top-bar-height + var.$language-row-height + 10px
-  );
+  padding-top: calc(var.$dictionary-top-bar-height);
 }
 
 .wordsList {
   display: flex;
   flex-direction: column;
+  margin-top: var.$language-row-height;
 }
 
 .wordCard {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: "main translation";
-
+  display: flex;
+  flex-direction: column;
   padding: 20px 0;
   border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 30px 1fr;
+  grid-template-areas: "main open translation";
 
   &.reverseRow {
-    grid-template-areas: "translation main";
+    grid-template-areas: "translation open main";
   }
 }
 
 .mainCol {
   grid-area: main;
+}
+
+.openDescription {
+  grid-area: open;
+  cursor: pointer;
+  padding: 3px;
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+
+.description {
+  width: 100%;
+  overflow: hidden;
+  word-break: break-word;
+  overflow-wrap: break-word;
+
+  max-height: 0;
+  opacity: 0;
+
+  transition:
+    // max-height 0.5s ease,
+    // opacity 0.5s ease,
+    // padding-top 0.6s ease,
+    // margin-top 0.5s ease;
+    all 0.5s ease;
+}
+
+.open {
+  .description {
+    max-height: 500px;
+    opacity: 1;
+    margin-top: 10px;
+    padding-top: 20px;
+  }
 }
