@@ -1,0 +1,24 @@
+.wordCard {
+  position: relative;
+  padding: 0 10px;
+}
+
+.rightActionsBtns {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -50px;
+  width: 50px;
+  background-color: #fc5406;
+  color: #000;
+}
+
+.leftActionsBtns {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -50px;
+  width: 50px;
+  background-color: #06fc06;
+  color: #000;
+}

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { cn } from "@shared/lib/styles";
 import { getWords } from "@shared/api/wordApi";
+import { cn } from "@shared/lib/styles";
 import { ChevronDown } from "@shared/ui/icons";
 
 import { useAddWordStore } from "./model/use-add-word-store";
@@ -11,8 +11,9 @@ import { useSwitchColStore } from "./model/use-switch-col-store";
 
 import { AddWordCardModal } from "./ui/add-word-card/add-word-card";
 import { DictionaryTopBar } from "./ui/dictionary-top-bar/dictionary-top-bar";
-import { Spoiler } from "./ui/spoiler/spoiler";
 import { LanguageRow } from "./ui/language-row/language-row";
+import { Spoiler } from "./ui/spoiler/spoiler";
+import { SwipeWordCard } from "./ui/swipe-word-card/swipe-word-card";
 
 import s from "./dictionary-page.module.scss";
 
@@ -42,7 +43,7 @@ export const DictionaryPage = () => {
     if (openWordId === id) {
       setStatus("closing");
       setOpenWordId(null);
-      setStatus('unexpanded');
+      setStatus("unexpanded");
     } else {
       setOpenWordId(id);
       setStatus("opening");
@@ -51,7 +52,8 @@ export const DictionaryPage = () => {
   };
 
   return (
-    <div className="container">
+    <div>
+      {/* <div className="container"> */}
       <main className={cn(s.dictionaryPage)}>
         <DictionaryTopBar />
         <LanguageRow />
@@ -60,40 +62,41 @@ export const DictionaryPage = () => {
           {words.map((word) => {
             const isCurrent = word.id;
             return (
-              <li
-                className={cn(
-                  s.wordCard,
-                  isCurrent && status ? s[`is-${status}`] : ""
-                )}
-                key={word.id}
-              >
-                <div className={cn(s.row, isReversed && s.reverseRow)}>
-                  <Spoiler
-                    className={s.mainCol}
-                    isVisible={isMainLanguageColVisible}
-                  >
-                    {word.source_word}
-                  </Spoiler>
-                  <ChevronDown
-                    className={cn(
-                      s.openDescription,
-                      openWordId === word.id && s.rotated
-                    )}
-                    onClick={() => toggleWord(word.id)}
-                  />
-                  <Spoiler isVisible={isTranslationColVisible}>
-                    {word.translations[0]?.text}
-                  </Spoiler>
-                </div>
-                <div className={cn(openWordId === word.id && s.open)}>
-                  <div className={s.description}>
-                    <div>
-                      Пояснення: {word.definitions.map((def) => def.text)}
+              <SwipeWordCard key={word.id}>
+                <div
+                  className={cn(
+                    s.wordCard,
+                    isCurrent && status ? s[`is-${status}`] : ""
+                  )}
+                >
+                  <div className={cn(s.row, isReversed && s.reverseRow)}>
+                    <Spoiler
+                      className={s.mainCol}
+                      isVisible={isMainLanguageColVisible}
+                    >
+                      {word.source_word}
+                    </Spoiler>
+                    <ChevronDown
+                      className={cn(
+                        s.openDescription,
+                        openWordId === word.id && s.rotated
+                      )}
+                      onClick={() => toggleWord(word.id)}
+                    />
+                    <Spoiler isVisible={isTranslationColVisible}>
+                      {word.translations[0]?.text}
+                    </Spoiler>
+                  </div>
+                  <div className={cn(openWordId === word.id && s.open)}>
+                    <div className={s.description}>
+                      <div>
+                        Пояснення: {word.definitions.map((def) => def.text)}
+                      </div>
+                      <div>Приклад: {word.examples.map((ex) => ex.text)}</div>
                     </div>
-                    <div>Приклад: {word.examples.map((ex) => ex.text)}</div>
                   </div>
                 </div>
-              </li>
+              </SwipeWordCard>
             );
           })}
         </ul>
