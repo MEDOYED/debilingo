@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { useSwipeWordCardStore } from "@pages/dictionary-page/model/use-swipe-word-card";
 
@@ -14,6 +14,8 @@ type SwipeWordCardProps = {
 type MoveDirection = "right" | "left";
 
 export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
+  const wordCardRef = useRef<HTMLLIElement | null>(null);
+
   const [firstFingerHorizontalPosition, setFirstFingerHorizontalPosition] =
     useState<number | null>(null);
 
@@ -22,6 +24,9 @@ export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
   const [moveDirection, setMoveDirection] = useState<MoveDirection | null>(
     null
   );
+
+  const [isOpenLeft, setIsOpenLeft] = useState<boolean>(false);
+  const [isOpenRight, setIsOpenRight] = useState<boolean>(false);
 
   console.log("currentWordId: ", id);
 
@@ -66,18 +71,29 @@ export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
   console.log("shiftLength: ", shiftLength);
 
   const handleTouchEnd = () => {
-    if (moveDirection === "left") {
+    if (moveDirection === "left" && isOpenLeft) {
+      setShiftLength(0);
+      setIsOpenLeft(false);
+    } else if (moveDirection === "right" && isOpenRight) {
+      setShiftLength(0);
+      setIsOpenRight(false);
+    } else if (moveDirection === "left") {
       setShiftLength(-50);
-    } else {
+      setIsOpenRight(true);
+    } else if (moveDirection === "right") {
+      setIsOpenLeft(true);
       setShiftLength(50);
     }
   };
+
+  console.log("isOpenLeft: ", isOpenLeft);
 
   const isWordSwiped = swipedWordId === id;
   console.log("isWordSwiped: ", isWordSwiped);
 
   return (
     <li
+      ref={wordCardRef}
       className={s.wordCard}
       onTouchStart={handleTouchStart}
       onTouchMove={handleFingerMove}

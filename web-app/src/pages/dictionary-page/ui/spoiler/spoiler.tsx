@@ -26,7 +26,7 @@ export const Spoiler = ({
     }
   }, [isVisible]);
 
-  console.log("revealed: ", revealed);
+  // console.log("revealed: ", revealed);
 
   const containerRef = useRef<HTMLSpanElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);

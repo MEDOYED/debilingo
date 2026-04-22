@@ -7,7 +7,7 @@ import s from "./mobile-bottom-bar.module.scss";
 
 export const MobileBottomBar = () => {
   const location = useLocation();
-  console.log(location.pathname);
+  // console.log(location.pathname);
 
   return (
     <nav
