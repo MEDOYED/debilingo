@@ -1,14 +1,19 @@
 import { useState } from "react";
 
+import { useSwipeWordCardStore } from "@pages/dictionary-page/model/use-swipe-word-card";
+
+import type { Word } from "@shared/api/wordApi";
+
 import s from "./swipe-word-card.module.scss";
 
 type SwipeWordCardProps = {
   children: React.ReactNode;
+  id: Word["id"];
 };
 
 type MoveDirection = "right" | "left";
 
-export const SwipeWordCard = ({ children }: SwipeWordCardProps) => {
+export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
   const [firstFingerHorizontalPosition, setFirstFingerHorizontalPosition] =
     useState<number | null>(null);
 
@@ -18,7 +23,13 @@ export const SwipeWordCard = ({ children }: SwipeWordCardProps) => {
     null
   );
 
+  console.log("currentWordId: ", id);
+
+  const { swipedWordId, setSwipedWordId } = useSwipeWordCardStore();
+
   const handleTouchStart = (e: React.TouchEvent) => {
+    setSwipedWordId(id);
+
     const touch = e.touches[0];
 
     console.log("Відстань зліва", touch.clientX);
@@ -62,13 +73,20 @@ export const SwipeWordCard = ({ children }: SwipeWordCardProps) => {
     }
   };
 
+  const isWordSwiped = swipedWordId === id;
+  console.log("isWordSwiped: ", isWordSwiped);
+
   return (
     <li
       className={s.wordCard}
       onTouchStart={handleTouchStart}
       onTouchMove={handleFingerMove}
       onTouchEnd={handleTouchEnd}
-      style={{ transform: `translateX(${shiftLength}px)` }}
+      style={
+        isWordSwiped
+          ? { transform: `translateX(${shiftLength}px)` }
+          : { transform: `translateX(0px)` }
+      }
     >
       <div className={s.leftActionsBtns}>
         <button className={s.attachBtn}>Pin</button>

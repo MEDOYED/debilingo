@@ -62,7 +62,10 @@ export const DictionaryPage = () => {
           {words.map((word) => {
             const isCurrent = word.id;
             return (
-              <SwipeWordCard key={word.id}>
+              <SwipeWordCard
+                key={word.id}
+                id={word.id}
+              >
                 <div
                   className={cn(
                     s.wordCard,
