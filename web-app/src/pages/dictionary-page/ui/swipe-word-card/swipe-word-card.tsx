@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 
-import { useSwipeWordCardStore } from "@pages/dictionary-page/model/use-swipe-word-card";
-
 import type { Word } from "@shared/api/wordApi";
+import { Pin, Trash } from "@shared/ui/icons";
+
+import { useSwipeWordCardStore } from "../../model/use-swipe-word-card";
 
 import s from "./swipe-word-card.module.scss";
 
@@ -52,6 +53,8 @@ export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
     console.log("Відстань зверху", moveTouch.clientY);
 
     if (!firstFingerHorizontalPosition) return;
+
+    if (firstFingerHorizontalPosition - moveTouch.clientX === 0) return null;
 
     const currentShiftLength = Math.floor(
       firstFingerHorizontalPosition - moveTouch.clientX
@@ -105,13 +108,17 @@ export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
       }
     >
       <div className={s.leftActionsBtns}>
-        <button className={s.attachBtn}>Pin</button>
+        <button className={s.attachBtn}>
+          <Pin />
+        </button>
       </div>
 
       {children}
 
       <div className={s.rightActionsBtns}>
-        <button className={s.deleteBtn}>D</button>
+        <button className={s.deleteBtn}>
+          <Trash />
+        </button>
       </div>
     </li>
   );
