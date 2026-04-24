@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-import { pinWord, type Word } from "@shared/api/wordApi";
+import { deleteWord, pinWord, type Word } from "@shared/api/wordApi";
 import { Pin, Trash } from "@shared/ui/icons";
 
 import { useAddWordStore } from "../../model/use-add-word-store";
@@ -124,6 +124,20 @@ export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
     setShiftLength(0);
   };
 
+  const handleDeleteWord = async () => {
+    await deleteWord(id);
+
+    const wordsWithoutDeletedWord = [];
+
+    for (let i = 0; i < words.length; i++) {
+      if (words[i].id !== id) {
+        wordsWithoutDeletedWord.push(words[i]);
+      }
+    }
+
+    setWords(wordsWithoutDeletedWord);
+  };
+
   return (
     <li
       ref={wordCardRef}
@@ -149,7 +163,10 @@ export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
       {children}
 
       <div className={s.rightActionsBtns}>
-        <button className={s.deleteBtn}>
+        <button
+          className={s.deleteBtn}
+          onClick={handleDeleteWord}
+        >
           <Trash />
         </button>
       </div>
