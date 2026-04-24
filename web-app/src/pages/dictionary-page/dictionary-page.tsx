@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { cn } from "@shared/lib/styles";
 import { getWords } from "@shared/api/wordApi";
+import { cn } from "@shared/lib/styles";
 import { ChevronDown } from "@shared/ui/icons";
 
 import { useAddWordStore } from "./model/use-add-word-store";
@@ -11,8 +11,9 @@ import { useSwitchColStore } from "./model/use-switch-col-store";
 
 import { AddWordCardModal } from "./ui/add-word-card/add-word-card";
 import { DictionaryTopBar } from "./ui/dictionary-top-bar/dictionary-top-bar";
-import { Spoiler } from "./ui/spoiler/spoiler";
 import { LanguageRow } from "./ui/language-row/language-row";
+import { Spoiler } from "./ui/spoiler/spoiler";
+import { SwipeWordCard } from "./ui/swipe-word-card/swipe-word-card";
 
 import s from "./dictionary-page.module.scss";
 
@@ -32,6 +33,22 @@ export const DictionaryPage = () => {
     const loadWords = async () => {
       if (!dictId) return;
       const data = await getWords(dictId);
+
+      // let filteredWithPinData = [];
+
+      // for (let i = 0; i < data.length; i++) {
+      //   if (data[i].created_at) {
+      //     filteredWithPinData.push(data[i]);
+      //   }
+      // }
+
+      // for (let i = 0; i < data.length; i++) {
+      //   if (data[i].created_at === null) {
+      //     filteredWithPinData.push(data[i]);
+      //   }
+      // }
+
+      // setWords(filteredWithPinData);
       setWords(data);
     };
 
@@ -42,7 +59,7 @@ export const DictionaryPage = () => {
     if (openWordId === id) {
       setStatus("closing");
       setOpenWordId(null);
-      setStatus('unexpanded');
+      setStatus("unexpanded");
     } else {
       setOpenWordId(id);
       setStatus("opening");
@@ -50,50 +67,70 @@ export const DictionaryPage = () => {
     }
   };
 
+  let filteredWithPinData = [];
+
+  for (let i = 0; i < words.length; i++) {
+    if (words[i].pinned_at) {
+      filteredWithPinData.push(words[i]);
+    }
+  }
+
+  for (let i = 0; i < words.length; i++) {
+    if (words[i].pinned_at === null) {
+      filteredWithPinData.push(words[i]);
+    }
+  }
+
   return (
-    <div className="container">
+    <div>
+      {/* <div className="container"> */}
       <main className={cn(s.dictionaryPage)}>
         <DictionaryTopBar />
         <LanguageRow />
 
         <ul className={s.wordsList}>
-          {words.map((word) => {
+          {filteredWithPinData.map((word) => {
             const isCurrent = word.id;
             return (
-              <li
-                className={cn(
-                  s.wordCard,
-                  isCurrent && status ? s[`is-${status}`] : ""
-                )}
+              <SwipeWordCard
                 key={word.id}
+                id={word.id}
               >
-                <div className={cn(s.row, isReversed && s.reverseRow)}>
-                  <Spoiler
-                    className={s.mainCol}
-                    isVisible={isMainLanguageColVisible}
-                  >
-                    {word.source_word}
-                  </Spoiler>
-                  <ChevronDown
-                    className={cn(
-                      s.openDescription,
-                      openWordId === word.id && s.rotated
-                    )}
-                    onClick={() => toggleWord(word.id)}
-                  />
-                  <Spoiler isVisible={isTranslationColVisible}>
-                    {word.translations[0]?.text}
-                  </Spoiler>
-                </div>
-                <div className={cn(openWordId === word.id && s.open)}>
-                  <div className={s.description}>
-                    <div>
-                      Пояснення: {word.definitions.map((def) => def.text)}
+                <div
+                  className={cn(
+                    s.wordCard,
+                    isCurrent && status ? s[`is-${status}`] : "",
+                    word.pinned_at && s.pinned
+                  )}
+                >
+                  <div className={cn(s.row, isReversed && s.reverseRow)}>
+                    <Spoiler
+                      className={s.mainCol}
+                      isVisible={isMainLanguageColVisible}
+                    >
+                      {word.source_word}
+                    </Spoiler>
+                    <ChevronDown
+                      className={cn(
+                        s.openDescription,
+                        openWordId === word.id && s.rotated
+                      )}
+                      onClick={() => toggleWord(word.id)}
+                    />
+                    <Spoiler isVisible={isTranslationColVisible}>
+                      {word.translations[0]?.text}
+                    </Spoiler>
+                  </div>
+                  <div className={cn(openWordId === word.id && s.open)}>
+                    <div className={s.description}>
+                      <div>
+                        Пояснення: {word.definitions.map((def) => def.text)}
+                      </div>
+                      <div>Приклад: {word.examples.map((ex) => ex.text)}</div>
                     </div>
-                    <div>Приклад: {word.examples.map((ex) => ex.text)}</div>
                   </div>
                 </div>
-              </li>
+              </SwipeWordCard>
             );
           })}
         </ul>

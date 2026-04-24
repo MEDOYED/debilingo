@@ -3,7 +3,8 @@
 .languageRow {
   display: grid;
   position: fixed;
-  width: calc(100% - 20px);
+  width: 100%;
+  padding: 0 10px;
   grid-template-columns: 1fr 30px 1fr;
   grid-template-areas: "main switch translation";
   align-items: center;

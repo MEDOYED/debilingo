@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { body } from "express-validator";
-import { createWord, deleteWord, getWords } from "../controllers/wordController.js";
+import { createWord, deleteWord, getWords, pinWord } from "../controllers/wordController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = Router();
@@ -19,5 +19,7 @@ router.post(
 );
 
 router.delete("/words/:id", deleteWord);
+
+router.patch("/words/pin/:id", pinWord);
 
 export default router;
