@@ -35,10 +35,11 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
     // Для кожного слова отримуємо translations, definitions, examples
     const wordsWithDetails = await Promise.all(
       (words || []).map(async (word) => {
-        const [translations, definitions, examples] = await Promise.all([
+        const [translations, definitions, examples, pinnedAt] = await Promise.all([
           supabase.from("translations").select("*").eq("word_id", word.id).order("order_index"),
           supabase.from("definitions").select("*").eq("word_id", word.id).order("order_index"),
           supabase.from("examples").select("*").eq("word_id", word.id).order("order_index"),
+          supabase.from("words").select("*").eq("word_id", word.id).order("order_index"),
         ]);
 
         return {
@@ -46,6 +47,7 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
           translations: translations.data || [],
           definitions: definitions.data || [],
           examples: examples.data || [],
+          // pinnedAt: pinnedAt || "",
         };
       })
     );
@@ -174,6 +176,77 @@ export const deleteWord = async (req: AuthRequest, res: Response): Promise<void>
     res.json({ success: true });
   } catch (error) {
     console.error("Delete word error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const pinWord = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.userId;
+    const { id } = req.params;
+
+    // Перевіряємо чи слово належить до словника користувача
+    const { data: word } = await supabase
+      .from("words")
+      .select("id, dictionary_id")
+      .eq("id", id)
+      .single();
+
+    if (!word) {
+      res.status(404).json({ error: "Word not found" });
+      return;
+    }
+
+    const { data: dict } = await supabase
+      .from("dictionaries")
+      .select("id")
+      .eq("id", word.dictionary_id)
+      .eq("user_id", userId)
+      .single();
+
+    if (!dict) {
+      res.status(404).json({ error: "Word not found" });
+      return;
+    }
+
+    // прикріпляємо слово (змінюємо тільки дату)
+    const { error: updateError } = await supabase
+      .from("words")
+      .update({
+        pinned_at: new Date().toISOString(),
+      })
+      .eq("id", id);
+
+    if (updateError) {
+      res.status(500).json({ error: "Failed to pin word" });
+      return;
+    }
+
+    const { data: updatedWord, error: fetchError } = await supabase
+      .from("words")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (fetchError || !updatedWord) {
+      res.status(500).json({ error: "Failed to pin word" });
+      return;
+    }
+
+    const [translationsData, definitionsData, examplesData] = await Promise.all([
+      supabase.from("translations").select("*").eq("word_id", id).order("order_index"),
+      supabase.from("definitions").select("*").eq("word_id", id).order("order_index"),
+      supabase.from("examples").select("*").eq("word_id", id).order("order_index"),
+    ]);
+
+    res.json({
+      ...updatedWord,
+      translations: translationsData.data || [],
+      definitions: definitionsData.data || [],
+      examples: examplesData.data || [],
+    });
+  } catch (error) {
+    console.error("Pin word error:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };

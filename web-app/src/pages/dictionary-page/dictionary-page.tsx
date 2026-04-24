@@ -33,6 +33,22 @@ export const DictionaryPage = () => {
     const loadWords = async () => {
       if (!dictId) return;
       const data = await getWords(dictId);
+
+      // let filteredWithPinData = [];
+
+      // for (let i = 0; i < data.length; i++) {
+      //   if (data[i].created_at) {
+      //     filteredWithPinData.push(data[i]);
+      //   }
+      // }
+
+      // for (let i = 0; i < data.length; i++) {
+      //   if (data[i].created_at === null) {
+      //     filteredWithPinData.push(data[i]);
+      //   }
+      // }
+
+      // setWords(filteredWithPinData);
       setWords(data);
     };
 
@@ -51,6 +67,20 @@ export const DictionaryPage = () => {
     }
   };
 
+  let filteredWithPinData = [];
+
+  for (let i = 0; i < words.length; i++) {
+    if (words[i].pinned_at) {
+      filteredWithPinData.push(words[i]);
+    }
+  }
+
+  for (let i = 0; i < words.length; i++) {
+    if (words[i].pinned_at === null) {
+      filteredWithPinData.push(words[i]);
+    }
+  }
+
   return (
     <div>
       {/* <div className="container"> */}
@@ -59,7 +89,7 @@ export const DictionaryPage = () => {
         <LanguageRow />
 
         <ul className={s.wordsList}>
-          {words.map((word) => {
+          {filteredWithPinData.map((word) => {
             const isCurrent = word.id;
             return (
               <SwipeWordCard
@@ -69,7 +99,8 @@ export const DictionaryPage = () => {
                 <div
                   className={cn(
                     s.wordCard,
-                    isCurrent && status ? s[`is-${status}`] : ""
+                    isCurrent && status ? s[`is-${status}`] : "",
+                    word.pinned_at && s.pinned
                   )}
                 >
                   <div className={cn(s.row, isReversed && s.reverseRow)}>

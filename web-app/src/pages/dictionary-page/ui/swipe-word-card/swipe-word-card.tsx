@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 
-import type { Word } from "@shared/api/wordApi";
+import { pinWord, type Word } from "@shared/api/wordApi";
 import { Pin, Trash } from "@shared/ui/icons";
 
+import { useAddWordStore } from "../../model/use-add-word-store";
 import { useSwipeWordCardStore } from "../../model/use-swipe-word-card";
 
 import s from "./swipe-word-card.module.scss";
@@ -29,6 +30,8 @@ export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
   const [isOpenLeft, setIsOpenLeft] = useState<boolean>(false);
   const [isOpenRight, setIsOpenRight] = useState<boolean>(false);
 
+  const [moveDistanceX, setMoveDistanceX] = useState<number>(0);
+
   console.log("currentWordId: ", id);
 
   const { swipedWordId, setSwipedWordId } = useSwipeWordCardStore();
@@ -39,7 +42,6 @@ export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
     const touch = e.touches[0];
 
     console.log("Відстань зліва", touch.clientX);
-    console.log("Відстань зверху", touch.clientY);
 
     setFirstFingerHorizontalPosition(touch.clientX);
   };
@@ -50,11 +52,14 @@ export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
     const moveTouch = e.touches[0];
 
     console.log("Відстань зліва", moveTouch.clientX);
-    console.log("Відстань зверху", moveTouch.clientY);
 
     if (!firstFingerHorizontalPosition) return;
 
-    if (firstFingerHorizontalPosition - moveTouch.clientX === 0) return null;
+    setMoveDistanceX(
+      Math.abs(firstFingerHorizontalPosition - moveTouch.clientX)
+    );
+
+    if (moveDistanceX < 15) return;
 
     const currentShiftLength = Math.floor(
       firstFingerHorizontalPosition - moveTouch.clientX
@@ -74,6 +79,11 @@ export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
   console.log("shiftLength: ", shiftLength);
 
   const handleTouchEnd = () => {
+    if (moveDistanceX < 15) {
+      setMoveDistanceX(0);
+      return;
+    }
+
     if (moveDirection === "left" && isOpenLeft) {
       setShiftLength(0);
       setIsOpenLeft(false);
@@ -87,12 +97,32 @@ export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
       setIsOpenLeft(true);
       setShiftLength(50);
     }
+
+    setMoveDistanceX(0);
   };
 
   console.log("isOpenLeft: ", isOpenLeft);
 
   const isWordSwiped = swipedWordId === id;
   console.log("isWordSwiped: ", isWordSwiped);
+
+  const { setWords, words } = useAddWordStore();
+
+  const handlePinWord = async () => {
+    const pinnedWord = await pinWord(id);
+
+    const wordsWithoutPinnedWord = [];
+
+    for (let i = 0; i < words.length; i++) {
+      if (words[i].id !== id) {
+        wordsWithoutPinnedWord.push(words[i]);
+      }
+    }
+
+    setWords([pinnedWord, ...wordsWithoutPinnedWord]);
+
+    setShiftLength(0);
+  };
 
   return (
     <li
@@ -108,7 +138,10 @@ export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
       }
     >
       <div className={s.leftActionsBtns}>
-        <button className={s.attachBtn}>
+        <button
+          className={s.attachBtn}
+          onClick={() => handlePinWord()}
+        >
           <Pin />
         </button>
       </div>

@@ -27,6 +27,7 @@ export interface Word {
   translations: Translation[];
   definitions: Definition[];
   examples: Example[];
+  pinned_at: string | null;
 }
 
 export const getWords = async (dictionaryId: string): Promise<Word[]> => {
@@ -50,4 +51,10 @@ export const createWord = async (data: {
 
 export const deleteWord = async (wordId: string): Promise<void> => {
   await apiClient.delete(`/words/${wordId}`);
+};
+
+export const pinWord = async (wordId: string): Promise<Word> => {
+  const response = await apiClient.patch(`/words/pin/${wordId}`);
+
+  return response.data;
 };
