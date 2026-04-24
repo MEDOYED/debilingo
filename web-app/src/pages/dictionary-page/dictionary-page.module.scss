@@ -21,6 +21,7 @@
   display: grid;
   grid-template-columns: 1fr 30px 1fr;
   grid-template-areas: "main open translation";
+  padding: 0 10px;
 
   &.reverseRow {
     grid-template-areas: "translation open main";
