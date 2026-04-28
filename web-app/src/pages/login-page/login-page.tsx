@@ -53,7 +53,7 @@ export const LoginPage = () => {
             className={s.loginButton}
             type="submit"
           >
-            Війти
+            Увійти
           </button>
         </form>
         <p className={s.loginFooter}>
