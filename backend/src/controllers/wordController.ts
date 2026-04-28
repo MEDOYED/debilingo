@@ -10,10 +10,10 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
     // Перевірка чи словник належить користувачу
     const { data: dict } = await supabase
       .from("dictionaries")
-      .select("id")
-      .eq("id", dictionaryId)
+      .select("id") // SQL: SELECT id FROM dictionaries
+      .eq("id", dictionaryId) // SQL: WHERE id = <dictionaryId>
       .eq("user_id", userId)
-      .single();
+      .single(); // retrun single string (not array)
 
     if (!dict) {
       res.status(404).json({ error: "Dictionary not found" });

@@ -5,6 +5,7 @@ import express, { NextFunction, Request, Response } from "express";
 import activityRoutes from "./routes/activity.js";
 import authRoutes from "./routes/authRoutes.js";
 import dictionaryRoutes from "./routes/dictionaryRoutes.js";
+import profileRoutes from "./routes/profileRoutes.js";
 import wordRoutes from "./routes/wordRoutes.js";
 
 import { testConnection } from "./config/supabase.js";
@@ -48,6 +49,7 @@ app.use("/api/auth", authRoutes); // має бути першим, щоб authMi
 app.use("/api/dictionaries", dictionaryRoutes);
 app.use("/api", activityRoutes);
 app.use("/api", wordRoutes);
+app.use("/api", profileRoutes);
 
 // 404 handler
 app.use((req: Request, res: Response) => {
