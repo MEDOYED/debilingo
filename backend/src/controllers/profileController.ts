@@ -1,6 +1,6 @@
 import { Response } from "express";
 
-import { supabase } from "../config/supabase";
+import { supabase } from "../config/supabase.js";
 import { AuthRequest } from "../middleware/authMiddleware";
 
 type ProfileResponse = {
