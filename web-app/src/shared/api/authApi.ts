@@ -12,11 +12,13 @@ export interface AuthResponse {
 
 export const register = async (
   email: string,
-  password: string
+  password: string,
+  username: string
 ): Promise<AuthResponse> => {
   const response = await apiClient.post<AuthResponse>("/auth/register", {
     email,
     password,
+    username,
   });
   return response.data;
 };
