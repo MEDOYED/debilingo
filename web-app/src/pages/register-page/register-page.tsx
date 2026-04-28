@@ -1,7 +1,7 @@
+import { cn } from "@shared/lib/styles";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../../shared/api/authApi";
-import { cn } from "@shared/lib/styles";
 
 import s from "./register-page.module.scss";
 
@@ -9,11 +9,13 @@ export const RegisterPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [error, setError] = useState("");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const data = await register(email, password);
+      const data = await register(email, password, username);
       localStorage.setItem("token", data.token);
       navigate("/");
     } catch (err: any) {
@@ -25,6 +27,7 @@ export const RegisterPage = () => {
       <div className={s.registerContainer}>
         <h1 className={s.registerTitle}>Реєстрація</h1>
         <form
+          autoComplete="off"
           className={s.registerForm}
           onSubmit={handleSubmit}
         >
@@ -36,6 +39,7 @@ export const RegisterPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+
           <div className={s.inputErrorsContainer}>
             <input
               className={s.registerPasswordInput}
@@ -47,6 +51,15 @@ export const RegisterPage = () => {
             />
             {error && <p className={s.registerError}>{error}</p>}
           </div>
+
+          <input
+            className={s.registerPasswordInput}
+            type="text"
+            placeholder="Придумайте нікнейм"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            autoComplete="off"
+          />
 
           <button
             className={s.registerButton}
