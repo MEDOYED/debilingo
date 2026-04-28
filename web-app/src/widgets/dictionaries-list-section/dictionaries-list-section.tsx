@@ -105,6 +105,7 @@ export const DictionariesListSection = ({
 
                 {/* <p className={s.card__summary}>Кількість слів:</p> */}
 
+                {/* todo [25.04.2026]: remove this button */}
                 <FilledButton
                   as="nav-link"
                   to={`/dictionary-v1/${dictionary.id}`}
