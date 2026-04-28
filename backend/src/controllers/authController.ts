@@ -7,9 +7,10 @@ const JWT_SECRET = process.env.JWT_SECRET || "dev_secret_key";
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      res.status(400).json({ error: "Email and password required" });
+    const { email, password, username } = req.body;
+
+    if (!email || !password || !username) {
+      res.status(400).json({ error: "Email and password and username are required" });
       return;
     }
 
@@ -20,14 +21,14 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
     const password_hash = await bcrypt.hash(password, 10);
 
-    const { data, error } = await supabase
+    const { data: userData, error: userError } = await supabase
       .from("users")
       .insert({ email, password_hash })
       .select()
       .single();
 
-    if (error) {
-      if (error.message.includes("duplicate")) {
+    if (userError || !userData) {
+      if (userError?.message.includes("duplicate")) {
         res.status(400).json({ error: "Email already exists" });
         return;
       }
@@ -36,9 +37,22 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const token = jwt.sign({ userId: data.id }, JWT_SECRET, { expiresIn: "7d" });
+    const { data: dataProfile, error: profileError } = await supabase
+      .from("profiles")
+      .insert({ user_id: userData.id, username })
+      .select()
+      .single();
 
-    res.status(201).json({ token, user: { id: data.id, email: data.email } });
+    if (profileError || !dataProfile) {
+      // best-effort cleanup if profile failed
+      await supabase.from("users").delete().eq("id", userData.id);
+      res.status(500).json({ error: "Failed to create profile" });
+      return;
+    }
+
+    const token = jwt.sign({ userId: userData.id }, JWT_SECRET, { expiresIn: "7d" });
+
+    res.status(201).json({ token, user: { id: userData.id, email: userData.email } });
   } catch (error) {
     console.error("Register error:", error);
     res.status(500).json({ error: "Internal server error" });
