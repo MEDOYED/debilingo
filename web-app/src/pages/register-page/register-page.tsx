@@ -19,7 +19,7 @@ export const RegisterPage = () => {
       localStorage.setItem("token", data.token);
       navigate("/");
     } catch (err: any) {
-      setError(err.response?.data?.error || "Registration failed");
+      setError(err.response?.data?.error || "Реєстрація не вдалася");
     }
   };
   return (
