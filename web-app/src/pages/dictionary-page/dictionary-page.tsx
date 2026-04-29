@@ -14,6 +14,7 @@ import { DictionaryTopBar } from "./ui/dictionary-top-bar/dictionary-top-bar";
 import { LanguageRow } from "./ui/language-row/language-row";
 import { Spoiler } from "./ui/spoiler/spoiler";
 import { SwipeWordCard } from "./ui/swipe-word-card/swipe-word-card";
+import { WordDetails } from "./ui/word-details/word-details";
 
 import s from "./dictionary-page.module.scss";
 
@@ -107,12 +108,10 @@ export const DictionaryPage = () => {
                     </Spoiler>
                   </div>
                   <div className={cn(openWordId === word.id && s.open)}>
-                    <div className={s.description}>
-                      <div>
-                        Пояснення: {word.definitions.map((def) => def.text)}
-                      </div>
-                      <div>Приклад: {word.examples.map((ex) => ex.text)}</div>
-                    </div>
+                    <WordDetails
+                      className={s.description}
+                      word={word}
+                    />
                   </div>
                 </div>
               </SwipeWordCard>
