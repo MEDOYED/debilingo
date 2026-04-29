@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 
+import { useProfileStore } from "@entities/profile";
 import { cn } from "@shared/lib/styles";
 
 import s from "./spoiler.module.scss";
@@ -145,6 +146,8 @@ export const Spoiler = ({
     };
   }, [revealed]);
 
+  const { updateStudyActivity } = useProfileStore();
+
   const handleClick = () => {
     if (isVisible) return; // Клік працює тільки коли глобально приховано
     if (revealed) return; // Якщо вже відкрито - нічого не робимо
@@ -153,6 +156,8 @@ export const Spoiler = ({
     if (animationRef.current) {
       cancelAnimationFrame(animationRef.current);
     }
+
+    updateStudyActivity(1);
   };
 
   return (
