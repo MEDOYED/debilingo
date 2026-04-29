@@ -7,6 +7,7 @@ import { useAddWordStore } from "../../model/use-add-word-store";
 
 import field from "@shared/styles/components/field.module.scss";
 import s from "./add-word-card.module.scss";
+import { LabelInputComponent } from "./label-Input-component/label-input-component";
 
 export const AddWordCardModal = () => {
   const { dictId } = useParams();
@@ -28,22 +29,40 @@ export const AddWordCardModal = () => {
     setWords,
   } = useAddWordStore();
 
-  const newWordData = {
-    dictionary_id: dictId || "",
-    source_word: mainLanguageWord,
-    note: note,
-    translations,
-    definitions,
-    examples,
-  };
-
   const handleSubmit = async () => {
+    const cleanArray = (arr: string[]): string[] => {
+      return arr.map((t) => t.trim()).filter((t) => t.length > 0);
+    };
+
+    const translationsClean = cleanArray(translations);
+
+    const isEmpty = !mainLanguageWord.trim() || translationsClean?.length === 0;
+
+    if (isEmpty) return;
+
+    const newWordData = {
+      dictionary_id: dictId || "",
+      source_word: mainLanguageWord,
+      note: note,
+      translations: translationsClean,
+      definitions: cleanArray(definitions),
+      examples: cleanArray(examples),
+    };
+
+    console.log("SENT:", newWordData);
+
     const newWord = await createWord(newWordData);
 
     setWords([newWord, ...words]);
 
     resetFields();
     closeCardCreateWord();
+    console.log(translations);
+  };
+
+  const closeCard = () => {
+    closeCardCreateWord();
+    resetFields();
   };
 
   if (!isOpenCardCreateWord) return null;
@@ -68,22 +87,54 @@ export const AddWordCardModal = () => {
             />
           </label>
 
-          <label
+          {/* <label
             className={field.label}
             htmlFor=""
           >
-            Переклад
-            <input
-              className={field.input}
-              type="text"
-              value={translations[0] || ""}
-              onChange={(e) => setTranslation([e.target.value])}
-            />
-          </label>
+            <div className={s.textAndButton}>
+              Переклад
+              <button
+                className={s.addAdditionalInput}
+                type="button"
+                onClick={() => setTranslation([...translations, ""])}
+              >
+                +
+              </button>
+            </div>
+            {translations.map((value, index) => (
+              <input
+                key={index}
+                className={field.input}
+                type="text"
+                value={value || ""}
+                onChange={(e) => {
+                  const update = [...translations];
+                  update[index] = e.target.value;
+                  setTranslation(update);
+                }}
+              />
+            ))}
+          </label> */}
+          <LabelInputComponent
+            classNameLabel={field.label}
+            classNameInput={field.input}
+            labelText="Переклад"
+            setText={setTranslation}
+            text={translations}
+            textInButton="Додати переклад"
+          />
         </div>
 
         {/* definition */}
-        <label
+        <LabelInputComponent
+          classNameLabel={field.label}
+          classNameInput={field.input}
+          labelText="Пояснення"
+          setText={setDefinition}
+          text={definitions}
+          textInButton="Додати пояснення"
+        />
+        {/* <label
           className={field.label}
           htmlFor=""
         >
@@ -96,10 +147,19 @@ export const AddWordCardModal = () => {
             name=""
             id=""
           />
-        </label>
+        </label> */}
 
         {/* example */}
-        <label
+
+        <LabelInputComponent
+          classNameLabel={field.label}
+          classNameInput={field.input}
+          labelText="Приклад"
+          setText={setExample}
+          text={examples}
+          textInButton="Додати приклад"
+        />
+        {/* <label
           className={field.label}
           htmlFor=""
         >
@@ -112,12 +172,12 @@ export const AddWordCardModal = () => {
             name=""
             id=""
           />
-        </label>
+        </label> */}
 
         <div className={s.actionRow}>
           <TextButton
             as="button"
-            onClick={closeCardCreateWord}
+            onClick={closeCard}
             size="small"
           >
             Відмінити
