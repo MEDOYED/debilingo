@@ -34,21 +34,6 @@ export const DictionaryPage = () => {
       if (!dictId) return;
       const data = await getWords(dictId);
 
-      // let filteredWithPinData = [];
-
-      // for (let i = 0; i < data.length; i++) {
-      //   if (data[i].created_at) {
-      //     filteredWithPinData.push(data[i]);
-      //   }
-      // }
-
-      // for (let i = 0; i < data.length; i++) {
-      //   if (data[i].created_at === null) {
-      //     filteredWithPinData.push(data[i]);
-      //   }
-      // }
-
-      // setWords(filteredWithPinData);
       setWords(data);
     };
 
