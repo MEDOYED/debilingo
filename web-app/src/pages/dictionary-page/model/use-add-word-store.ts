@@ -30,9 +30,9 @@ type Store = {
 export const useAddWordStore = create<Store>((set) => ({
   isOpenCardCreateWord: false,
   mainLanguageWord: "",
-  translations: [],
-  definitions: [],
-  examples: [],
+  translations: [""],
+  definitions: [""],
+  examples: [""],
   words: [],
   note: "",
 
@@ -93,9 +93,9 @@ export const useAddWordStore = create<Store>((set) => ({
   resetFields: () => {
     set({
       mainLanguageWord: "",
-      translations: [],
-      definitions: [],
-      examples: [],
+      translations: [""],
+      definitions: [""],
+      examples: [""],
       note: "",
     });
   },
