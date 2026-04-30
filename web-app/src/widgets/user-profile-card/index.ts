@@ -1,1 +1,1 @@
-export { UserProfileCard } from "./ui"
+export { UserProfileCard } from "./ui/user-profile-card";
