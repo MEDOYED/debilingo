@@ -7,5 +7,6 @@ export { EyeSlash } from "./eye-slash/eye-slash";
 export { Gamepad } from "./gamepad";
 export { Home } from "./home";
 export { Pin } from "./pin/pin";
+export { UnPin } from "./unpin/unpin";
 export { Trash } from "./trash/trash";
 export { Trophy } from "./trophy";
