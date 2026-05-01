@@ -229,7 +229,7 @@ export const pinWord = async (req: AuthRequest, res: Response): Promise<void> =>
       .single();
 
     if (fetchError || !updatedWord) {
-      res.status(500).json({ error: "Failed to pin word" });
+      res.status(500).json({ error: "Failed to unpin word" });
       return;
     }
 
@@ -247,6 +247,77 @@ export const pinWord = async (req: AuthRequest, res: Response): Promise<void> =>
     });
   } catch (error) {
     console.error("Pin word error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const unpinWord = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.userId;
+    const { id } = req.params;
+
+    // Перевіряємо чи слово належить до словника користувача
+    const { data: word } = await supabase
+      .from("words")
+      .select("id, dictionary_id")
+      .eq("id", id)
+      .single();
+
+    if (!word) {
+      res.status(404).json({ error: "Word not found" });
+      return;
+    }
+
+    const { data: dict } = await supabase
+      .from("dictionaries")
+      .select("id")
+      .eq("id", word.dictionary_id)
+      .eq("user_id", userId)
+      .single();
+
+    if (!dict) {
+      res.status(404).json({ error: "Word not found" });
+      return;
+    }
+
+    // відкріпляємо слово (змінюємо тільки дату - видаляємо дату - замість дати пишемо null)
+    const { error: updateError } = await supabase
+      .from("words")
+      .update({
+        pinned_at: null,
+      })
+      .eq("id", id);
+
+    if (updateError) {
+      res.status(500).json({ error: "Failed to unpin word" });
+      return;
+    }
+
+    const { data: updatedWord, error: fetchError } = await supabase
+      .from("words")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (fetchError || !updatedWord) {
+      res.status(500).json({ error: "Failed to pin word" });
+      return;
+    }
+
+    const [translationsData, definitionsData, examplesData] = await Promise.all([
+      supabase.from("translations").select("*").eq("word_id", id).order("order_index"),
+      supabase.from("definitions").select("*").eq("word_id", id).order("order_index"),
+      supabase.from("examples").select("*").eq("word_id", id).order("order_index"),
+    ]);
+
+    res.json({
+      ...updatedWord,
+      translations: translationsData.data || [],
+      definitions: definitionsData.data || [],
+      examples: examplesData.data || [],
+    });
+  } catch (error) {
+    console.error("Unpin word error:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
