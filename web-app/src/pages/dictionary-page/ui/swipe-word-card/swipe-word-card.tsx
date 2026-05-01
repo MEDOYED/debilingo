@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 
-import { deleteWord, pinWord, type Word } from "@shared/api/wordApi";
-import { Pin, Trash } from "@shared/ui/icons";
+import { deleteWord, pinWord, unpinWord, type Word } from "@shared/api/wordApi";
+import { Pin, Trash, UnPin } from "@shared/ui/icons";
 
 import { useAddWordStore } from "../../model/use-add-word-store";
 import { useSwipeWordCardStore } from "../../model/use-swipe-word-card";
@@ -11,11 +11,12 @@ import s from "./swipe-word-card.module.scss";
 type SwipeWordCardProps = {
   children: React.ReactNode;
   id: Word["id"];
+  word: Word;
 };
 
 type MoveDirection = "right" | "left";
 
-export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
+export const SwipeWordCard = ({ children, id, word }: SwipeWordCardProps) => {
   const wordCardRef = useRef<HTMLLIElement | null>(null);
 
   const [firstFingerHorizontalPosition, setFirstFingerHorizontalPosition] =
@@ -124,6 +125,16 @@ export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
     setShiftLength(0);
   };
 
+  const handleUnPinWord = async () => {
+    const pinnedWord = await unpinWord(id);
+
+    const wordsWithoutCurrent = words.filter((word) => word.id !== id);
+
+    setWords([pinnedWord, ...wordsWithoutCurrent]);
+
+    setShiftLength(0);
+  };
+
   const handleDeleteWord = async () => {
     await deleteWord(id);
 
@@ -154,9 +165,13 @@ export const SwipeWordCard = ({ children, id }: SwipeWordCardProps) => {
       <div className={s.leftActionsBtns}>
         <button
           className={s.attachBtn}
-          onClick={() => handlePinWord()}
+          onClick={
+            word.pinned_at === null
+              ? () => handlePinWord()
+              : () => handleUnPinWord()
+          }
         >
-          <Pin />
+          {word.pinned_at === null ? <Pin /> : <UnPin />}
         </button>
       </div>
 
