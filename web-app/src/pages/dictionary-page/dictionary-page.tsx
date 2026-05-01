@@ -80,6 +80,7 @@ export const DictionaryPage = () => {
               <SwipeWordCard
                 key={word.id}
                 id={word.id}
+                word={word}
               >
                 <div
                   className={cn(
