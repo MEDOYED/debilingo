@@ -1,0 +1,21 @@
+.ulContainer {
+  p {
+    flex-shrink: 0;
+  }
+}
+
+.ulClass {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: disc !important;
+  padding: 10px 0 10px 40px;
+
+  li {
+    list-style: disc !important;
+  }
+
+  li::marker {
+    font-size: 15px;
+  }
+}
