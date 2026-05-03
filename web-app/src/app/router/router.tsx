@@ -7,7 +7,7 @@ import { RatingPage } from "@pages/rating-page";
 import { RegisterPage } from "@pages/register-page";
 import { TrainingPage } from "@pages/training-page";
 
-import { DictionaryPage, DictionaryPageV1 } from "@pages/dictionary-page";
+import { DictionaryPage } from "@pages/dictionary-page";
 
 import RootLayout from "../layout/root-layout";
 
@@ -40,10 +40,7 @@ export const router = createBrowserRouter([
         element: <HomePage />,
       },
       { path: "/dictionary", element: <DictionariesPage /> },
-      {
-        path: "/dictionary-v1/:dictId",
-        element: <DictionaryPageV1 />,
-      },
+
       {
         path: "/dictionary/:dictId",
         element: <DictionaryPage />,

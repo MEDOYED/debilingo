@@ -58,3 +58,9 @@ export const pinWord = async (wordId: string): Promise<Word> => {
 
   return response.data;
 };
+
+export const unpinWord = async (wordId: string): Promise<Word> => {
+  const response = await apiClient.patch(`/words/unpin/${wordId}`);
+
+  return response.data;
+};
