@@ -129,12 +129,12 @@ export const SwipeWordCard = ({
     setShiftLength(0);
   };
 
-  const handleUnPinWord = async () => {
-    const pinnedWord = await unpinWord(id);
+  const handleUnpinWord = async () => {
+    const unpinnedWord = await unpinWord(id);
 
     const wordsWithoutCurrent = words.filter((word) => word.id !== id);
 
-    setWords([pinnedWord, ...wordsWithoutCurrent]);
+    setWords([unpinnedWord, ...wordsWithoutCurrent]);
 
     setShiftLength(0);
   };
@@ -172,7 +172,7 @@ export const SwipeWordCard = ({
           onClick={
             wordPinnedAt === null
               ? () => handlePinWord()
-              : () => handleUnPinWord()
+              : () => handleUnpinWord()
           }
         >
           {wordPinnedAt === null ? <Pin /> : <Unpin />}
