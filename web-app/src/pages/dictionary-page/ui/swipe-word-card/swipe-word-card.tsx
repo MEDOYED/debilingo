@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 
 import { deleteWord, pinWord, unpinWord, type Word } from "@shared/api/wordApi";
-import { Pin, Trash, UnPin } from "@shared/ui/icons";
+import { Pin, Trash, Unpin } from "@shared/ui/icons";
 
 import { useAddWordStore } from "../../model/use-add-word-store";
 import { useSwipeWordCardStore } from "../../model/use-swipe-word-card";
@@ -171,7 +171,7 @@ export const SwipeWordCard = ({ children, id, word }: SwipeWordCardProps) => {
               : () => handleUnPinWord()
           }
         >
-          {word.pinned_at === null ? <Pin /> : <UnPin />}
+          {word.pinned_at === null ? <Pin /> : <Unpin />}
         </button>
       </div>
 
