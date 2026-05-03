@@ -80,6 +80,7 @@ export const DictionaryPage = () => {
               <SwipeWordCard
                 key={word.id}
                 id={word.id}
+                wordPinnedAt={word.pinned_at}
               >
                 <div
                   className={cn(
