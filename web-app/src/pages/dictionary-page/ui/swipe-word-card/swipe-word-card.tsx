@@ -11,12 +11,16 @@ import s from "./swipe-word-card.module.scss";
 type SwipeWordCardProps = {
   children: React.ReactNode;
   id: Word["id"];
-  word: Word;
+  wordPinnedAt: Word["pinned_at"];
 };
 
 type MoveDirection = "right" | "left";
 
-export const SwipeWordCard = ({ children, id, word }: SwipeWordCardProps) => {
+export const SwipeWordCard = ({
+  children,
+  id,
+  wordPinnedAt,
+}: SwipeWordCardProps) => {
   const wordCardRef = useRef<HTMLLIElement | null>(null);
 
   const [firstFingerHorizontalPosition, setFirstFingerHorizontalPosition] =
@@ -166,12 +170,12 @@ export const SwipeWordCard = ({ children, id, word }: SwipeWordCardProps) => {
         <button
           className={s.attachBtn}
           onClick={
-            word.pinned_at === null
+            wordPinnedAt === null
               ? () => handlePinWord()
               : () => handleUnPinWord()
           }
         >
-          {word.pinned_at === null ? <Pin /> : <Unpin />}
+          {wordPinnedAt === null ? <Pin /> : <Unpin />}
         </button>
       </div>
 
