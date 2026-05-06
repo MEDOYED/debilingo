@@ -1,13 +1,14 @@
 import { useParams } from "react-router-dom";
 
+import { useProfileStore } from "@entities/profile";
 import { createWord } from "@shared/api/wordApi";
 import { FilledButton, TextButton } from "@shared/ui/buttons";
 
 import { useAddWordStore } from "../../model/use-add-word-store";
+import { LabelInputComponent } from "./label-Input-component/label-input-component";
 
 import field from "@shared/styles/components/field.module.scss";
 import s from "./add-word-card.module.scss";
-import { LabelInputComponent } from "./label-Input-component/label-input-component";
 
 export const AddWordCardModal = () => {
   const { dictId } = useParams();
@@ -29,6 +30,8 @@ export const AddWordCardModal = () => {
     setWords,
   } = useAddWordStore();
 
+  const { updateStudyActivity } = useProfileStore();
+
   const handleSubmit = async () => {
     const cleanArray = (arr: string[]): string[] => {
       return arr.map((t) => t.trim()).filter((t) => t.length > 0);
@@ -49,15 +52,17 @@ export const AddWordCardModal = () => {
       examples: cleanArray(examples),
     };
 
-    console.log("SENT:", newWordData);
+    // console.log("SENT:", newWordData);
 
     const newWord = await createWord(newWordData);
 
     setWords([newWord, ...words]);
 
+    updateStudyActivity(10);
+
     resetFields();
     closeCardCreateWord();
-    console.log(translations);
+    // console.log(translations);
   };
 
   const closeCard = () => {
@@ -87,34 +92,6 @@ export const AddWordCardModal = () => {
             />
           </label>
 
-          {/* <label
-            className={field.label}
-            htmlFor=""
-          >
-            <div className={s.textAndButton}>
-              Переклад
-              <button
-                className={s.addAdditionalInput}
-                type="button"
-                onClick={() => setTranslation([...translations, ""])}
-              >
-                +
-              </button>
-            </div>
-            {translations.map((value, index) => (
-              <input
-                key={index}
-                className={field.input}
-                type="text"
-                value={value || ""}
-                onChange={(e) => {
-                  const update = [...translations];
-                  update[index] = e.target.value;
-                  setTranslation(update);
-                }}
-              />
-            ))}
-          </label> */}
           <LabelInputComponent
             classNameLabel={field.label}
             classNameInput={field.input}
@@ -134,20 +111,6 @@ export const AddWordCardModal = () => {
           text={definitions}
           textInButton="Додати пояснення"
         />
-        {/* <label
-          className={field.label}
-          htmlFor=""
-        >
-          Пояснення
-          <input
-            className={field.input}
-            type="text"
-            value={definitions[0] || ""}
-            onChange={(e) => setDefinition([e.target.value])}
-            name=""
-            id=""
-          />
-        </label> */}
 
         {/* example */}
 
@@ -159,20 +122,6 @@ export const AddWordCardModal = () => {
           text={examples}
           textInButton="Додати приклад"
         />
-        {/* <label
-          className={field.label}
-          htmlFor=""
-        >
-          Приклад
-          <input
-            className={field.input}
-            type="text"
-            value={examples[0] || ""}
-            onChange={(e) => setExample([e.target.value])}
-            name=""
-            id=""
-          />
-        </label> */}
 
         <div className={s.actionRow}>
           <TextButton

@@ -9,3 +9,4 @@ export { Home } from "./home";
 export { Pin } from "./pin/pin";
 export { Trash } from "./trash/trash";
 export { Trophy } from "./trophy";
+export { Unpin } from "./unpin/unpin";

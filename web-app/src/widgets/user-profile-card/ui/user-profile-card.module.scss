@@ -1,22 +1,25 @@
-
 .profileLogoAndName {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
 .logo {
-    max-width: 50px;
-    max-height: 50px;
-    object-fit: cover;
+  max-width: 50px;
+  max-height: 50px;
+  object-fit: cover;
 
-    border-radius: 50%
+  border-radius: 50%;
 }
 
 .userInfo {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .firstName {
-  
+}
+
+.progressBarCard {
+  display: flex;
+  gap: 20px;
 }
