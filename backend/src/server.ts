@@ -81,7 +81,9 @@ const startServer = async () => {
       );
     }
 
-    app.listen(PORT, () => {
+    const numericPort = parseInt(PORT as string, 10);
+    app.listen(numericPort, "0.0.0.0", () => {
+      // app.listen(PORT, () => {
       console.log("=".repeat(50));
       console.log(`🚀 Server running on port ${PORT}`);
       console.log(`📍 API endpoint: http://localhost:${PORT}/api`);
