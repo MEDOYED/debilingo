@@ -13,7 +13,7 @@ import { testConnection } from "./config/supabase.js";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(
@@ -81,7 +81,9 @@ const startServer = async () => {
       );
     }
 
-    app.listen(PORT, () => {
+    const numericPort = parseInt(PORT as string, 10);
+    app.listen(numericPort, "0.0.0.0", () => {
+      // app.listen(PORT, () => {
       console.log("=".repeat(50));
       console.log(`🚀 Server running on port ${PORT}`);
       console.log(`📍 API endpoint: http://localhost:${PORT}/api`);
