@@ -15,14 +15,13 @@
   @media (max-width: 768px) {
     right: 10px;
     left: 10px;
-    padding: 8px 0;
+    padding: 8px;
   }
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  // gap: 10px;
 }
 
 .wordAndTranslationWrapper {

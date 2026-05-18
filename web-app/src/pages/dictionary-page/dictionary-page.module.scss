@@ -36,7 +36,7 @@
   grid-area: open;
   cursor: pointer;
   padding: 3px;
-  transition: transform 0.3s ease;
+  transition: all 0.5s ease;
   width: 100%;
 }
 
@@ -53,20 +53,15 @@
   max-height: 0;
   opacity: 0;
 
-  transition:
-    // max-height 0.5s ease,
-    // opacity 0.5s ease,
-    // padding-top 0.6s ease,
-    // margin-top 0.5s ease;
-    all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .open {
   .description {
-    max-height: 500px;
+    max-height: max-content;
     opacity: 1;
     margin-top: 10px;
-    padding-top: 20px;
+    padding: 20px 10px 0 10px;
   }
 }
 
