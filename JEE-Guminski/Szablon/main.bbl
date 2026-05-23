@@ -1,0 +1,265 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{react}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=350a86b0327152e3a50596538f38a5db}{%
+           family={{Meta Platforms, Inc.}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{350a86b0327152e3a50596538f38a5db}
+      \strng{fullhash}{350a86b0327152e3a50596538f38a5db}
+      \strng{fullhashraw}{350a86b0327152e3a50596538f38a5db}
+      \strng{bibnamehash}{350a86b0327152e3a50596538f38a5db}
+      \strng{authorbibnamehash}{350a86b0327152e3a50596538f38a5db}
+      \strng{authornamehash}{350a86b0327152e3a50596538f38a5db}
+      \strng{authorfullhash}{350a86b0327152e3a50596538f38a5db}
+      \strng{authorfullhashraw}{350a86b0327152e3a50596538f38a5db}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Using TypeScript with React - React Documentation}
+      \field{urlday}{22}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://react.dev/learn/typescript
+      \endverb
+      \verb{url}
+      \verb https://react.dev/learn/typescript
+      \endverb
+    \endentry
+    \entry{ts}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=b9a8b868588ad4bc6b36c29936e26423}{%
+           family={{Microsoft Corporation}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{b9a8b868588ad4bc6b36c29936e26423}
+      \strng{fullhash}{b9a8b868588ad4bc6b36c29936e26423}
+      \strng{fullhashraw}{b9a8b868588ad4bc6b36c29936e26423}
+      \strng{bibnamehash}{b9a8b868588ad4bc6b36c29936e26423}
+      \strng{authorbibnamehash}{b9a8b868588ad4bc6b36c29936e26423}
+      \strng{authornamehash}{b9a8b868588ad4bc6b36c29936e26423}
+      \strng{authorfullhash}{b9a8b868588ad4bc6b36c29936e26423}
+      \strng{authorfullhashraw}{b9a8b868588ad4bc6b36c29936e26423}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{TypeScript for JavaScript Programmers}
+      \field{urlday}{22}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html
+      \endverb
+      \verb{url}
+      \verb https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html
+      \endverb
+    \endentry
+    \entry{vite}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=fca61bcf09c3a629a3c04cf988277e43}{%
+           family={{Vite Core Team}},
+           familyi={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{fca61bcf09c3a629a3c04cf988277e43}
+      \strng{fullhash}{fca61bcf09c3a629a3c04cf988277e43}
+      \strng{fullhashraw}{fca61bcf09c3a629a3c04cf988277e43}
+      \strng{bibnamehash}{fca61bcf09c3a629a3c04cf988277e43}
+      \strng{authorbibnamehash}{fca61bcf09c3a629a3c04cf988277e43}
+      \strng{authornamehash}{fca61bcf09c3a629a3c04cf988277e43}
+      \strng{authorfullhash}{fca61bcf09c3a629a3c04cf988277e43}
+      \strng{authorfullhashraw}{fca61bcf09c3a629a3c04cf988277e43}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Features - Vite Documentation}
+      \field{urlday}{22}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://vitejs.dev/guide/features.html
+      \endverb
+      \verb{url}
+      \verb https://vitejs.dev/guide/features.html
+      \endverb
+    \endentry
+    \entry{fsd}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=6f0f81b52d0f86f10222cd178524bf79}{%
+           family={{FSD Community}},
+           familyi={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{6f0f81b52d0f86f10222cd178524bf79}
+      \strng{fullhash}{6f0f81b52d0f86f10222cd178524bf79}
+      \strng{fullhashraw}{6f0f81b52d0f86f10222cd178524bf79}
+      \strng{bibnamehash}{6f0f81b52d0f86f10222cd178524bf79}
+      \strng{authorbibnamehash}{6f0f81b52d0f86f10222cd178524bf79}
+      \strng{authornamehash}{6f0f81b52d0f86f10222cd178524bf79}
+      \strng{authorfullhash}{6f0f81b52d0f86f10222cd178524bf79}
+      \strng{authorfullhashraw}{6f0f81b52d0f86f10222cd178524bf79}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Overview - Feature-Sliced Design Documentation}
+      \field{urlday}{22}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://feature-sliced.design/docs/get-started/overview
+      \endverb
+      \verb{url}
+      \verb https://feature-sliced.design/docs/get-started/overview
+      \endverb
+    \endentry
+    \entry{zustand}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=446aee09709ac64d31c31dcda41d6b8e}{%
+           family={{Poimandres}},
+           familyi={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{446aee09709ac64d31c31dcda41d6b8e}
+      \strng{fullhash}{446aee09709ac64d31c31dcda41d6b8e}
+      \strng{fullhashraw}{446aee09709ac64d31c31dcda41d6b8e}
+      \strng{bibnamehash}{446aee09709ac64d31c31dcda41d6b8e}
+      \strng{authorbibnamehash}{446aee09709ac64d31c31dcda41d6b8e}
+      \strng{authornamehash}{446aee09709ac64d31c31dcda41d6b8e}
+      \strng{authorfullhash}{446aee09709ac64d31c31dcda41d6b8e}
+      \strng{authorfullhashraw}{446aee09709ac64d31c31dcda41d6b8e}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Zustand - Bear necessities for state management in React}
+      \field{urlday}{22}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://docs.pmnd.rs/zustand/getting-started/introduction
+      \endverb
+      \verb{url}
+      \verb https://docs.pmnd.rs/zustand/getting-started/introduction
+      \endverb
+    \endentry
+    \entry{supabase}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=1e970d5115956a1d1b5f767ff88d6a54}{%
+           family={{Supabase Inc.}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{1e970d5115956a1d1b5f767ff88d6a54}
+      \strng{fullhash}{1e970d5115956a1d1b5f767ff88d6a54}
+      \strng{fullhashraw}{1e970d5115956a1d1b5f767ff88d6a54}
+      \strng{bibnamehash}{1e970d5115956a1d1b5f767ff88d6a54}
+      \strng{authorbibnamehash}{1e970d5115956a1d1b5f767ff88d6a54}
+      \strng{authornamehash}{1e970d5115956a1d1b5f767ff88d6a54}
+      \strng{authorfullhash}{1e970d5115956a1d1b5f767ff88d6a54}
+      \strng{authorfullhashraw}{1e970d5115956a1d1b5f767ff88d6a54}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Row Level Security - Supabase Documentation}
+      \field{urlday}{22}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://supabase.com/docs/guides/auth/row-level-security
+      \endverb
+      \verb{url}
+      \verb https://supabase.com/docs/guides/auth/row-level-security
+      \endverb
+    \endentry
+    \entry{docker}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=4bd3b392874c74fba4ed57a24eae0ac1}{%
+           family={{Docker Inc.}},
+           familyi={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{4bd3b392874c74fba4ed57a24eae0ac1}
+      \strng{fullhash}{4bd3b392874c74fba4ed57a24eae0ac1}
+      \strng{fullhashraw}{4bd3b392874c74fba4ed57a24eae0ac1}
+      \strng{bibnamehash}{4bd3b392874c74fba4ed57a24eae0ac1}
+      \strng{authorbibnamehash}{4bd3b392874c74fba4ed57a24eae0ac1}
+      \strng{authornamehash}{4bd3b392874c74fba4ed57a24eae0ac1}
+      \strng{authorfullhash}{4bd3b392874c74fba4ed57a24eae0ac1}
+      \strng{authorfullhashraw}{4bd3b392874c74fba4ed57a24eae0ac1}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Containerize a Node.js application - Docker Documentation}
+      \field{urlday}{22}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://docs.docker.com/language/nodejs/containerize/
+      \endverb
+      \verb{url}
+      \verb https://docs.docker.com/language/nodejs/containerize/
+      \endverb
+    \endentry
+    \entry{gcr}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=7b568e72d25af32b0cec03e49cbf3f70}{%
+           family={{Google LLC}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{7b568e72d25af32b0cec03e49cbf3f70}
+      \strng{fullhash}{7b568e72d25af32b0cec03e49cbf3f70}
+      \strng{fullhashraw}{7b568e72d25af32b0cec03e49cbf3f70}
+      \strng{bibnamehash}{7b568e72d25af32b0cec03e49cbf3f70}
+      \strng{authorbibnamehash}{7b568e72d25af32b0cec03e49cbf3f70}
+      \strng{authornamehash}{7b568e72d25af32b0cec03e49cbf3f70}
+      \strng{authorfullhash}{7b568e72d25af32b0cec03e49cbf3f70}
+      \strng{authorfullhashraw}{7b568e72d25af32b0cec03e49cbf3f70}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{What is Cloud Run? - Google Cloud Architecture Center}
+      \field{urlday}{22}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://cloud.google.com/run/docs/overview/what-is-cloud-run
+      \endverb
+      \verb{url}
+      \verb https://cloud.google.com/run/docs/overview/what-is-cloud-run
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
