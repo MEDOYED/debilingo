@@ -1,0 +1,16 @@
+\babel@toc {polish}{}\relax 
+\contentsline {section}{\numberline {1}Wstęp}{2}{section.1}%
+\contentsline {section}{\numberline {2}Cel projektu}{3}{section.2}%
+\contentsline {section}{\numberline {3}Przegląd istniejących rozwiązań}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Duolingo}{4}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Quizlet}{4}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Anki}{4}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Opis architektury}{5}{section.4}%
+\contentsline {section}{\numberline {5}Opis implementacji}{6}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Frontend}{6}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Backend}{7}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Baza Danych}{7}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Docker}{7}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Testy}{8}{subsection.5.5}%
+\contentsline {section}{\numberline {6}Podsumowanie i wnioski}{9}{section.6}%
+\contentsline {section}{Bibliografia}{12}{section*.4}%

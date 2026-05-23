@@ -1,0 +1,157 @@
+\documentclass[times]{san}
+
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{float}
+
+\bibliografia{bibliografia.bib}
+
+\uczelnia{Społeczna Akademia Nauk}
+\przedmiot{Systemy Szkieletowe}
+\autor{Maksym Mokriakov}
+\nralbumu{121261}
+\grupa{2}
+\tytul{Debilingo -- aplikacja webowa wspierająca naukę języków obcych z elementami grywalizacji}
+\prowadzacy{mgr inż. Krystian Gumiński}
+\miasto{Łódź}
+\rok{2026}
+
+\begin{document}
+
+\maketitlepage
+\spistresci
+
+\section{Wstęp}
+
+Nauka języków obcych jest procesem długotrwałym, który wymaga regularności i dużego zaangażowania. W dobie powszechnego dostępu do urządzeń mobilnych, aplikacje wspomagające naukę stały się niezwykle popularne, jednak wiele z nich traci użytkowników z powodu szybkiego spadku motywacji po pierwszych dniach korzystania. 
+
+Niniejszy projekt, noszący nazwę "Debilingo", ma na celu rozwiązanie tego problemu. Aplikacja łączy w sobie funkcjonalność osobistego słownika do nauki obcych słówek z silnymi mechanizmami grywalizacji (gamifikacji). Użytkownicy są nagradzani za regularność punktami doświadczenia (XP), rozwijają swój wirtualny poziom oraz budują "Daily streak" (codzienną serię). W raporcie przedstawiono architekturę rozwiązania, zastosowane technologie oraz kluczowe aspekty implementacyjne.
+
+\section{Cel projektu}
+
+Głównym celem projektu jest stworzenie nowoczesnej i responsywnej aplikacji webowej, zoptymalizowanej pod kątem urządzeń mobilnych, która umożliwi użytkownikom efektywną naukę słownictwa poprzez samodzielnie tworzone listy słów połączone z elementami motywującymi.
+
+Wymagania funkcjonalne obejmują:
+\begin{itemize}
+    \item Rejestrację, logowanie oraz zarządzanie profilem użytkownika.
+    \item Tworzenie własnych, spersonalizowanych słowników językowych.
+    \item Dodawanie par słówek do wybranych słowników.
+    \item Śledzenie postępów użytkownika (system poziomów, naliczanie punktów XP, codzienne serie).
+\end{itemize}
+
+Wymagania niefunkcjonalne to między innymi wysoka wydajność, niezawodność, zastosowanie architektury "Mobile-first" oraz pełne pokrycie kluczowych funkcjonalności testami automatycznymi. Skalowalność systemu zapewniono dzięki chmurze obliczeniowej i konteneryzacji.
+
+\section{Przegląd istniejących rozwiązań}
+
+Na rynku istnieje wiele aplikacji wspierających naukę języków, z których każda kładzie nacisk na inne aspekty edukacji. Analiza tych systemów pozwoliła na zidentyfikowanie zarówno dobrych praktyk, jak i obszarów wymagających poprawy.
+
+\subsection{Duolingo}
+Duolingo jest obecnie jedną z najpopularniejszych aplikacji do nauki języków na świecie. Jej ogromną zaletą jest niezwykle rozbudowany system grywalizacji, który silnie motywuje do codziennych ćwiczeń. Wadą dla zaawansowanych użytkowników jest jednak z góry narzucony program nauczania i brak możliwości wprowadzania własnego słownictwa z określonej branży (np. IT).
+
+\subsection{Quizlet}
+Quizlet to platforma oparta na wirtualnych fiszkach (flashcards), pozwalająca na tworzenie własnych zestawów słówek. Jest to bardzo elastyczne narzędzie, często wykorzystywane w szkołach i na uczelniach. Niestety, w darmowej wersji brakuje zaawansowanych mechanizmów podtrzymujących zaangażowanie i długotrwałą motywację (elementów gry), przez co proces nauki po pewnym czasie może wydawać się nużący.
+
+\subsection{Anki}
+Anki to potężne oprogramowanie wykorzystujące algorytm Spaced Repetition (rozłożonych w czasie powtórek). Pozwala na naukę czegokolwiek, od słówek po medycynę. Choć jest niesamowicie skuteczne, jego interfejs jest archaiczny i skomplikowany dla nowych użytkowników, a brak jakiejkolwiek grywalizacji sprawia, że wymaga żelaznej dyscypliny.
+
+\vspace{0.5cm}
+Debilingo stara się połączyć najlepsze cechy wyżej wymienionych systemów: elastyczność w dodawaniu własnych słówek (Quizlet) oraz wciągające mechanizmy motywacyjne i łatwy w obsłudze interfejs (Duolingo). Na rysunku \ref{fig:screen1} przedstawiono poglądowy widok aplikacji realizującej te założenia.
+
+
+
+\section{Opis architektury}
+
+System został zaprojektowany z wykorzystaniem architektury rozproszonej typu klient-serwer, opierając się o nowoczesne rozwiązania chmurowe. Tabela \ref{tab:architektura} prezentuje podział na główne warstwy.
+
+\begin{table}[h]
+\centering
+\caption{Główne komponenty architektury systemu}
+\label{tab:architektura}
+\begin{tabular}{|c|p{4cm}|p{8cm}|}
+\hline
+Lp. & Komponent          & Technologia i rola \\
+\hline
+1   & Frontend (Aplikacja kliencka) & Vercel. Odpowiada za warstwę prezentacji (UI/UX). Oparta o React. \\
+2   & Backend (API)      & Google Cloud Run. Realizuje logikę biznesową (Node.js, Express) z zachowaniem pełnej skalowalności. \\
+3   & Baza danych        & Supabase (PostgreSQL). Platforma BaaS przechowująca dane użytkowników i słowniki. \\
+\hline
+\end{tabular}
+\end{table}
+
+Aplikacja frontendowa komunikuje się z serwerem backendowym za pośrednictwem żądań HTTP (REST API). Część zadań, takich jak natychmiastowe autoryzowanie sesji, wspierana jest również bezpośrednio przez klienta biblioteki Supabase w przeglądarce. Serwer backendowy jest całkowicie bezstanowy, co umożliwia jego bezpieczną konteneryzację w usłudze Google Cloud Run.
+
+\section{Opis implementacji}
+
+Implementacja systemu została podzielona na odrębne moduły zarządzane w ramach struktury monorepozytorium (oddzielne katalogi \texttt{web-app} oraz \texttt{backend}). 
+
+\subsection{Frontend}
+Frontend został zaimplementowany jako aplikacja Single Page Application (SPA) przy użyciu biblioteki React \cite{react} (w wersji 19) oraz języka TypeScript \cite{ts}. Jako narzędzie budujące wykorzystano Vite \cite{vite}, co znacząco przyspieszyło proces developmentu. Architektura kodu po stronie klienta oparta jest na nowoczesnej metodologii Feature-Sliced Design (FSD) \cite{fsd}, co widać w strukturze katalogów (\texttt{app}, \texttt{entities}, \texttt{features}, \texttt{pages}, \texttt{shared}, \texttt{widgets}). Zarządzanie stanem globalnym, w tym śledzenie punktów XP oraz trwającej serii użytkownika, powierzono bibliotece Zustand \cite{zustand}.
+
+Interfejs został zaprojektowany zgodnie z podejściem Mobile-first.
+% Interfejs został zaprojektowany zgodnie z podejściem Mobile-first (Rysunek \ref{fig:screen2}).
+
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.45\textwidth]{image-1.png}
+%     \caption{Poglądowy interfejs aplikacji mobilnej -- podsumowanie postępów}
+%     \label{fig:screen1}
+%     \end{figure}
+
+
+
+    \begin{figure}[h]
+        \centering
+    
+        \begin{subfigure}[t]{0.45\textwidth}
+            \centering
+            \includegraphics[height=0.55\textheight]{image-1.png}
+            \caption{Strona główna}
+            \label{fig:screen1}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[t]{0.45\textwidth}
+            \centering
+            \includegraphics[height=0.55\textheight]{image-2.png}
+            \caption{Słownik}
+            \label{fig:screen2}
+        \end{subfigure}
+    
+        \caption{Poglądowy interfejs aplikacji mobilnej}
+        \label{fig:two_screens}
+    \end{figure}
+
+
+\subsection{Backend}
+Warstwa serwerowa została napisana z wykorzystaniem środowiska uruchomieniowego Node.js oraz frameworka Express.js. Całość zaimplementowano w języku TypeScript dla zachowania typowania (Type-Safety) na każdym etapie. Głównym zadaniem backendu jest obsługa zaawansowanej logiki biznesowej, bezpieczna wymiana danych oraz zarządzanie słownikami użytkowników. 
+
+
+
+\subsection{Baza Danych}
+Projekt wykorzystuje usługę Supabase \cite{supabase}, będącą otwartoźródłową alternatywą dla Firebase, pod spodem opierającą się na relacyjnej bazie danych PostgreSQL. Dzięki zastosowaniu mechanizmów Row Level Security (RLS) wbudowanych w Supabase, dane są całkowicie bezpieczne na poziomie bazy -- każdy użytkownik ma wgląd i możliwość modyfikacji wyłącznie własnych słowników i postępów. 
+
+
+\subsection{Docker}
+W celu łatwego i bezawaryjnego przenoszenia środowiska aplikacyjnego, backend został w pełni skonteneryzowany z użyciem technologii Docker \cite{docker}. Zbudowany obraz kontenera zawierający Node.js, zainstalowane zależności (\texttt{node\_modules}) i zbudowane pliki źródłowe, pozwala na uruchomienie aplikacji w dowolnym środowisku produkcyjnym -- ostatecznie wybrano elastyczną usługę Google Cloud Run \cite{gcr}, która skaluje ilość instancji w zależności od obciążenia.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{dockerfile.png}
+    \caption{Dockerfile}
+    \label{fig:one_screen}
+\end{figure}
+
+\subsection{Testy}
+Biorąc pod uwagę jakość wytworzonego oprogramowania, wprowadzono rygorystyczne procedury testowe. Do testów jednostkowych (Unit tests) na frontendzie użyto nowoczesnego i niezwykle szybkiego narzędzia Vitest, które współpracuje z systemem budowania Vite. Dodatkowo, w projekcie zaimplementowano testy end-to-end (E2E) korzystając z frameworka Playwright, które symulują realne zachowanie użytkownika przechodzącego przez ekrany aplikacji. Kod sprawdzany jest również linterem (ESLint) oraz formaterem (Prettier).
+
+\section{Podsumowanie i wnioski}
+
+W ramach zrealizowanego projektu stworzono w pełni funkcjonalną i nowoczesną aplikację wspomagającą naukę języków obcych (Debilingo). Udało się pomyślnie zintegrować mechanizmy grywalizacji z narzędziem typu "flashcards", co znacząco zwiększa motywację do codziennej nauki.
+Zastosowanie technologii takich jak React 19, TypeScript oraz Supabase znacznie skróciło czas tworzenia oprogramowania i pozwoliło skupić się na dostarczeniu intuicyjnego interfejsu (UX).
+
+Największym wyzwaniem w projekcie okazało się prawidłowe zaprojektowanie relacji w bazie danych PostgreSQL oraz obsługa stanu globalnego na frontendzie, co zostało skutecznie rozwiązane dzięki elastyczności biblioteki Zustand. System jest otwarty na rozbudowę. W przyszłości planowane jest dodanie m.in. systemu znajomych, globalnych rankingów użytkowników oraz generowania przykładowych zdań dla nowych słówek przy pomocy sztucznej inteligencji.
+
+\spistabel
+\spisrysunkow
+\printbibliography
+
+\end{document}
