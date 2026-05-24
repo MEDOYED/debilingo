@@ -2,6 +2,7 @@ export interface DailyActivity {
   id: string;
   date: string;
   money_count: number;
+  study_time_seconds: number;
   user_id: string;
   created_at: string;
 }

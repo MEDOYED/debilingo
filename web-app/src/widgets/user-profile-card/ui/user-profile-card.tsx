@@ -65,6 +65,10 @@ export const UserProfileCard = ({ className }: UserProfileCardProps) => {
       <div>До нового рівня залишилося {needPercentageToNextLevel}%</div>
 
       <div>До нового рівня залишилося {neededXpForNextLevel}xp</div>
+
+      <div>
+        Загальний час навчання: {profileData?.totalStudyTimeSeconds} секунд
+      </div>
     </div>
   );
 };

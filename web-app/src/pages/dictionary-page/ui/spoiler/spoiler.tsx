@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 
-import { useProfileStore } from "@entities/profile";
 import { cn } from "@shared/lib/styles";
 
+import { useStudyInfoModalStore } from "@widgets/study-info-modal/model/use-study-info-modal-store";
 import s from "./spoiler.module.scss";
 
 interface SpoilerProps {
@@ -146,7 +146,7 @@ export const Spoiler = ({
     };
   }, [revealed]);
 
-  const { updateStudyActivity } = useProfileStore();
+  const { increaseXpCounter } = useStudyInfoModalStore();
 
   const handleClick = () => {
     if (isVisible) return; // Клік працює тільки коли глобально приховано
@@ -157,7 +157,7 @@ export const Spoiler = ({
       cancelAnimationFrame(animationRef.current);
     }
 
-    updateStudyActivity(1);
+    increaseXpCounter(1);
   };
 
   return (

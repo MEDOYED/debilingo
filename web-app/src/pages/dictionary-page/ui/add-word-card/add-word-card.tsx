@@ -58,7 +58,7 @@ export const AddWordCardModal = () => {
 
     setWords([newWord, ...words]);
 
-    updateStudyActivity(10);
+    updateStudyActivity(10, 0);
 
     resetFields();
     closeCardCreateWord();

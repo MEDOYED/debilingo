@@ -4,6 +4,10 @@ import { useParams } from "react-router-dom";
 import { getWords } from "@shared/api/wordApi";
 import { cn } from "@shared/lib/styles";
 import { ChevronDown } from "@shared/ui/icons";
+import {
+  StudyInfoModal,
+  useStudyInfoModalStore,
+} from "@widgets/study-info-modal";
 
 import { useAddWordStore } from "./model/use-add-word-store";
 import { useLanguageRowStore } from "./model/use-language-row-store";
@@ -29,6 +33,8 @@ export const DictionaryPage = () => {
     useLanguageRowStore();
   const { setWords, words } = useAddWordStore();
   const { isReversed } = useSwitchColStore();
+
+  const { xpCounter } = useStudyInfoModalStore();
 
   useEffect(() => {
     const loadWords = async () => {
@@ -121,6 +127,8 @@ export const DictionaryPage = () => {
         </ul>
 
         <AddWordCardModal />
+
+        {xpCounter > 0 && <StudyInfoModal />}
       </main>
     </div>
   );
