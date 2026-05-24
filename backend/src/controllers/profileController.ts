@@ -8,6 +8,7 @@ type ProfileResponse = {
   dailyStreak: number;
   lastStudyDate: string | null;
   totalXp: number;
+  totalStudyTimeSeconds: number;
   avatarKey: string | null;
   createdAt: string | null;
   userIdNumeric: string | null;
@@ -18,6 +19,7 @@ type ProfileWithUser = {
   daily_streak: number;
   last_study_date: string | null;
   total_xp: number;
+  total_study_time_seconds: number;
   avatar_key: string | null;
   users: {
     created_at: string;
@@ -38,7 +40,7 @@ export const getMyProfile = async (req: AuthRequest, res: Response): Promise<voi
   const { data, error } = await supabase
     .from("profiles")
     .select(
-      "username, daily_streak, last_study_date, total_xp, avatar_key, users(created_at, user_id_numeric)"
+      "username, daily_streak, last_study_date, total_xp, total_study_time_seconds, avatar_key, users(created_at, user_id_numeric)"
     )
     .eq("user_id", userId)
     .single<ProfileWithUser>();
@@ -62,6 +64,7 @@ export const getMyProfile = async (req: AuthRequest, res: Response): Promise<voi
     dailyStreak: profileData.daily_streak,
     lastStudyDate: profileData.last_study_date,
     totalXp: profileData.total_xp,
+    totalStudyTimeSeconds: profileData.total_study_time_seconds,
     avatarKey: profileData.avatar_key,
     createdAt: profileData.users?.created_at ?? null,
     userIdNumeric: profileData.users?.user_id_numeric ?? null,
@@ -135,10 +138,15 @@ export const studyActivity = async (req: AuthRequest, res: Response): Promise<vo
 
   // ---
 
-  const { xpDelta } = req.body;
+  const { xpDelta, timeDelta } = req.body;
 
   if (typeof xpDelta !== "number") {
-    res.status(400).json({ error: "This value should be a number!" });
+    res.status(400).json({ error: "This value (xpDelta) should be a number!" });
+    return;
+  }
+
+  if (typeof timeDelta !== "number") {
+    res.status(400).json({ error: "This value (timeDelta) should be a number!" });
     return;
   }
 
@@ -151,7 +159,7 @@ export const studyActivity = async (req: AuthRequest, res: Response): Promise<vo
 
   const { data, error } = await supabase
     .from("profiles")
-    .select("daily_streak, last_study_date, total_xp")
+    .select("daily_streak, last_study_date, total_xp, total_study_time_seconds")
     .eq("user_id", userId)
     .single();
 
@@ -167,7 +175,7 @@ export const studyActivity = async (req: AuthRequest, res: Response): Promise<vo
     return;
   }
 
-  const { daily_streak, last_study_date, total_xp } = data;
+  const { daily_streak, last_study_date, total_xp, total_study_time_seconds } = data;
 
   // ---
 
@@ -191,6 +199,7 @@ export const studyActivity = async (req: AuthRequest, res: Response): Promise<vo
   // ---
 
   const updatedXp = total_xp + xpDelta;
+  const updatedTime = total_study_time_seconds + timeDelta;
 
   const { error: updateStudyActivityError } = await supabase
     .from("profiles")
@@ -198,6 +207,7 @@ export const studyActivity = async (req: AuthRequest, res: Response): Promise<vo
       daily_streak: updatedStreak,
       last_study_date: todayStr,
       total_xp: updatedXp,
+      total_study_time_seconds: updatedTime,
     })
     .eq("user_id", userId);
 
@@ -206,5 +216,10 @@ export const studyActivity = async (req: AuthRequest, res: Response): Promise<vo
     return;
   }
 
-  res.json({ dailyStreak: updatedStreak, lastStudyDate: todayStr, totalXp: updatedXp });
+  res.json({
+    dailyStreak: updatedStreak,
+    lastStudyDate: todayStr,
+    totalXp: updatedXp,
+    totalStudyTimeSeconds: updatedTime,
+  });
 };

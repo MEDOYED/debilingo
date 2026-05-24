@@ -20,9 +20,13 @@ export const updateMyUsername = async (
 };
 
 export const studyActivity = async (
-  xpDelta: number
+  xpDelta: number,
+  timeDelta: number
 ): Promise<StudyResponse> => {
-  const response = await apiClient.post("/profile/study", { xpDelta });
+  const response = await apiClient.post("/profile/study", {
+    xpDelta,
+    timeDelta,
+  });
 
   return response.data;
 };
