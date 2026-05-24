@@ -34,5 +34,5 @@
       "@widgets/*": ["src/widgets/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "../JEE-Guminski/cn.test.ts"]
 }

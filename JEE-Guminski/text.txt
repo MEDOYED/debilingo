@@ -1,0 +1,24 @@
+Dokumentacja projektu
+
+Zobowiązani jesteście do przygotowania sprawozdania w formie "pracy dyplomowej", które powinno zawierać:
+
+Wstęp – ogólne wprowadzenie do tematyki projektu.
+Cel projektu – określenie problemu, który rozwiązuje aplikacja, oraz celów, jakie ma spełniać.
+Przegląd istniejących rozwiązań – analiza trzech podobnych rozwiązań dostępnych na rynku.
+Opis architektury – szczegółowy opis struktury systemu, stosowanych technologii i sposobu komunikacji między komponentami.
+Opis implementacji – omówienie kluczowych aspektów implementacyjnych, z podziałem na backend, frontend i bazę danych.
+Podsumowanie i wnioski – omówienie rezultatów pracy, napotkanych wyzwań i możliwości dalszego rozwoju.
+Bibliografia – źródła wykorzystane w trakcie pracy.
+Ocena projektu
+
+Kryteria oceny będą obejmować:
+
+Poprawność działania aplikacji – zgodność z wymaganiami funkcjonalnymi i niefunkcjonalnymi.
+Jakość kodu – czytelność, stosowanie dobrych praktyk programistycznych.
+Struktura i organizacja repozytorium – poprawność zastosowania Docker, systemu kontroli wersji (np. Git).
+Kompletność dokumentacji – jakość opracowania raportu zgodnie z wymaganiami.
+Testy i ich skuteczność – implementacja i pokrycie kodu testami.
+
+Sprawozdanie zgodnie z szablonem Latex.
+=== EDIT 26.03.2026 ===
+Udostępniono, zaktualizowany szablon. Jedyne co uległo zmianie, to parę linijek w klasie san.cls - poprawia mapowanie polskich znaków - dziękuje za zwrócenie uwagi. Jeśli ktoś zaczął robić sprawozdanie to nic się nie zmieniło, wystarczy podmienić plik cls na nowy i wszystko będzie działać
