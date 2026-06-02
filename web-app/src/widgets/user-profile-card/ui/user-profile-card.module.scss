@@ -1,3 +1,10 @@
+.UserProfileCard {
+  background-color: var(--md-sys-color-surface-container-low);
+  border-radius: 6px;
+  padding: 7px;
+  margin-top: 7px;
+}
+
 .profileLogoAndName {
   display: flex;
   gap: 20px;
@@ -19,4 +26,20 @@
 .progressBarCard {
   display: flex;
   gap: 20px;
+}
+
+.block {
+  margin-top: 20px;
+  background-color: var(--md-sys-color-secondary-container);
+  border-radius: 7px;
+  padding: 8px;
+
+  .label {
+    opacity: 0.8;
+  }
+
+  .dataText {
+    font-size: 28px;
+    color: --md-sys-color-on-secondary-container;
+  }
 }
