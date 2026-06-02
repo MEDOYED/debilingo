@@ -1,6 +1,9 @@
 import profileLogo from "/img/profile-logos/logo.webp";
 
+import { cn } from "@shared/lib/styles";
+
 import {
+  convertTime,
   LevelProgressBar,
   levelXp,
   StreakIcon,
@@ -25,8 +28,12 @@ export const UserProfileCard = ({ className }: UserProfileCardProps) => {
     userXpOnCurrentLevel,
   } = levelXp(profileData?.totalXp);
 
+  const { hoursString, minutesString, secondsString } = convertTime(
+    profileData?.totalStudyTimeSeconds
+  );
+
   return (
-    <div className={className}>
+    <div className={cn(s.UserProfileCard, className)}>
       <div className={s.profileLogoAndName}>
         <img
           className={s.logo}
@@ -66,8 +73,11 @@ export const UserProfileCard = ({ className }: UserProfileCardProps) => {
 
       <div>До нового рівня залишилося {neededXpForNextLevel}xp</div>
 
-      <div>
-        Загальний час навчання: {profileData?.totalStudyTimeSeconds} секунд
+      <div className={s.block}>
+        <div className={s.label}>час навчання</div>
+        <div className={s.dataText}>
+          {hoursString} : {minutesString} : {secondsString}
+        </div>
       </div>
     </div>
   );
