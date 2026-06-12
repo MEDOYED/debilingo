@@ -5,13 +5,13 @@ import express, { NextFunction, Request, Response } from "express";
 import activityRoutes from "./routes/activity.js";
 import authRoutes from "./routes/authRoutes.js";
 import dictionaryRoutes from "./routes/dictionaryRoutes.js";
+import leaderboardRoutes from "./routes/leaderboardRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
 import wordRoutes from "./routes/wordRoutes.js";
 
 dotenv.config();
 
 export const app = express();
-// const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(
@@ -48,6 +48,7 @@ app.use("/api/dictionaries", dictionaryRoutes);
 app.use("/api", activityRoutes);
 app.use("/api", wordRoutes);
 app.use("/api", profileRoutes);
+app.use("/api", leaderboardRoutes);
 
 // 404 handler
 app.use((req: Request, res: Response) => {
