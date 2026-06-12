@@ -2,8 +2,8 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { DictionariesPage } from "@pages/dictionaries-page";
 import { HomePage } from "@pages/home-page";
+import { LeaderboardsPage } from "@pages/leaderboards-page";
 import { LoginPage } from "@pages/login-page";
-import { RatingPage } from "@pages/rating-page";
 import { RegisterPage } from "@pages/register-page";
 import { TrainingPage } from "@pages/training-page";
 
@@ -50,8 +50,8 @@ export const router = createBrowserRouter([
         element: <TrainingPage />,
       },
       {
-        path: "/rating",
-        element: <RatingPage />,
+        path: "/leaderboards",
+        element: <LeaderboardsPage />,
       },
     ],
   },

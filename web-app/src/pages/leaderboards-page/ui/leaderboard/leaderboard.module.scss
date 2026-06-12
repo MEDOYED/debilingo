@@ -1,0 +1,22 @@
+.list {
+}
+
+.listItem {
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.positonNumber {
+  width: 40px;
+}
+
+.username {
+}
+
+.leaderboardValue {
+  margin-left: auto;
+}
