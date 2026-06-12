@@ -26,7 +26,7 @@ export const navigationListData: NavigationItem[] = [
   },
 
   {
-    to: "/rating",
+    to: "/leaderboards",
     Icon: Trophy,
     label: "Rating page",
   },
