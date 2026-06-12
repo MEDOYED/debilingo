@@ -4,7 +4,7 @@ import { Router } from "express";
 // import ... dont forget .js at the end
 import { getLeaderboardTotalXp } from "../controllers/leaderboardController.js";
 
-import { authMiddleware } from "../middleware/authMiddleware";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = Router();
 
