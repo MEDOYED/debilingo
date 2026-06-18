@@ -14,7 +14,7 @@ type SwipeWordCardProps = {
   wordPinnedAt: Word["pinned_at"];
 };
 
-type MoveDirection = "right" | "left";
+type MoveDirectionX = "right" | "left";
 
 export const SwipeWordCard = ({
   children,
@@ -25,12 +25,15 @@ export const SwipeWordCard = ({
 
   const [firstFingerHorizontalPosition, setFirstFingerHorizontalPosition] =
     useState<number | null>(null);
+  const [firstFingerVerticalPosition, setFirstFingerVerticalPosition] =
+    useState<number | null>(null);
 
   const [shiftLength, setShiftLength] = useState<number | null>(null);
 
-  const [moveDirection, setMoveDirection] = useState<MoveDirection | null>(
+  const [moveDirectionX, setMoveDirectionX] = useState<MoveDirectionX | null>(
     null
   );
+  const [isMoveDirectionY, setIsMoveDirectionY] = useState<boolean>(false);
 
   const [isOpenLeft, setIsOpenLeft] = useState<boolean>(false);
   const [isOpenRight, setIsOpenRight] = useState<boolean>(false);
@@ -49,6 +52,7 @@ export const SwipeWordCard = ({
     // console.log("Відстань зліва", touch.clientX);
 
     setFirstFingerHorizontalPosition(touch.clientX);
+    setFirstFingerVerticalPosition(touch.clientY);
   };
 
   // console.log("firstFingerHorizontalPosition: ", firstFingerHorizontalPosition);
@@ -59,10 +63,15 @@ export const SwipeWordCard = ({
     // console.log("Відстань зліва", moveTouch.clientX);
 
     if (!firstFingerHorizontalPosition) return;
+    if (!firstFingerVerticalPosition) return;
 
     setMoveDistanceX(
       Math.abs(firstFingerHorizontalPosition - moveTouch.clientX)
     );
+
+    if (Math.abs(firstFingerVerticalPosition - moveTouch.clientY) > 10) {
+      setIsMoveDirectionY(true);
+    }
 
     if (moveDistanceX < 15) return;
 
@@ -70,11 +79,13 @@ export const SwipeWordCard = ({
       firstFingerHorizontalPosition - moveTouch.clientX
     );
 
+    if (isMoveDirectionY === true) return;
+
     if (firstFingerHorizontalPosition - moveTouch.clientX > 0) {
-      setMoveDirection("left");
+      setMoveDirectionX("left");
       setShiftLength(-currentShiftLength);
     } else {
-      setMoveDirection("right");
+      setMoveDirectionX("right");
       setShiftLength(-currentShiftLength);
     }
 
@@ -89,20 +100,25 @@ export const SwipeWordCard = ({
       return;
     }
 
-    if (moveDirection === "left" && isOpenLeft) {
+    if (moveDirectionX === "left" && isOpenLeft && !isMoveDirectionY) {
       setShiftLength(0);
       setIsOpenLeft(false);
-    } else if (moveDirection === "right" && isOpenRight) {
+    } else if (moveDirectionX === "right" && isOpenRight && !isMoveDirectionY) {
       setShiftLength(0);
       setIsOpenRight(false);
-    } else if (moveDirection === "left") {
+    } else if (moveDirectionX === "left" && !isMoveDirectionY) {
       setShiftLength(-50);
       setIsOpenRight(true);
-    } else if (moveDirection === "right") {
+    } else if (moveDirectionX === "right" && !isMoveDirectionY) {
       setIsOpenLeft(true);
       setShiftLength(50);
+    } else if (isMoveDirectionY) {
+      setIsOpenLeft(false);
+      setIsOpenRight(false);
+      setShiftLength(0);
     }
 
+    setIsMoveDirectionY(false);
     setMoveDistanceX(0);
   };
 
