@@ -2,6 +2,8 @@ import profileLogo from "/img/profile-logos/logo.webp";
 
 import { cn } from "@shared/lib/styles";
 
+import { useUpdateDescriptionModalStore } from "@features/show-update-description";
+
 import {
   convertTime,
   LevelProgressBar,
@@ -10,6 +12,7 @@ import {
   useProfileStore,
 } from "@entities/profile";
 
+import { TextButton } from "@shared/ui/buttons";
 import s from "./user-profile-card.module.scss";
 
 type UserProfileCardProps = {
@@ -18,6 +21,7 @@ type UserProfileCardProps = {
 
 export const UserProfileCard = ({ className }: UserProfileCardProps) => {
   const { profileData } = useProfileStore();
+  const { openUpdateDescriptionModal } = useUpdateDescriptionModalStore();
 
   const {
     currentUserLevelXp,
@@ -34,16 +38,25 @@ export const UserProfileCard = ({ className }: UserProfileCardProps) => {
 
   return (
     <div className={cn(s.UserProfileCard, className)}>
-      <div className={s.profileLogoAndName}>
-        <img
-          className={s.logo}
-          src={profileLogo}
-          alt=""
-        />
-        <div className={s.userInfo}>
-          <span className={s.firstName}>{profileData?.username}</span>
-          <span># {profileData?.userIdNumeric}</span>
+      <div className={s.topRow}>
+        <div className={s.profileLogoAndName}>
+          <img
+            className={s.logo}
+            src={profileLogo}
+            alt=""
+          />
+          <div className={s.userInfo}>
+            <span className={s.firstName}>{profileData?.username}</span>
+            <span># {profileData?.userIdNumeric}</span>
+          </div>
         </div>
+
+        <TextButton
+          as="button"
+          onClick={openUpdateDescriptionModal}
+        >
+          v0.2
+        </TextButton>
       </div>
 
       {/* joined_at and streak */}
