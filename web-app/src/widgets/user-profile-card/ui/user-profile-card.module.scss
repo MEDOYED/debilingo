@@ -5,6 +5,11 @@
   margin-top: 7px;
 }
 
+.topRow {
+  display: flex;
+  justify-content: space-between;
+}
+
 .profileLogoAndName {
   display: flex;
   gap: 20px;

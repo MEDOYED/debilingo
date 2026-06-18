@@ -5,6 +5,8 @@ import { DesktopNavigation } from "../ui/desktop-navigation/desktop-navigation";
 // import { DesktopNavigation } from "@app/ui/desktop-navigation/desktop-navigation";
 import { MobileBottomBar } from "@app/ui/mobile-bottom-bar/ui/mobile-bottom-bar";
 
+import { UpdateDescriptionModal } from "@features/show-update-description";
+
 import { useProfileStore } from "@entities/profile";
 import { useDeviceType } from "@shared/lib/hooks";
 
@@ -26,6 +28,8 @@ const RootLayout = () => {
         <Outlet />
       </div>
       {isMobile && <MobileBottomBar />}
+
+      <UpdateDescriptionModal />
     </div>
   );
 };
