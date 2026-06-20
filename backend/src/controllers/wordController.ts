@@ -20,12 +20,17 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
       return;
     }
 
+    const quantityWords = parseInt(req.query.quantityWords as string) || 10; // 10 is default fallback
+    const offset = parseInt(req.query.offset as string) || 0;
+
     // Отримуємо слова
     const { data: words, error: wordsError } = await supabase
       .from("words")
       .select("*")
       .eq("dictionary_id", dictionaryId)
-      .order("created_at", { ascending: false });
+      .order("pinned_at", { ascending: false, nullsFirst: false })
+      .order("created_at", { ascending: false })
+      .range(offset, offset + quantityWords - 1);
 
     if (wordsError) {
       res.status(500).json({ error: "Failed to fetch words" });
@@ -35,11 +40,10 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
     // Для кожного слова отримуємо translations, definitions, examples
     const wordsWithDetails = await Promise.all(
       (words || []).map(async (word) => {
-        const [translations, definitions, examples, pinnedAt] = await Promise.all([
+        const [translations, definitions, examples] = await Promise.all([
           supabase.from("translations").select("*").eq("word_id", word.id).order("order_index"),
           supabase.from("definitions").select("*").eq("word_id", word.id).order("order_index"),
           supabase.from("examples").select("*").eq("word_id", word.id).order("order_index"),
-          supabase.from("words").select("*").eq("word_id", word.id).order("order_index"),
         ]);
 
         return {
@@ -47,7 +51,6 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
           translations: translations.data || [],
           definitions: definitions.data || [],
           examples: examples.data || [],
-          // pinnedAt: pinnedAt || "",
         };
       })
     );
