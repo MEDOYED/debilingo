@@ -40,7 +40,6 @@ export const DictionaryPage = () => {
 
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
 
   const isLoadingRef = useRef(false);
 
@@ -52,12 +51,11 @@ export const DictionaryPage = () => {
 
     const loadFirst = async () => {
       if (!dictId) return;
-      setIsLoading(true);
+
       const data = await getWords(dictId, LOAD_WORDS, 0);
       setWords(data);
       setHasMore(data.length >= LOAD_WORDS);
       setOffset(data.length);
-      setIsLoading(false);
     };
 
     loadFirst();
@@ -83,13 +81,11 @@ export const DictionaryPage = () => {
   const loadMoreWords = async () => {
     if (!dictId || !hasMore || isLoadingRef.current) return;
     isLoadingRef.current = true;
-    setIsLoading(true);
     const data = await getWords(dictId, LOAD_WORDS, offset);
     appendWords(data);
     setHasMore(data.length >= LOAD_WORDS);
     setOffset((prev) => prev + data.length);
     isLoadingRef.current = false;
-    setIsLoading(false);
   };
 
   const toggleWord = (id: string) => {
@@ -113,7 +109,6 @@ export const DictionaryPage = () => {
 
         <ul className={s.wordsList}>
           {words.map((word) => {
-            // {filteredWithPinData.map((word) => {
             const isCurrent = word.id;
             return (
               <SwipeWordCard
