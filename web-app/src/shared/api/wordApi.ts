@@ -30,9 +30,21 @@ export interface Word {
   pinned_at: string | null;
 }
 
-export const getWords = async (dictionaryId: string): Promise<Word[]> => {
+/**
+ *
+ * @param dictionaryId
+ * @param quantityWords
+ * @param offset
+ * @returns
+ */
+export const getWords = async (
+  dictionaryId: string,
+  quantityWords: number,
+  offset: number
+): Promise<Word[]> => {
   const response = await apiClient.get<Word[]>(
-    `/dictionary/${dictionaryId}/words`
+    `/dictionary/${dictionaryId}/words`,
+    { params: { quantityWords, offset } }
   );
   return response.data;
 };

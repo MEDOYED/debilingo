@@ -24,6 +24,8 @@ type Store = {
   setExample: (newExampleValue: string[]) => void;
   setNote: (newNoteValue: string) => void;
 
+  appendWords: (additionalWords: Word[]) => void;
+
   resetFields: () => void;
 };
 
@@ -88,6 +90,12 @@ export const useAddWordStore = create<Store>((set) => ({
     set({
       words: newWords,
     });
+  },
+
+  appendWords: (additionalWords) => {
+    set((prev) => ({
+      words: [...prev.words, ...additionalWords],
+    }));
   },
 
   resetFields: () => {

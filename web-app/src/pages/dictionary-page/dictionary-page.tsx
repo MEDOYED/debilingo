@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { getWords } from "@shared/api/wordApi";
@@ -24,6 +24,8 @@ import s from "./dictionary-page.module.scss";
 
 type Status = "opening" | "expanded" | "closing" | "unexpanded";
 
+const LOAD_WORDS = 20;
+
 export const DictionaryPage = () => {
   const { dictId } = useParams();
   const [openWordId, setOpenWordId] = useState<string | null>(null);
@@ -31,21 +33,60 @@ export const DictionaryPage = () => {
 
   const { isMainLanguageColVisible, isTranslationColVisible } =
     useLanguageRowStore();
-  const { setWords, words } = useAddWordStore();
+  const { setWords, words, appendWords } = useAddWordStore();
   const { isReversed } = useSwitchColStore();
 
   const { xpCounter } = useStudyInfoModalStore();
 
-  useEffect(() => {
-    const loadWords = async () => {
-      if (!dictId) return;
-      const data = await getWords(dictId);
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
 
+  const isLoadingRef = useRef(false);
+
+  // initial load when dictId changes
+  useEffect(() => {
+    setOffset(0);
+    setHasMore(true);
+    setWords([]);
+
+    const loadFirst = async () => {
+      if (!dictId) return;
+
+      const data = await getWords(dictId, LOAD_WORDS, 0);
       setWords(data);
+      setHasMore(data.length >= LOAD_WORDS);
+      setOffset(data.length);
     };
 
-    loadWords();
+    loadFirst();
   }, [dictId]);
+
+  //scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      const distanceToBottom =
+        document.documentElement.scrollHeight -
+        (window.scrollY + window.innerHeight);
+
+      if (distanceToBottom < 500 && hasMore && !isLoadingRef.current) {
+        loadMoreWords();
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasMore, offset, dictId]);
+
+  const loadMoreWords = async () => {
+    if (!dictId || !hasMore || isLoadingRef.current) return;
+    isLoadingRef.current = true;
+    const data = await getWords(dictId, LOAD_WORDS, offset);
+    appendWords(data);
+    setHasMore(data.length >= LOAD_WORDS);
+    setOffset((prev) => prev + data.length);
+    isLoadingRef.current = false;
+  };
 
   const toggleWord = (id: string) => {
     if (openWordId === id) {
@@ -59,20 +100,6 @@ export const DictionaryPage = () => {
     }
   };
 
-  let filteredWithPinData = [];
-
-  for (let i = 0; i < words.length; i++) {
-    if (words[i].pinned_at) {
-      filteredWithPinData.push(words[i]);
-    }
-  }
-
-  for (let i = 0; i < words.length; i++) {
-    if (words[i].pinned_at === null) {
-      filteredWithPinData.push(words[i]);
-    }
-  }
-
   return (
     <div>
       {/* <div className="container"> */}
@@ -81,7 +108,7 @@ export const DictionaryPage = () => {
         <LanguageRow />
 
         <ul className={s.wordsList}>
-          {filteredWithPinData.map((word) => {
+          {words.map((word) => {
             const isCurrent = word.id;
             return (
               <SwipeWordCard
