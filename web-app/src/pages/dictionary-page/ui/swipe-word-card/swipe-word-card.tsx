@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
 
 import { deleteWord, pinWord, unpinWord, type Word } from "@shared/api/wordApi";
-import { Pin, Trash, Unpin } from "@shared/ui/icons";
+import { Edit, Pin, Trash, Unpin } from "@shared/ui/icons";
 
 import { useAddWordStore } from "../../model/use-add-word-store";
 import { useSwipeWordCardStore } from "../../model/use-swipe-word-card";
+import { useWordStore } from "../../model/use-word-store";
 
 import s from "./swipe-word-card.module.scss";
 
@@ -42,7 +43,10 @@ export const SwipeWordCard = ({
 
   // console.log("currentWordId: ", id);
 
-  const { swipedWordId, setSwipedWordId } = useSwipeWordCardStore();
+  const { swipedWordId, setSwipedWordId, setEditableWordId } =
+    useSwipeWordCardStore();
+
+  const { setOpenWordId, setStatus } = useWordStore();
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setSwipedWordId(id);
@@ -111,7 +115,7 @@ export const SwipeWordCard = ({
       setIsOpenRight(true);
     } else if (moveDirectionX === "right" && !isMoveDirectionY) {
       setIsOpenLeft(true);
-      setShiftLength(50);
+      setShiftLength(100);
     } else if (isMoveDirectionY) {
       setIsOpenLeft(false);
       setIsOpenRight(false);
@@ -169,6 +173,13 @@ export const SwipeWordCard = ({
     setWords(wordsWithoutDeletedWord);
   };
 
+  const handleEditWord = () => {
+    setEditableWordId(id);
+    setOpenWordId(id);
+    setStatus("opening");
+    setTimeout(() => setStatus("expanded"), 500);
+  };
+
   return (
     <li
       ref={wordCardRef}
@@ -192,6 +203,13 @@ export const SwipeWordCard = ({
           }
         >
           {wordPinnedAt === null ? <Pin /> : <Unpin />}
+        </button>
+
+        <button
+          className={s.editBtn}
+          onClick={handleEditWord}
+        >
+          <Edit size={36} />
         </button>
       </div>
 

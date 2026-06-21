@@ -11,7 +11,9 @@ import {
 
 import { useAddWordStore } from "./model/use-add-word-store";
 import { useLanguageRowStore } from "./model/use-language-row-store";
+import { useSwipeWordCardStore } from "./model/use-swipe-word-card";
 import { useSwitchColStore } from "./model/use-switch-col-store";
+import { useWordStore } from "./model/use-word-store";
 
 import { AddWordCardModal } from "./ui/add-word-card/add-word-card";
 import { DictionaryTopBar } from "./ui/dictionary-top-bar/dictionary-top-bar";
@@ -22,14 +24,10 @@ import { WordDetails } from "./ui/word-details/word-details";
 
 import s from "./dictionary-page.module.scss";
 
-type Status = "opening" | "expanded" | "closing" | "unexpanded";
-
 const LOAD_WORDS = 20;
 
 export const DictionaryPage = () => {
   const { dictId } = useParams();
-  const [openWordId, setOpenWordId] = useState<string | null>(null);
-  const [status, setStatus] = useState<Status>("unexpanded");
 
   const { isMainLanguageColVisible, isTranslationColVisible } =
     useLanguageRowStore();
@@ -42,6 +40,11 @@ export const DictionaryPage = () => {
   const [hasMore, setHasMore] = useState(true);
 
   const isLoadingRef = useRef(false);
+
+  const { editableWordId } = useSwipeWordCardStore();
+  const { openWordId, setOpenWordId, status, setStatus } = useWordStore();
+
+  console.log(editableWordId);
 
   // initial load when dictId changes
   useEffect(() => {
