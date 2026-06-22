@@ -8,8 +8,8 @@ import { EditButton } from "@features/edit-word";
 
 import { Pin, Trash, Unpin } from "@shared/ui/icons";
 
+import { useAddWordStore } from "../../../../entities/word/model/use-add-word-store";
 import { useWordStore } from "../../../../entities/word/model/use-word-store";
-import { useAddWordStore } from "../../model/use-add-word-store";
 
 import s from "./swipe-word-card.module.scss";
 

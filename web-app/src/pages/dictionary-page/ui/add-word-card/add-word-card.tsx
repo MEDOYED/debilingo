@@ -4,7 +4,7 @@ import { useProfileStore } from "@entities/profile";
 import { createWord } from "@entities/word/api/wordApi";
 import { FilledButton, TextButton } from "@shared/ui/buttons";
 
-import { useAddWordStore } from "../../model/use-add-word-store";
+import { useAddWordStore } from "../../../../entities/word/model/use-add-word-store";
 import { LabelInputComponent } from "./label-Input-component/label-input-component";
 
 import field from "@shared/styles/components/field.module.scss";

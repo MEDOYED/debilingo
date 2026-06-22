@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { getWords } from "@entities/word/api/wordApi";
+import { useAddWordStore, useWordStore } from "@entities/word";
+import { getWords } from "@entities/word/api";
 import { cn } from "@shared/lib/styles";
 import { ChevronDown } from "@shared/ui/icons";
 import {
@@ -9,8 +10,6 @@ import {
   useStudyInfoModalStore,
 } from "@widgets/study-info-modal";
 
-import { useWordStore } from "../../entities/word/model/use-word-store";
-import { useAddWordStore } from "./model/use-add-word-store";
 import { useLanguageRowStore } from "./model/use-language-row-store";
 import { useSwitchColStore } from "./model/use-switch-col-store";
 
