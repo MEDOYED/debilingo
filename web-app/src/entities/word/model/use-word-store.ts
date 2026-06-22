@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { Word } from "../api";
+import type { Word } from "../types/word-types";
 
 type Status = "opening" | "expanded" | "closing" | "unexpanded";
 
