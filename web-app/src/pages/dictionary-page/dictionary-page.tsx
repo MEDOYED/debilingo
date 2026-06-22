@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { getWords } from "@shared/api/wordApi";
+import { getWords } from "@entities/word/api/wordApi";
 import { cn } from "@shared/lib/styles";
 import { ChevronDown } from "@shared/ui/icons";
 import {
@@ -9,11 +9,10 @@ import {
   useStudyInfoModalStore,
 } from "@widgets/study-info-modal";
 
+import { useWordStore } from "../../entities/word/model/use-word-store";
 import { useAddWordStore } from "./model/use-add-word-store";
 import { useLanguageRowStore } from "./model/use-language-row-store";
-import { useSwipeWordCardStore } from "./model/use-swipe-word-card";
 import { useSwitchColStore } from "./model/use-switch-col-store";
-import { useWordStore } from "./model/use-word-store";
 
 import { AddWordCardModal } from "./ui/add-word-card/add-word-card";
 import { DictionaryTopBar } from "./ui/dictionary-top-bar/dictionary-top-bar";
@@ -41,10 +40,8 @@ export const DictionaryPage = () => {
 
   const isLoadingRef = useRef(false);
 
-  const { editableWordId } = useSwipeWordCardStore();
-  const { openWordId, setOpenWordId, status, setStatus } = useWordStore();
-
-  console.log(editableWordId);
+  const { openWordId, setOpenWordId, status, setStatus, editableWordId } =
+    useWordStore();
 
   // initial load when dictId changes
   useEffect(() => {
@@ -127,12 +124,22 @@ export const DictionaryPage = () => {
                   )}
                 >
                   <div className={cn(s.row, isReversed && s.reverseRow)}>
-                    <Spoiler
-                      className={s.mainCol}
-                      isVisible={isMainLanguageColVisible}
-                    >
-                      {word.source_word}
-                    </Spoiler>
+                    {/*  */}
+                    {editableWordId === word.id ? (
+                      <div>
+                        <input
+                          type="text"
+                          value={word.source_word}
+                        />
+                      </div>
+                    ) : (
+                      <Spoiler
+                        className={s.mainCol}
+                        isVisible={isMainLanguageColVisible}
+                      >
+                        {word.source_word}
+                      </Spoiler>
+                    )}
                     <ChevronDown
                       className={cn(
                         s.openDescription,

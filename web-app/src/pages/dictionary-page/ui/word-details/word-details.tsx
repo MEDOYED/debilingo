@@ -1,4 +1,4 @@
-import type { Word } from "@shared/api/wordApi";
+import type { Word } from "@entities/word/api/wordApi";
 
 import s from "./word-details.module.scss";
 

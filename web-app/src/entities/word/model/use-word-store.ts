@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { Word } from "@shared/api/wordApi";
+import type { Word } from "../api";
 
 type Status = "opening" | "expanded" | "closing" | "unexpanded";
 
@@ -10,11 +10,19 @@ type WordStore = {
 
   status: Status;
   setStatus: (newStatus: Status) => void;
+
+  swipedWordId: Word["id"] | null;
+  setSwipedWordId: (newId: Word["id"] | null) => void;
+
+  editableWordId: Word["id"] | null;
+  setEditableWordId: (newId: Word["id"] | null) => void;
 };
 
 export const useWordStore = create<WordStore>((set) => ({
   openWordId: null,
   status: "unexpanded",
+  swipedWordId: null,
+  editableWordId: null,
 
   setOpenWordId: (newId) => {
     set({
@@ -25,6 +33,18 @@ export const useWordStore = create<WordStore>((set) => ({
   setStatus: (newStatus) => {
     set({
       status: newStatus,
+    });
+  },
+
+  setSwipedWordId: (newId) => {
+    set({
+      swipedWordId: newId,
+    });
+  },
+
+  setEditableWordId: (newId) => {
+    set({
+      editableWordId: newId,
     });
   },
 }));

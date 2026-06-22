@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import { useProfileStore } from "@entities/profile";
-import { createWord } from "@shared/api/wordApi";
+import { createWord } from "@entities/word/api/wordApi";
 import { FilledButton, TextButton } from "@shared/ui/buttons";
 
 import { useAddWordStore } from "../../model/use-add-word-store";

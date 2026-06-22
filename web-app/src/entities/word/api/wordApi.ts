@@ -1,4 +1,4 @@
-import apiClient from "./apiClient";
+import apiClient from "../../../shared/api/apiClient";
 
 export interface Translation {
   id: string;

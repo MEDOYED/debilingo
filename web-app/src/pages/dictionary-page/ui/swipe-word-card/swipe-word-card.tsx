@@ -1,11 +1,15 @@
 import { useRef, useState } from "react";
 
-import { deleteWord, pinWord, unpinWord, type Word } from "@shared/api/wordApi";
+import {
+  deleteWord,
+  pinWord,
+  unpinWord,
+  type Word,
+} from "@entities/word/api/wordApi";
 import { Edit, Pin, Trash, Unpin } from "@shared/ui/icons";
 
+import { useWordStore } from "../../../../entities/word/model/use-word-store";
 import { useAddWordStore } from "../../model/use-add-word-store";
-import { useSwipeWordCardStore } from "../../model/use-swipe-word-card";
-import { useWordStore } from "../../model/use-word-store";
 
 import s from "./swipe-word-card.module.scss";
 
@@ -43,10 +47,13 @@ export const SwipeWordCard = ({
 
   // console.log("currentWordId: ", id);
 
-  const { swipedWordId, setSwipedWordId, setEditableWordId } =
-    useSwipeWordCardStore();
-
-  const { setOpenWordId, setStatus } = useWordStore();
+  const {
+    setOpenWordId,
+    setStatus,
+    swipedWordId,
+    setSwipedWordId,
+    setEditableWordId,
+  } = useWordStore();
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setSwipedWordId(id);
@@ -178,6 +185,7 @@ export const SwipeWordCard = ({
     setOpenWordId(id);
     setStatus("opening");
     setTimeout(() => setStatus("expanded"), 500);
+    setShiftLength(0);
   };
 
   return (
