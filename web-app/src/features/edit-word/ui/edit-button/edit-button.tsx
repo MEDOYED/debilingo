@@ -1,21 +1,19 @@
-import { Edit } from "@shared/ui/icons";
-
+import type { Word } from "@entities/word";
 import {
   useAddWordStore,
   useSwipeWordStore,
   useWordStore,
 } from "@entities/word";
+import { Edit } from "@shared/ui/icons";
+
 import { useEditWordStore } from "../../model/use-edit-word-store";
-
-import type { Word } from "@entities/word";
-
-import s from "./edit-button.module.scss";
 
 type EditButtonProps = {
   id: Word["id"];
+  className?: string;
 };
 
-export const EditButton = ({ id }: EditButtonProps) => {
+export const EditButton = ({ id, className }: EditButtonProps) => {
   const { setEditableWordId, setOpenWordId, setStatus } = useWordStore();
   const { setShiftX } = useSwipeWordStore();
   const { words } = useAddWordStore();
@@ -37,7 +35,7 @@ export const EditButton = ({ id }: EditButtonProps) => {
 
   return (
     <button
-      className={s.editBtn}
+      className={className}
       onClick={handleEditWord}
     >
       <Edit size={36} />
