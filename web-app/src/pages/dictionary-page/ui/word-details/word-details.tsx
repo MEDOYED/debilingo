@@ -2,12 +2,17 @@ import type { Word } from "@entities/word";
 
 import s from "./word-details.module.scss";
 
+import { useWordStore } from "@entities/word";
+import { EditableAdditionalTranslationInput } from "@features/edit-word";
+
 interface WordDetailProps {
   className: string;
   word: Word;
 }
 
 export const WordDetails = ({ className, word }: WordDetailProps) => {
+  const { editableWordId } = useWordStore();
+
   return (
     <div className={className}>
       <div className={s.ulContainer}>
@@ -17,12 +22,16 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
         </p>
 
         <ul className={s.ulClass}>
-          {word.translations.slice(1).map((t) => (
+          {word.translations.slice(1).map((t, index) => (
             <li
               className={s.list}
               key={t.id}
             >
-              {t.text}
+              {editableWordId === word.id ? (
+                <EditableAdditionalTranslationInput inputIndex={index} />
+              ) : (
+                <> {t.text}</>
+              )}
             </li>
           ))}
         </ul>

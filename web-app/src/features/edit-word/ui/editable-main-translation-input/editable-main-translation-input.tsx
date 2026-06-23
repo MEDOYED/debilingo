@@ -1,6 +1,8 @@
 import { useEditWordStore } from "../../model/use-edit-word-store";
 
-import s from "./editable-main-translation-input.module.scss";
+// import s from "./editable-main-translation-input.module.scss";
+
+import s from "@features/edit-word/styles/input.module.scss";
 
 export const EditableMainTranslationInput = () => {
   const { draftTranslations, setDraftTranslations } = useEditWordStore();
