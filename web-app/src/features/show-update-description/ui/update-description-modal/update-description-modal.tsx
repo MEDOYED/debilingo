@@ -37,6 +37,7 @@ export const UpdateDescriptionModal = () => {
               <div>
                 <h2 className={s.version}>v 0.2 </h2>
                 <span className={s.date}>24.06.2026</span>
+                <div className={s.date}>This update took 24 man-hours.</div>
               </div>
 
               <TextButton
