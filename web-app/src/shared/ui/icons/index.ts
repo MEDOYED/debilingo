@@ -1,5 +1,6 @@
 export { ArrowLongRight } from "./arrow-long-right";
 export { ArrowsRightLeft } from "./arrows-right-left/arrows-right-left";
+export { CheckCircle } from "./check-circle/check-circle";
 export { ChevronDown } from "./chevron-down/chevron-down";
 export { DictionaryAdd } from "./dictionary-add";
 export { Edit } from "./edit/edit";
@@ -7,6 +8,7 @@ export { EyeIcon } from "./eye-icon/eye-icon";
 export { EyeSlash } from "./eye-slash/eye-slash";
 export { Gamepad } from "./gamepad";
 export { Home } from "./home";
+export { LoadingCircle } from "./loading-circle/loading-circle";
 export { Pin } from "./pin/pin";
 export { Trash } from "./trash/trash";
 export { Trophy } from "./trophy";

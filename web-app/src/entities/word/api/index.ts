@@ -4,4 +4,5 @@ export {
   getWords,
   pinWord,
   unpinWord,
+  updateWord,
 } from "./wordApi";

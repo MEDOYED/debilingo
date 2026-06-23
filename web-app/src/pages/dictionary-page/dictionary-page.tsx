@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useAddWordStore, useWordStore } from "@entities/word";
 import { getWords } from "@entities/word/api";
 import { cn } from "@shared/lib/styles";
-import { ChevronDown } from "@shared/ui/icons";
 import {
   StudyInfoModal,
   useStudyInfoModalStore,
@@ -20,6 +19,9 @@ import { Spoiler } from "./ui/spoiler/spoiler";
 import { SwipeWordCard } from "./ui/swipe-word-card/swipe-word-card";
 import { WordDetails } from "./ui/word-details/word-details";
 
+import { SubmitEditWordButton } from "@features/edit-word";
+import { EditableSourceWordInput } from "@features/edit-word/ui/editable-source-word-input/editable-source-word-input";
+import { ChevronDown } from "@shared/ui/icons";
 import s from "./dictionary-page.module.scss";
 
 const LOAD_WORDS = 20;
@@ -125,12 +127,13 @@ export const DictionaryPage = () => {
                   <div className={cn(s.row, isReversed && s.reverseRow)}>
                     {/*  */}
                     {editableWordId === word.id ? (
-                      <div>
-                        <input
-                          type="text"
-                          value={word.source_word}
-                        />
-                      </div>
+                      // <div>
+                      //   <input
+                      //     type="text"
+                      //     value={word.source_word}
+                      //   />
+                      // </div>
+                      <EditableSourceWordInput />
                     ) : (
                       <Spoiler
                         className={s.mainCol}
@@ -139,13 +142,19 @@ export const DictionaryPage = () => {
                         {word.source_word}
                       </Spoiler>
                     )}
-                    <ChevronDown
-                      className={cn(
-                        s.openDescription,
-                        openWordId === word.id && s.rotated
-                      )}
-                      onClick={() => toggleWord(word.id)}
-                    />
+
+                    {editableWordId === word.id ? (
+                      <SubmitEditWordButton />
+                    ) : (
+                      <ChevronDown
+                        className={cn(
+                          s.openDescription,
+                          openWordId === word.id && s.rotated
+                        )}
+                        onClick={() => toggleWord(word.id)}
+                      />
+                    )}
+
                     <Spoiler isVisible={isTranslationColVisible}>
                       {word.translations[0]?.text}
                     </Spoiler>

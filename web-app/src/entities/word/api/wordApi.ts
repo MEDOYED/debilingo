@@ -48,3 +48,16 @@ export const unpinWord = async (wordId: string): Promise<Word> => {
 
   return response.data;
 };
+
+export const updateWord = async (
+  wordId: string,
+  data: {
+    source_word?: string;
+    translations?: string[];
+    definitions?: string[];
+    examples?: string[];
+  }
+): Promise<Word> => {
+  const response = await apiClient.patch<Word>(`/words/${wordId}`, data);
+  return response.data;
+};

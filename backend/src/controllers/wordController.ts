@@ -324,3 +324,118 @@ export const unpinWord = async (req: AuthRequest, res: Response): Promise<void> 
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+export const updateWord = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.userId;
+    const { id } = req.params;
+
+    const { source_word, translations, definitions, examples } = req.body;
+
+    // Перевіряємо чи слово належить до словника користувача
+    const { data: word } = await supabase
+      .from("words")
+      .select("id, dictionary_id")
+      .eq("id", id)
+      .single();
+
+    if (!word) {
+      res.status(404).json({ error: "Word not found" });
+      return;
+    }
+
+    const { data: dict } = await supabase
+      .from("dictionaries")
+      .select("id")
+      .eq("id", word.dictionary_id)
+      .eq("user_id", userId)
+      .single();
+
+    if (!dict) {
+      res.status(404).json({ error: "Word not found" });
+      return;
+    }
+
+    const updateFields: Record<string, unknown> = {};
+    if (source_word !== undefined) updateFields.source_word = source_word;
+
+    if (Object.keys(updateFields).length > 0) {
+      const { error: updateError } = await supabase.from("words").update(updateFields).eq("id", id);
+
+      if (updateError) {
+        res.status(500).json({ error: "Failed to update word" });
+        return;
+      }
+    }
+
+    // update translations (remove old and push new)
+    if (translations !== undefined) {
+      await supabase.from("translations").delete().eq("word_id", id);
+
+      if (translations.length > 0) {
+        const translationsData = translations.map((text: string, index: number) => ({
+          word_id: id,
+          text,
+          order_index: index,
+        }));
+        await supabase.from("translations").insert(translationsData);
+      }
+    }
+
+    // update definitions
+    if (definitions !== undefined) {
+      await supabase.from("definitions").delete().eq("word_id", id);
+
+      if (definitions.length > 0) {
+        const definitionsData = definitions.map((text: string, index: number) => ({
+          word_id: id,
+          text,
+          order_index: index,
+        }));
+        await supabase.from("definitions").insert(definitionsData);
+      }
+    }
+
+    // update examples
+    if (examples !== undefined) {
+      await supabase.from("examples").delete().eq("word_id", id);
+
+      if (examples.length > 0) {
+        const examplesData = examples.map((text: string, index: number) => ({
+          word_id: id,
+          text,
+          order_index: index,
+        }));
+        await supabase.from("examples").insert(examplesData);
+      }
+    }
+
+    // return updated word with all data
+    const { data: updatedWord, error: fetchError } = await supabase
+      .from("words")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (fetchError || !updatedWord) {
+      res.status(500).json({ error: "Failed to fetch updated word" });
+      return;
+    }
+
+    const [translationsData, definitionsData, examplesData] = await Promise.all([
+      supabase.from("translations").select("*").eq("word_id", id).order("order_index"),
+      supabase.from("definitions").select("*").eq("word_id", id).order("order_index"),
+      supabase.from("examples").select("*").eq("word_id", id).order("order_index"),
+    ]);
+
+    res.json({
+      ...updatedWord,
+      translations: translationsData.data || [],
+      definitions: definitionsData.data || [],
+      examples: examplesData.data || [],
+    });
+  } catch (error) {
+    console.error("Update word error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
