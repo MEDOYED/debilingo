@@ -3,7 +3,10 @@ import type { Word } from "@entities/word";
 import s from "./word-details.module.scss";
 
 import { useWordStore } from "@entities/word";
-import { EditableAdditionalTranslationInput } from "@features/edit-word";
+import {
+  EditableAdditionalTranslationInput,
+  EditableDefinitionInput,
+} from "@features/edit-word";
 
 interface WordDetailProps {
   className: string;
@@ -30,7 +33,7 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
               {editableWordId === word.id ? (
                 <EditableAdditionalTranslationInput inputIndex={index} />
               ) : (
-                <> {t.text}</>
+                <>{t.text}</>
               )}
             </li>
           ))}
@@ -41,12 +44,16 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
         <p>Пояснення:</p>
 
         <ul className={s.ulClass}>
-          {word.definitions.map((def) => (
+          {word.definitions.map((def, index) => (
             <li
               className={s.list}
               key={def.id}
             >
-              {def.text}
+              {editableWordId === word.id ? (
+                <EditableDefinitionInput inputIndex={index} />
+              ) : (
+                <>{def.text}</>
+              )}
             </li>
           ))}
         </ul>
