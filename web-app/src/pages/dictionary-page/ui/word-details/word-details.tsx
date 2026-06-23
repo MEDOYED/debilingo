@@ -6,6 +6,7 @@ import { useWordStore } from "@entities/word";
 import {
   EditableAdditionalTranslationInput,
   EditableDefinitionInput,
+  EditableExampleInput,
 } from "@features/edit-word";
 
 interface WordDetailProps {
@@ -63,12 +64,16 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
         <p>Приклад{word.examples.length < 2 ? "" : "и"}:</p>
 
         <ul className={s.ulClass}>
-          {word.examples.map((ex) => (
+          {word.examples.map((ex, index) => (
             <li
               className={s.list}
               key={ex.id}
             >
-              {ex.text}
+              {editableWordId === word.id ? (
+                <EditableExampleInput inputIndex={index} />
+              ) : (
+                <>{ex.text}</>
+              )}
             </li>
           ))}
         </ul>
