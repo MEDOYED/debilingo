@@ -20,6 +20,7 @@ import { SwipeWordCard } from "./ui/swipe-word-card/swipe-word-card";
 import { WordDetails } from "./ui/word-details/word-details";
 
 import { SubmitEditWordButton } from "@features/edit-word";
+import { EditableMainTranslationInput } from "@features/edit-word/ui/editable-main-translation-input/editable-main-translation-input";
 import { EditableSourceWordInput } from "@features/edit-word/ui/editable-source-word-input/editable-source-word-input";
 import { ChevronDown } from "@shared/ui/icons";
 import s from "./dictionary-page.module.scss";
@@ -127,12 +128,6 @@ export const DictionaryPage = () => {
                   <div className={cn(s.row, isReversed && s.reverseRow)}>
                     {/*  */}
                     {editableWordId === word.id ? (
-                      // <div>
-                      //   <input
-                      //     type="text"
-                      //     value={word.source_word}
-                      //   />
-                      // </div>
                       <EditableSourceWordInput />
                     ) : (
                       <Spoiler
@@ -155,9 +150,13 @@ export const DictionaryPage = () => {
                       />
                     )}
 
-                    <Spoiler isVisible={isTranslationColVisible}>
-                      {word.translations[0]?.text}
-                    </Spoiler>
+                    {editableWordId === word.id ? (
+                      <EditableMainTranslationInput />
+                    ) : (
+                      <Spoiler isVisible={isTranslationColVisible}>
+                        {word.translations[0]?.text}
+                      </Spoiler>
+                    )}
                   </div>
                   <div className={cn(openWordId === word.id && s.open)}>
                     <WordDetails
