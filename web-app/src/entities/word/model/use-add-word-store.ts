@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { Word } from "@shared/api/wordApi";
+import type { Word } from "@entities/word";
 
 type Store = {
   isOpenCardCreateWord: boolean;

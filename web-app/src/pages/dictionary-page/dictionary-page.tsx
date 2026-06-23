@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { getWords } from "@shared/api/wordApi";
+import { useAddWordStore, useWordStore } from "@entities/word";
+import { getWords } from "@entities/word/api";
 import { cn } from "@shared/lib/styles";
-import { ChevronDown } from "@shared/ui/icons";
 import {
   StudyInfoModal,
   useStudyInfoModalStore,
 } from "@widgets/study-info-modal";
 
-import { useAddWordStore } from "./model/use-add-word-store";
 import { useLanguageRowStore } from "./model/use-language-row-store";
 import { useSwitchColStore } from "./model/use-switch-col-store";
 
@@ -20,16 +19,16 @@ import { Spoiler } from "./ui/spoiler/spoiler";
 import { SwipeWordCard } from "./ui/swipe-word-card/swipe-word-card";
 import { WordDetails } from "./ui/word-details/word-details";
 
+import { SubmitEditWordButton } from "@features/edit-word";
+import { EditableMainTranslationInput } from "@features/edit-word/ui/editable-main-translation-input/editable-main-translation-input";
+import { EditableSourceWordInput } from "@features/edit-word/ui/editable-source-word-input/editable-source-word-input";
+import { ChevronDown } from "@shared/ui/icons";
 import s from "./dictionary-page.module.scss";
-
-type Status = "opening" | "expanded" | "closing" | "unexpanded";
 
 const LOAD_WORDS = 20;
 
 export const DictionaryPage = () => {
   const { dictId } = useParams();
-  const [openWordId, setOpenWordId] = useState<string | null>(null);
-  const [status, setStatus] = useState<Status>("unexpanded");
 
   const { isMainLanguageColVisible, isTranslationColVisible } =
     useLanguageRowStore();
@@ -42,6 +41,9 @@ export const DictionaryPage = () => {
   const [hasMore, setHasMore] = useState(true);
 
   const isLoadingRef = useRef(false);
+
+  const { openWordId, setOpenWordId, status, setStatus, editableWordId } =
+    useWordStore();
 
   // initial load when dictId changes
   useEffect(() => {
@@ -124,22 +126,37 @@ export const DictionaryPage = () => {
                   )}
                 >
                   <div className={cn(s.row, isReversed && s.reverseRow)}>
-                    <Spoiler
-                      className={s.mainCol}
-                      isVisible={isMainLanguageColVisible}
-                    >
-                      {word.source_word}
-                    </Spoiler>
-                    <ChevronDown
-                      className={cn(
-                        s.openDescription,
-                        openWordId === word.id && s.rotated
-                      )}
-                      onClick={() => toggleWord(word.id)}
-                    />
-                    <Spoiler isVisible={isTranslationColVisible}>
-                      {word.translations[0]?.text}
-                    </Spoiler>
+                    {/*  */}
+                    {editableWordId === word.id ? (
+                      <EditableSourceWordInput />
+                    ) : (
+                      <Spoiler
+                        className={s.mainCol}
+                        isVisible={isMainLanguageColVisible}
+                      >
+                        {word.source_word}
+                      </Spoiler>
+                    )}
+
+                    {editableWordId === word.id ? (
+                      <SubmitEditWordButton />
+                    ) : (
+                      <ChevronDown
+                        className={cn(
+                          s.openDescription,
+                          openWordId === word.id && s.rotated
+                        )}
+                        onClick={() => toggleWord(word.id)}
+                      />
+                    )}
+
+                    {editableWordId === word.id ? (
+                      <EditableMainTranslationInput />
+                    ) : (
+                      <Spoiler isVisible={isTranslationColVisible}>
+                        {word.translations[0]?.text}
+                      </Spoiler>
+                    )}
                   </div>
                   <div className={cn(openWordId === word.id && s.open)}>
                     <WordDetails
