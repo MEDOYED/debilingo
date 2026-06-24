@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { getWords } from "@shared/api/wordApi";
+import { useAddWordStore, useWordStore } from "@entities/word";
+import { getWords } from "@entities/word/api";
 import { cn } from "@shared/lib/styles";
-import { ChevronDown } from "@shared/ui/icons";
 import {
   StudyInfoModal,
   useStudyInfoModalStore,
 } from "@widgets/study-info-modal";
 
-import { useAddWordStore } from "./model/use-add-word-store";
 import { useLanguageRowStore } from "./model/use-language-row-store";
 import { useSwitchColStore } from "./model/use-switch-col-store";
 
@@ -20,32 +19,82 @@ import { Spoiler } from "./ui/spoiler/spoiler";
 import { SwipeWordCard } from "./ui/swipe-word-card/swipe-word-card";
 import { WordDetails } from "./ui/word-details/word-details";
 
+import { SubmitEditWordButton } from "@features/edit-word";
+import { EditableMainTranslationInput } from "@features/edit-word/ui/editable-main-translation-input/editable-main-translation-input";
+import { EditableSourceWordInput } from "@features/edit-word/ui/editable-source-word-input/editable-source-word-input";
+import { ChevronDown } from "@shared/ui/icons";
 import s from "./dictionary-page.module.scss";
 
-type Status = "opening" | "expanded" | "closing" | "unexpanded";
+const LOAD_WORDS = 20;
 
 export const DictionaryPage = () => {
   const { dictId } = useParams();
-  const [openWordId, setOpenWordId] = useState<string | null>(null);
-  const [status, setStatus] = useState<Status>("unexpanded");
 
   const { isMainLanguageColVisible, isTranslationColVisible } =
     useLanguageRowStore();
-  const { setWords, words } = useAddWordStore();
+  const { setWords, words, appendWords } = useAddWordStore();
   const { isReversed } = useSwitchColStore();
 
   const { xpCounter } = useStudyInfoModalStore();
 
-  useEffect(() => {
-    const loadWords = async () => {
-      if (!dictId) return;
-      const data = await getWords(dictId);
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
 
+  const isLoadingRef = useRef(false);
+
+  const {
+    openWordId,
+    setOpenWordId,
+    status,
+    setStatus,
+    editableWordId,
+    setEditableWordId,
+  } = useWordStore();
+
+  // initial load when dictId changes
+  useEffect(() => {
+    setOffset(0);
+    setHasMore(true);
+    setWords([]);
+
+    const loadFirst = async () => {
+      if (!dictId) return;
+
+      const data = await getWords(dictId, LOAD_WORDS, 0);
       setWords(data);
+      setHasMore(data.length >= LOAD_WORDS);
+      setOffset(data.length);
     };
 
-    loadWords();
+    loadFirst();
   }, [dictId]);
+
+  //scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      const distanceToBottom =
+        document.documentElement.scrollHeight -
+        (window.scrollY + window.innerHeight);
+
+      if (distanceToBottom < 500 && hasMore && !isLoadingRef.current) {
+        loadMoreWords();
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasMore, offset, dictId]);
+
+  const loadMoreWords = async () => {
+    if (!dictId || !hasMore || isLoadingRef.current) return;
+    isLoadingRef.current = true;
+    const data = await getWords(dictId, LOAD_WORDS, offset);
+    appendWords(data);
+    setHasMore(data.length >= LOAD_WORDS);
+    setOffset((prev) => prev + data.length);
+    isLoadingRef.current = false;
+  };
 
   const toggleWord = (id: string) => {
     if (openWordId === id) {
@@ -59,20 +108,6 @@ export const DictionaryPage = () => {
     }
   };
 
-  let filteredWithPinData = [];
-
-  for (let i = 0; i < words.length; i++) {
-    if (words[i].pinned_at) {
-      filteredWithPinData.push(words[i]);
-    }
-  }
-
-  for (let i = 0; i < words.length; i++) {
-    if (words[i].pinned_at === null) {
-      filteredWithPinData.push(words[i]);
-    }
-  }
-
   return (
     <div>
       {/* <div className="container"> */}
@@ -81,7 +116,7 @@ export const DictionaryPage = () => {
         <LanguageRow />
 
         <ul className={s.wordsList}>
-          {filteredWithPinData.map((word) => {
+          {words.map((word) => {
             const isCurrent = word.id;
             return (
               <SwipeWordCard
@@ -97,22 +132,40 @@ export const DictionaryPage = () => {
                   )}
                 >
                   <div className={cn(s.row, isReversed && s.reverseRow)}>
-                    <Spoiler
-                      className={s.mainCol}
-                      isVisible={isMainLanguageColVisible}
-                    >
-                      {word.source_word}
-                    </Spoiler>
-                    <ChevronDown
-                      className={cn(
-                        s.openDescription,
-                        openWordId === word.id && s.rotated
-                      )}
-                      onClick={() => toggleWord(word.id)}
-                    />
-                    <Spoiler isVisible={isTranslationColVisible}>
-                      {word.translations[0]?.text}
-                    </Spoiler>
+                    {/*  */}
+                    {editableWordId === word.id ? (
+                      <EditableSourceWordInput />
+                    ) : (
+                      <Spoiler
+                        className={s.mainCol}
+                        isVisible={isMainLanguageColVisible}
+                      >
+                        {word.source_word}
+                      </Spoiler>
+                    )}
+
+                    {editableWordId === word.id ? (
+                      <SubmitEditWordButton />
+                    ) : (
+                      <ChevronDown
+                        className={cn(
+                          s.openDescription,
+                          openWordId === word.id && s.rotated
+                        )}
+                        onClick={() => {
+                          toggleWord(word.id);
+                          setEditableWordId(null);
+                        }}
+                      />
+                    )}
+
+                    {editableWordId === word.id ? (
+                      <EditableMainTranslationInput />
+                    ) : (
+                      <Spoiler isVisible={isTranslationColVisible}>
+                        {word.translations[0]?.text}
+                      </Spoiler>
+                    )}
                   </div>
                   <div className={cn(openWordId === word.id && s.open)}>
                     <WordDetails

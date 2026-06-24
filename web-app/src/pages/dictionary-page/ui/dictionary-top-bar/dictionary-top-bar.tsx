@@ -1,6 +1,6 @@
 import { TextButton } from "@shared/ui/buttons";
 
-import { useAddWordStore } from "../../model/use-add-word-store";
+import { useAddWordStore } from "../../../../entities/word/model/use-add-word-store";
 
 import s from "./dictionary-top-bar.module.scss";
 

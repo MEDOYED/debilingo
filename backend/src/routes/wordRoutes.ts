@@ -6,6 +6,7 @@ import {
   getWords,
   pinWord,
   unpinWord,
+  updateWord,
 } from "../controllers/wordController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
@@ -29,5 +30,7 @@ router.delete("/words/:id", deleteWord);
 router.patch("/words/pin/:id", pinWord);
 
 router.patch("/words/unpin/:id", unpinWord);
+
+router.patch("/words/:id", updateWord);
 
 export default router;

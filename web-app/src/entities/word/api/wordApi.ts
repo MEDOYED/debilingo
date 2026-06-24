@@ -1,38 +1,22 @@
-import apiClient from "./apiClient";
+import apiClient from "../../../shared/api/apiClient";
 
-export interface Translation {
-  id: string;
-  text: string;
-  order_index: number;
-}
+import type { Word } from "../types/word-types";
 
-export interface Definition {
-  id: string;
-  text: string;
-  order_index: number;
-}
-
-export interface Example {
-  id: string;
-  text: string;
-  order_index: number;
-}
-
-export interface Word {
-  id: string;
-  dictionary_id: string;
-  source_word: string;
-  note: string | null;
-  created_at: string;
-  translations: Translation[];
-  definitions: Definition[];
-  examples: Example[];
-  pinned_at: string | null;
-}
-
-export const getWords = async (dictionaryId: string): Promise<Word[]> => {
+/**
+ *
+ * @param dictionaryId
+ * @param quantityWords
+ * @param offset
+ * @returns
+ */
+export const getWords = async (
+  dictionaryId: string,
+  quantityWords: number,
+  offset: number
+): Promise<Word[]> => {
   const response = await apiClient.get<Word[]>(
-    `/dictionary/${dictionaryId}/words`
+    `/dictionary/${dictionaryId}/words`,
+    { params: { quantityWords, offset } }
   );
   return response.data;
 };
@@ -62,5 +46,18 @@ export const pinWord = async (wordId: string): Promise<Word> => {
 export const unpinWord = async (wordId: string): Promise<Word> => {
   const response = await apiClient.patch(`/words/unpin/${wordId}`);
 
+  return response.data;
+};
+
+export const updateWord = async (
+  wordId: string,
+  data: {
+    source_word?: string;
+    translations?: string[];
+    definitions?: string[];
+    examples?: string[];
+  }
+): Promise<Word> => {
+  const response = await apiClient.patch<Word>(`/words/${wordId}`, data);
   return response.data;
 };

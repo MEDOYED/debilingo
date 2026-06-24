@@ -1,6 +1,13 @@
-import type { Word } from "@shared/api/wordApi";
+import type { Word } from "@entities/word";
 
 import s from "./word-details.module.scss";
+
+import { useWordStore } from "@entities/word";
+import {
+  EditableAdditionalTranslationInput,
+  EditableDefinitionInput,
+  EditableExampleInput,
+} from "@features/edit-word";
 
 interface WordDetailProps {
   className: string;
@@ -8,6 +15,8 @@ interface WordDetailProps {
 }
 
 export const WordDetails = ({ className, word }: WordDetailProps) => {
+  const { editableWordId } = useWordStore();
+
   return (
     <div className={className}>
       <div className={s.ulContainer}>
@@ -17,12 +26,16 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
         </p>
 
         <ul className={s.ulClass}>
-          {word.translations.slice(1).map((t) => (
+          {word.translations.slice(1).map((t, index) => (
             <li
               className={s.list}
               key={t.id}
             >
-              {t.text}
+              {editableWordId === word.id ? (
+                <EditableAdditionalTranslationInput inputIndex={index} />
+              ) : (
+                <>{t.text}</>
+              )}
             </li>
           ))}
         </ul>
@@ -32,12 +45,16 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
         <p>Пояснення:</p>
 
         <ul className={s.ulClass}>
-          {word.definitions.map((def) => (
+          {word.definitions.map((def, index) => (
             <li
               className={s.list}
               key={def.id}
             >
-              {def.text}
+              {editableWordId === word.id ? (
+                <EditableDefinitionInput inputIndex={index} />
+              ) : (
+                <>{def.text}</>
+              )}
             </li>
           ))}
         </ul>
@@ -47,12 +64,16 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
         <p>Приклад{word.examples.length < 2 ? "" : "и"}:</p>
 
         <ul className={s.ulClass}>
-          {word.examples.map((ex) => (
+          {word.examples.map((ex, index) => (
             <li
               className={s.list}
               key={ex.id}
             >
-              {ex.text}
+              {editableWordId === word.id ? (
+                <EditableExampleInput inputIndex={index} />
+              ) : (
+                <>{ex.text}</>
+              )}
             </li>
           ))}
         </ul>
