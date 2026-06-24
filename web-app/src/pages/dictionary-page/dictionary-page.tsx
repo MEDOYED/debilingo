@@ -42,8 +42,14 @@ export const DictionaryPage = () => {
 
   const isLoadingRef = useRef(false);
 
-  const { openWordId, setOpenWordId, status, setStatus, editableWordId } =
-    useWordStore();
+  const {
+    openWordId,
+    setOpenWordId,
+    status,
+    setStatus,
+    editableWordId,
+    setEditableWordId,
+  } = useWordStore();
 
   // initial load when dictId changes
   useEffect(() => {
@@ -146,7 +152,10 @@ export const DictionaryPage = () => {
                           s.openDescription,
                           openWordId === word.id && s.rotated
                         )}
-                        onClick={() => toggleWord(word.id)}
+                        onClick={() => {
+                          toggleWord(word.id);
+                          setEditableWordId(null);
+                        }}
                       />
                     )}
 

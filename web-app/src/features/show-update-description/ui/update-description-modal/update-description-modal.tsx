@@ -36,7 +36,8 @@ export const UpdateDescriptionModal = () => {
             <div>
               <div>
                 <h2 className={s.version}>v 0.2 </h2>
-                <span className={s.date}>18.06.2026</span>
+                <span className={s.date}>24.06.2026</span>
+                <div className={s.date}>This update took 24 man-hours.</div>
               </div>
 
               <TextButton
@@ -65,7 +66,12 @@ export const UpdateDescriptionModal = () => {
               <ul className={s.list}>
                 <li>
                   - Fixed appearance the annoying left/right action buttons when
-                  scrolling vertically through the dictionary
+                  scrolling vertically through the dictionary.
+                </li>
+                <li>
+                  - Fixed an issue where words from the previous dictionary
+                  remained visible while new words were loading during a
+                  dictionary switch.
                 </li>
               </ul>
             </div>

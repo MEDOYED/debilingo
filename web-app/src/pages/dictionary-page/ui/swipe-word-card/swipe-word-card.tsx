@@ -189,7 +189,7 @@ export const SwipeWordCard = ({
     >
       <div className={s.leftActionsBtns}>
         <button
-          className={s.attachBtn}
+          className={s.leftActionBtn}
           onClick={
             wordPinnedAt === null
               ? () => handlePinWord()
@@ -199,7 +199,10 @@ export const SwipeWordCard = ({
           {wordPinnedAt === null ? <Pin /> : <Unpin />}
         </button>
 
-        <EditButton id={id} />
+        <EditButton
+          className={s.leftActionBtn}
+          id={id}
+        />
       </div>
 
       {children}
