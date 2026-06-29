@@ -41,6 +41,21 @@ export const createTracker = async (req: AuthRequest, res: Response): Promise<vo
     return;
   }
 
+  const { data: existing } = await supabase
+    .from("time_trackers")
+    .select("id")
+    .eq("user_id", userId)
+    .eq("name", name.trim())
+    .eq("tag_id", tag_id || null)
+    .maybeSingle();
+
+  if (existing) {
+    res.status(409).json({
+      error: "A tracker with this name and tag already exists",
+    });
+    return;
+  }
+
   const { data, error } = await supabase
     .from("time_trackers")
     .insert({
