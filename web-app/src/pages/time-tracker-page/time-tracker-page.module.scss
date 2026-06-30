@@ -1,0 +1,69 @@
+@use "@shared/styles/config" as conf;
+
+.timeTrackers {
+}
+
+.timeTracker {
+  display: flex;
+  align-items: center;
+  // flex-direction: column;
+  padding: 20px 7px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.icon {
+  margin: 0 20px;
+}
+
+.nameAndTagWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.tag {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.time {
+  display: flex;
+  margin-left: auto;
+}
+
+.openAddNewTrackerModal {
+  position: fixed;
+  bottom: conf.$mobile-navigation-bottombar-height + 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.modalAddTimeTrackerBackground {
+  position: fixed;
+  top: 0px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--md-sys-color-surface-container-low);
+  z-index: 1000;
+  padding: 15px;
+
+  .modalWondow {
+    position: relative;
+  }
+
+  .buttonsWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .inputsWrapper {
+    background-color: var(--md-sys-color-surface-container-high);
+    border-radius: 20px;
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+}
