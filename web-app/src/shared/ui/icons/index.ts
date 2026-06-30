@@ -2,6 +2,7 @@ export { ArrowLongRight } from "./arrow-long-right";
 export { ArrowsRightLeft } from "./arrows-right-left/arrows-right-left";
 export { CheckCircle } from "./check-circle/check-circle";
 export { ChevronDown } from "./chevron-down/chevron-down";
+export { Clock } from "./clock/clock";
 export { DictionaryAdd } from "./dictionary-add";
 export { Edit } from "./edit/edit";
 export { EyeIcon } from "./eye-icon/eye-icon";

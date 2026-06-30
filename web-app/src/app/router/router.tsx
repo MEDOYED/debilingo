@@ -5,6 +5,7 @@ import { HomePage } from "@pages/home-page";
 import { LeaderboardsPage } from "@pages/leaderboards-page";
 import { LoginPage } from "@pages/login-page";
 import { RegisterPage } from "@pages/register-page";
+import { TimeTrackerPage } from "@pages/time-tracker-page";
 import { TrainingPage } from "@pages/training-page";
 
 import { DictionaryPage } from "@pages/dictionary-page";
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
       {
         path: "/training",
         element: <TrainingPage />,
+      },
+      {
+        path: "/time-tracker",
+        element: <TimeTrackerPage />,
       },
       {
         path: "/leaderboards",
