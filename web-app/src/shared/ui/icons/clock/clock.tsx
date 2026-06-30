@@ -1,10 +1,6 @@
 import type { IconProps } from "@shared/types";
 
-type ClockProps = {
-  className: IconProps["className"];
-};
-
-export const Clock = ({ className }: ClockProps) => {
+export const Clock = ({ className }: IconProps) => {
   return (
     <svg
       className={className}

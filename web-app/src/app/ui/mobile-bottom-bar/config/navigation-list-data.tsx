@@ -25,12 +25,6 @@ export const NAV_ITEMS: NavigationItem[] = [
     Icon: Clock,
     label: "Time tracker page",
   },
-  // {
-  //   to: "/training",
-  //   Icon: Gamepad,
-  //   label: "Training page",
-  // },
-
   {
     to: "/leaderboards",
     Icon: Trophy,
