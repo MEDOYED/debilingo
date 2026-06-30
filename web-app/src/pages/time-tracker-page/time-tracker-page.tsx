@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { FilledButton, TextButton } from "@shared/ui/buttons";
 
 import type { TrackerTag } from "@entities/time-tag";
-import { getTags } from "@entities/time-tag/api";
+import { createTag, getTags } from "@entities/time-tag/api";
 import field from "@shared/styles/components/field.module.scss";
 import s from "./time-tracker-page.module.scss";
 
@@ -37,7 +37,7 @@ export const TimeTrackerPage = () => {
 
   // inputs state
   const [name, setName] = useState<string>("");
-  const [createTag, setCreateTag] = useState<string>("");
+  const [createNewTag, setCreateNewTag] = useState<string>("");
 
   // data state
   const [isLoadingAllData, setIsLoadingAllData] = useState<boolean>(true);
@@ -57,7 +57,16 @@ export const TimeTrackerPage = () => {
 
   const handleAddNewTimeTracker = () => {};
 
-  const handleCreateNewTag = () => {};
+  const handleCreateNewTag = async () => {
+    const newTagData = {
+      name: createNewTag,
+      color: "#d946ef",
+    };
+
+    const newTag = await createTag(newTagData);
+
+    setTags([...tags, newTag]);
+  };
 
   return (
     <>
@@ -148,8 +157,8 @@ export const TimeTrackerPage = () => {
                 <input
                   className={field.input}
                   type="text"
-                  value={createTag}
-                  onChange={(e) => setCreateTag(e.target.value)}
+                  value={createNewTag}
+                  onChange={(e) => setCreateNewTag(e.target.value)}
                 />
               </label>
 
