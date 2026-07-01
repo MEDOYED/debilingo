@@ -1,21 +1,27 @@
-import { LabelTag } from "@shared/ui/icons";
+import { Clock, LabelTag } from "@shared/ui/icons";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { FilledButton, TextButton } from "@shared/ui/buttons";
 
-import { TimeTrackersList } from "./ui/time-trackers-list/time-trackers-list";
-
 import type { TrackerTag } from "@entities/time-tag";
 import { createTag, getTags } from "@entities/time-tag/api";
 
-import { createTimeTracker, getTimeTrackers } from "@entities/time-tracker";
+import { convertTime } from "@shared/lib/time";
+
+import {
+  createTimeTracker,
+  getActiveSession,
+  getTimeTrackers,
+  startSession,
+  stopSession,
+} from "@entities/time-tracker";
 import { cn } from "@shared/lib/styles";
 import field from "@shared/styles/components/field.module.scss";
 import s from "./time-tracker-page.module.scss";
 
-import type { TimeTrackerWithTag } from "@entities/time-tracker";
+import type { TimeSession, TimeTrackerWithTag } from "@entities/time-tracker";
 
 const COLORS = [
   "#ef4444",
@@ -63,6 +69,11 @@ export const TimeTrackerPage = () => {
   const [isLoadingAllData, setIsLoadingAllData] = useState<boolean>(true);
   const [tags, setTags] = useState<TrackerTag[]>([]);
   const [timeTrackers, setTimeTrackers] = useState<TimeTrackerWithTag[]>([]);
+  const [activeSession, setActiveSession] = useState<TimeSession | null>(null);
+
+  // timers state
+  const [currentSessionTimeSeconds, setCurrentSessionTimeSeconds] =
+    useState<number>(0);
 
   useEffect(() => {
     // load all data on first open page
@@ -72,6 +83,9 @@ export const TimeTrackerPage = () => {
 
       const dataAllTimeTrackers = await getTimeTrackers();
       setTimeTrackers(dataAllTimeTrackers);
+
+      const dataActiveSession = await getActiveSession();
+      setActiveSession(dataActiveSession);
 
       setIsLoadingAllData(false);
     };
@@ -142,6 +156,48 @@ export const TimeTrackerPage = () => {
     }
   };
 
+  const handleTimeTrackerClick = async (timeTracker: TimeTrackerWithTag) => {
+    console.log("activeSession: ", activeSession);
+
+    if (activeSession === null) {
+      const startedSession = await startSession(timeTracker.id);
+      setActiveSession(startedSession);
+    }
+
+    if (activeSession && activeSession?.tracker_id !== timeTracker.id) {
+      const startedSession = await startSession(timeTracker.id);
+      setActiveSession(startedSession);
+    }
+
+    if (activeSession && activeSession?.tracker_id === timeTracker.id) {
+      await stopSession(activeSession.id);
+      setActiveSession(null);
+    }
+  };
+
+  const { secondsString, minutesString, hoursString } = convertTime(
+    currentSessionTimeSeconds
+  );
+
+  useEffect(() => {
+    if (!activeSession) {
+      setCurrentSessionTimeSeconds(0);
+      return;
+    }
+
+    const tick = () => {
+      const ms = Date.now() - new Date(activeSession.started_at).getTime();
+      const secods = Math.floor(ms / 1000);
+      setCurrentSessionTimeSeconds(secods);
+    };
+
+    tick();
+
+    const intervalId = setInterval(tick, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [activeSession]);
+
   return (
     <>
       {isLoadingAllData === true && <div>Loading...</div>}
@@ -150,7 +206,41 @@ export const TimeTrackerPage = () => {
         <main>
           <h1 className="container">time tracker page</h1>
 
-          <TimeTrackersList timeTrackers={timeTrackers} />
+          <ul className={s.timeTrackers}>
+            {timeTrackers.map((timeTracker, index) => (
+              <li
+                className={cn(
+                  s.timeTracker,
+                  activeSession?.tracker_id === timeTracker.id &&
+                    s.activeTracker
+                )}
+                style={{
+                  backgroundColor:
+                    activeSession?.tracker_id === timeTracker.id
+                      ? timeTracker.tag?.color
+                      : undefined,
+                }}
+                key={index}
+                onClick={() => handleTimeTrackerClick(timeTracker)}
+              >
+                <Clock className={s.icon} />
+                <div className={s.nameAndTagWrapper}>
+                  <span>{timeTracker.name}</span>
+                  <span className={s.tag}>тег: {timeTracker.tag?.name}</span>
+                </div>
+
+                <div className={s.timeWrapper}>
+                  <span className={s.todayTotalTime}>00:05:00</span>
+                  {activeSession?.tracker_id === timeTracker.id && (
+                    <span className={s.stopwatch}>
+                      {hoursString}:{minutesString}:{secondsString}
+                    </span>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+
           <FilledButton
             className={s.openAddNewTrackerModal}
             as="button"

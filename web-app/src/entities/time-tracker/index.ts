@@ -5,4 +5,6 @@ export {
   updateTimeTracker,
 } from "./api/tracker-api";
 
-export type { TimeTrackerWithTag } from "./model/types";
+export { getActiveSession, startSession, stopSession } from "./api/session-api";
+
+export type { TimeSession, TimeTrackerWithTag } from "./model/types";

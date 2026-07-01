@@ -1,5 +1,41 @@
 @use "@shared/styles/config" as conf;
 
+.timeTrackers {
+  .timeTracker {
+    display: flex;
+    align-items: center;
+    // flex-direction: column;
+    padding: 20px 7px;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .activeTracker {
+  }
+
+  .icon {
+    margin: 0 20px;
+  }
+
+  .nameAndTagWrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tag {
+    font-size: 16px;
+    opacity: 0.8;
+  }
+
+  .timeWrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+  }
+
+  .time {
+  }
+}
+
 .openAddNewTrackerModal {
   position: fixed;
   bottom: conf.$mobile-navigation-bottombar-height + 30px;
