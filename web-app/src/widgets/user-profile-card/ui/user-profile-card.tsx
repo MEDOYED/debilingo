@@ -5,12 +5,13 @@ import { cn } from "@shared/lib/styles";
 import { useUpdateDescriptionModalStore } from "@features/show-update-description";
 
 import {
-  convertTime,
   LevelProgressBar,
   levelXp,
   StreakIcon,
   useProfileStore,
 } from "@entities/profile";
+
+import { convertTime } from "@shared/lib/time";
 
 import { TextButton } from "@shared/ui/buttons";
 import s from "./user-profile-card.module.scss";
