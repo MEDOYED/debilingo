@@ -67,7 +67,7 @@ export const TimeTrackerPage = () => {
   >(null);
 
   // selected states
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [selectedTag, setSelectedTag] = useState<TrackerTag | null>(null);
 
   // data state
   const [isLoadingAllData, setIsLoadingAllData] = useState<boolean>(true);
@@ -104,7 +104,7 @@ export const TimeTrackerPage = () => {
       const newTag = await createTag(newTagData);
       setTags([...tags, newTag]);
 
-      setSelectedTag(createNewTagName);
+      setSelectedTag(newTag);
       setIsCreateTagModalOpen(false);
       setCreateNewTagName("");
     } catch (error) {
@@ -189,11 +189,9 @@ export const TimeTrackerPage = () => {
                       {tags.map((tag, index) => (
                         <li key={index}>
                           <TextButton
-                            className={cn(
-                              selectedTag === tag.name && s.selectedTag
-                            )}
+                            className={cn(selectedTag === tag && s.selectedTag)}
                             as="button"
-                            onClick={() => setSelectedTag(tag.name)}
+                            onClick={() => setSelectedTag(tag)}
                           >
                             <LabelTag color={tag.color} />
                             {tag.name}
@@ -263,6 +261,7 @@ export const TimeTrackerPage = () => {
             </div>
           )}
 
+          {/* modal Error Message On Create New Tag  */}
           {errorMessageOnCreateNewTag && (
             <div className={s.infoErrorModal}>
               <FilledButton

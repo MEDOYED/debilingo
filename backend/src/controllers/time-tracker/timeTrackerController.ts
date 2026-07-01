@@ -41,12 +41,17 @@ export const createTracker = async (req: AuthRequest, res: Response): Promise<vo
     return;
   }
 
+  if (!tag_id || typeof tag_id !== "string") {
+    res.status(400).json({ error: "tag is required" });
+    return;
+  }
+
   const { data: existing } = await supabase
     .from("time_trackers")
     .select("id")
     .eq("user_id", userId)
     .eq("name", name.trim())
-    .eq("tag_id", tag_id || null)
+    .eq("tag_id", tag_id)
     .maybeSingle();
 
   if (existing) {
@@ -62,7 +67,7 @@ export const createTracker = async (req: AuthRequest, res: Response): Promise<vo
       user_id: userId,
       name: name.trim(),
       color: color || "#6366f1",
-      tag_id: tag_id || null,
+      tag_id: tag_id,
     })
     .select(`*, tag:tracker_tags(*)`)
     .single();

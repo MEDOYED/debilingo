@@ -42,7 +42,7 @@ export interface UpdateTagRequest {
 export interface CreateTrackerRequest {
   name: string;
   color: string;
-  tag_id?: string;
+  tag_id: string;
 }
 
 export interface UpdateTrackerRequest {
