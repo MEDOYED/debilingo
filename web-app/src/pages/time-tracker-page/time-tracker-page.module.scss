@@ -104,3 +104,25 @@
     scale: 1.6;
   }
 }
+
+.infoErrorModal {
+  position: fixed;
+  z-index: 1300;
+  background-color: var(--md-sys-color-error);
+  color: var(--md-sys-color-on-error);
+  bottom: 20px;
+  right: 20px;
+  border-radius: 30px;
+  max-width: calc(100vw - 40px);
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .closeBtn {
+    display: flex;
+    margin-left: auto;
+    font-size: 20px;
+  }
+}

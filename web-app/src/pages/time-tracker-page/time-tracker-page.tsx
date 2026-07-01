@@ -1,5 +1,6 @@
 import { Clock, LabelTag } from "@shared/ui/icons";
 
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { FilledButton, TextButton } from "@shared/ui/buttons";
@@ -60,6 +61,11 @@ export const TimeTrackerPage = () => {
   const [createNewTagName, setCreateNewTagName] = useState<string>("");
   const [createNewTagColor, setCreateNewTagColor] = useState<string>("#8b5cf6");
 
+  // status messages
+  const [errorMessageOnCreateNewTag, setErrorMessageOnCreateNewTag] = useState<
+    string | null
+  >(null);
+
   // selected states
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
@@ -82,18 +88,37 @@ export const TimeTrackerPage = () => {
   const handleAddNewTimeTracker = () => {};
 
   const handleCreateNewTag = async () => {
+    if (createNewTagName === "") {
+      setErrorMessageOnCreateNewTag(
+        "New tag name is empty! Fill it and try again"
+      );
+      return;
+    }
+
     const newTagData = {
       name: createNewTagName,
       color: createNewTagColor,
     };
 
-    const newTag = await createTag(newTagData);
+    try {
+      const newTag = await createTag(newTagData);
+      setTags([...tags, newTag]);
 
-    setTags([...tags, newTag]);
-
-    setSelectedTag(createNewTagName);
-    setIsCreateTagModalOpen(false);
-    setCreateNewTagName("");
+      setSelectedTag(createNewTagName);
+      setIsCreateTagModalOpen(false);
+      setCreateNewTagName("");
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 409) {
+        setErrorMessageOnCreateNewTag(
+          "Conflict! Maybe this tag already exist!"
+        );
+      }
+      if (axios.isAxiosError(error)) {
+        setErrorMessageOnCreateNewTag(
+          "Something went wrong. We couldn't save your new tag right now. Please try again in a few moments."
+        );
+      }
+    }
   };
 
   return (
@@ -235,6 +260,21 @@ export const TimeTrackerPage = () => {
               >
                 Cancel
               </TextButton>
+            </div>
+          )}
+
+          {errorMessageOnCreateNewTag && (
+            <div className={s.infoErrorModal}>
+              <FilledButton
+                className={s.closeBtn}
+                as="button"
+                onClick={() => setErrorMessageOnCreateNewTag(null)}
+                variant="error"
+              >
+                ⛌
+              </FilledButton>
+
+              <span>{errorMessageOnCreateNewTag}</span>
             </div>
           )}
         </main>
