@@ -1,9 +1,11 @@
-import { Clock, LabelTag } from "@shared/ui/icons";
+import { LabelTag } from "@shared/ui/icons";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { FilledButton, TextButton } from "@shared/ui/buttons";
+
+import { TimeTrackersList } from "./ui/time-trackers-list/time-trackers-list";
 
 import type { TrackerTag } from "@entities/time-tag";
 import { createTag, getTags } from "@entities/time-tag/api";
@@ -14,24 +16,6 @@ import field from "@shared/styles/components/field.module.scss";
 import s from "./time-tracker-page.module.scss";
 
 import type { TimeTrackerWithTag } from "@entities/time-tracker";
-
-// const LIST_DATA = [
-//   {
-//     name: "YouTube",
-//     tag: "Пройобування життя",
-//     time: "00:06:04",
-//   },
-//   {
-//     name: "YouTube",
-//     tag: "Пройобування життя",
-//     time: "00:06:04",
-//   },
-//   {
-//     name: "YouTube",
-//     tag: "Пройобування життя",
-//     time: "00:06:04",
-//   },
-// ];
 
 const COLORS = [
   "#ef4444",
@@ -166,22 +150,7 @@ export const TimeTrackerPage = () => {
         <main>
           <h1 className="container">time tracker page</h1>
 
-          <ul className={s.timeTrackers}>
-            {timeTrackers.map((timeTracker, index) => (
-              // {LIST_DATA.map((item, index) => (
-              <li
-                className={s.timeTracker}
-                key={index}
-              >
-                <Clock className={s.icon} />
-                <div className={s.nameAndTagWrapper}>
-                  <span>{timeTracker.name}</span>
-                  <span className={s.tag}>тег: {timeTracker.tag?.name}</span>
-                </div>
-                <span className={s.time}>00:05:02</span>
-              </li>
-            ))}
-          </ul>
+          <TimeTrackersList timeTrackers={timeTrackers} />
           <FilledButton
             className={s.openAddNewTrackerModal}
             as="button"

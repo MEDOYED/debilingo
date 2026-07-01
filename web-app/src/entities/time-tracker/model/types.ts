@@ -24,3 +24,14 @@ export interface UpdateTimeTracker {
   color?: string;
   tag_id?: string;
 }
+
+export interface TimeSession {
+  id: string;
+  user_id: string;
+  tracker_id: string;
+  started_at: string;
+  ended_at: string | null;
+  duration_seconds: number | null;
+  created_at: string;
+  tracker?: TimeTrackerWithTag;
+}
