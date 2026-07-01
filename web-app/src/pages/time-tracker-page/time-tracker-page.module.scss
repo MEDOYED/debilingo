@@ -66,6 +66,11 @@
     flex-direction: column;
     gap: 15px;
   }
+
+  .selectedTag {
+    background-color: var(--md-sys-color-tertiary);
+    color: var(--md-sys-color-on-tertiary);
+  }
 }
 
 .CreateTagModal {
@@ -77,4 +82,25 @@
   background-color: var(--md-sys-color-surface-container-low);
   z-index: 1100;
   padding: 15px;
+
+  .colorsList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .colorListItem {
+    width: fit-content;
+    height: fit-content;
+  }
+
+  .colorButton {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+
+  .selectedTagColor {
+    scale: 1.6;
+  }
 }

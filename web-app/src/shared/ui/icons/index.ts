@@ -9,6 +9,7 @@ export { EyeIcon } from "./eye-icon/eye-icon";
 export { EyeSlash } from "./eye-slash/eye-slash";
 export { Gamepad } from "./gamepad";
 export { Home } from "./home";
+export { LabelTag } from "./label-tag/label-tag";
 export { LoadingCircle } from "./loading-circle/loading-circle";
 export { Pin } from "./pin/pin";
 export { Trash } from "./trash/trash";

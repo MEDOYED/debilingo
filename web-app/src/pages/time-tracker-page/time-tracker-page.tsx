@@ -1,4 +1,4 @@
-import { Clock } from "@shared/ui/icons";
+import { Clock, LabelTag } from "@shared/ui/icons";
 
 import { useEffect, useState } from "react";
 
@@ -6,6 +6,7 @@ import { FilledButton, TextButton } from "@shared/ui/buttons";
 
 import type { TrackerTag } from "@entities/time-tag";
 import { createTag, getTags } from "@entities/time-tag/api";
+import { cn } from "@shared/lib/styles";
 import field from "@shared/styles/components/field.module.scss";
 import s from "./time-tracker-page.module.scss";
 
@@ -27,6 +28,25 @@ const LIST_DATA = [
   },
 ];
 
+const COLORS = [
+  "#ef4444",
+  "#f97316",
+  "#f59e0b",
+  "#eab308",
+  "#22c55e",
+  "#10b981",
+  "#14b8a6",
+  "#06b6d4",
+  "#3b82f6",
+  "#6366f1",
+  "#8b5cf6",
+  "#a855f7",
+  "#d946ef",
+  "#ec4899",
+  "#f43f5e",
+  "#78716c",
+];
+
 // time summary page
 
 export const TimeTrackerPage = () => {
@@ -37,7 +57,11 @@ export const TimeTrackerPage = () => {
 
   // inputs state
   const [name, setName] = useState<string>("");
-  const [createNewTag, setCreateNewTag] = useState<string>("");
+  const [createNewTagName, setCreateNewTagName] = useState<string>("");
+  const [createNewTagColor, setCreateNewTagColor] = useState<string>("#8b5cf6");
+
+  // selected states
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   // data state
   const [isLoadingAllData, setIsLoadingAllData] = useState<boolean>(true);
@@ -59,13 +83,17 @@ export const TimeTrackerPage = () => {
 
   const handleCreateNewTag = async () => {
     const newTagData = {
-      name: createNewTag,
-      color: "#d946ef",
+      name: createNewTagName,
+      color: createNewTagColor,
     };
 
     const newTag = await createTag(newTagData);
 
     setTags([...tags, newTag]);
+
+    setSelectedTag(createNewTagName);
+    setIsCreateTagModalOpen(false);
+    setCreateNewTagName("");
   };
 
   return (
@@ -99,7 +127,7 @@ export const TimeTrackerPage = () => {
             Add new tracker
           </FilledButton>
 
-          {/* modal add time tracker */}
+          {/* modal create time tracker */}
           {isAddTrackerOpen && (
             <div className={s.modalAddTimeTrackerBackground}>
               <div className={s.modalWindow}>
@@ -115,7 +143,7 @@ export const TimeTrackerPage = () => {
                     as="button"
                     onClick={handleAddNewTimeTracker}
                   >
-                    Add tracker
+                    Create tracker
                   </FilledButton>
                 </div>
 
@@ -130,11 +158,22 @@ export const TimeTrackerPage = () => {
                     />
                   </label>
 
-                  <label className={field.label}>
+                  <div className={field.label}>
                     Тег:
                     <ul>
                       {tags.map((tag, index) => (
-                        <li key={index}>{tag.name}</li>
+                        <li key={index}>
+                          <TextButton
+                            className={cn(
+                              selectedTag === tag.name && s.selectedTag
+                            )}
+                            as="button"
+                            onClick={() => setSelectedTag(tag.name)}
+                          >
+                            <LabelTag color={tag.color} />
+                            {tag.name}
+                          </TextButton>
+                        </li>
                       ))}
                     </ul>
                     {/* tag list */}
@@ -144,7 +183,7 @@ export const TimeTrackerPage = () => {
                     >
                       Create new tag
                     </TextButton>
-                  </label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -157,10 +196,31 @@ export const TimeTrackerPage = () => {
                 <input
                   className={field.input}
                   type="text"
-                  value={createNewTag}
-                  onChange={(e) => setCreateNewTag(e.target.value)}
+                  value={createNewTagName}
+                  onChange={(e) => setCreateNewTagName(e.target.value)}
                 />
               </label>
+
+              <div className={field.label}>
+                color:
+                <ul className={s.colorsList}>
+                  {COLORS.map((color, index) => (
+                    <li
+                      className={s.colorListItem}
+                      key={index}
+                    >
+                      <button
+                        onClick={() => setCreateNewTagColor(color)}
+                        className={cn(
+                          s.colorButton,
+                          createNewTagColor === color && s.selectedTagColor
+                        )}
+                        style={{ backgroundColor: color }}
+                      ></button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
               <FilledButton
                 as="button"
