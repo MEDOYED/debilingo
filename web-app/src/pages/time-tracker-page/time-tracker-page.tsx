@@ -7,27 +7,31 @@ import { FilledButton, TextButton } from "@shared/ui/buttons";
 
 import type { TrackerTag } from "@entities/time-tag";
 import { createTag, getTags } from "@entities/time-tag/api";
+
+import { createTimeTracker, getTimeTrackers } from "@entities/time-tracker";
 import { cn } from "@shared/lib/styles";
 import field from "@shared/styles/components/field.module.scss";
 import s from "./time-tracker-page.module.scss";
 
-const LIST_DATA = [
-  {
-    name: "YouTube",
-    tag: "Пройобування життя",
-    time: "00:06:04",
-  },
-  {
-    name: "YouTube",
-    tag: "Пройобування життя",
-    time: "00:06:04",
-  },
-  {
-    name: "YouTube",
-    tag: "Пройобування життя",
-    time: "00:06:04",
-  },
-];
+import type { TimeTrackerWithTag } from "@entities/time-tracker";
+
+// const LIST_DATA = [
+//   {
+//     name: "YouTube",
+//     tag: "Пройобування життя",
+//     time: "00:06:04",
+//   },
+//   {
+//     name: "YouTube",
+//     tag: "Пройобування життя",
+//     time: "00:06:04",
+//   },
+//   {
+//     name: "YouTube",
+//     tag: "Пройобування життя",
+//     time: "00:06:04",
+//   },
+// ];
 
 const COLORS = [
   "#ef4444",
@@ -57,7 +61,9 @@ export const TimeTrackerPage = () => {
     useState<boolean>(false);
 
   // inputs state
-  const [name, setName] = useState<string>("");
+  const [newTrackerTimeName, setNewTrackerTimeName] = useState<string | null>(
+    null
+  );
   const [createNewTagName, setCreateNewTagName] = useState<string>("");
   const [createNewTagColor, setCreateNewTagColor] = useState<string>("#8b5cf6");
 
@@ -72,20 +78,51 @@ export const TimeTrackerPage = () => {
   // data state
   const [isLoadingAllData, setIsLoadingAllData] = useState<boolean>(true);
   const [tags, setTags] = useState<TrackerTag[]>([]);
+  const [timeTrackers, setTimeTrackers] = useState<TimeTrackerWithTag[]>([]);
 
   useEffect(() => {
     // load all data on first open page
     const loadFirst = async () => {
-      const data = await getTags();
+      const dataAllTags = await getTags();
+      setTags(dataAllTags);
 
-      setTags(data);
+      const dataAllTimeTrackers = await getTimeTrackers();
+      setTimeTrackers(dataAllTimeTrackers);
+
       setIsLoadingAllData(false);
     };
 
     loadFirst();
   }, []);
 
-  const handleAddNewTimeTracker = () => {};
+  const handleAddNewTimeTracker = async () => {
+    if (!newTrackerTimeName) {
+      setErrorMessageOnCreateNewTag("The input with new tag name is empty!");
+      return;
+    }
+
+    if (!selectedTag) {
+      setErrorMessageOnCreateNewTag("Select some tag!");
+      return;
+    }
+
+    const newTimeTrackerData = {
+      name: newTrackerTimeName,
+      color: selectedTag.color,
+      tag_id: selectedTag.id,
+    };
+
+    try {
+      const newTimeTracker = await createTimeTracker(newTimeTrackerData);
+
+      setTimeTrackers([...timeTrackers, newTimeTracker]);
+      setIsAddTrackerOpen(false);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setErrorMessageOnCreateNewTag(error.message);
+      }
+    }
+  };
 
   const handleCreateNewTag = async () => {
     if (createNewTagName === "") {
@@ -130,17 +167,18 @@ export const TimeTrackerPage = () => {
           <h1 className="container">time tracker page</h1>
 
           <ul className={s.timeTrackers}>
-            {LIST_DATA.map((item, index) => (
+            {timeTrackers.map((timeTracker, index) => (
+              // {LIST_DATA.map((item, index) => (
               <li
                 className={s.timeTracker}
                 key={index}
               >
                 <Clock className={s.icon} />
                 <div className={s.nameAndTagWrapper}>
-                  <span>{item.name}</span>
-                  <span className={s.tag}>тег: {item.tag}</span>
+                  <span>{timeTracker.name}</span>
+                  <span className={s.tag}>тег: {timeTracker.tag?.name}</span>
                 </div>
-                <span className={s.time}>{item.time}</span>
+                <span className={s.time}>00:05:02</span>
               </li>
             ))}
           </ul>
@@ -178,8 +216,8 @@ export const TimeTrackerPage = () => {
                     <input
                       className={field.input}
                       type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      value={newTrackerTimeName ? newTrackerTimeName : ""}
+                      onChange={(e) => setNewTrackerTimeName(e.target.value)}
                     />
                   </label>
 
