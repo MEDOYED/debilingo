@@ -35,3 +35,25 @@ export interface TimeSession {
   created_at: string;
   tracker?: TimeTrackerWithTag;
 }
+
+export type Period = "1d" | "7d" | "30d" | "custom" | "all";
+
+export interface TrackerStatItem {
+  id: string;
+  name: string;
+  color: string;
+  total_seconds: number;
+  session_count: number;
+}
+
+export interface TagStats {
+  tag: TrackerTag;
+  total_seconds: number;
+  trackers: TrackerStatItem[];
+}
+
+export interface TimeStatsResponse {
+  period: Period;
+  total_seconds: number;
+  tags: TagStats[];
+}

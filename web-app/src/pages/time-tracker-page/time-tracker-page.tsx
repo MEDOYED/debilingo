@@ -7,6 +7,7 @@ import { FilledButton, TextButton } from "@shared/ui/buttons";
 
 import type { TrackerTag } from "@entities/time-tag";
 import { createTag, getTags } from "@entities/time-tag/api";
+import { getTimeStats, type TimeStatsResponse } from "@entities/time-tracker";
 
 import { convertTime } from "@shared/lib/time";
 
@@ -70,6 +71,9 @@ export const TimeTrackerPage = () => {
   const [tags, setTags] = useState<TrackerTag[]>([]);
   const [timeTrackers, setTimeTrackers] = useState<TimeTrackerWithTag[]>([]);
   const [activeSession, setActiveSession] = useState<TimeSession | null>(null);
+  const [dataTimeStats, setDataTimeStats] = useState<
+    TimeStatsResponse[] | null
+  >(null);
 
   // timers state
   const [currentSessionTimeSeconds, setCurrentSessionTimeSeconds] =
@@ -86,6 +90,9 @@ export const TimeTrackerPage = () => {
 
       const dataActiveSession = await getActiveSession();
       setActiveSession(dataActiveSession);
+
+      const dataTimeStats = await getTimeStats("1d");
+      setDataTimeStats(dataTimeStats);
 
       setIsLoadingAllData(false);
     };
@@ -165,6 +172,9 @@ export const TimeTrackerPage = () => {
     }
 
     if (activeSession && activeSession?.tracker_id !== timeTracker.id) {
+      await stopSession(activeSession.id);
+      setActiveSession(null);
+
       const startedSession = await startSession(timeTracker.id);
       setActiveSession(startedSession);
     }
@@ -198,6 +208,36 @@ export const TimeTrackerPage = () => {
     return () => clearInterval(intervalId);
   }, [activeSession]);
 
+  // useEffect(() => {
+  //   const todalTotalTime = (timeTrackerId: TimeTrackerWithTag["id"]) => {
+  //     // const currentTimeStats = dataTimeStats?.find((timeStat) =>
+  //     //   timeStat.tags.find((tag) =>
+  //     //     tag.trackers.find((tracker) => tracker.id === timeTrackerId)
+  //     //   )
+  //     // );
+
+  //     // console.log("currentTimeStats:", currentTimeStats);
+
+  //     if (!dataTimeStats) return;
+
+  //     const
+
+  //     for (let i = 0; i <= dataTimeStats.length;  i++) {
+
+  //     };
+  //   };
+
+  //   return todalTotalTime;
+  // }, [dataTimeStats]);
+
+  const todalTotalTime = (timeTrackerId: TimeTrackerWithTag["id"]) => {
+    return "bob";
+  };
+
+  useEffect(() => {
+    console.log(dataTimeStats);
+  }, [dataTimeStats]);
+
   return (
     <>
       {isLoadingAllData === true && <div>Loading...</div>}
@@ -230,7 +270,9 @@ export const TimeTrackerPage = () => {
                 </div>
 
                 <div className={s.timeWrapper}>
-                  <span className={s.todayTotalTime}>00:05:00</span>
+                  <span className={s.todayTotalTime}>
+                    {todalTotalTime(timeTracker.id)}
+                  </span>
                   {activeSession?.tracker_id === timeTracker.id && (
                     <span className={s.stopwatch}>
                       {hoursString}:{minutesString}:{secondsString}
