@@ -7,4 +7,10 @@ export {
 
 export { getActiveSession, startSession, stopSession } from "./api/session-api";
 
-export type { TimeSession, TimeTrackerWithTag } from "./model/types";
+export { getTimeStats } from "./api/stats-api";
+
+export type {
+  TimeSession,
+  TimeStatsResponse,
+  TimeTrackerWithTag,
+} from "./model/types";

@@ -1,6 +1,8 @@
 @use "@shared/styles/config" as conf;
 
 .timeTrackers {
+  margin-bottom: 100px;
+
   .timeTracker {
     display: flex;
     align-items: center;

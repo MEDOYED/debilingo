@@ -7,6 +7,7 @@ import { FilledButton, TextButton } from "@shared/ui/buttons";
 
 import type { TrackerTag } from "@entities/time-tag";
 import { createTag, getTags } from "@entities/time-tag/api";
+import { getTimeStats, type TimeStatsResponse } from "@entities/time-tracker";
 
 import { convertTime } from "@shared/lib/time";
 
@@ -70,6 +71,9 @@ export const TimeTrackerPage = () => {
   const [tags, setTags] = useState<TrackerTag[]>([]);
   const [timeTrackers, setTimeTrackers] = useState<TimeTrackerWithTag[]>([]);
   const [activeSession, setActiveSession] = useState<TimeSession | null>(null);
+  const [dataTimeStats, setDataTimeStats] = useState<TimeStatsResponse | null>(
+    null
+  );
 
   // timers state
   const [currentSessionTimeSeconds, setCurrentSessionTimeSeconds] =
@@ -86,6 +90,9 @@ export const TimeTrackerPage = () => {
 
       const dataActiveSession = await getActiveSession();
       setActiveSession(dataActiveSession);
+
+      const dataTimeStats = await getTimeStats("1d");
+      setDataTimeStats(dataTimeStats);
 
       setIsLoadingAllData(false);
     };
@@ -162,16 +169,28 @@ export const TimeTrackerPage = () => {
     if (activeSession === null) {
       const startedSession = await startSession(timeTracker.id);
       setActiveSession(startedSession);
+
+      const dataTimeStats = await getTimeStats("1d");
+      setDataTimeStats(dataTimeStats);
     }
 
     if (activeSession && activeSession?.tracker_id !== timeTracker.id) {
+      await stopSession(activeSession.id);
+      setActiveSession(null);
+
       const startedSession = await startSession(timeTracker.id);
       setActiveSession(startedSession);
+
+      const dataTimeStats = await getTimeStats("1d");
+      setDataTimeStats(dataTimeStats);
     }
 
     if (activeSession && activeSession?.tracker_id === timeTracker.id) {
       await stopSession(activeSession.id);
       setActiveSession(null);
+
+      const dataTimeStats = await getTimeStats("1d");
+      setDataTimeStats(dataTimeStats);
     }
   };
 
@@ -197,6 +216,25 @@ export const TimeTrackerPage = () => {
 
     return () => clearInterval(intervalId);
   }, [activeSession]);
+
+  const todalTimeTrackerTime = (timeTracker: TimeTrackerWithTag) => {
+    const tagsArr = dataTimeStats?.tags;
+    const searchedTagGroup = tagsArr?.find(
+      (item) => item.tag.name === timeTracker.tag.name
+    );
+    const searchedTimeTracker = searchedTagGroup?.trackers.find(
+      (item) => item.id === timeTracker.id
+    );
+    const searchedTimeTrackerTotalSeconds = searchedTimeTracker?.total_seconds;
+
+    const { hoursString, minutesString, secondsString } = convertTime(
+      searchedTimeTrackerTotalSeconds
+    );
+
+    const convertedTotalTrackerTime = `${hoursString}:${minutesString}:${secondsString}`;
+
+    return convertedTotalTrackerTime;
+  };
 
   return (
     <>
@@ -230,7 +268,9 @@ export const TimeTrackerPage = () => {
                 </div>
 
                 <div className={s.timeWrapper}>
-                  <span className={s.todayTotalTime}>00:05:00</span>
+                  <span className={s.todayTotalTime}>
+                    {todalTimeTrackerTime(timeTracker)}
+                  </span>
                   {activeSession?.tracker_id === timeTracker.id && (
                     <span className={s.stopwatch}>
                       {hoursString}:{minutesString}:{secondsString}

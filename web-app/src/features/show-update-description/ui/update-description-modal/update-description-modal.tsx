@@ -1,17 +1,16 @@
 import s from "./update-description-modal.module.scss";
 
-import { TextButton } from "@shared/ui/buttons";
+import { Fragment } from "react";
 
 import { useEffect } from "react";
 import { useUpdateDescriptionModalStore } from "../../model/use-update-description-modal-store";
 
+import { TextButton } from "@shared/ui/buttons";
+import { UPDATES_DATA } from "../../config/updates-data";
+
 export const UpdateDescriptionModal = () => {
   const { closeUpdateDescriptionModal, isUpdateDescriptionModalOpen } =
     useUpdateDescriptionModalStore();
-
-  // if (isUpdateDescriptionModalOpen === false) return;
-
-  console.log("isUpdateDescriptionModalOpen", isUpdateDescriptionModalOpen);
 
   useEffect(() => {
     if (isUpdateDescriptionModalOpen) {
@@ -32,49 +31,75 @@ export const UpdateDescriptionModal = () => {
             className={s.modal}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* top row */}
-            <div>
-              <div>
-                <h2 className={s.version}>v 0.2 </h2>
-                <span className={s.date}>24.06.2026</span>
-                <div className={s.date}>This update took 24 man-hours.</div>
-              </div>
+            <>
+              {UPDATES_DATA.map((item, index) => (
+                <Fragment key={index}>
+                  {/* top row */}
+                  <div>
+                    <div>
+                      <h2 className={s.version}>v {item.version} </h2>
+                      <span className={s.date}>{item.date}</span>
+                      <div className={s.date}>
+                        This update took {item.manHours} man-hours.
+                      </div>
+                    </div>
 
-              <TextButton
-                as="button"
-                onClick={() => closeUpdateDescriptionModal()}
-                className={s.closeButton}
-              >
-                X
-              </TextButton>
-            </div>
+                    <TextButton
+                      as="button"
+                      onClick={() => closeUpdateDescriptionModal()}
+                      className={s.closeButton}
+                    >
+                      ⛌
+                    </TextButton>
+                  </div>
 
-            {/* update info */}
-            <div>
-              <h3 className={s.title}>Features:</h3>
-              <ul className={s.list}>
-                <li>- Modal window with update versions descriptions</li>
-                <li>- The ability to edit words</li>
-              </ul>
+                  {/* update info */}
+                  <div className={s.updateInfoWrapper}>
+                    {item.features && (
+                      <>
+                        <h3 className={s.title}>Features:</h3>
+                        <ul className={s.list}>
+                          {item.features.map((feature, index) => (
+                            <li key={index}>- {feature}</li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
 
-              <h3 className={s.title}>Improvments:</h3>
-              <ul className={s.list}>
-                <li>- loading speed of the words</li>
-              </ul>
+                    {item.improvements && (
+                      <>
+                        <h3 className={s.title}>Improvements:</h3>
+                        <ul className={s.list}>
+                          {item.improvements.map((improvement, index) => (
+                            <li key={index}>- {improvement}</li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
 
-              <h3 className={s.title}>Fixes:</h3>
-              <ul className={s.list}>
-                <li>
-                  - Fixed appearance the annoying left/right action buttons when
-                  scrolling vertically through the dictionary.
-                </li>
-                <li>
-                  - Fixed an issue where words from the previous dictionary
-                  remained visible while new words were loading during a
-                  dictionary switch.
-                </li>
-              </ul>
-            </div>
+                    {item.fixes && (
+                      <>
+                        <h3 className={s.title}>Fixes:</h3>
+                        <ul className={s.list}>
+                          {item.fixes.map((fix, index) => (
+                            <li key={index}>- {fix}</li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+
+                    <h2 className={s.contributorTitle}>
+                      All the contributors who made this release possible!
+                    </h2>
+                    <ul>
+                      {item.contributors.map((contributor, index) => (
+                        <li key={index}>{contributor}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </Fragment>
+              ))}
+            </>
           </div>
         </div>
       )}
