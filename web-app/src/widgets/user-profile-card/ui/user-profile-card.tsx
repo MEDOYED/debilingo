@@ -2,7 +2,10 @@ import profileLogo from "/img/profile-logos/logo.webp";
 
 import { cn } from "@shared/lib/styles";
 
-import { useUpdateDescriptionModalStore } from "@features/show-update-description";
+import {
+  LAST_APP_VERSION,
+  useUpdateDescriptionModalStore,
+} from "@features/show-update-description";
 
 import {
   LevelProgressBar,
@@ -56,7 +59,7 @@ export const UserProfileCard = ({ className }: UserProfileCardProps) => {
           as="button"
           onClick={openUpdateDescriptionModal}
         >
-          v0.2
+          v{LAST_APP_VERSION}
         </TextButton>
       </div>
 
