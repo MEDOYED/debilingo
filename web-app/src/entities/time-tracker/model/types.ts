@@ -10,7 +10,7 @@ export interface TimeTracker {
 }
 
 export interface TimeTrackerWithTag extends TimeTracker {
-  tag: TrackerTag | null;
+  tag: TrackerTag;
 }
 
 export interface CreateTimeTracker {

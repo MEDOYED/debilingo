@@ -71,9 +71,9 @@ export const TimeTrackerPage = () => {
   const [tags, setTags] = useState<TrackerTag[]>([]);
   const [timeTrackers, setTimeTrackers] = useState<TimeTrackerWithTag[]>([]);
   const [activeSession, setActiveSession] = useState<TimeSession | null>(null);
-  const [dataTimeStats, setDataTimeStats] = useState<
-    TimeStatsResponse[] | null
-  >(null);
+  const [dataTimeStats, setDataTimeStats] = useState<TimeStatsResponse | null>(
+    null
+  );
 
   // timers state
   const [currentSessionTimeSeconds, setCurrentSessionTimeSeconds] =
@@ -169,6 +169,9 @@ export const TimeTrackerPage = () => {
     if (activeSession === null) {
       const startedSession = await startSession(timeTracker.id);
       setActiveSession(startedSession);
+
+      const dataTimeStats = await getTimeStats("1d");
+      setDataTimeStats(dataTimeStats);
     }
 
     if (activeSession && activeSession?.tracker_id !== timeTracker.id) {
@@ -177,11 +180,17 @@ export const TimeTrackerPage = () => {
 
       const startedSession = await startSession(timeTracker.id);
       setActiveSession(startedSession);
+
+      const dataTimeStats = await getTimeStats("1d");
+      setDataTimeStats(dataTimeStats);
     }
 
     if (activeSession && activeSession?.tracker_id === timeTracker.id) {
       await stopSession(activeSession.id);
       setActiveSession(null);
+
+      const dataTimeStats = await getTimeStats("1d");
+      setDataTimeStats(dataTimeStats);
     }
   };
 
@@ -208,35 +217,24 @@ export const TimeTrackerPage = () => {
     return () => clearInterval(intervalId);
   }, [activeSession]);
 
-  // useEffect(() => {
-  //   const todalTotalTime = (timeTrackerId: TimeTrackerWithTag["id"]) => {
-  //     // const currentTimeStats = dataTimeStats?.find((timeStat) =>
-  //     //   timeStat.tags.find((tag) =>
-  //     //     tag.trackers.find((tracker) => tracker.id === timeTrackerId)
-  //     //   )
-  //     // );
+  const todalTimeTrackerTime = (timeTracker: TimeTrackerWithTag) => {
+    const tagsArr = dataTimeStats?.tags;
+    const searchedTagGroup = tagsArr?.find(
+      (item) => item.tag.name === timeTracker.tag.name
+    );
+    const searchedTimeTracker = searchedTagGroup?.trackers.find(
+      (item) => item.id === timeTracker.id
+    );
+    const searchedTimeTrackerTotalSeconds = searchedTimeTracker?.total_seconds;
 
-  //     // console.log("currentTimeStats:", currentTimeStats);
+    const { hoursString, minutesString, secondsString } = convertTime(
+      searchedTimeTrackerTotalSeconds
+    );
 
-  //     if (!dataTimeStats) return;
+    const convertedTotalTrackerTime = `${hoursString}:${minutesString}:${secondsString}`;
 
-  //     const
-
-  //     for (let i = 0; i <= dataTimeStats.length;  i++) {
-
-  //     };
-  //   };
-
-  //   return todalTotalTime;
-  // }, [dataTimeStats]);
-
-  const todalTotalTime = (timeTrackerId: TimeTrackerWithTag["id"]) => {
-    return "bob";
+    return convertedTotalTrackerTime;
   };
-
-  useEffect(() => {
-    console.log(dataTimeStats);
-  }, [dataTimeStats]);
 
   return (
     <>
@@ -271,7 +269,7 @@ export const TimeTrackerPage = () => {
 
                 <div className={s.timeWrapper}>
                   <span className={s.todayTotalTime}>
-                    {todalTotalTime(timeTracker.id)}
+                    {todalTimeTrackerTime(timeTracker)}
                   </span>
                   {activeSession?.tracker_id === timeTracker.id && (
                     <span className={s.stopwatch}>
