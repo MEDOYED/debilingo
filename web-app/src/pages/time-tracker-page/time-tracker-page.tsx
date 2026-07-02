@@ -91,7 +91,7 @@ export const TimeTrackerPage = () => {
       const dataActiveSession = await getActiveSession();
       setActiveSession(dataActiveSession);
 
-      const dataTimeStats = await getTimeStats("1d");
+      const dataTimeStats = await getTimeStats("all");
       setDataTimeStats(dataTimeStats);
 
       setIsLoadingAllData(false);
@@ -170,7 +170,7 @@ export const TimeTrackerPage = () => {
       const startedSession = await startSession(timeTracker.id);
       setActiveSession(startedSession);
 
-      const dataTimeStats = await getTimeStats("1d");
+      const dataTimeStats = await getTimeStats("all");
       setDataTimeStats(dataTimeStats);
     }
 
@@ -181,7 +181,7 @@ export const TimeTrackerPage = () => {
       const startedSession = await startSession(timeTracker.id);
       setActiveSession(startedSession);
 
-      const dataTimeStats = await getTimeStats("1d");
+      const dataTimeStats = await getTimeStats("all");
       setDataTimeStats(dataTimeStats);
     }
 
@@ -189,7 +189,7 @@ export const TimeTrackerPage = () => {
       await stopSession(activeSession.id);
       setActiveSession(null);
 
-      const dataTimeStats = await getTimeStats("1d");
+      const dataTimeStats = await getTimeStats("all");
       setDataTimeStats(dataTimeStats);
     }
   };
