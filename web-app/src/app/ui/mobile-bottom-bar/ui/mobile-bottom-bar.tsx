@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 
 import { cn } from "@shared/lib/styles";
-import { navigationListData } from "../config/navigation-list-data";
+import { NAV_ITEMS } from "../config/navigation-list-data";
 
 import s from "./mobile-bottom-bar.module.scss";
 
@@ -17,7 +17,7 @@ export const MobileBottomBar = () => {
       <ul className={s.list}>
         {/* burger icon in future that will be open navigation-modal */}
         <li className={cn(s.listItem, s.bugerIcon)}>B</li>
-        {navigationListData.map((item, index) => {
+        {NAV_ITEMS.map((item, index) => {
           return (
             <li
               className={cn(s.listItem, {

@@ -1,4 +1,5 @@
-import { DictionaryAdd, Gamepad, Home, Trophy } from "@shared/ui/icons";
+import { Clock, DictionaryAdd, Home, Trophy } from "@shared/ui/icons";
+// import { Gamepad } from "@shared/ui/icons";
 
 import type { IconProps } from "@shared/types";
 
@@ -8,7 +9,7 @@ interface NavigationItem {
   label: string;
 }
 
-export const navigationListData: NavigationItem[] = [
+export const NAV_ITEMS: NavigationItem[] = [
   {
     to: "/",
     Icon: Home,
@@ -20,11 +21,10 @@ export const navigationListData: NavigationItem[] = [
     label: "Dictionary page",
   },
   {
-    to: "/training",
-    Icon: Gamepad,
-    label: "Training page",
+    to: "/time-tracker",
+    Icon: Clock,
+    label: "Time tracker page",
   },
-
   {
     to: "/leaderboards",
     Icon: Trophy,

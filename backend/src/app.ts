@@ -7,6 +7,10 @@ import authRoutes from "./routes/authRoutes.js";
 import dictionaryRoutes from "./routes/dictionaryRoutes.js";
 import leaderboardRoutes from "./routes/leaderboardRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
+import sessionRoutes from "./routes/time-tracker/sessionRoutes.js";
+import statsRoutes from "./routes/time-tracker/statsRoutes.js";
+import tagRoutes from "./routes/time-tracker/tagRoutes.js";
+import timeTrackerRoutes from "./routes/time-tracker/timeTrackerRoutes.js";
 import wordRoutes from "./routes/wordRoutes.js";
 
 dotenv.config();
@@ -49,6 +53,10 @@ app.use("/api", activityRoutes);
 app.use("/api", wordRoutes);
 app.use("/api", profileRoutes);
 app.use("/api", leaderboardRoutes);
+app.use("/api", tagRoutes);
+app.use("/api", timeTrackerRoutes);
+app.use("/api", sessionRoutes);
+app.use("/api", statsRoutes);
 
 // 404 handler
 app.use((req: Request, res: Response) => {
