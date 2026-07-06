@@ -1,13 +1,13 @@
-@use "./styles/variables.module.scss" as var;
+@use "@shared/styles/variables/dictionary" as conf;
 
 .dictionaryPage {
-  padding-top: calc(var.$dictionary-top-bar-height);
+  padding-top: calc(conf.$dictionary-top-bar-height);
 }
 
 .wordsList {
   display: flex;
   flex-direction: column;
-  margin-top: var.$language-row-height;
+  margin-top: conf.$language-row-height;
 }
 
 .wordCard {
@@ -19,7 +19,7 @@
 
 .row {
   display: grid;
-  grid-template-columns: 1fr var.$central-col-width 1fr;
+  grid-template-columns: 1fr conf.$central-col-width 1fr;
   grid-template-areas: "main open translation";
   padding: 0 10px;
 

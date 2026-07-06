@@ -1,4 +1,11 @@
-export { WordCard } from "./ui/word-card/word-card";
+export {
+  createWord,
+  deleteWord,
+  getWords,
+  pinWord,
+  unpinWord,
+  updateWord,
+} from "./api/wordApi";
 
 export { useAddWordStore } from "./model/use-add-word-store";
 export { useSwipeWordStore } from "./model/use-swipe-word-store";
@@ -10,3 +17,5 @@ export type {
   Translation,
   Word,
 } from "./types/word-types";
+
+export { WordCard } from "./ui/word-card/word-card";

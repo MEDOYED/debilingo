@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom";
 
 import { useAddWordStore, useWordStore } from "@entities/word";
 import { getWords } from "@entities/word/api";
+import { CreateWordModal } from "@features/create-word";
 import { cn } from "@shared/lib/styles";
+
 import {
   StudyInfoModal,
   useStudyInfoModalStore,
@@ -12,7 +14,6 @@ import {
 import { useLanguageRowStore } from "./model/use-language-row-store";
 import { useSwitchColStore } from "./model/use-switch-col-store";
 
-import { AddWordCardModal } from "./ui/add-word-card/add-word-card";
 import { DictionaryTopBar } from "./ui/dictionary-top-bar/dictionary-top-bar";
 import { LanguageRow } from "./ui/language-row/language-row";
 import { Spoiler } from "./ui/spoiler/spoiler";
@@ -179,7 +180,7 @@ export const DictionaryPage = () => {
           })}
         </ul>
 
-        <AddWordCardModal />
+        <CreateWordModal />
 
         {xpCounter > 0 && <StudyInfoModal />}
       </main>

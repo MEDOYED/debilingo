@@ -1,8 +1,9 @@
-@use "../../styles/variables.module.scss" as var;
+// @use "../../styles/variables.module.scss" as var;
+@use "@shared/styles/variables/dictionary" as conf;
 
 .card {
   position: fixed;
-  top: var.$dictionary-top-bar-height;
+  top: conf.$dictionary-top-bar-height;
   height: fit-content;
   padding: 15px;
   right: 15px;
