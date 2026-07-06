@@ -1,10 +1,10 @@
-import { TextButton } from "@shared/ui/buttons";
-import s from "./label-input-component.module.scss";
 import { cn } from "@shared/lib/styles";
+import { TextButton } from "@shared/ui/buttons";
+
+import field from "@shared/styles/components/field.module.scss";
+import s from "./label-input-component.module.scss";
 
 interface IProps {
-  classNameLabel: string;
-  classNameInput: string;
   labelText: string;
   setText: (value: string[]) => void;
   text: string[];
@@ -12,8 +12,6 @@ interface IProps {
 }
 
 export const LabelInputComponent = ({
-  classNameLabel,
-  classNameInput,
   labelText,
   setText,
   text,
@@ -21,7 +19,7 @@ export const LabelInputComponent = ({
 }: IProps) => {
   return (
     <label
-      className={classNameLabel}
+      className={field.label}
       htmlFor=""
     >
       <div className={s.textAndButton}>{labelText}</div>
@@ -32,7 +30,7 @@ export const LabelInputComponent = ({
         >
           <input
             key={index}
-            className={cn(classNameInput, s.input)}
+            className={cn(field.input, s.input)}
             type="text"
             value={value || ""}
             onChange={(e) => {

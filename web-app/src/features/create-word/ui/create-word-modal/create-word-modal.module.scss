@@ -28,6 +28,11 @@
 .wordAndTranslationWrapper {
   display: flex;
   gap: 6px;
+
+  @media (max-width: 380px) {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 .actionRow {

@@ -91,9 +91,8 @@ export const CreateWordModal = () => {
             />
           </label>
 
+          {/* translations */}
           <LabelInputComponent
-            classNameLabel={field.label}
-            classNameInput={field.input}
             labelText="Переклад"
             setText={setTranslation}
             text={translations}
@@ -101,21 +100,16 @@ export const CreateWordModal = () => {
           />
         </div>
 
-        {/* definition */}
+        {/* definitions */}
         <LabelInputComponent
-          classNameLabel={field.label}
-          classNameInput={field.input}
           labelText="Пояснення"
           setText={setDefinition}
           text={definitions}
           textInButton="Додати пояснення"
         />
 
-        {/* example */}
-
+        {/* examples  */}
         <LabelInputComponent
-          classNameLabel={field.label}
-          classNameInput={field.input}
           labelText="Приклад"
           setText={setExample}
           text={examples}
