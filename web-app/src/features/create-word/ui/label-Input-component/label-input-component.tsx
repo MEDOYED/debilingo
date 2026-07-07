@@ -1,5 +1,6 @@
 import { cn } from "@shared/lib/styles";
 import { TextButton } from "@shared/ui/buttons";
+import { Clear, Trash } from "@shared/ui/icons";
 
 import field from "@shared/styles/components/field.module.scss";
 import s from "./label-input-component.module.scss";
@@ -17,6 +18,17 @@ export const LabelInputComponent = ({
   text,
   textInButton,
 }: IProps) => {
+  const handleDelete = (index: number) => {
+    const update = [...text];
+
+    if (update[index] === "") {
+      setText(text.length > 1 ? text.filter((_, i) => i !== index) : [""]);
+    } else {
+      update[index] = "";
+      setText(update);
+    }
+  };
+
   return (
     <label
       className={field.label}
@@ -40,17 +52,17 @@ export const LabelInputComponent = ({
               setText(update);
             }}
           />
-          <TextButton
+          <button
+            type="button"
             className={s.deleteInputButton}
-            as="button"
-            onClick={() =>
-              setText(
-                text.length > 1 ? text.filter((_, i) => i !== index) : [""]
-              )
-            }
+            onClick={() => handleDelete(index)}
           >
-            -
-          </TextButton>
+            {text[index] && text[index] !== "" ? (
+              <Clear />
+            ) : (
+              index !== 0 && <Trash />
+            )}
+          </button>
         </div>
       ))}
       <TextButton
