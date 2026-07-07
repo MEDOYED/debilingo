@@ -13,10 +13,10 @@ export const UPDATES_DATA: UpdatesData[] = [
     version: "0.4",
     date: "31.07.2026",
     manHours: "",
-    features: [
+    features: null,
+    improvements: [
       "Impove modal for creation new word on dictionary page: improve clear and delete unnecessary inputs, add icons for that actions (clear and delete), add padding-right for this buttons",
     ],
-    improvements: ["Version modal window refactor"],
     fixes: null,
     contributors: ["Medoyed"],
   },
