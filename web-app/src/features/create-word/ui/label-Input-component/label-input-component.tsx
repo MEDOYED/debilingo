@@ -1,10 +1,11 @@
-import { TextButton } from "@shared/ui/buttons";
-import s from "./label-input-component.module.scss";
 import { cn } from "@shared/lib/styles";
+import { TextButton } from "@shared/ui/buttons";
+import { Clear, Trash } from "@shared/ui/icons";
+
+import field from "@shared/styles/components/field.module.scss";
+import s from "./label-input-component.module.scss";
 
 interface IProps {
-  classNameLabel: string;
-  classNameInput: string;
   labelText: string;
   setText: (value: string[]) => void;
   text: string[];
@@ -12,16 +13,25 @@ interface IProps {
 }
 
 export const LabelInputComponent = ({
-  classNameLabel,
-  classNameInput,
   labelText,
   setText,
   text,
   textInButton,
 }: IProps) => {
+  const handleDelete = (index: number) => {
+    const update = [...text];
+
+    if (update[index] === "") {
+      setText(text.length > 1 ? text.filter((_, i) => i !== index) : [""]);
+    } else {
+      update[index] = "";
+      setText(update);
+    }
+  };
+
   return (
     <label
-      className={classNameLabel}
+      className={field.label}
       htmlFor=""
     >
       <div className={s.textAndButton}>{labelText}</div>
@@ -32,7 +42,7 @@ export const LabelInputComponent = ({
         >
           <input
             key={index}
-            className={cn(classNameInput, s.input)}
+            className={cn(field.input, s.input)}
             type="text"
             value={value || ""}
             onChange={(e) => {
@@ -42,17 +52,17 @@ export const LabelInputComponent = ({
               setText(update);
             }}
           />
-          <TextButton
+          <button
+            type="button"
             className={s.deleteInputButton}
-            as="button"
-            onClick={() =>
-              setText(
-                text.length > 1 ? text.filter((_, i) => i !== index) : [""]
-              )
-            }
+            onClick={() => handleDelete(index)}
           >
-            -
-          </TextButton>
+            {text[index] && text[index] !== "" ? (
+              <Clear />
+            ) : (
+              index !== 0 && <Trash />
+            )}
+          </button>
         </div>
       ))}
       <TextButton

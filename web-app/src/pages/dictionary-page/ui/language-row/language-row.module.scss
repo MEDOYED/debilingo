@@ -1,16 +1,16 @@
-@use "../../styles/variables.module.scss" as var;
+@use "@shared/styles/variables/dictionary" as conf;
 
 .languageRow {
   display: grid;
   position: fixed;
   width: 100%;
   padding: 0 10px;
-  grid-template-columns: 1fr var.$central-col-width 1fr;
+  grid-template-columns: 1fr conf.$central-col-width 1fr;
   grid-template-areas: "main switch translation";
   align-items: center;
   background-color: var(--md-sys-color-background);
   z-index: 3;
-  height: var.$language-row-height;
+  height: conf.$language-row-height;
 }
 
 .colWrapper {
