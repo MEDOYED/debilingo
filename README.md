@@ -62,7 +62,7 @@ cp .env.example .env
 The `.env` file is already configured to use the deployed dev backend, so you don't need to change anything! It should contain:
 
 ```env
-VITE_API_URL=https://debilingo-backend-dev-423439214783.us-central1.run.app/api
+VITE_API_URL=https://debilingo-backend-dev.vercel.app/api
 ```
 
 #### Step 4: Start the Development Server
@@ -107,13 +107,11 @@ While in the `web-app/` directory:
 ### ✅ Verify Your Setup
 
 1. **Check if backend is connected:**
-
    - Open http://localhost:1414/
    - Try to register a new account
    - If registration works, backend connection is successful ✅
 
 2. **Check if dev server is running:**
-
    - You should see hot-reload when you edit files
    - Changes should appear instantly in the browser
 
