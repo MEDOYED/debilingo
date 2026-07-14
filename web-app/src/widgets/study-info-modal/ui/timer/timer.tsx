@@ -20,7 +20,7 @@ export const Timer = () => {
 
       increaseTimeCounter(1);
 
-      if (seconds === 10) {
+      if (seconds === 20) {
         clearInterval(interval);
 
         const currentXp = useStudyInfoModalStore.getState().xpCounter;
