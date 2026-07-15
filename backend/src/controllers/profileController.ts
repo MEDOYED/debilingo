@@ -177,8 +177,6 @@ export const studyActivity = async (req: AuthRequest, res: Response): Promise<vo
 
   const { daily_streak, last_study_date, total_xp, total_study_time_seconds } = data;
 
-  // ---
-
   const todayStr = new Date().toISOString().slice(0, 10);
   const yesterday = new Date();
 
@@ -187,18 +185,18 @@ export const studyActivity = async (req: AuthRequest, res: Response): Promise<vo
   const yesterdayStr = yesterday.toISOString().slice(0, 10);
 
   let updatedStreak: number;
+  let xpDeltaWithDailyStreak: number = xpDelta;
 
   if (last_study_date === todayStr) {
     updatedStreak = daily_streak;
   } else if (last_study_date === yesterdayStr) {
     updatedStreak = daily_streak + 1;
+    xpDeltaWithDailyStreak = xpDelta + updatedStreak;
   } else {
     updatedStreak = 1;
   }
 
-  // ---
-
-  const updatedXp = total_xp + xpDelta;
+  const updatedXp = total_xp + xpDeltaWithDailyStreak;
   const updatedTime = total_study_time_seconds + timeDelta;
 
   const { error: updateStudyActivityError } = await supabase

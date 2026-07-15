@@ -13,7 +13,9 @@ export const UPDATES_DATA: UpdatesData[] = [
     version: "0.4",
     date: "31.07.2026",
     manHours: "",
-    features: null,
+    features: [
+      "Increase xp at the same value of daily streak when daily streak is increase by one. For example if you have 23 days in daily streak and you on next day click on spoiler you increase your total xp count by +24xp for 24 daily streak and +1xp for spoiler. Note: that work one time per day",
+    ],
     improvements: [
       "Impove modal for creation new word on dictionary page: improve clear and delete unnecessary inputs, add icons for that actions (clear and delete), add padding-right for this buttons",
     ],
