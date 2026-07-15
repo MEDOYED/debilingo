@@ -1,6 +1,6 @@
 import s from "./timer.module.scss";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useProfileStore } from "@entities/profile";
 import { useStudyInfoModalStore } from "../../model/use-study-info-modal-store";
@@ -9,6 +9,8 @@ export const Timer = () => {
   const { timeCounter, increaseTimeCounter, xpCounter, resetCounters } =
     useStudyInfoModalStore();
   const { updateStudyActivity } = useProfileStore();
+
+  const [stopTimer, setStopTimer] = useState(false);
 
   useEffect(() => {
     if (xpCounter === 0) return;
@@ -20,7 +22,7 @@ export const Timer = () => {
 
       increaseTimeCounter(1);
 
-      if (seconds === 20) {
+      if (seconds === 20 || stopTimer) {
         clearInterval(interval);
 
         const currentXp = useStudyInfoModalStore.getState().xpCounter;
@@ -34,6 +36,8 @@ export const Timer = () => {
           console.error("Failed to save activity", error);
         }
 
+        setStopTimer(false);
+
         // enableDataSending();
       }
     }, 1000);
@@ -41,7 +45,14 @@ export const Timer = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [xpCounter]);
+  }, [stopTimer, xpCounter]);
 
-  return <div className={s.timer}>time: {timeCounter}s</div>;
+  return (
+    <div
+      onClick={() => setStopTimer(true)}
+      className={s.timer}
+    >
+      time: {timeCounter}s
+    </div>
+  );
 };
