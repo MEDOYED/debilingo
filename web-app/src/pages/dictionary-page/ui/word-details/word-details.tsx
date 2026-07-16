@@ -8,6 +8,8 @@ import {
   EditableDefinitionInput,
   EditableExampleInput,
 } from "@features/edit-word";
+import { TextButton } from "@shared/ui/buttons";
+import { ArrowTopRightOnSquare } from "@shared/ui/icons";
 
 interface WordDetailProps {
   className: string;
@@ -20,6 +22,14 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
   return (
     <div className={className}>
       <div className={s.ulContainer}>
+        <TextButton
+          as="external-link"
+          href={`https://youglish.com/pronounce/${word.source_word}/english`}
+          className={s.youglishBtn}
+        >
+          Прослухати на YouGlish <ArrowTopRightOnSquare />
+        </TextButton>
+
         <p>
           Додатков{word.translations.length < 3 ? "ий" : "і"} переклад
           {word.translations.length < 3 ? "" : "и"}:
