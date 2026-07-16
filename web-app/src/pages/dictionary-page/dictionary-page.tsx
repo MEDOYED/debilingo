@@ -23,9 +23,9 @@ import { WordDetails } from "./ui/word-details/word-details";
 import { SubmitEditWordButton } from "@features/edit-word";
 import { EditableMainTranslationInput } from "@features/edit-word/ui/editable-main-translation-input/editable-main-translation-input";
 import { EditableSourceWordInput } from "@features/edit-word/ui/editable-source-word-input/editable-source-word-input";
-import { ArrowTopRightOnSquare, ChevronDown } from "@shared/ui/icons";
-import s from "./dictionary-page.module.scss";
+import { ChevronDown } from "@shared/ui/icons";
 import { SpeakerWave } from "@shared/ui/icons/speaker-wave/speaker-wave";
+import s from "./dictionary-page.module.scss";
 
 const LOAD_WORDS = 20;
 
@@ -41,8 +41,6 @@ export const DictionaryPage = () => {
 
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-
-  const [modalWord, setModalWord] = useState("");
 
   const isLoadingRef = useRef(false);
 
@@ -160,13 +158,7 @@ export const DictionaryPage = () => {
                           <span className={s.wordSource}>
                             {word.source_word}{" "}
                           </span>
-                          <a
-                            onClick={() => setModalWord(word.source_word)}
-                            target="_blank"
-                            href={`https://youglish.com/pronounce/${modalWord}/english`}
-                          >
-                            <ArrowTopRightOnSquare />
-                          </a>
+
                           <span
                             className={s.speaker}
                             onClick={() => speak(word.source_word)}
@@ -176,6 +168,7 @@ export const DictionaryPage = () => {
                         </div>
                       </Spoiler>
                     )}
+
                     {editableWordId === word.id ? (
                       <SubmitEditWordButton />
                     ) : (
