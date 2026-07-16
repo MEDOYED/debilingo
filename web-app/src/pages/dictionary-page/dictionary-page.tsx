@@ -154,17 +154,15 @@ export const DictionaryPage = () => {
                         className={s.mainCol}
                         isVisible={isMainLanguageColVisible}
                       >
-                        <div className={s.wordAndRedirectAndSpeaker}>
+                        <div className={s.wordAndSpeakerWrapper}>
                           <span className={s.wordSource}>
                             {word.source_word}{" "}
                           </span>
 
-                          <span
+                          <SpeakerWave
                             className={s.speaker}
                             onClick={() => speak(word.source_word)}
-                          >
-                            <SpeakerWave />
-                          </span>
+                          />
                         </div>
                       </Spoiler>
                     )}
