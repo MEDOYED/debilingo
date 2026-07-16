@@ -23,7 +23,7 @@ import { WordDetails } from "./ui/word-details/word-details";
 import { SubmitEditWordButton } from "@features/edit-word";
 import { EditableMainTranslationInput } from "@features/edit-word/ui/editable-main-translation-input/editable-main-translation-input";
 import { EditableSourceWordInput } from "@features/edit-word/ui/editable-source-word-input/editable-source-word-input";
-import { ChevronDown } from "@shared/ui/icons";
+import { ArrowTopRightOnSquare, ChevronDown } from "@shared/ui/icons";
 import s from "./dictionary-page.module.scss";
 import { SpeakerWave } from "@shared/ui/icons/speaker-wave/speaker-wave";
 
@@ -41,6 +41,8 @@ export const DictionaryPage = () => {
 
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+
+  const [modalWord, setModalWord] = useState("");
 
   const isLoadingRef = useRef(false);
 
@@ -154,10 +156,17 @@ export const DictionaryPage = () => {
                         className={s.mainCol}
                         isVisible={isMainLanguageColVisible}
                       >
-                        <div className={s.wordAndSpeaker}>
+                        <div className={s.wordAndRedirectAndSpeaker}>
                           <span className={s.wordSource}>
                             {word.source_word}{" "}
                           </span>
+                          <a
+                            onClick={() => setModalWord(word.source_word)}
+                            target="_blank"
+                            href={`https://youglish.com/pronounce/${modalWord}/english`}
+                          >
+                            <ArrowTopRightOnSquare />
+                          </a>
                           <span
                             className={s.speaker}
                             onClick={() => speak(word.source_word)}
@@ -167,7 +176,6 @@ export const DictionaryPage = () => {
                         </div>
                       </Spoiler>
                     )}
-
                     {editableWordId === word.id ? (
                       <SubmitEditWordButton />
                     ) : (
