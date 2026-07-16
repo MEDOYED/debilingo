@@ -17,3 +17,4 @@ export { Trash } from "./trash/trash";
 export { Trophy } from "./trophy";
 export { Unpin } from "./unpin/unpin";
 export { SpeakerWave } from "./speaker-wave/speaker-wave";
+export { ArrowTopRightOnSquare } from "./arrow-top-right-on-square/arrow-top-right-on-square";
