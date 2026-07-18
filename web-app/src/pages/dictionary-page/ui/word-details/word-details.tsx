@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import type { Word } from "@entities/word";
 
 import s from "./word-details.module.scss";
@@ -10,9 +12,9 @@ import {
 } from "@features/edit-word";
 import { TextButton } from "@shared/ui/buttons";
 import { ArrowTopRightOnSquare } from "@shared/ui/icons";
-import { YouGlishModal } from "@widgets/youglish-modal/youglish-modal";
 import { YouGlishPlayer } from "@shared/ui/youGlishPlayer/youglish-player";
-import { useState } from "react";
+
+import { YouGlishModal } from "@widgets/youglish-modal/youglish-modal";
 
 interface WordDetailProps {
   className: string;
