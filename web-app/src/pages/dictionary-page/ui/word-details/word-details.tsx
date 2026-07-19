@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import type { Word } from "@entities/word";
 
 import s from "./word-details.module.scss";
@@ -12,9 +10,6 @@ import {
 } from "@features/edit-word";
 import { TextButton } from "@shared/ui/buttons";
 import { ArrowTopRightOnSquare } from "@shared/ui/icons";
-import { YouGlishPlayer } from "@shared/ui/youGlishPlayer/youglish-player";
-
-import { YouGlishModal } from "@widgets/youglish-modal/youglish-modal";
 
 interface WordDetailProps {
   className: string;
@@ -24,23 +19,16 @@ interface WordDetailProps {
 export const WordDetails = ({ className, word }: WordDetailProps) => {
   const { editableWordId } = useWordStore();
 
-  const [openModal, setOpenModal] = useState(false);
-
   return (
     <div className={className}>
       <div className={s.ulContainer}>
         <TextButton
-          as="button"
-          onClick={() => setOpenModal(true)}
+          as="external-link"
+          href={`https://youglish.com/pronounce/${word.source_word}/english`}
           className={s.youglishBtn}
         >
           Прослухати на YouGlish <ArrowTopRightOnSquare />
         </TextButton>
-        {openModal && (
-          <YouGlishModal onClose={() => setOpenModal(false)}>
-            <YouGlishPlayer word={word.source_word} />
-          </YouGlishModal>
-        )}
 
         <p>
           Додатков{word.translations.length < 3 ? "ий" : "і"} переклад
