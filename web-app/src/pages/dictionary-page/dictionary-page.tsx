@@ -25,6 +25,7 @@ import { EditableMainTranslationInput } from "@features/edit-word/ui/editable-ma
 import { EditableSourceWordInput } from "@features/edit-word/ui/editable-source-word-input/editable-source-word-input";
 import { ChevronDown } from "@shared/ui/icons";
 import s from "./dictionary-page.module.scss";
+import { useIsVisibleWordStore } from "./model/use-is-visible-word-spoiler-store";
 
 const LOAD_WORDS = 20;
 
@@ -109,6 +110,8 @@ export const DictionaryPage = () => {
     }
   };
 
+  const { isVisibleWord } = useIsVisibleWordStore();
+
   const speak = (text: string, lang: string = "en-US") => {
     speechSynthesis.cancel();
 
@@ -155,10 +158,10 @@ export const DictionaryPage = () => {
                       >
                         <div className={s.wordAndSpeakerWrapper}>
                           <span
-                            onDoubleClick={() => speak(word.source_word)}
                             onClick={() =>
-                              isMainLanguageColVisible &&
-                              speak(word.source_word)
+                              (isMainLanguageColVisible &&
+                                speak(word.source_word)) ||
+                              (isVisibleWord && speak(word.source_word))
                             }
                             className={s.wordSource}
                           >
