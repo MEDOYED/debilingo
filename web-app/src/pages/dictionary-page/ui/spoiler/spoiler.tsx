@@ -5,6 +5,7 @@ import { cn } from "@shared/lib/styles";
 
 import { useStudyInfoModalStore } from "@widgets/study-info-modal/model/use-study-info-modal-store";
 import s from "./spoiler.module.scss";
+import { useIsVisibleWordStore } from "@pages/dictionary-page/model/use-is-visible-word-spoiler-store";
 
 interface SpoilerProps {
   children: ReactNode;
@@ -148,9 +149,14 @@ export const Spoiler = ({
 
   const { increaseXpCounter } = useStudyInfoModalStore();
 
+  const { toggleVisible } = useIsVisibleWordStore();
+
   const handleClick = () => {
     if (isVisible) return; // Клік працює тільки коли глобально приховано
-    if (revealed) return; // Якщо вже відкрито - нічого не робимо
+    if (revealed) {
+      toggleVisible();
+      return;
+    } // Якщо вже відкрито - нічого не робимо
 
     setIsIndividuallyRevealed(true);
     if (animationRef.current) {
