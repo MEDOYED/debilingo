@@ -25,7 +25,6 @@ import { EditableMainTranslationInput } from "@features/edit-word/ui/editable-ma
 import { EditableSourceWordInput } from "@features/edit-word/ui/editable-source-word-input/editable-source-word-input";
 import { ChevronDown } from "@shared/ui/icons";
 import s from "./dictionary-page.module.scss";
-import { useIsVisibleWordStore } from "./model/use-is-visible-word-spoiler-store";
 
 const LOAD_WORDS = 20;
 
@@ -110,20 +109,6 @@ export const DictionaryPage = () => {
     }
   };
 
-  const { isVisibleWord } = useIsVisibleWordStore();
-
-  const speak = (text: string, lang: string = "en-US") => {
-    speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    utterance.lang = lang;
-    utterance.rate = 1;
-    utterance.pitch = 1;
-
-    speechSynthesis.speak(utterance);
-  };
-
   return (
     <div>
       {/* <div className="container"> */}
@@ -155,16 +140,11 @@ export const DictionaryPage = () => {
                       <Spoiler
                         className={s.mainCol}
                         isVisible={isMainLanguageColVisible}
+                        word={word.source_word}
+                        mainCol={true}
                       >
                         <div className={s.wordAndSpeakerWrapper}>
-                          <span
-                            onClick={() =>
-                              (isMainLanguageColVisible &&
-                                speak(word.source_word)) ||
-                              (isVisibleWord && speak(word.source_word))
-                            }
-                            className={s.wordSource}
-                          >
+                          <span className={s.wordSource}>
                             {word.source_word}{" "}
                           </span>
                         </div>
@@ -189,7 +169,10 @@ export const DictionaryPage = () => {
                     {editableWordId === word.id ? (
                       <EditableMainTranslationInput />
                     ) : (
-                      <Spoiler isVisible={isTranslationColVisible}>
+                      <Spoiler
+                        mainCol={false}
+                        isVisible={isTranslationColVisible}
+                      >
                         {word.translations[0]?.text}
                       </Spoiler>
                     )}
