@@ -15,12 +15,17 @@ export const UPDATES_DATA: UpdatesData[] = [
     manHours: "",
     features: [
       "Increase xp at the same value of daily streak when daily streak is increase by one. For example if you have 23 days in daily streak and you on next day click on spoiler you increase your total xp count by +24xp for 24 daily streak and +1xp for spoiler. Note: that work one time per day",
+      "Allow users to manually stop the XP timer by clicking on it and send the accumulated study data",
+      "Allow users to play words in the main dictionary column by clicking on them",
+      "Add the ability to open real-life video examples of words through YouGlish from the detailed word information section",
     ],
     improvements: [
       "Impove modal for creation new word on dictionary page: improve clear and delete unnecessary inputs, add icons for that actions (clear and delete), add padding-right for this buttons",
     ],
-    fixes: null,
-    contributors: ["Medoyed"],
+    fixes: [
+      "Fix 404 errors when accessing dictionary routes after page reload or prolonged inactivity",
+    ],
+    contributors: ["Medoyed", "Riazanov Daniil"],
   },
   {
     version: "0.3",
