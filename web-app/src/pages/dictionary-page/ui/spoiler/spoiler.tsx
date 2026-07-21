@@ -5,18 +5,21 @@ import { cn } from "@shared/lib/styles";
 
 import { useStudyInfoModalStore } from "@widgets/study-info-modal/model/use-study-info-modal-store";
 import s from "./spoiler.module.scss";
-import { useIsVisibleWordStore } from "@pages/dictionary-page/model/use-is-visible-word-spoiler-store";
 
 interface SpoilerProps {
   children: ReactNode;
   className?: string;
   isVisible: boolean;
+  word?: string;
+  mainCol: boolean;
 }
 
 export const Spoiler = ({
   children,
   className = "",
   isVisible,
+  word,
+  mainCol,
 }: SpoilerProps) => {
   const [isIndividuallyRevealed, setIsIndividuallyRevealed] = useState(false);
 
@@ -149,14 +152,24 @@ export const Spoiler = ({
 
   const { increaseXpCounter } = useStudyInfoModalStore();
 
-  const { toggleVisible } = useIsVisibleWordStore();
+  const speak = (text: string, lang: string = "en-US") => {
+    speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    utterance.lang = lang;
+    utterance.rate = 1;
+    utterance.pitch = 1;
+
+    speechSynthesis.speak(utterance);
+  };
 
   const handleClick = () => {
+    if ((isIndividuallyRevealed || isVisible) && mainCol) {
+      if (word) speak(word);
+    }
     if (isVisible) return; // Клік працює тільки коли глобально приховано
-    if (revealed) {
-      toggleVisible();
-      return;
-    } // Якщо вже відкрито - нічого не робимо
+    if (revealed) return; // Якщо вже відкрито - нічого не робимо
 
     setIsIndividuallyRevealed(true);
     if (animationRef.current) {
