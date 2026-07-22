@@ -1,5 +1,5 @@
 @use "@shared/styles/config" as conf;
-@use "../../styles/variables.module.scss" as var;
+@use "@shared/styles/variables/dictionary" as confDictionary;
 
 .topBarOverlay {
   position: fixed;
@@ -8,7 +8,7 @@
   left: conf.$desktop-left-sidebar-width;
   padding: 8px 15px 0 15px;
   backdrop-filter: blur(4px);
-  height: var.$dictionary-top-bar-height;
+  height: confDictionary.$dictionary-top-bar-height;
   z-index: 100;
 
   @media (max-width: 1023px) {

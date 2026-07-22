@@ -10,12 +10,16 @@ interface SpoilerProps {
   children: ReactNode;
   className?: string;
   isVisible: boolean;
+  word?: string;
+  mainCol: boolean;
 }
 
 export const Spoiler = ({
   children,
   className = "",
   isVisible,
+  word,
+  mainCol,
 }: SpoilerProps) => {
   const [isIndividuallyRevealed, setIsIndividuallyRevealed] = useState(false);
 
@@ -148,7 +152,22 @@ export const Spoiler = ({
 
   const { increaseXpCounter } = useStudyInfoModalStore();
 
+  const speak = (text: string, lang: string = "en-US") => {
+    speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    utterance.lang = lang;
+    utterance.rate = 1;
+    utterance.pitch = 1;
+
+    speechSynthesis.speak(utterance);
+  };
+
   const handleClick = () => {
+    if ((isIndividuallyRevealed || isVisible) && mainCol) {
+      if (word) speak(word);
+    }
     if (isVisible) return; // Клік працює тільки коли глобально приховано
     if (revealed) return; // Якщо вже відкрито - нічого не робимо
 

@@ -1,16 +1,15 @@
 import { useParams } from "react-router-dom";
 
 import { useProfileStore } from "@entities/profile";
-import { createWord } from "@entities/word/api/wordApi";
+import { createWord, useAddWordStore } from "@entities/word";
 import { FilledButton, TextButton } from "@shared/ui/buttons";
 
-import { useAddWordStore } from "../../../../entities/word/model/use-add-word-store";
-import { LabelInputComponent } from "./label-Input-component/label-input-component";
+import { LabelInputComponent } from "../label-Input-component/label-input-component";
 
 import field from "@shared/styles/components/field.module.scss";
-import s from "./add-word-card.module.scss";
+import s from "./create-word-modal.module.scss";
 
-export const AddWordCardModal = () => {
+export const CreateWordModal = () => {
   const { dictId } = useParams();
 
   const {
@@ -92,9 +91,8 @@ export const AddWordCardModal = () => {
             />
           </label>
 
+          {/* translations */}
           <LabelInputComponent
-            classNameLabel={field.label}
-            classNameInput={field.input}
             labelText="Переклад"
             setText={setTranslation}
             text={translations}
@@ -102,21 +100,16 @@ export const AddWordCardModal = () => {
           />
         </div>
 
-        {/* definition */}
+        {/* definitions */}
         <LabelInputComponent
-          classNameLabel={field.label}
-          classNameInput={field.input}
           labelText="Пояснення"
           setText={setDefinition}
           text={definitions}
           textInButton="Додати пояснення"
         />
 
-        {/* example */}
-
+        {/* examples  */}
         <LabelInputComponent
-          classNameLabel={field.label}
-          classNameInput={field.input}
           labelText="Приклад"
           setText={setExample}
           text={examples}

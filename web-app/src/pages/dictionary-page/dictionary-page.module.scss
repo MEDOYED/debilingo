@@ -1,13 +1,13 @@
-@use "./styles/variables.module.scss" as var;
+@use "@shared/styles/variables/dictionary" as conf;
 
 .dictionaryPage {
-  padding-top: calc(var.$dictionary-top-bar-height);
+  padding-top: calc(conf.$dictionary-top-bar-height);
 }
 
 .wordsList {
   display: flex;
   flex-direction: column;
-  margin-top: var.$language-row-height;
+  margin-top: conf.$language-row-height;
 }
 
 .wordCard {
@@ -19,7 +19,7 @@
 
 .row {
   display: grid;
-  grid-template-columns: 1fr var.$central-col-width 1fr;
+  grid-template-columns: 1fr conf.$central-col-width 1fr;
   grid-template-areas: "main open translation";
   padding: 0 10px;
 
@@ -32,10 +32,30 @@
   grid-area: main;
 }
 
+.wordAndSpeakerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.wordSource {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  cursor: pointer;
+}
+
+.speaker:hover {
+  cursor: pointer;
+  color: #abb6ba;
+}
+
 .openDescription {
   grid-area: open;
   cursor: pointer;
-  padding: 3px;
+  padding: 3px 8px;
   transition: all 0.5s ease;
   width: 100%;
 }

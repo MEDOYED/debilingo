@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom";
 
 import { useAddWordStore, useWordStore } from "@entities/word";
 import { getWords } from "@entities/word/api";
+import { CreateWordModal } from "@features/create-word";
 import { cn } from "@shared/lib/styles";
+
 import {
   StudyInfoModal,
   useStudyInfoModalStore,
@@ -12,7 +14,6 @@ import {
 import { useLanguageRowStore } from "./model/use-language-row-store";
 import { useSwitchColStore } from "./model/use-switch-col-store";
 
-import { AddWordCardModal } from "./ui/add-word-card/add-word-card";
 import { DictionaryTopBar } from "./ui/dictionary-top-bar/dictionary-top-bar";
 import { LanguageRow } from "./ui/language-row/language-row";
 import { Spoiler } from "./ui/spoiler/spoiler";
@@ -139,8 +140,14 @@ export const DictionaryPage = () => {
                       <Spoiler
                         className={s.mainCol}
                         isVisible={isMainLanguageColVisible}
+                        word={word.source_word}
+                        mainCol={true}
                       >
-                        {word.source_word}
+                        <div className={s.wordAndSpeakerWrapper}>
+                          <span className={s.wordSource}>
+                            {word.source_word}{" "}
+                          </span>
+                        </div>
                       </Spoiler>
                     )}
 
@@ -162,7 +169,10 @@ export const DictionaryPage = () => {
                     {editableWordId === word.id ? (
                       <EditableMainTranslationInput />
                     ) : (
-                      <Spoiler isVisible={isTranslationColVisible}>
+                      <Spoiler
+                        mainCol={false}
+                        isVisible={isTranslationColVisible}
+                      >
                         {word.translations[0]?.text}
                       </Spoiler>
                     )}
@@ -179,7 +189,7 @@ export const DictionaryPage = () => {
           })}
         </ul>
 
-        <AddWordCardModal />
+        <CreateWordModal />
 
         {xpCounter > 0 && <StudyInfoModal />}
       </main>
