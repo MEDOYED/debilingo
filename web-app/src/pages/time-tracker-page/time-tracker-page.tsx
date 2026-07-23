@@ -23,6 +23,7 @@ import field from "@shared/styles/components/field.module.scss";
 import s from "./time-tracker-page.module.scss";
 
 import type { TimeSession, TimeTrackerWithTag } from "@entities/time-tracker";
+import { useLoadingTimer } from "./model/use-loading-timer";
 
 const COLORS = [
   "#ef4444",
@@ -236,35 +237,11 @@ export const TimeTrackerPage = () => {
     return convertedTotalTrackerTime;
   };
 
-  const [loadingTime, setLoadingTime] = useState("0,00");
-
-  useEffect(() => {
-    if (!isLoadingAllData) return;
-
-    const startTime = performance.now();
-    let animationFrameId: number;
-
-    const updateTimer = () => {
-      const elapsed = performance.now() - startTime;
-
-      const seconds = Math.floor(elapsed / 1000);
-      const hundredths = Math.floor((elapsed % 1000) / 10);
-
-      setLoadingTime(`${seconds},${String(hundredths).padStart(2, "0")}`);
-
-      animationFrameId = requestAnimationFrame(updateTimer);
-    };
-
-    updateTimer();
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [isLoadingAllData]);
+  const { loadingTime } = useLoadingTimer(isLoadingAllData);
 
   return (
     <>
-      {isLoadingAllData === true && <div>Loading {loadingTime}</div>}
+      {isLoadingAllData === true && <div>Loading {loadingTime}s</div>}
 
       {isLoadingAllData === false && (
         <main>
