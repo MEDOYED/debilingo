@@ -236,9 +236,35 @@ export const TimeTrackerPage = () => {
     return convertedTotalTrackerTime;
   };
 
+  const [loadingTime, setLoadingTime] = useState("0,00");
+
+  useEffect(() => {
+    if (!isLoadingAllData) return;
+
+    const startTime = performance.now();
+    let animationFrameId: number;
+
+    const updateTimer = () => {
+      const elapsed = performance.now() - startTime;
+
+      const seconds = Math.floor(elapsed / 1000);
+      const hundredths = Math.floor((elapsed % 1000) / 10);
+
+      setLoadingTime(`${seconds},${String(hundredths).padStart(2, "0")}`);
+
+      animationFrameId = requestAnimationFrame(updateTimer);
+    };
+
+    updateTimer();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isLoadingAllData]);
+
   return (
     <>
-      {isLoadingAllData === true && <div>Loading...</div>}
+      {isLoadingAllData === true && <div>Loading {loadingTime}</div>}
 
       {isLoadingAllData === false && (
         <main>
