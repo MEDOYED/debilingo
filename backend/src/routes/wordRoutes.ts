@@ -5,6 +5,7 @@ import {
   deleteWord,
   getWords,
   pinWord,
+  shuffleWords,
   unpinWord,
   updateWord,
 } from "../controllers/wordController.js";
@@ -30,6 +31,8 @@ router.delete("/words/:id", deleteWord);
 router.patch("/words/pin/:id", pinWord);
 
 router.patch("/words/unpin/:id", unpinWord);
+
+router.patch("/words/:dictionaryId/shuffle", shuffleWords);
 
 router.patch("/words/:id", updateWord);
 

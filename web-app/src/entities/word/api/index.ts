@@ -3,6 +3,7 @@ export {
   deleteWord,
   getWords,
   pinWord,
+  shuffleWords,
   unpinWord,
   updateWord,
 } from "./wordApi";

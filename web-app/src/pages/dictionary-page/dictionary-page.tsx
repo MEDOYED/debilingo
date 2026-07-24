@@ -23,7 +23,9 @@ import { WordDetails } from "./ui/word-details/word-details";
 import { SubmitEditWordButton } from "@features/edit-word";
 import { EditableMainTranslationInput } from "@features/edit-word/ui/editable-main-translation-input/editable-main-translation-input";
 import { EditableSourceWordInput } from "@features/edit-word/ui/editable-source-word-input/editable-source-word-input";
+import { useShuffleStore } from "@features/shuffle-words";
 import { ChevronDown } from "@shared/ui/icons";
+
 import s from "./dictionary-page.module.scss";
 
 const LOAD_WORDS = 20;
@@ -52,14 +54,15 @@ export const DictionaryPage = () => {
     setEditableWordId,
   } = useWordStore();
 
-  // initial load when dictId changes
-  useEffect(() => {
-    setOffset(0);
-    setHasMore(true);
-    setWords([]);
+  const { shuffleVersion } = useShuffleStore();
 
-    const loadFirst = async () => {
-      if (!dictId) return;
+  useEffect(() => {
+    if (!dictId) return;
+
+    const loadWords = async () => {
+      setOffset(0);
+      setHasMore(true);
+      setWords([]);
 
       const data = await getWords(dictId, LOAD_WORDS, 0);
       setWords(data);
@@ -67,8 +70,8 @@ export const DictionaryPage = () => {
       setOffset(data.length);
     };
 
-    loadFirst();
-  }, [dictId]);
+    loadWords();
+  }, [shuffleVersion, dictId]);
 
   //scroll listener
   useEffect(() => {

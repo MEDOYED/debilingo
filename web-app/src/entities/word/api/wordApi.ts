@@ -49,6 +49,10 @@ export const unpinWord = async (wordId: string): Promise<Word> => {
   return response.data;
 };
 
+export const shuffleWords = async (dictionaryId: string): Promise<void> => {
+  await apiClient.patch(`/words/${dictionaryId}/shuffle`);
+};
+
 export const updateWord = async (
   wordId: string,
   data: {

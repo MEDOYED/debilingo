@@ -28,7 +28,8 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
       .from("words")
       .select("*")
       .eq("dictionary_id", dictionaryId)
-      .order("pinned_at", { ascending: false, nullsFirst: false })
+      .order("is_pinned", { ascending: false })
+      .order("shuffle_order", { ascending: true, nullsFirst: true })
       .order("created_at", { ascending: false })
       .range(offset, offset + quantityWords - 1);
 
@@ -217,6 +218,7 @@ export const pinWord = async (req: AuthRequest, res: Response): Promise<void> =>
       .from("words")
       .update({
         pinned_at: new Date().toISOString(),
+        is_pinned: true,
       })
       .eq("id", id);
 
@@ -288,6 +290,7 @@ export const unpinWord = async (req: AuthRequest, res: Response): Promise<void> 
       .from("words")
       .update({
         pinned_at: null,
+        is_pinned: false,
       })
       .eq("id", id);
 
@@ -321,6 +324,40 @@ export const unpinWord = async (req: AuthRequest, res: Response): Promise<void> 
     });
   } catch (error) {
     console.error("Unpin word error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const shuffleWords = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.userId;
+    const { dictionaryId } = req.params;
+
+    const { data: dict } = await supabase
+      .from("dictionaries")
+      .select("id")
+      .eq("id", dictionaryId)
+      .eq("user_id", userId)
+      .single();
+
+    if (!dict) {
+      res.status(404).json({ error: "Dictionary not found" });
+      return;
+    }
+
+    const { error } = await supabase.rpc("shuffle_dictionary_words", {
+      p_dict_id: dictionaryId,
+    });
+
+    if (error) {
+      console.error("Shuffle error:", error);
+      res.status(500).json({ error: "Failed to shuffle words" });
+      return;
+    }
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Shuffle words error:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
