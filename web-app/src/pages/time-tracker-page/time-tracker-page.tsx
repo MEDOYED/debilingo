@@ -23,6 +23,7 @@ import field from "@shared/styles/components/field.module.scss";
 import s from "./time-tracker-page.module.scss";
 
 import type { TimeSession, TimeTrackerWithTag } from "@entities/time-tracker";
+import { useLoadingTimer } from "./model/use-loading-timer";
 
 const COLORS = [
   "#ef4444",
@@ -236,9 +237,11 @@ export const TimeTrackerPage = () => {
     return convertedTotalTrackerTime;
   };
 
+  const { loadingTime } = useLoadingTimer(isLoadingAllData);
+
   return (
     <>
-      {isLoadingAllData === true && <div>Loading...</div>}
+      {isLoadingAllData === true && <div>Loading {loadingTime}s</div>}
 
       {isLoadingAllData === false && (
         <main>

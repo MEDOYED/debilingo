@@ -1,4 +1,4 @@
-import apiClient from "../../../shared/api/apiClient";
+import apiClient from "@shared/api/apiClient";
 
 import type { Word } from "../types/word-types";
 
@@ -12,11 +12,15 @@ import type { Word } from "../types/word-types";
 export const getWords = async (
   dictionaryId: string,
   quantityWords: number,
-  offset: number
+  offset: number,
+  sort?: string
 ): Promise<Word[]> => {
+  const params: Record<string, string | number> = { quantityWords, offset };
+  if (sort) params.sort = sort;
+
   const response = await apiClient.get<Word[]>(
     `/dictionary/${dictionaryId}/words`,
-    { params: { quantityWords, offset } }
+    { params: params }
   );
   return response.data;
 };
@@ -47,6 +51,14 @@ export const unpinWord = async (wordId: string): Promise<Word> => {
   const response = await apiClient.patch(`/words/unpin/${wordId}`);
 
   return response.data;
+};
+
+export const shuffleWords = async (dictionaryId: string): Promise<void> => {
+  await apiClient.patch(`/words/${dictionaryId}/shuffle`);
+};
+
+export const unshuffleWords = async (dictionaryId: string): Promise<void> => {
+  await apiClient.patch(`/words/${dictionaryId}/unshuffle`);
 };
 
 export const updateWord = async (
