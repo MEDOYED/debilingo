@@ -17,6 +17,9 @@
 }
 
 .topBar {
+  display: flex;
+  justify-content: flex-end;
+
   top: 15px;
   right: 15px;
   border-radius: 20px;
@@ -27,5 +30,5 @@
 .buttonNewWord {
   font-size: 30px !important;
   display: flex;
-  margin-left: auto;
+  // margin-left: auto;
 }

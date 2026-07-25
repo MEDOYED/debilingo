@@ -1,4 +1,5 @@
 export { ArrowLongRight } from "./arrow-long-right";
+export { ArrowTopRightOnSquare } from "./arrow-top-right-on-square/arrow-top-right-on-square";
 export { ArrowsRightLeft } from "./arrows-right-left/arrows-right-left";
 export { CheckCircle } from "./check-circle/check-circle";
 export { ChevronDown } from "./chevron-down/chevron-down";
@@ -13,7 +14,7 @@ export { Home } from "./home";
 export { LabelTag } from "./label-tag/label-tag";
 export { LoadingCircle } from "./loading-circle/loading-circle";
 export { Pin } from "./pin/pin";
+export { Shuffle } from "./shuffle/shuffle";
 export { Trash } from "./trash/trash";
 export { Trophy } from "./trophy";
 export { Unpin } from "./unpin/unpin";
-export { ArrowTopRightOnSquare } from "./arrow-top-right-on-square/arrow-top-right-on-square";

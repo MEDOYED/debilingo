@@ -6,6 +6,7 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
   try {
     const userId = req.userId;
     const { dictionaryId } = req.params;
+    const sort = req.query.sort as string;
 
     // Перевірка чи словник належить користувачу
     const { data: dict } = await supabase
@@ -23,14 +24,25 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
     const quantityWords = parseInt(req.query.quantityWords as string) || 10; // 10 is default fallback
     const offset = parseInt(req.query.offset as string) || 0;
 
+    let query = supabase.from("words").select("*").eq("dictionary_id", dictionaryId);
+
+    if (sort === "shuffle") {
+      query = query
+        .order("is_pinned", { ascending: false })
+        .order("shuffle_order", { ascending: true, nullsFirst: true })
+        .order("created_at", { ascending: false });
+    } else {
+      query = query
+        .order("is_pinned", { ascending: false })
+        .order("pinned_at", { ascending: false, nullsFirst: false })
+        .order("created_at", { ascending: false });
+    }
+
     // Отримуємо слова
-    const { data: words, error: wordsError } = await supabase
-      .from("words")
-      .select("*")
-      .eq("dictionary_id", dictionaryId)
-      .order("pinned_at", { ascending: false, nullsFirst: false })
-      .order("created_at", { ascending: false })
-      .range(offset, offset + quantityWords - 1);
+    const { data: words, error: wordsError } = await query.range(
+      offset,
+      offset + quantityWords - 1
+    );
 
     if (wordsError) {
       res.status(500).json({ error: "Failed to fetch words" });
@@ -217,6 +229,7 @@ export const pinWord = async (req: AuthRequest, res: Response): Promise<void> =>
       .from("words")
       .update({
         pinned_at: new Date().toISOString(),
+        is_pinned: true,
       })
       .eq("id", id);
 
@@ -288,6 +301,7 @@ export const unpinWord = async (req: AuthRequest, res: Response): Promise<void> 
       .from("words")
       .update({
         pinned_at: null,
+        is_pinned: false,
       })
       .eq("id", id);
 
@@ -321,6 +335,75 @@ export const unpinWord = async (req: AuthRequest, res: Response): Promise<void> 
     });
   } catch (error) {
     console.error("Unpin word error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const shuffleWords = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.userId;
+    const { dictionaryId } = req.params;
+
+    const { data: dict } = await supabase
+      .from("dictionaries")
+      .select("id")
+      .eq("id", dictionaryId)
+      .eq("user_id", userId)
+      .single();
+
+    if (!dict) {
+      res.status(404).json({ error: "Dictionary not found" });
+      return;
+    }
+
+    const { error } = await supabase.rpc("shuffle_dictionary_words", {
+      p_dict_id: dictionaryId,
+    });
+
+    if (error) {
+      console.error("Shuffle error:", error);
+      res.status(500).json({ error: "Failed to shuffle words" });
+      return;
+    }
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Shuffle words error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const unshuffleWords = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.userId;
+    const { dictionaryId } = req.params;
+
+    const { data: dict } = await supabase
+      .from("dictionaries")
+      .select("id")
+      .eq("id", dictionaryId)
+      .eq("user_id", userId)
+      .single();
+
+    if (!dict) {
+      res.status(404).json({ error: "Dictionary not found" });
+      return;
+    }
+
+    const { error } = await supabase
+      .from("words")
+      .update({ shuffle_order: null })
+      .eq("dictionary_id", dictionaryId);
+
+    if (error) {
+      console.error("Unshuffle error:", error);
+      res.status(500).json({ error: "Failed to unshaffle words" });
+      return;
+    }
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Unshaffle words error:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
