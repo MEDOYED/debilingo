@@ -7,6 +7,7 @@ import {
   pinWord,
   shuffleWords,
   unpinWord,
+  unshuffleWords,
   updateWord,
 } from "../controllers/wordController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
@@ -33,6 +34,7 @@ router.patch("/words/pin/:id", pinWord);
 router.patch("/words/unpin/:id", unpinWord);
 
 router.patch("/words/:dictionaryId/shuffle", shuffleWords);
+router.patch("/words/:dictionaryId/unshuffle", unshuffleWords);
 
 router.patch("/words/:id", updateWord);
 

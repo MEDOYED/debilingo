@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
 export const ShuffleButton = () => {
   const { dictId } = useParams();
 
-  const { triggerShuffleVersion } = useShuffleStore();
+  const { triggerShuffleVersion, setIsShuffled } = useShuffleStore();
 
   const handleShuffleWords = async () => {
     if (!dictId) {
@@ -22,6 +22,7 @@ export const ShuffleButton = () => {
 
     await shuffleWords(dictId);
     triggerShuffleVersion();
+    setIsShuffled(true);
   };
 
   return (

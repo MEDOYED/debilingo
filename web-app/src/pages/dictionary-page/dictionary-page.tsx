@@ -24,6 +24,7 @@ import { SubmitEditWordButton } from "@features/edit-word";
 import { EditableMainTranslationInput } from "@features/edit-word/ui/editable-main-translation-input/editable-main-translation-input";
 import { EditableSourceWordInput } from "@features/edit-word/ui/editable-source-word-input/editable-source-word-input";
 import { useShuffleStore } from "@features/shuffle-words";
+import { useUnshuffleStore } from "@features/unshuffle-words";
 import { ChevronDown } from "@shared/ui/icons";
 
 import s from "./dictionary-page.module.scss";
@@ -54,24 +55,30 @@ export const DictionaryPage = () => {
     setEditableWordId,
   } = useWordStore();
 
-  const { shuffleVersion } = useShuffleStore();
+  const { shuffleVersion, isShuffled } = useShuffleStore();
+  const { unshuffleVersion } = useUnshuffleStore();
 
   useEffect(() => {
-    if (!dictId) return;
-
     const loadWords = async () => {
+      if (!dictId) return;
+      if (isLoadingRef.current) return;
+
+      isLoadingRef.current = true;
       setOffset(0);
       setHasMore(true);
       setWords([]);
 
-      const data = await getWords(dictId, LOAD_WORDS, 0);
+      const sort = isShuffled ? "shuffle" : undefined;
+
+      const data = await getWords(dictId, LOAD_WORDS, 0, sort);
       setWords(data);
       setHasMore(data.length >= LOAD_WORDS);
       setOffset(data.length);
+      isLoadingRef.current = false;
     };
 
     loadWords();
-  }, [shuffleVersion, dictId]);
+  }, [shuffleVersion, unshuffleVersion, dictId, isShuffled]);
 
   //scroll listener
   useEffect(() => {
@@ -88,12 +95,14 @@ export const DictionaryPage = () => {
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [hasMore, offset, dictId]);
+  }, [hasMore, offset, dictId, isShuffled]);
 
   const loadMoreWords = async () => {
     if (!dictId || !hasMore || isLoadingRef.current) return;
     isLoadingRef.current = true;
-    const data = await getWords(dictId, LOAD_WORDS, offset);
+
+    const sort = isShuffled ? "shuffle" : undefined;
+    const data = await getWords(dictId, LOAD_WORDS, offset, sort);
     appendWords(data);
     setHasMore(data.length >= LOAD_WORDS);
     setOffset((prev) => prev + data.length);
