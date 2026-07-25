@@ -10,10 +10,13 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
-    version: "0.4.1",
-    date: "23.07.2026",
-    manHours: "0",
-    features: ["Add a stopwatch loading indicator to the time tracking page."],
+    version: "0.5.1",
+    date: "25.07.2026",
+    manHours: "5",
+    features: [
+      "Add a stopwatch loading indicator to the time tracking page.",
+      "shuffle and unshuffle words in dictionary page",
+    ],
     improvements: null,
     fixes: null,
     contributors: ["Medoyed", "Riazanov Daniil"],
