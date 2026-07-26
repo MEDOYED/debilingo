@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
         index: true,
         element: <HomePage />,
       },
-      { path: "/dictionary", element: <DictionariesPage /> },
+      { path: "/dictionaries", element: <DictionariesPage /> },
 
       {
         path: "/dictionary/:dictId",

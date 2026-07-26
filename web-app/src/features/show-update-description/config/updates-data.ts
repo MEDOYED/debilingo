@@ -10,6 +10,15 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
+    version: "0.6.0",
+    date: "26.07.2026",
+    manHours: "2",
+    features: ["Navigation menu"],
+    improvements: null,
+    fixes: null,
+    contributors: ["Medoyed"],
+  },
+  {
     version: "0.5.1",
     date: "25.07.2026",
     manHours: "5",
