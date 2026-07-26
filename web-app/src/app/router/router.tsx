@@ -9,6 +9,7 @@ import { TimeTrackerPage } from "@pages/time-tracker-page";
 import { TrainingPage } from "@pages/training-page";
 
 import { DictionaryPage } from "@pages/dictionary-page";
+import { MoneyEarning } from "@pages/money-earning";
 
 import RootLayout from "../layout/root-layout";
 
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
       {
         path: "/leaderboards",
         element: <LeaderboardsPage />,
+      },
+      {
+        path: "/money-earning",
+        element: <MoneyEarning />,
       },
     ],
   },

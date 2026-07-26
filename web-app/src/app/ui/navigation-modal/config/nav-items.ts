@@ -23,4 +23,8 @@ export const NAV_ITEMS: NavItem[] = [
     to: "/time-tracker",
     text: "Трекери часу",
   },
+  {
+    to: "/money-earning",
+    text: "Заробляння грошей",
+  },
 ];
