@@ -15,10 +15,10 @@ type ExternalLinkProps = {
 type LinkProps = {
   as: "nav-link";
   to: string;
+  onClick?: () => void;
 
   disabled?: never;
   href?: never;
-  onClick?: never;
 };
 
 type ButtonProps = {
@@ -54,6 +54,7 @@ export const TextButton = ({
       <Link
         to={to}
         className={cn(s.button, s[size], className)}
+        onClick={onClick}
       >
         {children}
       </Link>

@@ -1,0 +1,14 @@
+.active {
+  background-color: color-mix(
+    var(--md-sys-color-tertiary-container),
+    transparent 30%
+  );
+  color: var(--md-sys-color-on-tertiary-container);
+
+  &:hover {
+    background-color: var(
+      --md-sys-color-tertiary-container
+    ) !important;
+    color: var(--md-sys-color-on-tertiary-container) !important;
+  }
+}

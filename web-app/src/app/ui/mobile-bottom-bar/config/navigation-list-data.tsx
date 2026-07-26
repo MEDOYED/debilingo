@@ -16,7 +16,7 @@ export const NAV_ITEMS: NavigationItem[] = [
     label: "Home page",
   },
   {
-    to: "/dictionary",
+    to: "/dictionaries",
     Icon: DictionaryAdd,
     label: "Dictionary page",
   },
