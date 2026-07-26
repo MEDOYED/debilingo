@@ -1,0 +1,42 @@
+.headerBurger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  position: relative;
+  width: 45px;
+  height: 45px;
+}
+
+.top {
+  transform: translate(0px, 0px) rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+.middle {
+  transform-origin: center;
+  transform: scaleX(1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.bottom {
+  transform: translate(0px, 0px) rotate(0deg);
+
+  transition: transform 0.3s ease;
+}
+
+.open {
+  .top {
+    transform: translate(8px, -1px) rotate(45deg);
+    transition: transform 0.3s ease;
+  }
+
+  .middle {
+    transform: scaleX(0);
+  }
+
+  .bottom {
+    transform: translate(-9px, 8px) rotate(-45deg);
+    transition: transform 0.3s ease;
+  }
+}

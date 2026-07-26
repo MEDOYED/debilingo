@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import { DesktopNavigation } from "../ui/desktop-navigation/desktop-navigation";
 // import { DesktopNavigation } from "@app/ui/desktop-navigation/desktop-navigation";
 import { MobileBottomBar } from "@app/ui/mobile-bottom-bar/ui/mobile-bottom-bar";
+import { NavigationModal } from "../ui/navigation-modal";
 
 import { UpdateDescriptionModal } from "@features/show-update-description";
 
@@ -30,6 +31,7 @@ const RootLayout = () => {
       {isMobile && <MobileBottomBar />}
 
       <UpdateDescriptionModal />
+      <NavigationModal />
     </div>
   );
 };

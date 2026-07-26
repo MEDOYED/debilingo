@@ -1,0 +1,11 @@
+.dropDownListItems {
+  margin-left: 15px;
+}
+
+.rotateChevronUp {
+  transform: rotateX(180deg);
+}
+
+.activeTextButtonWithHoverEffect {
+  background-color: color-mix(in srgb, currentColor 8%, transparent);
+}
