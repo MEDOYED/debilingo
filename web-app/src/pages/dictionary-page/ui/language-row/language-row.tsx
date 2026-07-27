@@ -19,7 +19,7 @@ export const LanguageRow = () => {
   return (
     <div className={cn(s.languageRow, isReversed && s.reverseRow)}>
       <div className={s.colWrapper}>
-        <span>Слово</span>
+        <span>Word</span>
 
         {isMainLanguageColVisible ? (
           <TextButton
@@ -46,7 +46,7 @@ export const LanguageRow = () => {
 
       <div className={s.translateCol}>
         <div className={s.colWrapper}>
-          <span>Переклад</span>
+          <span>Translation</span>
           {isTranslationColVisible ? (
             <TextButton
               as="button"

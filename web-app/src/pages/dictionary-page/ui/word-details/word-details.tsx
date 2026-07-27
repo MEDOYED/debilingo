@@ -27,13 +27,10 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
           href={`https://youglish.com/pronounce/${word.source_word}/english`}
           className={s.youglishBtn}
         >
-          Прослухати на YouGlish <ArrowTopRightOnSquare />
+          Listen on YouGlish <ArrowTopRightOnSquare />
         </TextButton>
 
-        <p>
-          Додатков{word.translations.length < 3 ? "ий" : "і"} переклад
-          {word.translations.length < 3 ? "" : "и"}:
-        </p>
+        <p>Additional translation:</p>
 
         <ul className={s.ulClass}>
           {word.translations.slice(1).map((t, index) => (
@@ -52,7 +49,7 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
       </div>
 
       <div className={s.ulContainer}>
-        <p>Пояснення:</p>
+        <p>Explanation:</p>
 
         <ul className={s.ulClass}>
           {word.definitions.map((def, index) => (
@@ -71,7 +68,7 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
       </div>
 
       <div className={s.ulContainer}>
-        <p>Приклад{word.examples.length < 2 ? "" : "и"}:</p>
+        <p>Example{word.examples.length < 2 ? "" : "s"}:</p>
 
         <ul className={s.ulClass}>
           {word.examples.map((ex, index) => (

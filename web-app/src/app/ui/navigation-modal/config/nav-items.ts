@@ -4,27 +4,27 @@ import type { NavItem } from "../model/types";
 export const NAV_ITEMS: NavItem[] = [
   {
     to: "/",
-    text: "Головна",
+    text: "Home",
   },
   {
-    text: "Іноземні мови",
+    text: "Foreign languages",
     dropDownList: [
       {
         to: "/dictionaries",
-        text: "Всі словники",
+        text: "All dictionaries",
       },
       {
         to: "/leaderboards",
-        text: "Рейтинги",
+        text: "Ratings",
       },
     ],
   },
   {
     to: "/time-tracker",
-    text: "Трекери часу",
+    text: "Time trackers",
   },
   {
     to: "/money-earning",
-    text: "Заробляння грошей",
+    text: "Making money",
   },
 ];

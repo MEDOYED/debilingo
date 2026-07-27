@@ -84,14 +84,14 @@ export const UserProfileCard = ({ className }: UserProfileCardProps) => {
         </div>
       </div>
 
-      <div>Рівень пройдено на {percentageSuccess}%</div>
+      <div>Level completed by {percentageSuccess}%</div>
 
-      <div>До нового рівня залишилося {needPercentageToNextLevel}%</div>
+      <div>The next level is left {needPercentageToNextLevel}%</div>
 
-      <div>До нового рівня залишилося {neededXpForNextLevel}xp</div>
+      <div>The next level is left {neededXpForNextLevel}xp</div>
 
       <div className={s.block}>
-        <div className={s.label}>час навчання</div>
+        <div className={s.label}>Study time</div>
         <div className={s.dataText}>
           {hoursString} : {minutesString} : {secondsString}
         </div>

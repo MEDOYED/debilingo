@@ -19,13 +19,13 @@ export const RegisterPage = () => {
       localStorage.setItem("token", data.token);
       navigate("/");
     } catch (err: any) {
-      setError(err.response?.data?.error || "Реєстрація не вдалася");
+      setError(err.response?.data?.error || "Registration failed");
     }
   };
   return (
     <div className={cn(s.pageRegister, "container")}>
       <div className={s.registerContainer}>
-        <h1 className={s.registerTitle}>Реєстрація</h1>
+        <h1 className={s.registerTitle}>Sign up</h1>
         <form
           autoComplete="off"
           className={s.registerForm}
@@ -45,7 +45,7 @@ export const RegisterPage = () => {
               className={s.registerPasswordInput}
               type="password"
               name="password"
-              placeholder="Пароль"
+              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -55,7 +55,7 @@ export const RegisterPage = () => {
           <input
             className={s.registerPasswordInput}
             type="text"
-            placeholder="Придумайте нікнейм"
+            placeholder="Choose a nickname"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             autoComplete="off"
@@ -65,11 +65,11 @@ export const RegisterPage = () => {
             className={s.registerButton}
             type="submit"
           >
-            Зареєструватися
+            Sign up
           </button>
         </form>
         <p className={s.registerFooter}>
-          Вже маєте обліковий запис? <Link to="/login">Вхід</Link>
+          Already have an account? <Link to="/login">Вхід</Link>
         </p>
       </div>
     </div>
