@@ -69,7 +69,7 @@ export const RegisterPage = () => {
           </button>
         </form>
         <p className={s.registerFooter}>
-          Already have an account? <Link to="/login">Вхід</Link>
+          Already have an account? <Link to="/login">Sing in</Link>
         </p>
       </div>
     </div>
