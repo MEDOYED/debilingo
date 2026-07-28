@@ -6,6 +6,7 @@ import s from "./modal-navigation.module.scss";
 const navigationData = [
   {
     text: "Home",
+    to: "",
   },
   {
     text: "Dictionaries",
