@@ -17,13 +17,13 @@ export const LoginPage = () => {
       localStorage.setItem("token", data.token);
       navigate("/");
     } catch (err: any) {
-      setError(err.response?.data?.error || "Не вдалося ввійти");
+      setError(err.response?.data?.error || "Failed to sign in");
     }
   };
   return (
     <div className={cn(s.pageLogin, "container")}>
       <div className={s.loginContainer}>
-        <h1 className={s.loginTitle}>Вхід</h1>
+        <h1 className={s.loginTitle}>Sign in</h1>
 
         <form
           className={s.loginForm}
@@ -42,7 +42,7 @@ export const LoginPage = () => {
               className={s.loginPasswordInput}
               type="password"
               name="password"
-              placeholder="Пароль"
+              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -53,16 +53,16 @@ export const LoginPage = () => {
             className={s.loginButton}
             type="submit"
           >
-            Увійти
+            Sign in
           </button>
         </form>
         <p className={s.loginFooter}>
-          Немає облікового запису?{" "}
+          Don't have an account?{" "}
           <Link
             className={s.registerLink}
             to="/register"
           >
-            Зареєструватися
+            Register
           </Link>
         </p>
       </div>

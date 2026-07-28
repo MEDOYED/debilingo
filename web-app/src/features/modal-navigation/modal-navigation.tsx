@@ -5,19 +5,19 @@ import s from "./modal-navigation.module.scss";
 
 const navigationData = [
   {
-    text: "Головна",
+    text: "Home",
     to: "",
   },
   {
-    text: "Словники",
+    text: "Dictionaries",
     to: "/dictionary",
   },
   {
-    text: "Тренування",
+    text: "Training",
     to: "/training",
   },
   {
-    text: "Рейтинги",
+    text: "Ratings",
     to: "/rating",
   },
 ];

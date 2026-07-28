@@ -267,7 +267,7 @@ export const TimeTrackerPage = () => {
                 <Clock className={s.icon} />
                 <div className={s.nameAndTagWrapper}>
                   <span>{timeTracker.name}</span>
-                  <span className={s.tag}>тег: {timeTracker.tag?.name}</span>
+                  <span className={s.tag}>Tag: {timeTracker.tag?.name}</span>
                 </div>
 
                 <div className={s.timeWrapper}>
@@ -314,7 +314,7 @@ export const TimeTrackerPage = () => {
 
                 <div className={s.inputsWrapper}>
                   <label className={field.label}>
-                    Назва:
+                    Name:
                     <input
                       className={field.input}
                       type="text"
@@ -324,7 +324,7 @@ export const TimeTrackerPage = () => {
                   </label>
 
                   <div className={field.label}>
-                    Тег:
+                    Tag:
                     <ul>
                       {tags.map((tag, index) => (
                         <li key={index}>
@@ -355,7 +355,7 @@ export const TimeTrackerPage = () => {
           {isCreateTagModalOpen && (
             <div className={s.CreateTagModal}>
               <label className={field.label}>
-                tag:
+                Tag:
                 <input
                   className={field.input}
                   type="text"
