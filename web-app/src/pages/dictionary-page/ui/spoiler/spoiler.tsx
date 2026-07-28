@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@shared/lib/styles";
+import { useVoicesStore } from "@shared/stores/use-voices-store";
 
 import { useStudyInfoModalStore } from "@widgets/study-info-modal/model/use-study-info-modal-store";
 import s from "./spoiler.module.scss";
@@ -152,6 +153,9 @@ export const Spoiler = ({
 
   const { increaseXpCounter } = useStudyInfoModalStore();
 
+  // voice
+  const { voices } = useVoicesStore();
+
   const speak = (text: string, lang: string = "en-US") => {
     speechSynthesis.cancel();
 
@@ -160,6 +164,16 @@ export const Spoiler = ({
     utterance.lang = lang;
     utterance.rate = 1;
     utterance.pitch = 1;
+
+    const samanthaVoice = voices.find((voice) => {
+      const splitedVoiceURI = voice.voiceURI.split(".");
+      const splitedVoiceURILength = splitedVoiceURI.length;
+      const voiceName = splitedVoiceURI[splitedVoiceURILength - 1];
+      const searchedVoice = voiceName === "Samantha";
+
+      return searchedVoice;
+    });
+    if (samanthaVoice) utterance.voice = samanthaVoice;
 
     speechSynthesis.speak(utterance);
   };

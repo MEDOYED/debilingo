@@ -43,14 +43,14 @@ export const DictionariesListSection = ({
   return (
     <section className={cn(s.section, className)}>
       <div className={s.titleRow}>
-        <h2 className={s.sectionTitle}>Мої словники:</h2>
+        <h2 className={s.sectionTitle}>My dictionaries:</h2>
 
         <TextButton
           className={s.createDictionaryBtn}
           as="button"
           onClick={openCardCreateDictionary}
         >
-          Створити новий словник
+          Create a new dictionary
         </TextButton>
       </div>
 
@@ -74,7 +74,7 @@ export const DictionariesListSection = ({
                   as="button"
                   onClick={() => setIdDeleteCardOpen(null)}
                 >
-                  Відмінити видалення
+                  Undo deletion
                 </TextButton>
 
                 <FilledButton
@@ -82,7 +82,7 @@ export const DictionariesListSection = ({
                   variant="error"
                   onClick={() => handleDelete(idDeleteCardOpen!)} // ! --> idDeleteCardOpen !== null
                 >
-                  Підтвердити видалення
+                  Confirm deletion
                 </FilledButton>
               </li>
             );
@@ -111,7 +111,7 @@ export const DictionariesListSection = ({
                     onClick={() => {}} // todo [28.03.2026]: on Click open modal for word creation after navigation to dictionary 0.3s
                     // className={s.card__addWordButton}
                   >
-                    Додати слово
+                    Add a word
                   </TextButton>
 
                   <TextButton

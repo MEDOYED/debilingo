@@ -10,6 +10,17 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
+    version: "0.6.3",
+    date: "27.07.2026",
+    manHours: "6",
+    features: null,
+    improvements: ["translate all static text to english"],
+    fixes: [
+      'Fix voice speech on some iPhones and android. Try to use "Samantha" voice for all spoilers by default',
+    ],
+    contributors: ["Riazanov Daniil, Medoyed (Maksym Mokriakov)"],
+  },
+  {
     version: "0.6.1",
     date: "26.07.2026",
     manHours: "2",

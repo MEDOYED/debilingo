@@ -24,6 +24,7 @@ app.use(
       "http://localhost:1414",
       "https://debilingo-dev.vercel.app",
       "https://debilingo-main.vercel.app",
+      "https://caffeinic-enriqueta-unevasive.ngrok-free.dev",
     ],
     credentials: true,
   })

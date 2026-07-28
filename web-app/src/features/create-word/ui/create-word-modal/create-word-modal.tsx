@@ -93,27 +93,27 @@ export const CreateWordModal = () => {
 
           {/* translations */}
           <LabelInputComponent
-            labelText="Переклад"
+            labelText="Translation"
             setText={setTranslation}
             text={translations}
-            textInButton="Додати переклад"
+            textInButton="Add translation"
           />
         </div>
 
         {/* definitions */}
         <LabelInputComponent
-          labelText="Пояснення"
+          labelText="Explanation"
           setText={setDefinition}
           text={definitions}
-          textInButton="Додати пояснення"
+          textInButton="Add explanation"
         />
 
         {/* examples  */}
         <LabelInputComponent
-          labelText="Приклад"
+          labelText="Example"
           setText={setExample}
           text={examples}
-          textInButton="Додати приклад"
+          textInButton="Add example"
         />
 
         <div className={s.actionRow}>
@@ -122,7 +122,7 @@ export const CreateWordModal = () => {
             onClick={closeCard}
             size="small"
           >
-            Відмінити
+            Cancel
           </TextButton>
 
           <FilledButton
@@ -131,7 +131,7 @@ export const CreateWordModal = () => {
             variant="primary"
             size="small"
           >
-            Створити
+            Create
           </FilledButton>
         </div>
       </form>
