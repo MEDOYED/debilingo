@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { DictionariesPage } from "@pages/dictionaries-page";
 import { DictionaryPage } from "@pages/dictionary-page";
+import { HabitTrackerPage } from "@pages/habit-tracker-page";
 import { HomePage } from "@pages/home-page";
 import { LeaderboardsPage } from "@pages/leaderboards-page";
 import { LoginPage } from "@pages/login-page";
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
       {
         path: "/time-tracker",
         element: <TimeTrackerPage />,
+      },
+      {
+        path: "/habit-tracker",
+        element: <HabitTrackerPage />,
       },
       {
         path: "/leaderboards",
