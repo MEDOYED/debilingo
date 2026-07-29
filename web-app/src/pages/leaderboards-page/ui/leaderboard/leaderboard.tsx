@@ -1,3 +1,4 @@
+import { convertTime } from "@shared/lib/time";
 import type { Leaderboard } from "../../model/types";
 import { useLeaderboardsNavigationStore } from "../../model/use-leaderboards-navigation-store";
 
@@ -10,6 +11,7 @@ type LeaderboardProps = {
 export const LeaderboardTable = ({ leaderboardData }: LeaderboardProps) => {
   const { activeNavItem } = useLeaderboardsNavigationStore();
 
+   console.log("study time", leaderboardData);
   if (!leaderboardData) {
     return (
       <div>
@@ -21,6 +23,7 @@ export const LeaderboardTable = ({ leaderboardData }: LeaderboardProps) => {
   return (
     <ul className={s.list}>
       {leaderboardData.map((item, index) => {
+        const time = activeNavItem === "totalStudyTime" ? convertTime(item.total_study_time_seconds) : null;
         return (
           <li
             className={s.listItem}
@@ -34,7 +37,10 @@ export const LeaderboardTable = ({ leaderboardData }: LeaderboardProps) => {
 
             {activeNavItem === "totalStudyTime" && (
               <div className={s.leaderboardValue}>
-                {item.total_study_time_seconds}
+                <p className="">
+                  {time.hoursString}:{time.minutesString}:{time.secondsString}
+                </p>
+                {/* {item.total_study_time_seconds} */}
               </div>
             )}
 
