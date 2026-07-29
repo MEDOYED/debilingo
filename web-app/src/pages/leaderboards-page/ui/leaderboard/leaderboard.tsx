@@ -10,8 +10,7 @@ type LeaderboardProps = {
 
 export const LeaderboardTable = ({ leaderboardData }: LeaderboardProps) => {
   const { activeNavItem } = useLeaderboardsNavigationStore();
-
-   console.log("study time", leaderboardData);
+  
   if (!leaderboardData) {
     return (
       <div>
@@ -38,9 +37,8 @@ export const LeaderboardTable = ({ leaderboardData }: LeaderboardProps) => {
             {activeNavItem === "totalStudyTime" && (
               <div className={s.leaderboardValue}>
                 <p className="">
-                  {time.hoursString}:{time.minutesString}:{time.secondsString}
+                  {time?.hoursString}:{time?.minutesString}:{time?.secondsString}
                 </p>
-                {/* {item.total_study_time_seconds} */}
               </div>
             )}
 
