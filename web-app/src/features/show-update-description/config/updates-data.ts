@@ -14,9 +14,7 @@ export const UPDATES_DATA: UpdatesData[] = [
     date: "29.07.2026",
     manHours: "0.1",
     features: null,
-    improvements: [
-      "Display study time in HH:MM:SS format on the leaderboard.",
-    ],
+    improvements: ["Display study time in HH:MM:SS format on the leaderboard."],
     fixes: null,
     contributors: ["Selim Gandymov"],
   },

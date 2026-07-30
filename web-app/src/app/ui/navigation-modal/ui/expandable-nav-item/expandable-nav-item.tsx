@@ -21,9 +21,7 @@ type ExpandableNavItemProps = {
   dropDownList: ExpandableNavItemData;
 };
 
-export const ExpandableNavItem = ({
-  dropDownList,
-}: ExpandableNavItemProps) => {
+export const ExpandableNavItem = ({ dropDownList }: ExpandableNavItemProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const { windowWidth } = useWindowSize();
@@ -32,16 +30,12 @@ export const ExpandableNavItem = ({
     <div>
       <TextButton
         as="button"
-        onClick={() => setIsOpen(prev => !prev)}
+        onClick={() => setIsOpen((prev) => !prev)}
         size={windowWidth > 768 ? "large" : "medium"}
-        className={cn(
-          isOpen === true && s.activeTextButtonWithHoverEffect,
-        )}
+        className={cn(isOpen === true && s.activeTextButtonWithHoverEffect)}
       >
         {dropDownList.text}
-        <ChevronDown
-          className={cn(isOpen === true && s.rotateChevronUp)}
-        />
+        <ChevronDown className={cn(isOpen === true && s.rotateChevronUp)} />
       </TextButton>
 
       {isOpen && (
