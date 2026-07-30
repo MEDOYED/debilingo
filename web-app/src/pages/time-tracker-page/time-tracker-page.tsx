@@ -14,9 +14,9 @@ import { convertTime } from "@shared/lib/time";
 import {
   createTimeTracker,
   getActiveSession,
-  getTimeTrackers,
   startSession,
   stopSession,
+  useTimeTrackerStore,
 } from "@entities/time-tracker";
 import { cn } from "@shared/lib/styles";
 import field from "@shared/styles/components/field.module.scss";
@@ -70,7 +70,6 @@ export const TimeTrackerPage = () => {
   // data state
   const [isLoadingAllData, setIsLoadingAllData] = useState<boolean>(true);
   const [tags, setTags] = useState<TrackerTag[]>([]);
-  const [timeTrackers, setTimeTrackers] = useState<TimeTrackerWithTag[]>([]);
   const [activeSession, setActiveSession] = useState<TimeSession | null>(null);
   const [dataTimeStats, setDataTimeStats] = useState<TimeStatsResponse | null>(
     null
@@ -80,20 +79,23 @@ export const TimeTrackerPage = () => {
   const [currentSessionTimeSeconds, setCurrentSessionTimeSeconds] =
     useState<number>(0);
 
+  // stores:
+  const { timeTrackers, setTimeTrackers, loadTimeTrackers } =
+    useTimeTrackerStore();
+
   useEffect(() => {
     // load all data on first open page
     const loadFirst = async () => {
       const dataAllTags = await getTags();
       setTags(dataAllTags);
 
-      const dataAllTimeTrackers = await getTimeTrackers();
-      setTimeTrackers(dataAllTimeTrackers);
-
       const dataActiveSession = await getActiveSession();
       setActiveSession(dataActiveSession);
 
       const dataTimeStats = await getTimeStats("all");
       setDataTimeStats(dataTimeStats);
+
+      await loadTimeTrackers();
 
       setIsLoadingAllData(false);
     };
@@ -121,7 +123,9 @@ export const TimeTrackerPage = () => {
     try {
       const newTimeTracker = await createTimeTracker(newTimeTrackerData);
 
-      setTimeTrackers([...timeTrackers, newTimeTracker]);
+      const oldTimeTrackers = timeTrackers ? timeTrackers : [];
+
+      setTimeTrackers([...oldTimeTrackers, newTimeTracker]);
       setIsAddTrackerOpen(false);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -248,7 +252,7 @@ export const TimeTrackerPage = () => {
           <h1 className="container">time tracker page</h1>
 
           <ul className={s.timeTrackers}>
-            {timeTrackers.map((timeTracker, index) => (
+            {timeTrackers?.map((timeTracker, index) => (
               <li
                 className={cn(
                   s.timeTracker,
