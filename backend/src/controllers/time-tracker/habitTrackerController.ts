@@ -69,7 +69,7 @@ export const getHabitSessions = async (req: AuthRequest, res: Response): Promise
   const offsetMinutes = Number(timezone_offset) || 0;
   const offsetMs = offsetMinutes * 60 * 1000;
 
-  const startDate = period === "custom" && start_date ? start_date : "2026-07-27";
+  const startDate = period === "custom" && start_date ? start_date : "2026-07-30";
 
   const endDate =
     period === "custom" && end_date ? end_date : new Date().toISOString().split("T")[0];

@@ -10,13 +10,15 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
-    version: "0.6.4",
-    date: "29.07.2026",
-    manHours: "0.1",
-    features: null,
+    version: "0.7.4",
+    date: "01.08.2026",
+    manHours: "21",
+    features: [
+      "New page - Habit tracker based on Time tracker page. Help users make a new habits, helps do some things consistency day after day",
+    ],
     improvements: ["Display study time in HH:MM:SS format on the leaderboard."],
     fixes: null,
-    contributors: ["Selim Gandymov"],
+    contributors: ["Selim Gandymov, Maksym Mokriakov [Medoed]"],
   },
   {
     version: "0.6.3",

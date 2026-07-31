@@ -53,7 +53,7 @@ export const HabitTrackerPage = () => {
       const endDate = formatLocalDate(today);
 
       const dataHabitTrackerDaysStats: HabitSessionsResponse =
-        await getHabitSessions("2026-07-29", endDate);
+        await getHabitSessions("2026-07-26", endDate);
 
       setHabitTrackerDaysStats(dataHabitTrackerDaysStats);
 
