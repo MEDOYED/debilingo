@@ -7,6 +7,7 @@ import authRoutes from "./routes/authRoutes.js";
 import dictionaryRoutes from "./routes/dictionaryRoutes.js";
 import leaderboardRoutes from "./routes/leaderboardRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
+import habitTrackerRoutes from "./routes/time-tracker/habitTrackerRoutes.js";
 import sessionRoutes from "./routes/time-tracker/sessionRoutes.js";
 import statsRoutes from "./routes/time-tracker/statsRoutes.js";
 import tagRoutes from "./routes/time-tracker/tagRoutes.js";
@@ -56,6 +57,7 @@ app.use("/api", profileRoutes);
 app.use("/api", leaderboardRoutes);
 app.use("/api", tagRoutes);
 app.use("/api", timeTrackerRoutes);
+app.use("/api", habitTrackerRoutes);
 app.use("/api", sessionRoutes);
 app.use("/api", statsRoutes);
 
