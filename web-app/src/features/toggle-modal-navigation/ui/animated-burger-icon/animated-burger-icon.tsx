@@ -6,9 +6,7 @@ type AnimatedBurgerIconProps = {
   isOpen: boolean;
 };
 
-export const AnimatedBurgerIcon = ({
-  isOpen,
-}: AnimatedBurgerIconProps) => {
+export const AnimatedBurgerIcon = ({ isOpen }: AnimatedBurgerIconProps) => {
   return (
     <svg
       className={cn(s.headerBurger, isOpen === true && s.open)}

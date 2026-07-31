@@ -15,19 +15,11 @@
 
   &:hover,
   &:focus-visible {
-    background-color: color-mix(
-      in srgb,
-      currentColor 8%,
-      transparent
-    );
+    background-color: color-mix(in srgb, currentColor 8%, transparent);
   }
 
   &:active {
-    background-color: color-mix(
-      in srgb,
-      currentColor 12%,
-      transparent
-    );
+    background-color: color-mix(in srgb, currentColor 12%, transparent);
   }
 
   &.small {
