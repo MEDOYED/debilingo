@@ -4,7 +4,7 @@ import type { TimeTrackerWithTag } from "./types";
 import { getTimeTrackers } from "../api/tracker-api";
 
 type TimeTrackerStore = {
-  status: "idle" | "loading" | "loaded" | "error";
+  statusTimeTracker: "idle" | "loading" | "loaded" | "error";
   errorMessage: string | null;
   timeTrackers: TimeTrackerWithTag[] | null;
 
@@ -13,7 +13,7 @@ type TimeTrackerStore = {
 };
 
 export const useTimeTrackerStore = create<TimeTrackerStore>((set) => ({
-  status: "idle",
+  statusTimeTracker: "idle",
   errorMessage: null,
   timeTrackers: null,
 
@@ -25,7 +25,7 @@ export const useTimeTrackerStore = create<TimeTrackerStore>((set) => ({
 
   loadTimeTrackers: async () => {
     set({
-      status: "loading",
+      statusTimeTracker: "loading",
       errorMessage: null,
     });
 
@@ -34,12 +34,12 @@ export const useTimeTrackerStore = create<TimeTrackerStore>((set) => ({
 
       set({
         timeTrackers: data,
-        status: "loaded",
+        statusTimeTracker: "loaded",
         errorMessage: null,
       });
     } catch (errorCatched) {
       set({
-        status: "error",
+        statusTimeTracker: "error",
         errorMessage: "Failed to load profile",
       });
     }

@@ -1,0 +1,12 @@
+.tableWrapper {
+  display: flex;
+}
+
+.addHabitModal {
+  position: fixed;
+  top: 30vh;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--md-sys-color-surface-container-highest);
+}

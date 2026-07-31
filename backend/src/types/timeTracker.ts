@@ -81,3 +81,31 @@ export interface ApiResponse<T> {
   error?: string;
   message?: string;
 }
+
+export interface UpdateHabitTimeGoalRequest {
+  habit_time_goal: number;
+}
+
+export interface HabitTracker extends TimeTrackerWithTag {
+  habit_time_goal: number;
+}
+
+export interface HabitDayStats {
+  total_seconds: number;
+  session_count: number;
+}
+
+export interface HabitTrackerStat {
+  id: string;
+  name: string;
+  color: string;
+  tag: TrackerTag | null;
+  habit_time_goal: number;
+  days: Record<string, HabitDayStats>;
+}
+
+export interface HabitSessionsResponse {
+  start_date: string;
+  end_date: string;
+  trackers: HabitTrackerStat[];
+}
