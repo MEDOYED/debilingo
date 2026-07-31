@@ -13,6 +13,8 @@ type Store = {
 
   words: Word[];
   setWords: (newWords: Word[]) => void;
+  reloadVersion: number;
+  reloadWords: () => void;
 
   toggleIsOpenCardCreateWord: () => void;
   closeCardCreateWord: () => void;
@@ -36,6 +38,7 @@ export const useAddWordStore = create<Store>((set) => ({
   definitions: [""],
   examples: [""],
   words: [],
+  reloadVersion: 0,
   note: "",
 
   toggleIsOpenCardCreateWord: () => {
@@ -95,6 +98,12 @@ export const useAddWordStore = create<Store>((set) => ({
   appendWords: (additionalWords) => {
     set((prev) => ({
       words: [...prev.words, ...additionalWords],
+    }));
+  },
+
+  reloadWords: () => {
+    set((prev) => ({
+      reloadVersion: prev.reloadVersion + 1,
     }));
   },
 

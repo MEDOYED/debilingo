@@ -36,7 +36,8 @@ export const DictionaryPage = () => {
 
   const { isMainLanguageColVisible, isTranslationColVisible } =
     useLanguageRowStore();
-  const { setWords, words, appendWords } = useAddWordStore();
+  const { setWords, words, appendWords, reloadVersion } = useAddWordStore();
+  const offsetRef = useRef(0);
   const { isReversed } = useSwitchColStore();
 
   const { xpCounter } = useStudyInfoModalStore();
@@ -64,21 +65,25 @@ export const DictionaryPage = () => {
       if (isLoadingRef.current) return;
 
       isLoadingRef.current = true;
-      setOffset(0);
-      setHasMore(true);
-      setWords([]);
+      const limit = Math.max(offsetRef.current, LOAD_WORDS);
+
+      // setOffset(0);
+      // setHasMore(true);
+      // setWords([]);
 
       const sort = isShuffled ? "shuffle" : undefined;
 
-      const data = await getWords(dictId, LOAD_WORDS, 0, sort);
+      const data = await getWords(dictId, limit, 0, sort);
+
       setWords(data);
-      setHasMore(data.length >= LOAD_WORDS);
+      setHasMore(data.length >= limit);
       setOffset(data.length);
+      offsetRef.current = data.length;
       isLoadingRef.current = false;
     };
 
     loadWords();
-  }, [shuffleVersion, unshuffleVersion, dictId, isShuffled]);
+  }, [shuffleVersion, unshuffleVersion, dictId, isShuffled, reloadVersion]);
 
   //scroll listener
   useEffect(() => {
@@ -106,6 +111,7 @@ export const DictionaryPage = () => {
     appendWords(data);
     setHasMore(data.length >= LOAD_WORDS);
     setOffset((prev) => prev + data.length);
+    offsetRef.current += data.length;
     isLoadingRef.current = false;
   };
 

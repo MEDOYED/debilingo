@@ -1,15 +1,17 @@
 import { useRef, useState } from "react";
 
-import type { Word } from "@entities/word";
-import { useSwipeWordStore } from "@entities/word";
 import { deleteWord, pinWord, unpinWord } from "@entities/word/api";
 
 import { EditButton } from "@features/edit-word";
 
 import { Pin, Trash, Unpin } from "@shared/ui/icons";
 
-import { useAddWordStore } from "../../../../entities/word/model/use-add-word-store";
-import { useWordStore } from "../../../../entities/word/model/use-word-store";
+import {
+  type Word,
+  useAddWordStore,
+  useSwipeWordStore,
+  useWordStore,
+} from "@entities/word";
 
 import s from "./swipe-word-card.module.scss";
 
@@ -132,46 +134,52 @@ export const SwipeWordCard = ({
   const isWordSwiped = swipedWordId === id;
   // console.log("isWordSwiped: ", isWordSwiped);
 
-  const { setWords, words } = useAddWordStore();
+  const { reloadWords } = useAddWordStore();
 
   const handlePinWord = async () => {
-    const pinnedWord = await pinWord(id);
+    // const pinnedWord = await pinWord(id);
 
-    const wordsWithoutPinnedWord = [];
+    // const wordsWithoutPinnedWord = [];
 
-    for (let i = 0; i < words.length; i++) {
-      if (words[i].id !== id) {
-        wordsWithoutPinnedWord.push(words[i]);
-      }
-    }
+    // for (let i = 0; i < words.length; i++) {
+    //   if (words[i].id !== id) {
+    //     wordsWithoutPinnedWord.push(words[i]);
+    //   }
+    // }
 
-    setWords([pinnedWord, ...wordsWithoutPinnedWord]);
+    // setWords([pinnedWord, ...wordsWithoutPinnedWord]);
 
+    await pinWord(id);
     setShiftX(0);
+    reloadWords();
   };
 
   const handleUnpinWord = async () => {
-    const unpinnedWord = await unpinWord(id);
+    // const unpinnedWord = await unpinWord(id);
 
-    const wordsWithoutCurrent = words.filter((word) => word.id !== id);
+    // const wordsWithoutCurrent = words.filter((word) => word.id !== id);
 
-    setWords([unpinnedWord, ...wordsWithoutCurrent]);
+    // setWords([unpinnedWord, ...wordsWithoutCurrent]);
 
+    await unpinWord(id);
     setShiftX(0);
+    reloadWords();
   };
 
   const handleDeleteWord = async () => {
     await deleteWord(id);
 
-    const wordsWithoutDeletedWord = [];
+    // const wordsWithoutDeletedWord = [];
 
-    for (let i = 0; i < words.length; i++) {
-      if (words[i].id !== id) {
-        wordsWithoutDeletedWord.push(words[i]);
-      }
-    }
+    // for (let i = 0; i < words.length; i++) {
+    //   if (words[i].id !== id) {
+    //     wordsWithoutDeletedWord.push(words[i]);
+    //   }
+    // }
 
-    setWords(wordsWithoutDeletedWord);
+    // setWords(wordsWithoutDeletedWord);
+    setShiftX(0);
+    reloadWords();
   };
 
   return (
