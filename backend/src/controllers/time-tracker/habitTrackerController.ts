@@ -59,16 +59,28 @@ export const getHabitSessions = async (req: AuthRequest, res: Response): Promise
     return;
   }
 
-  const { period, start_date, end_date } = req.query as {
+  const { period, start_date, end_date, timezone_offset } = req.query as {
     period?: "custom";
     start_date?: string;
     end_date?: string;
+    timezone_offset?: string;
   };
+
+  const offsetMinutes = Number(timezone_offset) || 0;
+  const offsetMs = offsetMinutes * 60 * 1000;
 
   const startDate = period === "custom" && start_date ? start_date : "2026-07-27";
 
   const endDate =
     period === "custom" && end_date ? end_date : new Date().toISOString().split("T")[0];
+
+  const rangeStart = new Date(
+    new Date(`${startDate}T00:00:00.000Z`).getTime() - offsetMs
+  ).toISOString();
+
+  const rangeEnd = new Date(
+    new Date(`${endDate}T23:59:59.999Z`).getTime() - offsetMs
+  ).toISOString();
 
   const { data: habitTrackersData, error: habitTrackersError } = await supabase
     .from("time_trackers")
@@ -81,8 +93,8 @@ export const getHabitSessions = async (req: AuthRequest, res: Response): Promise
     .select("*")
     .eq("user_id", userId)
     .not("ended_at", "is", null)
-    .gte("started_at", startDate)
-    .lte("started_at", endDate + "T23:59:59.999Z");
+    .gte("started_at", rangeStart)
+    .lte("started_at", rangeEnd);
 
   if (habitTrackersError || sessionsError) {
     res.status(500).json({ error: "Failed to fetch habit sessions" });
@@ -98,7 +110,9 @@ export const getHabitSessions = async (req: AuthRequest, res: Response): Promise
     const days: Record<string, HabitDayStats> = {};
 
     trackerSessions.forEach((session) => {
-      const day = session.started_at.slice(0, 10);
+      const day = new Date(new Date(session.started_at).getTime() + offsetMs)
+        .toISOString()
+        .slice(0, 10);
 
       if (!days[day]) {
         days[day] = { total_seconds: 0, session_count: 0 };

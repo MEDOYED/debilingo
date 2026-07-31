@@ -17,9 +17,18 @@ export const getHabitSessions = async (
   start_date: string,
   end_date: string
 ): Promise<HabitSessionsResponse> => {
+  const timezoneOffsetMinutes = -new Date().getTimezoneOffset();
+
   const response = await apiClient.get<HabitSessionsResponse>(
     "/habit-trackers/days-stats",
-    { params: { period: "custom", start_date, end_date } }
+    {
+      params: {
+        period: "custom",
+        start_date,
+        end_date,
+        timezone_offset: timezoneOffsetMinutes,
+      },
+    }
   );
   return response.data;
 };
