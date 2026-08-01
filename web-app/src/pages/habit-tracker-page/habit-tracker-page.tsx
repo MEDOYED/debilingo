@@ -2,8 +2,13 @@ import { FilledButton, TextButton } from "@shared/ui/buttons";
 
 import { useEffect, useState } from "react";
 
+import { cn } from "@shared/lib/styles";
+
 import field from "@shared/styles/components/field.module.scss";
 import s from "./habit-tracker-page.module.scss";
+
+import { convertTime } from "@shared/lib/time";
+import { LabelTag } from "@shared/ui/icons";
 
 import type {
   HabitSessionsResponse,
@@ -131,21 +136,15 @@ export const HabitTrackerPage = () => {
 
       {/* Habit trackers list */}
       <div className={s.tableWrapper}>
-        <ul>
-          {habitTrackerDaysStats?.trackers.map((tracker, index) => (
-            <li key={index}>
-              <div>--------</div>
-              <div>{tracker.name}</div>
-              <div>{tracker.tag?.name}</div>
-              <div>{tracker.habit_time_goal}</div>
-              <div>--------</div>
-            </li>
-          ))}
-        </ul>
-
-        <table>
+        <table className={s.table}>
           <thead>
             <tr>
+              <th
+                className={s.firstCol}
+                scope="col"
+              >
+                Tracker
+              </th>
               {dateColumns.map((date, index) => (
                 <th
                   key={index}
@@ -158,19 +157,50 @@ export const HabitTrackerPage = () => {
           </thead>
 
           <tbody>
-            {habitTrackerDaysStats &&
-              habitTrackerDaysStats.trackers.map((tracker, index) => (
-                <tr key={index}>
-                  {dateColumns.map((date) => (
-                    <th
-                      key={date}
-                      scope="row"
-                    >
-                      {tracker.days[date]?.total_seconds ?? 0}
-                    </th>
-                  ))}
+            {habitTrackerDaysStats?.trackers.map((tracker) => {
+              const { hoursString, minutesString, secondsString } = convertTime(
+                tracker.habit_time_goal
+              );
+
+              const hours = hoursString === "00" ? "" : `${hoursString}:`;
+              const minutes = minutesString === "00" ? null : minutesString;
+
+              return (
+                <tr key={tracker.id}>
+                  <th
+                    className={s.firstCol}
+                    scope="row"
+                  >
+                    <div className={s.firtsCol__trackerName}>
+                      {tracker.name}
+                    </div>
+                    <div className={s.firtsCol__trackerTagNameWrapper}>
+                      <LabelTag color={tracker.color} />
+                      <div>{tracker.tag?.name}</div>
+                    </div>
+                    <div>Goal: {`${hours}${minutes}:${secondsString}`}</div>
+                  </th>
+
+                  {dateColumns.map((date) => {
+                    const { hoursString, minutesString, secondsString } =
+                      convertTime(tracker.days[date].total_seconds);
+
+                    const hours = hoursString === "00" ? "" : `${hoursString}:`;
+                    const minutes =
+                      minutesString === "00" ? null : minutesString;
+
+                    return (
+                      <th
+                        key={date}
+                        scope="row"
+                      >
+                        {`${hours}${minutes}:${secondsString}`}
+                      </th>
+                    );
+                  })}
                 </tr>
-              ))}
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -205,13 +235,18 @@ export const HabitTrackerPage = () => {
 
               <h2>Select time tracker what you want to add as new habit:</h2>
 
-              <ul>
+              <ul className={s.list}>
                 {timeTrackers?.map((timeTracker, index) => (
                   <li
                     key={index}
                     onClick={() => setSelectedTimeTrackerId(timeTracker.id)}
+                    className={cn(
+                      s.listItem,
+                      timeTracker.id === selectedTimeTrackerId && s.active
+                    )}
                   >
                     <div>{timeTracker.name}</div>
+                    <div>{timeTracker.tag.name}</div>
                   </li>
                 ))}
               </ul>
