@@ -3,19 +3,37 @@
 .tableWrapper {
   display: flex;
   overflow-x: auto;
-}
 
-.table {
-  border-collapse: separate;
-}
+  .table {
+    border-collapse: separate;
+  }
 
-.firstCol {
-  position: sticky;
-  left: 0;
-  z-index: 1;
-  background-color: var(--md-sys-color-surface-container-low);
-  min-width: 150px;
-  text-align: left;
+  th,
+  td {
+    border-bottom: 1px solid var(--md-sys-color-outline);
+    border-right: 1px solid var(--md-sys-color-outline);
+    padding: 5px;
+  }
+
+  .firstCol {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: var(--md-sys-color-surface-container-low);
+    min-width: 150px;
+    text-align: left;
+  }
+
+  .firtsCol__trackerName {
+    font-size: 22px;
+  }
+
+  .firtsCol__trackerTagNameWrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 7px 0;
+  }
 }
 
 .addHabitModal {

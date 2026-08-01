@@ -7,6 +7,9 @@ import { cn } from "@shared/lib/styles";
 import field from "@shared/styles/components/field.module.scss";
 import s from "./habit-tracker-page.module.scss";
 
+import { convertTime } from "@shared/lib/time";
+import { LabelTag } from "@shared/ui/icons";
+
 import type {
   HabitSessionsResponse,
   TimeTracker,
@@ -154,27 +157,50 @@ export const HabitTrackerPage = () => {
           </thead>
 
           <tbody>
-            {habitTrackerDaysStats?.trackers.map((tracker) => (
-              <tr key={tracker.id}>
-                <th
-                  className={s.firstCol}
-                  scope="row"
-                >
-                  <div>{tracker.name}</div>
-                  <div>{tracker.tag?.name}</div>
-                  <div>{tracker.habit_time_goal}</div>
-                </th>
+            {habitTrackerDaysStats?.trackers.map((tracker) => {
+              const { hoursString, minutesString, secondsString } = convertTime(
+                tracker.habit_time_goal
+              );
 
-                {dateColumns.map((date) => (
+              const hours = hoursString === "00" ? "" : `${hoursString}:`;
+              const minutes = minutesString === "00" ? null : minutesString;
+
+              return (
+                <tr key={tracker.id}>
                   <th
-                    key={date}
+                    className={s.firstCol}
                     scope="row"
                   >
-                    {tracker.days[date]?.total_seconds ?? 0}
+                    <div className={s.firtsCol__trackerName}>
+                      {tracker.name}
+                    </div>
+                    <div className={s.firtsCol__trackerTagNameWrapper}>
+                      <LabelTag color={tracker.color} />
+                      <div>{tracker.tag?.name}</div>
+                    </div>
+                    <div>Goal: {`${hours}${minutes}:${secondsString}`}</div>
                   </th>
-                ))}
-              </tr>
-            ))}
+
+                  {dateColumns.map((date) => {
+                    const { hoursString, minutesString, secondsString } =
+                      convertTime(tracker.days[date].total_seconds);
+
+                    const hours = hoursString === "00" ? "" : `${hoursString}:`;
+                    const minutes =
+                      minutesString === "00" ? null : minutesString;
+
+                    return (
+                      <th
+                        key={date}
+                        scope="row"
+                      >
+                        {`${hours}${minutes}:${secondsString}`}
+                      </th>
+                    );
+                  })}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
