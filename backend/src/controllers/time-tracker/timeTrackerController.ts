@@ -2,7 +2,11 @@ import { Response } from "express";
 import { supabase } from "../../config/supabase.js";
 import { AuthRequest } from "../../middleware/authMiddleware.js";
 
-import type { CreateTrackerRequest, UpdateTrackerRequest } from "../../types/timeTracker.js";
+import type {
+  CreateTrackerRequest,
+  TimeTrackerWithTag,
+  UpdateTrackerRequest,
+} from "../../types/timeTracker.js";
 
 export const getTrackers = async (req: AuthRequest, res: Response): Promise<void> => {
   const userId = req.userId;
@@ -23,7 +27,9 @@ export const getTrackers = async (req: AuthRequest, res: Response): Promise<void
     return;
   }
 
-  res.json(data || []);
+  const typedData = data as TimeTrackerWithTag[];
+
+  res.json(typedData || []);
 };
 
 export const createTracker = async (req: AuthRequest, res: Response): Promise<void> => {
