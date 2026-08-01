@@ -1,5 +1,19 @@
 .tableWrapper {
   display: flex;
+  overflow-x: auto;
+}
+
+.table {
+  border-collapse: separate;
+}
+
+.firstCol {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: var(--md-sys-color-surface-container-low);
+  min-width: 150px;
+  text-align: left;
 }
 
 .addHabitModal {

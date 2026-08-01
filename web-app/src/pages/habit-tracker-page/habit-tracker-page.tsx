@@ -131,21 +131,15 @@ export const HabitTrackerPage = () => {
 
       {/* Habit trackers list */}
       <div className={s.tableWrapper}>
-        <ul>
-          {habitTrackerDaysStats?.trackers.map((tracker, index) => (
-            <li key={index}>
-              <div>--------</div>
-              <div>{tracker.name}</div>
-              <div>{tracker.tag?.name}</div>
-              <div>{tracker.habit_time_goal}</div>
-              <div>--------</div>
-            </li>
-          ))}
-        </ul>
-
-        <table>
+        <table className={s.table}>
           <thead>
             <tr>
+              <th
+                className={s.firstCol}
+                scope="col"
+              >
+                Tracker
+              </th>
               {dateColumns.map((date, index) => (
                 <th
                   key={index}
@@ -158,19 +152,27 @@ export const HabitTrackerPage = () => {
           </thead>
 
           <tbody>
-            {habitTrackerDaysStats &&
-              habitTrackerDaysStats.trackers.map((tracker, index) => (
-                <tr key={index}>
-                  {dateColumns.map((date) => (
-                    <th
-                      key={date}
-                      scope="row"
-                    >
-                      {tracker.days[date]?.total_seconds ?? 0}
-                    </th>
-                  ))}
-                </tr>
-              ))}
+            {habitTrackerDaysStats?.trackers.map((tracker) => (
+              <tr key={tracker.id}>
+                <th
+                  className={s.firstCol}
+                  scope="row"
+                >
+                  <div>{tracker.name}</div>
+                  <div>{tracker.tag?.name}</div>
+                  <div>{tracker.habit_time_goal}</div>
+                </th>
+
+                {dateColumns.map((date) => (
+                  <th
+                    key={date}
+                    scope="row"
+                  >
+                    {tracker.days[date]?.total_seconds ?? 0}
+                  </th>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
