@@ -183,18 +183,27 @@ export const HabitTrackerPage = () => {
 
                   {dateColumns.map((date) => {
                     const { hoursString, minutesString, secondsString } =
-                      convertTime(tracker.days[date].total_seconds);
+                      convertTime(tracker.days?.[date]?.total_seconds);
 
                     const hours = hoursString === "00" ? "" : `${hoursString}:`;
                     const minutes =
-                      minutesString === "00" ? null : minutesString;
+                      hoursString === "00" && minutesString === "00"
+                        ? ""
+                        : `${minutesString}:`;
+
+                    const seconds =
+                      hoursString === "00" &&
+                      minutesString === "00" &&
+                      secondsString === "00"
+                        ? ""
+                        : `${secondsString}`;
 
                     return (
                       <th
                         key={date}
                         scope="row"
                       >
-                        {`${hours}${minutes}:${secondsString}`}
+                        {`${hours}${minutes}${seconds}`}
                       </th>
                     );
                   })}
