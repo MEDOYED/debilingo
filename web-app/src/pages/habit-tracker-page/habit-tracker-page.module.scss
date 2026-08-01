@@ -1,3 +1,5 @@
+@use "@shared/styles/config" as conf;
+
 .tableWrapper {
   display: flex;
   overflow-x: auto;
@@ -18,9 +20,25 @@
 
 .addHabitModal {
   position: fixed;
-  top: 30vh;
+  top: 10vh;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: var(--md-sys-color-surface-container-highest);
+  z-index: 10;
+  overflow-y: auto;
+  padding-bottom: conf.$mobile-navigation-bottombar-height + 20px;
+
+  .list {
+  }
+
+  .listItem {
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--md-sys-color-outline);
+
+    &.active {
+      background-color: var(--md-sys-color-tertiary);
+      color: var(--md-sys-color-on-tertiary);
+    }
+  }
 }

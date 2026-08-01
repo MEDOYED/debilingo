@@ -2,6 +2,8 @@ import { FilledButton, TextButton } from "@shared/ui/buttons";
 
 import { useEffect, useState } from "react";
 
+import { cn } from "@shared/lib/styles";
+
 import field from "@shared/styles/components/field.module.scss";
 import s from "./habit-tracker-page.module.scss";
 
@@ -207,13 +209,18 @@ export const HabitTrackerPage = () => {
 
               <h2>Select time tracker what you want to add as new habit:</h2>
 
-              <ul>
+              <ul className={s.list}>
                 {timeTrackers?.map((timeTracker, index) => (
                   <li
                     key={index}
                     onClick={() => setSelectedTimeTrackerId(timeTracker.id)}
+                    className={cn(
+                      s.listItem,
+                      timeTracker.id === selectedTimeTrackerId && s.active
+                    )}
                   >
                     <div>{timeTracker.name}</div>
+                    <div>{timeTracker.tag.name}</div>
                   </li>
                 ))}
               </ul>
