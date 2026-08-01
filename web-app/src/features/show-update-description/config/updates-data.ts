@@ -12,7 +12,7 @@ export const UPDATES_DATA: UpdatesData[] = [
   {
     version: "0.7.4",
     date: "01.08.2026",
-    manHours: "21",
+    manHours: "23",
     features: [
       "New page - Habit tracker based on Time tracker page. Help users make a new habits, helps do some things consistency day after day",
     ],
