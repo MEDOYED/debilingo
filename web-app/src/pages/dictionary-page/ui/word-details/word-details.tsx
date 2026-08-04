@@ -1,17 +1,16 @@
-import type { Word } from "@entities/word";
-
-import s from "./word-details.module.scss";
-
-import { useAddWordStore, useWordStore } from "@entities/word";
+import { useWordStore } from "@entities/word";
 import {
   EditableAdditionalTranslationInput,
   EditableDefinitionInput,
   EditableExampleInput,
+  useEditWordStore,
 } from "@features/edit-word";
 import { TextButton } from "@shared/ui/buttons";
 import { ArrowTopRightOnSquare } from "@shared/ui/icons";
-import { useState } from "react";
-import { LabelInputComponent } from "@features/create-word/ui/label-Input-component/label-input-component";
+
+import type { Word } from "@entities/word";
+
+import s from "./word-details.module.scss";
 
 interface WordDetailProps {
   className: string;
@@ -19,11 +18,9 @@ interface WordDetailProps {
 }
 
 export const WordDetails = ({ className, word }: WordDetailProps) => {
+  const { draftDefinitions, setDraftDefinitions } = useEditWordStore();
+
   const { editableWordId } = useWordStore();
-
-  const { translations, setTranslation } = useAddWordStore();
-
-  const [newDefinitions, setNewDefinitions] = useState<number[]>([]);
 
   return (
     <div className={className}>
@@ -47,12 +44,6 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
               {editableWordId === word.id ? (
                 <>
                   <EditableAdditionalTranslationInput inputIndex={index} />
-                  <LabelInputComponent
-                    // labelText="Explanation"
-                    setText={setTranslation}
-                    text={translations}
-                    textInButton="Add explanation"
-                  />
                 </>
               ) : (
                 t.text
@@ -66,21 +57,9 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
         <p>Explanation:</p>
 
         <ul className={s.ulClass}>
-          {word.definitions.map((def, index) => (
-            <li
-              className={s.list}
-              key={def.id}
-            >
-              {editableWordId === word.id ? (
-                <EditableDefinitionInput inputIndex={index} />
-              ) : (
-                <>{def.text}</>
-              )}
-            </li>
-          ))}
-          {editableWordId === word.id && (
+          {editableWordId === word.id ? (
             <>
-              {newDefinitions.map((_, index) => (
+              {draftDefinitions?.map((_, index) => (
                 <li
                   key={`new-definition-${index}`}
                   className={s.list}
@@ -93,12 +72,23 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
               <TextButton
                 className={s.addInputButton}
                 as="button"
-                onClick={() =>
-                  setNewDefinitions((prev) => [...prev, prev.length])
-                }
+                onClick={() => {
+                  setDraftDefinitions([...draftDefinitions, ""]);
+                }}
               >
-                + Additional translation
+                + Add definition
               </TextButton>
+            </>
+          ) : (
+            <>
+              {word.definitions.map((def) => (
+                <li
+                  className={s.list}
+                  key={def.id}
+                >
+                  {def.text}
+                </li>
+              ))}
             </>
           )}
         </ul>
