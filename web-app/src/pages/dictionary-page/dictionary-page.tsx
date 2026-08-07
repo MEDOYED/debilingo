@@ -44,6 +44,7 @@ export const DictionaryPage = () => {
 
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const isLoadingRef = useRef(false);
 
@@ -60,26 +61,30 @@ export const DictionaryPage = () => {
   const { unshuffleVersion } = useUnshuffleStore();
 
   useEffect(() => {
+    if (!dictId) return;
+
+    // Synchronously clear stale data before the async fetch begins
+    setWords([]);
+    setOffset(0);
+    setHasMore(true);
+    offsetRef.current = 0;
+    isLoadingRef.current = false;
+    setIsLoading(true);
+
     const loadWords = async () => {
-      if (!dictId) return;
       if (isLoadingRef.current) return;
-
       isLoadingRef.current = true;
-      const limit = Math.max(offsetRef.current, LOAD_WORDS);
-
-      // setOffset(0);
-      // setHasMore(true);
-      // setWords([]);
 
       const sort = isShuffled ? "shuffle" : undefined;
 
-      const data = await getWords(dictId, limit, 0, sort);
+      const data = await getWords(dictId, LOAD_WORDS, 0, sort);
 
       setWords(data);
-      setHasMore(data.length >= limit);
+      setHasMore(data.length >= LOAD_WORDS);
       setOffset(data.length);
       offsetRef.current = data.length;
       isLoadingRef.current = false;
+      setIsLoading(false);
     };
 
     loadWords();
@@ -134,78 +139,90 @@ export const DictionaryPage = () => {
         <DictionaryTopBar />
         <LanguageRow />
 
-        <ul className={s.wordsList}>
-          {words.map((word) => {
-            const isCurrent = word.id;
-            return (
-              <SwipeWordCard
-                key={word.id}
-                id={word.id}
-                wordPinnedAt={word.pinned_at}
-              >
-                <div
-                  className={cn(
-                    s.wordCard,
-                    isCurrent && status ? s[`is-${status}`] : "",
-                    word.pinned_at && s.pinned
-                  )}
+        {isLoading ? (
+          <ul className={s.wordsList}>
+            {Array.from({ length: 8 }).map((_, i) => (
+              <li key={i} className={s.skeletonRow}>
+                <div className={s.skeletonCell} />
+                <div className={s.skeletonChevron} />
+                <div className={s.skeletonCell} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <ul className={s.wordsList}>
+            {words.map((word) => {
+              const isCurrent = word.id;
+              return (
+                <SwipeWordCard
+                  key={word.id}
+                  id={word.id}
+                  wordPinnedAt={word.pinned_at}
                 >
-                  <div className={cn(s.row, isReversed && s.reverseRow)}>
-                    {/*  */}
-                    {editableWordId === word.id ? (
-                      <EditableSourceWordInput />
-                    ) : (
-                      <Spoiler
-                        className={s.mainCol}
-                        isVisible={isMainLanguageColVisible}
-                        word={word.source_word}
-                        mainCol={true}
-                      >
-                        <div className={s.wordAndSpeakerWrapper}>
-                          <span className={s.wordSource}>
-                            {word.source_word}{" "}
-                          </span>
-                        </div>
-                      </Spoiler>
+                  <div
+                    className={cn(
+                      s.wordCard,
+                      isCurrent && status ? s[`is-${status}`] : "",
+                      word.pinned_at && s.pinned
                     )}
+                  >
+                    <div className={cn(s.row, isReversed && s.reverseRow)}>
+                      {/*  */}
+                      {editableWordId === word.id ? (
+                        <EditableSourceWordInput />
+                      ) : (
+                        <Spoiler
+                          className={s.mainCol}
+                          isVisible={isMainLanguageColVisible}
+                          word={word.source_word}
+                          mainCol={true}
+                        >
+                          <div className={s.wordAndSpeakerWrapper}>
+                            <span className={s.wordSource}>
+                              {word.source_word}{" "}
+                            </span>
+                          </div>
+                        </Spoiler>
+                      )}
 
-                    {editableWordId === word.id ? (
-                      <SubmitEditWordButton />
-                    ) : (
-                      <ChevronDown
-                        className={cn(
-                          s.openDescription,
-                          openWordId === word.id && s.rotated
-                        )}
-                        onClick={() => {
-                          toggleWord(word.id);
-                          setEditableWordId(null);
-                        }}
+                      {editableWordId === word.id ? (
+                        <SubmitEditWordButton />
+                      ) : (
+                        <ChevronDown
+                          className={cn(
+                            s.openDescription,
+                            openWordId === word.id && s.rotated
+                          )}
+                          onClick={() => {
+                            toggleWord(word.id);
+                            setEditableWordId(null);
+                          }}
+                        />
+                      )}
+
+                      {editableWordId === word.id ? (
+                        <EditableMainTranslationInput />
+                      ) : (
+                        <Spoiler
+                          mainCol={false}
+                          isVisible={isTranslationColVisible}
+                        >
+                          {word.translations[0]?.text}
+                        </Spoiler>
+                      )}
+                    </div>
+                    <div className={cn(openWordId === word.id && s.open)}>
+                      <WordDetails
+                        className={s.description}
+                        word={word}
                       />
-                    )}
-
-                    {editableWordId === word.id ? (
-                      <EditableMainTranslationInput />
-                    ) : (
-                      <Spoiler
-                        mainCol={false}
-                        isVisible={isTranslationColVisible}
-                      >
-                        {word.translations[0]?.text}
-                      </Spoiler>
-                    )}
+                    </div>
                   </div>
-                  <div className={cn(openWordId === word.id && s.open)}>
-                    <WordDetails
-                      className={s.description}
-                      word={word}
-                    />
-                  </div>
-                </div>
-              </SwipeWordCard>
-            );
-          })}
-        </ul>
+                </SwipeWordCard>
+              );
+            })}
+          </ul>
+        )}
 
         <CreateWordModal />
 

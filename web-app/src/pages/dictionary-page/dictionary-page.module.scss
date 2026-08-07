@@ -88,3 +88,49 @@
 .pinned {
   background-color: var(--md-sys-color-surface-container-low);
 }
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeletonRow {
+  display: grid;
+  grid-template-columns: 1fr conf.$central-col-width 1fr;
+  align-items: center;
+  padding: 20px 10px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  gap: 8px;
+}
+
+.skeletonCell {
+  height: 18px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    var(--md-sys-color-surface-container) 25%,
+    var(--md-sys-color-surface-container-high) 50%,
+    var(--md-sys-color-surface-container) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.skeletonChevron {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin: 0 auto;
+  background: linear-gradient(
+    90deg,
+    var(--md-sys-color-surface-container) 25%,
+    var(--md-sys-color-surface-container-high) 50%,
+    var(--md-sys-color-surface-container) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}

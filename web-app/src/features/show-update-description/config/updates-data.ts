@@ -10,6 +10,19 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
+    version: "0.6.4",
+    date: "07.08.2026",
+    manHours: "1",
+    features: null,
+    improvements: [
+      "Dictionary page now shows a shimmer skeleton while loading words, instead of remaining blank or showing stale data",
+    ],
+    fixes: [
+      "Fix: words from the previously opened dictionary were briefly visible when navigating to a new dictionary while data was still loading",
+    ],
+    contributors: ["Selim Gandymov"],
+  },
+  {
     version: "0.6.3",
     date: "27.07.2026",
     manHours: "6",
