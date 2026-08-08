@@ -1,0 +1,62 @@
+@use "@shared/styles/config" as conf;
+
+.tableWrapper {
+  display: flex;
+  overflow-x: auto;
+
+  .table {
+    border-collapse: separate;
+  }
+
+  th,
+  td {
+    border-bottom: 1px solid var(--md-sys-color-outline);
+    border-right: 1px solid var(--md-sys-color-outline);
+    padding: 5px;
+  }
+
+  .firstCol {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: var(--md-sys-color-surface-container-low);
+    min-width: 150px;
+    text-align: left;
+  }
+
+  .firtsCol__trackerName {
+    font-size: 22px;
+  }
+
+  .firtsCol__trackerTagNameWrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 7px 0;
+  }
+}
+
+.addHabitModal {
+  position: fixed;
+  top: 10vh;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--md-sys-color-surface-container-highest);
+  z-index: 10;
+  overflow-y: auto;
+  padding-bottom: conf.$mobile-navigation-bottombar-height + 20px;
+
+  .list {
+  }
+
+  .listItem {
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--md-sys-color-outline);
+
+    &.active {
+      background-color: var(--md-sys-color-tertiary);
+      color: var(--md-sys-color-on-tertiary);
+    }
+  }
+}

@@ -7,6 +7,7 @@ export interface TimeTracker {
   name: string;
   color: string;
   created_at: string;
+  habit_time_goal: number | null;
 }
 
 export interface TimeTrackerWithTag extends TimeTracker {
@@ -56,4 +57,24 @@ export interface TimeStatsResponse {
   period: Period;
   total_seconds: number;
   tags: TagStats[];
+}
+
+export interface HabitDayStats {
+  total_seconds: number;
+  session_count: number;
+}
+
+export interface HabitTrackerStat {
+  id: string;
+  name: string;
+  color: string;
+  tag: TrackerTag | null;
+  habit_time_goal: number;
+  days: Record<string, HabitDayStats>;
+}
+
+export interface HabitSessionsResponse {
+  start_date: string;
+  end_date: string;
+  trackers: HabitTrackerStat[];
 }

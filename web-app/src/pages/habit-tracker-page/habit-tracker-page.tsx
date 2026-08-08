@@ -1,0 +1,275 @@
+import { FilledButton, TextButton } from "@shared/ui/buttons";
+
+import { useEffect, useState } from "react";
+
+import { cn } from "@shared/lib/styles";
+
+import field from "@shared/styles/components/field.module.scss";
+import s from "./habit-tracker-page.module.scss";
+
+import { convertTime } from "@shared/lib/time";
+import { LabelTag } from "@shared/ui/icons";
+
+import type {
+  HabitSessionsResponse,
+  TimeTracker,
+} from "@entities/time-tracker";
+
+import {
+  getHabitSessions,
+  updateHabitTimeGoal,
+  useTimeTrackerStore,
+} from "@entities/time-tracker";
+
+const formatLocalDate = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+export const HabitTrackerPage = () => {
+  // loading state
+  const [isLoadingAllData, setIsLoadingAllData] = useState<boolean>(true);
+
+  // data state
+  const [habitTrackerDaysStats, setHabitTrackerDaysStats] =
+    useState<HabitSessionsResponse | null>(null);
+
+  // modals state
+  const [isOpenAddHabitModal, setIsOpenAddHabitModal] =
+    useState<boolean>(false);
+
+  // input values
+  const [timeGoalInputValue, setTimeGoalInputValue] = useState<string>("");
+
+  // selected values
+  const [selectedTimeTrackerId, setSelectedTimeTrackerId] = useState<
+    TimeTracker["id"] | null
+  >(null);
+
+  const { timeTrackers, loadTimeTrackers, statusTimeTracker, setTimeTrackers } =
+    useTimeTrackerStore();
+
+  // load all data on first open page
+  useEffect(() => {
+    const loadFirst = async () => {
+      const today = new Date();
+      const endDate = formatLocalDate(today);
+
+      const dataHabitTrackerDaysStats: HabitSessionsResponse =
+        await getHabitSessions("2026-07-30", endDate);
+
+      setHabitTrackerDaysStats(dataHabitTrackerDaysStats);
+
+      setIsLoadingAllData(false);
+    };
+
+    loadFirst();
+  }, []);
+
+  useEffect(() => {
+    if (statusTimeTracker === "idle") {
+      loadTimeTrackers();
+    }
+  }, [statusTimeTracker, loadTimeTrackers]);
+
+  const handleCreateHabit = async () => {
+    if (!timeTrackers) {
+      console.error(timeTrackers, "is requierd");
+      return;
+    }
+
+    const timeGoalSecondsNumber = Number(timeGoalInputValue);
+    if (
+      !selectedTimeTrackerId ||
+      selectedTimeTrackerId === null ||
+      isNaN(timeGoalSecondsNumber)
+    )
+      return;
+
+    const updatedTracker = await updateHabitTimeGoal(
+      selectedTimeTrackerId,
+      timeGoalSecondsNumber
+    );
+
+    const trackersWithoutOldChangedTracker = timeTrackers.filter(
+      (timeTracker) => timeTracker.id !== updatedTracker.id
+    );
+
+    setTimeTrackers([updatedTracker, ...trackersWithoutOldChangedTracker]);
+  };
+
+  const generateDateRange = (start: string, end: string): string[] => {
+    const dates: string[] = [];
+    const current = new Date(start + "T00:00:00Z");
+    const last = new Date(end + "T00:00:00Z");
+    while (current <= last) {
+      dates.push(current.toISOString().slice(0, 10));
+      current.setUTCDate(current.getUTCDate() + 1);
+    }
+    return dates;
+  };
+
+  const dateColumns = habitTrackerDaysStats
+    ? generateDateRange(
+        habitTrackerDaysStats.start_date,
+        habitTrackerDaysStats.end_date
+      )
+    : [];
+
+  const formatDate = (date: string): string =>
+    date.split("-").reverse().join(".");
+
+  return (
+    <main>
+      {statusTimeTracker === "loading" && isLoadingAllData === true && (
+        <div>Loading...</div>
+      )}
+
+      <TextButton
+        as="button"
+        onClick={() => setIsOpenAddHabitModal(true)}
+      >
+        + new habit
+      </TextButton>
+
+      {/* Habit trackers list */}
+      <div className={s.tableWrapper}>
+        <table className={s.table}>
+          <thead>
+            <tr>
+              <th
+                className={s.firstCol}
+                scope="col"
+              >
+                Tracker
+              </th>
+              {dateColumns.map((date, index) => (
+                <th
+                  key={index}
+                  scope="col"
+                >
+                  {formatDate(date)}
+                </th>
+              ))}
+            </tr>
+          </thead>
+
+          <tbody>
+            {habitTrackerDaysStats?.trackers.map((tracker) => {
+              const { hoursString, minutesString, secondsString } = convertTime(
+                tracker.habit_time_goal
+              );
+
+              const hours = hoursString === "00" ? "" : `${hoursString}:`;
+              const minutes = minutesString === "00" ? null : minutesString;
+
+              return (
+                <tr key={tracker.id}>
+                  <th
+                    className={s.firstCol}
+                    scope="row"
+                  >
+                    <div className={s.firtsCol__trackerName}>
+                      {tracker.name}
+                    </div>
+                    <div className={s.firtsCol__trackerTagNameWrapper}>
+                      <LabelTag color={tracker.color} />
+                      <div>{tracker.tag?.name}</div>
+                    </div>
+                    <div>Goal: {`${hours}${minutes}:${secondsString}`}</div>
+                  </th>
+
+                  {dateColumns.map((date) => {
+                    const { hoursString, minutesString, secondsString } =
+                      convertTime(tracker.days?.[date]?.total_seconds);
+
+                    const hours = hoursString === "00" ? "" : `${hoursString}:`;
+                    const minutes =
+                      hoursString === "00" && minutesString === "00"
+                        ? ""
+                        : `${minutesString}:`;
+
+                    const seconds =
+                      hoursString === "00" &&
+                      minutesString === "00" &&
+                      secondsString === "00"
+                        ? ""
+                        : `${secondsString}`;
+
+                    return (
+                      <th
+                        key={date}
+                        scope="row"
+                      >
+                        {`${hours}${minutes}${seconds}`}
+                      </th>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {isOpenAddHabitModal && (
+        <div className={s.addHabitModal}>
+          <TextButton
+            as="button"
+            onClick={() => setIsOpenAddHabitModal(false)}
+          >
+            X
+          </TextButton>
+
+          {statusTimeTracker === "loading" && <div>Loading...</div>}
+
+          {statusTimeTracker === "error" && (
+            <div>Error loading time trackers</div>
+          )}
+
+          {statusTimeTracker === "loaded" && (
+            <>
+              <h2>
+                What is your time goal per day for this habit? (in seconds)
+              </h2>
+
+              <input
+                className={field.input}
+                type="number"
+                value={timeGoalInputValue}
+                onChange={(e) => setTimeGoalInputValue(e.target.value)}
+              />
+
+              <h2>Select time tracker what you want to add as new habit:</h2>
+
+              <ul className={s.list}>
+                {timeTrackers?.map((timeTracker, index) => (
+                  <li
+                    key={index}
+                    onClick={() => setSelectedTimeTrackerId(timeTracker.id)}
+                    className={cn(
+                      s.listItem,
+                      timeTracker.id === selectedTimeTrackerId && s.active
+                    )}
+                  >
+                    <div>{timeTracker.name}</div>
+                    <div>{timeTracker.tag.name}</div>
+                  </li>
+                ))}
+              </ul>
+
+              <FilledButton
+                as="button"
+                onClick={handleCreateHabit}
+              >
+                Create habit
+              </FilledButton>
+            </>
+          )}
+        </div>
+      )}
+    </main>
+  );
+};

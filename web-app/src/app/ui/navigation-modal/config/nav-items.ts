@@ -1,6 +1,5 @@
 import type { NavItem } from "../model/types";
 
-// nav items for client side (for all users)
 export const NAV_ITEMS: NavItem[] = [
   {
     to: "/",
@@ -22,6 +21,10 @@ export const NAV_ITEMS: NavItem[] = [
   {
     to: "/time-tracker",
     text: "Time trackers",
+  },
+  {
+    to: "/habit-tracker",
+    text: "Habit trackers",
   },
   {
     to: "/money-earning",

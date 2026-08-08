@@ -23,4 +23,4 @@ export const stopSession = async (sessionId: string): Promise<TimeSession> => {
 };
 // export const updateSession;
 // export const deleteSession;
-// export const getTrackerSessions;
+// export const getTrackersSessions;

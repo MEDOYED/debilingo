@@ -10,7 +10,7 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
-    version: "0.6.4",
+    version: "0.7.6",
     date: "07.08.2026",
     manHours: "1",
     features: null,
@@ -21,6 +21,19 @@ export const UPDATES_DATA: UpdatesData[] = [
       "Fix: words from the previously opened dictionary were briefly visible when navigating to a new dictionary while data was still loading",
     ],
     contributors: ["Selim Gandymov"],
+  },
+  {
+    version: "0.7.5",
+    date: "01.08.2026",
+    manHours: "24",
+    features: [
+      "New page - Habit tracker based on Time tracker page. Help users make a new habits, helps do some things consistency day after day",
+    ],
+    improvements: ["Display study time in HH:MM:SS format on the leaderboard."],
+    fixes: [
+      "Error on habit tracker page when add tracker without some time sessions in date range",
+    ],
+    contributors: ["Selim Gandymov, Maksym Mokriakov [Medoed]"],
   },
   {
     version: "0.6.3",
