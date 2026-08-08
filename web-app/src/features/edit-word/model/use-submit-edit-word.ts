@@ -26,9 +26,13 @@ export const useSubmitEditWord = () => {
 
   const data = {
     source_word: draftSourceWord,
-    translations: draftTranslations,
-    definitions: draftDefinitions,
-    examples: draftExamples,
+    translations: draftTranslations
+      .map((item) => item)
+      .filter((text) => text !== ""),
+    definitions: draftDefinitions
+      .map((item) => item)
+      .filter((text) => text !== ""),
+    examples: draftExamples.map((item) => item).filter((text) => text !== ""),
   };
 
   const handleSubmit = async () => {
