@@ -27,9 +27,15 @@ export const useEditWordStore = create<EditWordStore>((set) => ({
   initDrafts: (word) => {
     set({
       draftSourceWord: word.source_word,
-      draftTranslations: word.translations.map((item) => item.text),
-      draftDefinitions: word.definitions.map((item) => item.text),
-      draftExamples: word.examples.map((item) => item.text),
+      draftTranslations: word.translations
+        .map((item) => item.text)
+        .filter((text) => text !== ""),
+      draftDefinitions: word.definitions
+        .map((item) => item.text)
+        .filter((text) => text !== ""),
+      draftExamples: word.examples
+        .map((item) => item.text)
+        .filter((text) => text !== ""),
     });
   },
 
