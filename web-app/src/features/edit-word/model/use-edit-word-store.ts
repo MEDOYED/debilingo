@@ -3,6 +3,7 @@ import { create } from "zustand";
 import { type Word } from "@entities/word";
 
 type EditWordStore = {
+  draftId: string;
   draftSourceWord: string;
   draftTranslations: string[];
   draftDefinitions: string[];
@@ -19,6 +20,7 @@ type EditWordStore = {
 };
 
 export const useEditWordStore = create<EditWordStore>((set) => ({
+  draftId: "",
   draftSourceWord: "",
   draftTranslations: [],
   draftDefinitions: [],
@@ -26,6 +28,7 @@ export const useEditWordStore = create<EditWordStore>((set) => ({
 
   initDrafts: (word) => {
     set({
+      draftId: word.id,
       draftSourceWord: word.source_word,
       draftTranslations: word.translations.map((item) => item.text),
       draftDefinitions: word.definitions.map((item) => item.text),
@@ -59,6 +62,7 @@ export const useEditWordStore = create<EditWordStore>((set) => ({
 
   resetDrafts: () => {
     set({
+      draftId: "",
       draftSourceWord: "",
       draftTranslations: [],
       draftDefinitions: [],
