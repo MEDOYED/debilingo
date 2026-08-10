@@ -55,7 +55,7 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
                   setDraftTranslations([...draftTranslations, ""]);
                 }}
               >
-                + Add definition
+                + Add translation
               </TextButton>
             </>
           ) : (
@@ -74,7 +74,7 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
       </div>
 
       <div className={s.ulContainer}>
-        <p>Explanation:</p>
+        <p>Definitions:</p>
 
         <ul className={s.ulClass}>
           {editableWordId === word.id ? (
@@ -133,7 +133,7 @@ export const WordDetails = ({ className, word }: WordDetailProps) => {
                   setDraftExamples([...draftExamples, ""]);
                 }}
               >
-                + Add definition
+                + Add example
               </TextButton>
             </>
           ) : (
