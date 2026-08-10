@@ -10,6 +10,19 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
+    version: "0.7.7",
+    date: "10.08.2026",
+    manHours: "10",
+    features: [
+      "Now in edit word mode you can add more examples, definitions and translations",
+    ],
+    improvements: [
+      "If in edit mode you don't change anything and click on save button, it save instantly without loading time",
+    ],
+    fixes: null,
+    contributors: ["Riazanov Daniil, Maksym Mokriakov [Medoed]"],
+  },
+  {
     version: "0.7.5",
     date: "01.08.2026",
     manHours: "24",
