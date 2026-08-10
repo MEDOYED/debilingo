@@ -13,6 +13,7 @@ export const useSubmitEditWord = () => {
 
   const { setWords, words } = useAddWordStore();
   const {
+    draftId,
     draftSourceWord,
     draftTranslations,
     draftDefinitions,
@@ -25,6 +26,7 @@ export const useSubmitEditWord = () => {
   const wordId = editableWordId;
 
   const data = {
+    id: draftId,
     source_word: draftSourceWord,
     translations: draftTranslations.filter((text) => text !== ""),
     definitions: draftDefinitions.filter((text) => text !== ""),
@@ -37,9 +39,7 @@ export const useSubmitEditWord = () => {
     setSendingStatus("in-process");
 
     try {
-      const oldWordData = words.find(
-        (word) => word.source_word === data.source_word
-      );
+      const oldWordData = words.find((word) => word.id === data.id);
 
       const oldData = {
         source_word: oldWordData?.source_word,
