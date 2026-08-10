@@ -26,9 +26,9 @@ export const useSubmitEditWord = () => {
 
   const data = {
     source_word: draftSourceWord,
-    translations: draftTranslations,
-    definitions: draftDefinitions,
-    examples: draftExamples,
+    translations: draftTranslations.filter((text) => text !== ""),
+    definitions: draftDefinitions.filter((text) => text !== ""),
+    examples: draftExamples.filter((text) => text !== ""),
   };
 
   const handleSubmit = async () => {

@@ -6,7 +6,7 @@ import field from "@shared/styles/components/field.module.scss";
 import s from "./label-input-component.module.scss";
 
 interface IProps {
-  labelText: string;
+  labelText?: string;
   setText: (value: string[]) => void;
   text: string[];
   textInButton: string;
