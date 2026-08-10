@@ -26,13 +26,9 @@ export const useSubmitEditWord = () => {
 
   const data = {
     source_word: draftSourceWord,
-    translations: draftTranslations
-      .map((item) => item)
-      .filter((text) => text !== ""),
-    definitions: draftDefinitions
-      .map((item) => item)
-      .filter((text) => text !== ""),
-    examples: draftExamples.map((item) => item).filter((text) => text !== ""),
+    translations: draftTranslations.filter((text) => text !== ""),
+    definitions: draftDefinitions.filter((text) => text !== ""),
+    examples: draftExamples.filter((text) => text !== ""),
   };
 
   const handleSubmit = async () => {
