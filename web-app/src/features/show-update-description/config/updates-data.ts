@@ -10,17 +10,20 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
-    version: "0.7.6",
-    date: "07.08.2026",
-    manHours: "1",
-    features: null,
+    version: "0.7.8",
+    date: "12.08.2026",
+    manHours: "11",
+    features: [
+      "Now in edit word mode you can add more examples, definitions and translations",
+    ],
     improvements: [
+      "If in edit mode you don't change anything and click on save button, it save instantly without loading time",
       "Dictionary page now shows a shimmer skeleton while loading words, instead of remaining blank or showing stale data",
     ],
-    fixes: [
+     fixes: [
       "Fix: words from the previously opened dictionary were briefly visible when navigating to a new dictionary while data was still loading",
     ],
-    contributors: ["Selim Gandymov"],
+    contributors: ["Riazanov Daniil, Maksym Mokriakov [Medoed]", "Selim Gandymov"],
   },
   {
     version: "0.7.5",
