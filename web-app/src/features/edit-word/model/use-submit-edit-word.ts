@@ -13,6 +13,7 @@ export const useSubmitEditWord = () => {
 
   const { setWords, words } = useAddWordStore();
   const {
+    draftId,
     draftSourceWord,
     draftTranslations,
     draftDefinitions,
@@ -25,6 +26,7 @@ export const useSubmitEditWord = () => {
   const wordId = editableWordId;
 
   const data = {
+    id: draftId,
     source_word: draftSourceWord,
     translations: draftTranslations.filter((text) => text !== ""),
     definitions: draftDefinitions.filter((text) => text !== ""),
@@ -37,6 +39,29 @@ export const useSubmitEditWord = () => {
     setSendingStatus("in-process");
 
     try {
+      const oldWordData = words.find((word) => word.id === data.id);
+
+      const oldData = {
+        source_word: oldWordData?.source_word,
+        translations: oldWordData?.translations?.map((item) => item.text) ?? [],
+        definitions: oldWordData?.definitions?.map((item) => item.text) ?? [],
+        examples: oldWordData?.examples?.map((item) => item.text) ?? [],
+      };
+
+      const isEqual =
+        oldData.source_word === data.source_word &&
+        JSON.stringify(oldData.translations) ===
+          JSON.stringify(data.translations) &&
+        JSON.stringify(oldData.definitions) ===
+          JSON.stringify(data.definitions) &&
+        JSON.stringify(oldData.examples) === JSON.stringify(data.examples);
+
+      if (isEqual) {
+        setSendingStatus("success");
+        setEditableWordId(null);
+        return;
+      }
+
       const updatedWord = await updateWord(wordId, data);
 
       // replace the updated word in local  store
