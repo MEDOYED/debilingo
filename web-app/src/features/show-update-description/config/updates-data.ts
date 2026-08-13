@@ -10,6 +10,17 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
+    version: "0.7.8",
+    date: "13.08.2026",
+    manHours: "1",
+    features: null,
+    improvements: null,
+    fixes: [
+      "After unpinning a word it jumped to the top of the dictionary. Now it goes right under the pinned words and takes its place by date",
+    ],
+    contributors: ["Selim Gandymov"],
+  },
+  {
     version: "0.7.7",
     date: "10.08.2026",
     manHours: "10",

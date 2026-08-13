@@ -153,9 +153,19 @@ export const SwipeWordCard = ({
   const handleUnpinWord = async () => {
     const unpinnedWord = await unpinWord(id);
 
-    const wordsWithoutCurrent = words.filter((word) => word.id !== id);
+    const sortedWords = words
+      .map((word) => (word.id === id ? unpinnedWord : word))
+      .sort((a, b) => {
+        if (a.pinned_at && b.pinned_at) {
+          return b.pinned_at.localeCompare(a.pinned_at);
+        }
+        if (a.pinned_at) return -1;
+        if (b.pinned_at) return 1;
 
-    setWords([unpinnedWord, ...wordsWithoutCurrent]);
+        return b.created_at.localeCompare(a.created_at);
+      });
+
+    setWords(sortedWords);
 
     setShiftX(0);
   };
