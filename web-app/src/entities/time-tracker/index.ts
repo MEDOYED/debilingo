@@ -10,6 +10,7 @@ export {
 
 export type {
   HabitSessionsResponse,
+  Period,
   TimeSession,
   TimeStatsResponse,
   TimeTracker,

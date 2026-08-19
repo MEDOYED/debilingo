@@ -1,29 +1,32 @@
-import { Clock, LabelTag } from "@shared/ui/icons";
-
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-import { FilledButton, TextButton } from "@shared/ui/buttons";
-
 import type { TrackerTag } from "@entities/time-tag";
 import { createTag, getTags } from "@entities/time-tag/api";
-import { getTimeStats, type TimeStatsResponse } from "@entities/time-tracker";
-
-import { convertTime } from "@shared/lib/time";
-
+import type {
+  Period,
+  TimeSession,
+  TimeTrackerWithTag,
+} from "@entities/time-tracker";
 import {
   createTimeTracker,
   getActiveSession,
+  getTimeStats,
   startSession,
   stopSession,
   useTimeTrackerStore,
+  type TimeStatsResponse,
 } from "@entities/time-tracker";
 import { cn } from "@shared/lib/styles";
+import { convertTime } from "@shared/lib/time";
+import { FilledButton, TextButton } from "@shared/ui/buttons";
+import { Clock, LabelTag } from "@shared/ui/icons";
+
+import { useLoadingTimer } from "./model/use-loading-timer";
+import { FilterPeriodButtons } from "./ui/filter-period-buttons/filter-period-buttons";
+
 import field from "@shared/styles/components/field.module.scss";
 import s from "./time-tracker-page.module.scss";
-
-import type { TimeSession, TimeTrackerWithTag } from "@entities/time-tracker";
-import { useLoadingTimer } from "./model/use-loading-timer";
 
 const COLORS = [
   "#ef4444",
@@ -66,6 +69,7 @@ export const TimeTrackerPage = () => {
 
   // selected states
   const [selectedTag, setSelectedTag] = useState<TrackerTag | null>(null);
+  const [selectedPeriod, setSelectedPeriod] = useState<Period>("1d");
 
   // data state
   const [isLoadingAllData, setIsLoadingAllData] = useState<boolean>(true);
@@ -92,7 +96,7 @@ export const TimeTrackerPage = () => {
       const dataActiveSession = await getActiveSession();
       setActiveSession(dataActiveSession);
 
-      const dataTimeStats = await getTimeStats("all");
+      const dataTimeStats = await getTimeStats(selectedPeriod);
       setDataTimeStats(dataTimeStats);
 
       await loadTimeTrackers();
@@ -101,7 +105,7 @@ export const TimeTrackerPage = () => {
     };
 
     loadFirst();
-  }, []);
+  }, [selectedPeriod]);
 
   const handleAddNewTimeTracker = async () => {
     if (!newTrackerTimeName) {
@@ -175,7 +179,7 @@ export const TimeTrackerPage = () => {
       const startedSession = await startSession(timeTracker.id);
       setActiveSession(startedSession);
 
-      const dataTimeStats = await getTimeStats("all");
+      const dataTimeStats = await getTimeStats(selectedPeriod);
       setDataTimeStats(dataTimeStats);
     }
 
@@ -186,7 +190,7 @@ export const TimeTrackerPage = () => {
       const startedSession = await startSession(timeTracker.id);
       setActiveSession(startedSession);
 
-      const dataTimeStats = await getTimeStats("all");
+      const dataTimeStats = await getTimeStats(selectedPeriod);
       setDataTimeStats(dataTimeStats);
     }
 
@@ -194,7 +198,7 @@ export const TimeTrackerPage = () => {
       await stopSession(activeSession.id);
       setActiveSession(null);
 
-      const dataTimeStats = await getTimeStats("all");
+      const dataTimeStats = await getTimeStats(selectedPeriod);
       setDataTimeStats(dataTimeStats);
     }
   };
@@ -249,7 +253,10 @@ export const TimeTrackerPage = () => {
 
       {isLoadingAllData === false && (
         <main>
-          <h1 className="container">time tracker page</h1>
+          <FilterPeriodButtons
+            selectedPeriod={selectedPeriod}
+            setSelectedPeriod={setSelectedPeriod}
+          />
 
           <ul className={s.timeTrackers}>
             {timeTrackers?.map((timeTracker, index) => (
