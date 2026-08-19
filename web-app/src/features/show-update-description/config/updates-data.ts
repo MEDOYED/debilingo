@@ -11,27 +11,20 @@ type UpdatesData = {
 export const UPDATES_DATA: UpdatesData[] = [
   {
     version: "0.7.8",
-    date: "13.08.2026",
-    manHours: "1",
-    features: null,
-    improvements: null,
-    fixes: [
-      "After unpinning a word it jumped to the top of the dictionary. Now it goes right under the pinned words and takes its place by date",
-    ],
-    contributors: ["Selim Gandymov"],
-  },
-  {
-    version: "0.7.7",
-    date: "10.08.2026",
-    manHours: "10",
+    date: "19.08.2026",
+    manHours: "11",
     features: [
       "Now in edit word mode you can add more examples, definitions and translations",
     ],
     improvements: [
       "If in edit mode you don't change anything and click on save button, it save instantly without loading time",
     ],
-    fixes: null,
-    contributors: ["Riazanov Daniil, Maksym Mokriakov [Medoed]"],
+    fixes: [
+      "After unpinning a word it jumped to the top of the dictionary. Now it goes right under the pinned words and takes its place by date",
+    ],
+    contributors: [
+      "Riazanov Daniil, Maksym Mokriakov [Medoed], Selim Gandymov",
+    ],
   },
   {
     version: "0.7.5",
