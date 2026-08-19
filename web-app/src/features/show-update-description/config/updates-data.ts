@@ -10,11 +10,12 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
-    version: "0.7.8",
+    version: "0.7.9",
     date: "19.08.2026",
-    manHours: "11",
+    manHours: "16",
     features: [
       "Now in edit word mode you can add more examples, definitions and translations",
+      "Add period 1d, 7d, 30d, all time for time tracker page",
     ],
     improvements: [
       "If in edit mode you don't change anything and click on save button, it save instantly without loading time",
