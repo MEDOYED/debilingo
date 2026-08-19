@@ -1,4 +1,4 @@
-@use "../../../../shared/styles/tokens/colors/dark-blue";
+@use "@shared/styles/tokens/colors/dark-blue";
 
 .group {
   padding: 10px 0;
@@ -35,6 +35,11 @@
   transition:
     transform 250ms ease,
     width 250ms ease;
+
+  @media (max-width: 320px) {
+    min-width: 50px;
+    width: 60px;
+  }
 }
 
 .button {
@@ -58,37 +63,31 @@
   transition:
     background-color 250ms ease,
     color 250ms ease;
-}
 
-.button:hover {
-  background: var(--md-sys-color-surface-container-high);
-}
+  &:hover {
+    background: var(--md-sys-color-surface-container-high);
+  }
 
-.button:focus-visible {
-  outline: 2px solid var(--md-sys-color-primary);
-  outline-offset: -2px;
-}
+  &:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: -2px;
+  }
 
-.button:active {
-  background: var(--md-sys-color-surface-container-highest);
+  &:active {
+    background: var(--md-sys-color-surface-container-highest);
+  }
+
+  @media (max-width: 320px) {
+    min-width: 50px;
+    width: 60px;
+  }
 }
 
 .selected {
   background: var(--md-sys-color-primary);
   color: var(--md-sys-color-on-primary);
-}
 
-.selected:hover {
-  background: var(--md-sys-color-primary);
-}
-
-@media (max-width: 320px) {
-  .indicator {
-    width: 60px;
-  }
-
-  .button {
-    min-width: 50px;
-    width: 60px;
+  &:hover {
+    background: var(--md-sys-color-primary);
   }
 }

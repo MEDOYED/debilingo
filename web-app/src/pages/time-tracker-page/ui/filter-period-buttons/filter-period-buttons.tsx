@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
-import s from "./FilterPeriodButtons.module.scss";
+
+import s from "./filter-period-buttons.module.scss";
 
 type Period = "all" | "1d" | "7d" | "30d";
 
@@ -9,13 +10,13 @@ type Periods = {
 };
 
 interface FilterPeriodButtonsProps {
-  periodFilter: string;
-  setPeriodFilter: (period: Period) => void;
+  selectedPeriod: string;
+  setSelectedPeriod: (period: Period) => void;
 }
 
 export const FilterPeriodButtons = ({
-  setPeriodFilter,
-  periodFilter,
+  selectedPeriod,
+  setSelectedPeriod,
 }: FilterPeriodButtonsProps) => {
   const buttonsRef = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -37,10 +38,6 @@ export const FilterPeriodButtons = ({
 
   const periods: Periods[] = [
     {
-      period: "all",
-      text: "all time",
-    },
-    {
       period: "1d",
       text: "1 day",
     },
@@ -51,6 +48,10 @@ export const FilterPeriodButtons = ({
     {
       period: "30d",
       text: "30 days",
+    },
+    {
+      period: "all",
+      text: "all time",
     },
   ];
 
@@ -65,7 +66,7 @@ export const FilterPeriodButtons = ({
           }}
         />
         {periods.map((item, index) => {
-          const isSelected = item.period === periodFilter;
+          const isSelected = item.period === selectedPeriod;
 
           return (
             <button
@@ -77,7 +78,7 @@ export const FilterPeriodButtons = ({
               className={`${s.button} ${isSelected ? s.selected : ""}`}
               aria-pressed={isSelected}
               onClick={() => {
-                setPeriodFilter(item.period);
+                setSelectedPeriod(item.period);
                 updateIndicator(index);
               }}
             >
