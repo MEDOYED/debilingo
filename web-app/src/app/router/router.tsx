@@ -12,6 +12,7 @@ import { TimeTrackerPage } from "@pages/time-tracker-page";
 import { TrainingPage } from "@pages/training-page";
 
 import RootLayout from "../layout/root-layout";
+import { GameQuizPage } from "@pages/game-quiz-page/game-quiz-page";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const token = localStorage.getItem("token");
@@ -41,6 +42,7 @@ export const router = createBrowserRouter([
         index: true,
         element: <HomePage />,
       },
+      { path: "/games/quiz", element: <GameQuizPage /> },
       { path: "/dictionaries", element: <DictionariesPage /> },
 
       {
