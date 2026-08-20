@@ -1,0 +1,93 @@
+@use "@shared/styles/tokens/colors/dark-blue";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 20px 150px 20px;
+  min-height: calc(100dvh - 50px);
+}
+
+.infoContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stopButtonAndXpContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.stopButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40px;
+  padding: 10px 24px;
+
+  border: none;
+  border-radius: 20px;
+
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+
+  font: inherit;
+  cursor: pointer;
+
+  transition: background-color 150ms ease;
+}
+
+.card {
+  width: 350px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+  font-size: 30px;
+  font-weight: 600;
+
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 10px;
+}
+
+.buttonsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 45px;
+}
+
+.answers {
+  width: 150px;
+  height: 50px;
+  padding: 0 16px;
+
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 12px;
+
+  background: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+
+  font: inherit;
+  cursor: pointer;
+
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    transform 100ms ease;
+}
+
+.correct {
+  background: var(--md-sys-color-surface-tint);
+  color: var(--md-sys-color-on-primary);
+}
+
+.incorrect {
+  background: var(--md-sys-color-error-container);
+  color: var(--md-sys-color-on-error-container);
+}
