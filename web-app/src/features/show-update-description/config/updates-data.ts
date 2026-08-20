@@ -10,6 +10,24 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
+    version: "0.7.9",
+    date: "19.08.2026",
+    manHours: "16",
+    features: [
+      "Now in edit word mode you can add more examples, definitions and translations",
+      "Add period 1d, 7d, 30d, all time for time tracker page",
+    ],
+    improvements: [
+      "If in edit mode you don't change anything and click on save button, it save instantly without loading time",
+    ],
+    fixes: [
+      "After unpinning a word it jumped to the top of the dictionary. Now it goes right under the pinned words and takes its place by date",
+    ],
+    contributors: [
+      "Riazanov Daniil, Maksym Mokriakov [Medoed], Selim Gandymov",
+    ],
+  },
+  {
     version: "0.7.5",
     date: "01.08.2026",
     manHours: "24",
