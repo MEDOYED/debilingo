@@ -1,4 +1,4 @@
-import { Clock, DictionaryAdd, Gamepad, Home, Trophy } from "@shared/ui/icons";
+import { Clock, Gamepad, Home, Trophy } from "@shared/ui/icons";
 // import { Gamepad } from "@shared/ui/icons";
 
 import type { IconProps } from "@shared/types";
