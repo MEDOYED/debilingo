@@ -1,0 +1,19 @@
+@use "@shared/styles/tokens/colors/dark-blue";
+
+.track {
+  width: 100%;
+  height: 4px;
+
+  overflow: hidden;
+
+  border-radius: 2px;
+  background: var(--md-sys-color-surface-container-highest);
+}
+
+.indicator {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--md-sys-color-primary);
+
+  transition: width 1s linear;
+}
