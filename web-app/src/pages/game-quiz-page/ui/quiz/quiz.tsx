@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { getWords, type Word } from "@entities/word";
 import { useProfileStore } from "@entities/profile";
+import { getWords, type Word } from "@entities/word";
 import correctSound from "@shared/assets/sounds/correct.wav";
 import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
 import { useStudyInfoModalStore } from "@widgets/study-info-modal";
 
-import { ProgressBar } from "./progress-bar/progress-bar";
+import { ProgressBar } from "../progress-bar/progress-bar";
 
 import s from "./quiz.module.scss";
 

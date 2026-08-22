@@ -63,4 +63,9 @@
   background: var(--md-sys-color-primary);
   border-radius: 10px;
   color: var(--md-sys-color-on-primary);
+
+  &:disabled {
+    background-color: var(--md-sys-color-surface-variant);
+    color: var(--md-sys-color-on-surface-variant);
+  }
 }

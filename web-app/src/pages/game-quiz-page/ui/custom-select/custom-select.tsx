@@ -1,14 +1,19 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
-import s from "./custom-select.module.scss";
+
 import type { Dictionary } from "@shared/api/dictionaryApi";
 import { ChevronDown } from "@shared/ui/icons";
 
-type IProps = {
+import s from "./custom-select.module.scss";
+
+type CustomSelectProps = {
   dictionaries: Dictionary[];
   setDictionaryId: Dispatch<SetStateAction<string>>;
 };
 
-export const CustomSelect = ({ dictionaries, setDictionaryId }: IProps) => {
+export const CustomSelect = ({
+  dictionaries,
+  setDictionaryId,
+}: CustomSelectProps) => {
   const [selectedLanguage, setSelectedLanguage] = useState("Chose language");
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -21,6 +26,7 @@ export const CustomSelect = ({ dictionaries, setDictionaryId }: IProps) => {
         <ChevronDown />
       </div>
 
+      {/* import { cn } from "@shared/lib/styles";  */}
       <div className={`${s.selectVariants} ${isOpen ? s.open : ""}`}>
         {dictionaries.map((dictionary) => (
           <button

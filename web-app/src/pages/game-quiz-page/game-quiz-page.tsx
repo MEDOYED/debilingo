@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-import { useDictionariesStore } from "@widgets/dictionaries-list-section/model/use-dictionaries-store";
 import { getDictionaries } from "@shared/api/dictionaryApi";
+import { useDictionariesStore } from "@widgets/dictionaries-list-section";
 
-import { Quiz } from "./ui/quiz";
 import { CustomSelect } from "./ui/custom-select/custom-select";
+import { Quiz } from "./ui/quiz/quiz";
 
 import s from "./game-quiz-page.module.scss";
 
@@ -14,14 +14,17 @@ export const GameQuizPage = () => {
   const [dictionaryId, setDictionaryId] = useState("");
 
   useEffect(() => {
-    loadDictionaries();
+    const firstLoad = async () => {
+      if (dictionaries.length !== 0) return;
+
+      const data = await getDictionaries();
+
+      setDictionaries(data);
+    };
+
+    firstLoad();
   }, []);
 
-  const loadDictionaries = async () => {
-    const data = await getDictionaries();
-
-    setDictionaries(data);
-  };
   return (
     <main>
       {startGame ? (

@@ -1,8 +1,8 @@
 import s from "./progress-bar.module.scss";
 
-interface ProgressBarProps {
+type ProgressBarProps = {
   progress: number;
-}
+};
 
 export const ProgressBar = ({ progress }: ProgressBarProps) => {
   return (
