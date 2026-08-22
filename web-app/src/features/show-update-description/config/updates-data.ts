@@ -11,14 +11,14 @@ type UpdatesData = {
 export const UPDATES_DATA: UpdatesData[] = [
   {
     version: "0.8.0",
-    date: "19.08.2026",
-    manHours: "9",
+    date: "22.08.2026",
+    manHours: "14",
     features: [
       "Added a Quiz game with a progress bar, dictionary selection, XP rewards for correct answers, answer validation, incorrect answer handling, and sound effects for correct and incorrect answers.",
     ],
     improvements: null,
     fixes: null,
-    contributors: ["Riazanov Daniil"],
+    contributors: ["Riazanov Daniil, Mokriakov Maksym"],
   },
   {
     version: "0.7.9",

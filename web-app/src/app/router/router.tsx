@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { DictionariesPage } from "@pages/dictionaries-page";
 import { DictionaryPage } from "@pages/dictionary-page";
+import { GameQuizPage } from "@pages/game-quiz-page/game-quiz-page";
 import { HabitTrackerPage } from "@pages/habit-tracker-page";
 import { HomePage } from "@pages/home-page";
 import { LeaderboardsPage } from "@pages/leaderboards-page";
@@ -12,7 +13,6 @@ import { TimeTrackerPage } from "@pages/time-tracker-page";
 import { TrainingPage } from "@pages/training-page";
 
 import RootLayout from "../layout/root-layout";
-import { GameQuizPage } from "@pages/game-quiz-page/game-quiz-page";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const token = localStorage.getItem("token");

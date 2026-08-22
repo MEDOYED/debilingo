@@ -30,6 +30,7 @@ export const CustomSelect = ({
       <div className={`${s.selectVariants} ${isOpen ? s.open : ""}`}>
         {dictionaries.map((dictionary) => (
           <button
+            key={dictionary.id}
             onClick={() => {
               setDictionaryId(dictionary.id);
               setSelectedLanguage(dictionary.main_language);

@@ -88,7 +88,7 @@ export const Quiz = ({
     const loadWords = async () => {
       if (!dictionaryId) return;
 
-      const data = await getWords(dictionaryId, 0, 0);
+      const data = await getWords(dictionaryId, 50, 0);
 
       setAllWords(data);
 

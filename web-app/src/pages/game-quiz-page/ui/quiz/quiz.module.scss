@@ -64,7 +64,7 @@
 
 .answers {
   width: 150px;
-  height: 50px;
+  min-height: 50px;
   padding: 0 16px;
 
   border: 1px solid var(--md-sys-color-outline);
