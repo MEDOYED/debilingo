@@ -1,10 +1,10 @@
 import { createDictionary, getDictionaries } from "@shared/api/dictionaryApi";
 import { cn } from "@shared/lib/styles";
 import { FilledButton, TextButton } from "@shared/ui/buttons";
+import { CustomSelect } from "@shared/ui/drop-down-selects";
 
 import { useAddDictionaryStore } from "../../model/use-add-dictionary-store";
 import { useDictionariesStore } from "../../model/use-dictionaries-store";
-import { LanguageField } from "../language-field/language-field";
 
 import c from "../../styles/common.module.scss";
 import s from "./add-dictionary-card.module.scss";
@@ -39,18 +39,23 @@ export const AddDictionaryCard = () => {
     closeCardCreateDictionary();
   };
 
+  const LANGUAGES = ["English", "German", "Polish", "Ukrainian", "Russian"];
+
   return (
     <li className={cn(c.card, c.cardInner, s.cardAddDictionary)}>
-      <LanguageField
-        variant="main"
-        value={mainLanguage}
-        onChange={setMainLanguage}
+      <span>Main language</span>
+      <CustomSelect
+        setMainLanguage={setMainLanguage}
+        languages={LANGUAGES}
+        className={s.mainLanguage}
+        dropdownClassName={s.dropdownClassName}
       />
-
-      <LanguageField
-        variant="secondary"
-        value={secondaryLanguage}
-        onChange={setSecondaryLanguage}
+      <span>Secondary language</span>
+      <CustomSelect
+        setSecondaryLanguage={setSecondaryLanguage}
+        languages={LANGUAGES}
+        className={s.secondaryLanguage}
+        dropdownClassName={s.dropdownClassName}
       />
 
       <div className={s.btnsWrapper}>
@@ -58,14 +63,14 @@ export const AddDictionaryCard = () => {
           as="button"
           onClick={closeCardCreateDictionary}
         >
-          Відмінити
+          Cancel
         </TextButton>
 
         <FilledButton
           as="button"
           onClick={handleCreateDictionary}
         >
-          Створити
+          Create
         </FilledButton>
       </div>
     </li>
