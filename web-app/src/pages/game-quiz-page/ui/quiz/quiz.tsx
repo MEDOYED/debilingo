@@ -124,7 +124,7 @@ export const Quiz = ({
       correctAudio.currentTime = 0;
       correctAudio.play();
       console.log("Правильно!");
-      increaseXpCounter(3);
+      increaseXpCounter(1);
       setTimeout(() => {
         nextQuestion();
       }, 1000);
