@@ -54,6 +54,16 @@
 
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: 10px;
+
+  &.correctCard {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+  }
+
+  &.incorrectCard {
+    background-color: var(--md-sys-color-error-container);
+    color: var(--md-sys-color-on-error-container);
+  }
 }
 
 .buttonsContainer {

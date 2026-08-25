@@ -10,6 +10,19 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
+    version: "0.8.2",
+    date: "25.08.2026",
+    manHours: "0.5",
+    features: null,
+    improvements: [
+      "Colors for correct/incorrect state for main word card in quiz game",
+    ],
+    fixes: [
+      "xp balance for quiz game: now for correct answer: +1px, for incorrect answer: -1px, and for each 10 seconds of game: +1px. For 120 sec game you recive 12xp for time",
+    ],
+    contributors: ["Mokriakov Maksym"],
+  },
+  {
     version: "0.8.0",
     date: "22.08.2026",
     manHours: "14",
