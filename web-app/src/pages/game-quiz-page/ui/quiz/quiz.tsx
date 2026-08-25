@@ -165,7 +165,7 @@ export const Quiz = ({
       </div>
 
       <div
-        className={`${s.card} ${answerCorrect ? s.correct : ""} ${incorrectAnswer ? s.incorrect : ""}`}
+        className={`${s.card} ${answerCorrect ? s.correctCard : ""} ${incorrectAnswer ? s.incorrectCard : ""}`}
       >
         {currentWord.source_word}
       </div>
