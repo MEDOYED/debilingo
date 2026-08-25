@@ -10,6 +10,8 @@ import { ProgressBar } from "../progress-bar/progress-bar";
 
 import s from "./quiz.module.scss";
 
+const secondsTimeGame = 120;
+
 export const Quiz = ({
   dictionaryId,
   setStartGame,
@@ -28,6 +30,7 @@ export const Quiz = ({
     timeCounter,
     increaseTimeCounter,
     increaseXpCounter,
+    decreaseXpCounter,
     xpCounter,
     resetCounters,
   } = useStudyInfoModalStore();
@@ -58,7 +61,7 @@ export const Quiz = ({
 
       increaseTimeCounter(1);
 
-      if (seconds >= 120 || isStopTimer) {
+      if (seconds >= secondsTimeGame || isStopTimer) {
         clearInterval(interval);
 
         const currentXp = useStudyInfoModalStore.getState().xpCounter;
@@ -71,7 +74,10 @@ export const Quiz = ({
         }
 
         try {
-          await updateStudyActivity(currentXp, currentTime);
+          const currectTotalXp = currentXp + secondsTimeGame / 10;
+          console.log("currectTotalXp: ", currectTotalXp);
+
+          await updateStudyActivity(currectTotalXp, currentTime);
           resetCounters();
         } catch (error) {
           console.error("Failed to save activity", error);
@@ -129,6 +135,7 @@ export const Quiz = ({
         nextQuestion();
       }, 1000);
     } else {
+      decreaseXpCounter(1);
       setIncorrectAnswer(answer);
       setAnswerCorrect(true);
       inCorrectAudio.currentTime = 0;
@@ -144,7 +151,7 @@ export const Quiz = ({
   return currentWord ? (
     <div className={s.container}>
       <div className={s.infoContainer}>
-        <ProgressBar progress={(timeCounter / 120) * 100} />
+        <ProgressBar progress={(timeCounter / secondsTimeGame) * 100} />
 
         <div className={s.stopButtonAndXpContainer}>
           <div>{xpCounter} xp</div>
