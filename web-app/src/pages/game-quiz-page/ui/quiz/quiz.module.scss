@@ -66,6 +66,15 @@
   }
 }
 
+.cardText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-wrap: break-word;
+  text-align: center;
+  padding: 5px;
+}
+
 .buttonsContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -76,6 +85,7 @@
   width: 150px;
   min-height: 50px;
   padding: 0 16px;
+  overflow-wrap: break-word;
 
   border: 1px solid var(--md-sys-color-outline);
   border-radius: 12px;
