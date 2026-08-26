@@ -15,7 +15,7 @@ export const NAV_ITEMS: NavigationItem[] = [
     label: "Home page",
   },
   {
-    to: "/games/quiz",
+    to: "/games",
     Icon: Gamepad,
     label: "Quiz game",
   },
