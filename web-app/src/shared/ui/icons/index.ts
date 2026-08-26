@@ -18,3 +18,4 @@ export { Shuffle } from "./shuffle/shuffle";
 export { Trash } from "./trash/trash";
 export { Trophy } from "./trophy";
 export { Unpin } from "./unpin/unpin";
+export { Microphone } from "./microphone/microphone";
