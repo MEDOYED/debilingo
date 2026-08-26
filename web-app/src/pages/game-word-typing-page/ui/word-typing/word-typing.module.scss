@@ -1,0 +1,79 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 20px 150px 20px;
+  min-height: calc(100dvh - 50px);
+}
+
+.infoContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stopButtonAndXpContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.stopButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40px;
+  padding: 10px 24px;
+
+  border: none;
+  border-radius: 20px;
+
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+
+  font: inherit;
+  cursor: pointer;
+
+  transition: background-color 150ms ease;
+}
+
+.card {
+  width: 350px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+  font-size: 30px;
+  font-weight: 600;
+
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 10px;
+
+  &.correctCard {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+  }
+
+  &.incorrectCard {
+    background-color: var(--md-sys-color-error-container);
+    color: var(--md-sys-color-on-error-container);
+  }
+}
+
+.cardText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-wrap: break-word;
+  text-align: center;
+  padding: 5px;
+}
+
+.inputAnswer {
+  width: 200px;
+  background-color: wheat;
+}
