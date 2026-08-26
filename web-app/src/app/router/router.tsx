@@ -5,7 +5,6 @@ import { CatCollectionPage } from "@pages/cat-collection-page";
 import { CatMapPage } from "@pages/cat-map-page";
 import { DictionariesPage } from "@pages/dictionaries-page";
 import { DictionaryPage } from "@pages/dictionary-page";
-import { GameQuizPage } from "@pages/game-quiz-page/game-quiz-page";
 import { HabitTrackerPage } from "@pages/habit-tracker-page";
 import { HomePage } from "@pages/home-page";
 import { LeaderboardsPage } from "@pages/leaderboards-page";
@@ -13,6 +12,9 @@ import { LoginPage } from "@pages/login-page";
 import { MoneyEarning } from "@pages/money-earning";
 import { RegisterPage } from "@pages/register-page";
 import { TimeTrackerPage } from "@pages/time-tracker-page";
+import { GamesPage } from "@pages/games-page";
+import { GameQuizPage } from "@pages/game-quiz-page/game-quiz-page";
+import { GameWordTypingPage } from "@pages/game-word-typing-page";
 import { TrainingPage } from "@pages/training-page";
 
 import RootLayout from "../layout/root-layout";
@@ -45,7 +47,9 @@ export const router = createBrowserRouter([
         index: true,
         element: <HomePage />,
       },
+      { path: "/games", element: <GamesPage /> },
       { path: "/games/quiz", element: <GameQuizPage /> },
+      { path: "/games/word-typing", element: <GameWordTypingPage /> },
       { path: "/dictionaries", element: <DictionariesPage /> },
 
       {
