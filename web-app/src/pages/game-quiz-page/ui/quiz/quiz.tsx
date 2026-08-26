@@ -167,7 +167,7 @@ export const Quiz = ({
       <div
         className={`${s.card} ${answerCorrect ? s.correctCard : ""} ${incorrectAnswer ? s.incorrectCard : ""}`}
       >
-        {currentWord.source_word}
+        <p className={s.cardText}>{currentWord.source_word}</p>
       </div>
       <div className={s.buttonsContainer}>
         {answers.map((answer, index) => (
