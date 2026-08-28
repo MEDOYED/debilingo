@@ -10,6 +10,17 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
+    version: "0.8.3",
+    date: "28.08.2026",
+    manHours: "1",
+    features: null,
+    improvements: null,
+    fixes: [
+      "bug on time tracker page: if user click fast two times on few timers now it is not start second timer and page does not crushed. Only one timer can be started. New timer can be started only if prev timer has beed stoped",
+    ],
+    contributors: ["Mokriakov Maksym"],
+  },
+  {
     version: "0.8.2",
     date: "25.08.2026",
     manHours: "0.5",
