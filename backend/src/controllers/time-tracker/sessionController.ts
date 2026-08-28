@@ -25,6 +25,7 @@ export const getActiveSession = async (req: AuthRequest, res: Response): Promise
     res.json(data || null);
   } catch (err) {
     console.error("getActiveSession unexpected error:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -50,11 +51,25 @@ export const startSession = async (req: AuthRequest, res: Response): Promise<voi
       return;
     }
 
-    await supabase
+    // 2. Якщо вже є активна сесія — коректно завершуємо її
+    const { data: currentActive } = await supabase
       .from("time_sessions")
-      .update({ ended_at: new Date().toISOString() })
+      .select("id, started_at")
       .eq("user_id", userId)
-      .is("ended_at", null);
+      .is("ended_at", null)
+      .maybeSingle();
+
+    if (currentActive) {
+      const now = new Date();
+      const durationSeconds = Math.max(
+        0,
+        Math.floor((now.getTime() - new Date(currentActive.started_at).getTime()) / 1000)
+      );
+      await supabase
+        .from("time_sessions")
+        .update({ ended_at: now.toISOString(), duration_seconds: durationSeconds })
+        .eq("id", currentActive.id);
+    }
 
     const { data, error } = await supabase
       .from("time_sessions")
