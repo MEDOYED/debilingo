@@ -4,6 +4,7 @@ import express, { NextFunction, Request, Response } from "express";
 
 import activityRoutes from "./routes/activity.js";
 import authRoutes from "./routes/authRoutes.js";
+import catRoutes from "./routes/catRoutes.js";
 import dictionaryRoutes from "./routes/dictionaryRoutes.js";
 import leaderboardRoutes from "./routes/leaderboardRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
@@ -31,8 +32,8 @@ app.use(
   })
 );
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
 // Request logging middleware
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -51,6 +52,7 @@ app.get("/health", (req: Request, res: Response) => {
 // API Routes
 app.use("/api/auth", authRoutes); // має бути першим, щоб authMiddleware не застосовувався до цього роуту
 app.use("/api/dictionaries", dictionaryRoutes);
+app.use("/api/cats", catRoutes);
 app.use("/api", activityRoutes);
 app.use("/api", wordRoutes);
 app.use("/api", profileRoutes);

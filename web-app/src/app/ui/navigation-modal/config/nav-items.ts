@@ -30,4 +30,21 @@ export const NAV_ITEMS: NavItem[] = [
     to: "/money-earning",
     text: "Making money",
   },
+  {
+    text: "Cats (Catemon)",
+    dropDownList: [
+      {
+        to: "/cats/map",
+        text: "🗺️ Cat Map",
+      },
+      {
+        to: "/cats/catch",
+        text: "📸 Catch Cat",
+      },
+      {
+        to: "/cats/collection",
+        text: "📚 Collection",
+      },
+    ],
+  },
 ];

@@ -1,5 +1,8 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
+import { CatCatchPage } from "@pages/cat-catch-page";
+import { CatCollectionPage } from "@pages/cat-collection-page";
+import { CatMapPage } from "@pages/cat-map-page";
 import { DictionariesPage } from "@pages/dictionaries-page";
 import { DictionaryPage } from "@pages/dictionary-page";
 import { GameQuizPage } from "@pages/game-quiz-page/game-quiz-page";
@@ -68,6 +71,22 @@ export const router = createBrowserRouter([
       {
         path: "/money-earning",
         element: <MoneyEarning />,
+      },
+      {
+        path: "/cats",
+        element: <CatMapPage />,
+      },
+      {
+        path: "/cats/map",
+        element: <CatMapPage />,
+      },
+      {
+        path: "/cats/catch",
+        element: <CatCatchPage />,
+      },
+      {
+        path: "/cats/collection",
+        element: <CatCollectionPage />,
       },
     ],
   },

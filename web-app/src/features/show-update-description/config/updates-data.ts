@@ -10,6 +10,17 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
+    version: "0.9.0",
+    date: "30.08.2026",
+    manHours: "2",
+    features: [
+      "New aplication for cat catch. New three pages for it: map, collection and catch cat page",
+    ],
+    improvements: null,
+    fixes: null,
+    contributors: ["Mokriakov Maksym"],
+  },
+  {
     version: "0.8.3",
     date: "28.08.2026",
     manHours: "1",

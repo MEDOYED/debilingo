@@ -1,0 +1,206 @@
+.viewfinderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  gap: 16px;
+  position: relative;
+}
+
+.headerBar {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.cameraFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 60vh;
+  border-radius: 28px;
+  overflow: hidden;
+  background-color: var(--md-sys-color-surface-container-lowest);
+  border: 2px solid var(--md-sys-color-outline-variant);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.videoElement {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Targeting Reticle */
+.reticle {
+  position: absolute;
+  inset: 28px;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-color: var(--md-sys-color-primary);
+  border-style: solid;
+}
+
+.topLeft {
+  top: 0;
+  left: 0;
+  border-width: 3px 0 0 3px;
+  border-top-left-radius: 8px;
+}
+
+.topRight {
+  top: 0;
+  right: 0;
+  border-width: 3px 3px 0 0;
+  border-top-right-radius: 8px;
+}
+
+.bottomLeft {
+  bottom: 0;
+  left: 0;
+  border-width: 0 0 3px 3px;
+  border-bottom-left-radius: 8px;
+}
+
+.bottomRight {
+  bottom: 0;
+  right: 0;
+  border-width: 0 3px 3px 0;
+  border-bottom-right-radius: 8px;
+}
+
+.centerCatIcon {
+  font-size: 32px;
+  opacity: 0.35;
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.8));
+}
+
+.fallbackOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: var(--md-sys-color-surface-container-high);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  gap: 16px;
+}
+
+.fallbackText {
+  color: var(--md-sys-color-on-surface);
+  font-size: 14px;
+  margin: 0;
+}
+
+.nativeCameraBtn {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border: none;
+  padding: 12px 20px;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--md-sys-color-primary-fixed);
+    color: var(--md-sys-color-on-primary-fixed);
+    transform: scale(1.03);
+  }
+}
+
+.hiddenInput {
+  display: none;
+}
+
+/* Shutter and Controls */
+.controlsBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  padding: 8px 16px;
+}
+
+.secondaryBtn {
+  background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 20px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+
+  &:hover {
+    background-color: var(--md-sys-color-surface-container-highest);
+    border-color: var(--md-sys-color-outline);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.btnLabel {
+  font-size: 13px;
+}
+
+.shutterButton {
+  background-color: var(--md-sys-color-primary-container);
+  border: 4px solid var(--md-sys-color-primary);
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 20px rgba(130, 211, 224, 0.4);
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+
+  &:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 28px rgba(130, 211, 224, 0.7);
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+}
+
+.shutterInner {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background-color: var(--md-sys-color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shutterCat {
+  font-size: 24px;
+}

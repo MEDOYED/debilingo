@@ -1,0 +1,72 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: calc(100vh - 70px);
+  background-color: var(--md-sys-color-background);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.mapContainer {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px 16px 12px;
+  box-sizing: border-box;
+}
+
+/* Material Design 3 Expressive Extended Floating Action Button */
+.fabButton {
+  position: absolute;
+  bottom: 28px;
+  right: 28px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 14px 22px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(130, 211, 224, 0.4);
+  transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+
+  &:hover {
+    background-color: var(--md-sys-color-primary-fixed);
+    color: var(--md-sys-color-on-primary-fixed);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 24px rgba(130, 211, 224, 0.6);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+.fabIcon {
+  font-size: 20px;
+}
+
+.fabText {
+  letter-spacing: 0.2px;
+}
+
+@media (max-width: 600px) {
+  .mapContainer {
+    padding: 6px 8px 12px 8px;
+  }
+
+  .fabButton {
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 18px;
+    font-size: 14px;
+  }
+}

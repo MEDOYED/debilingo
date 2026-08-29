@@ -1,0 +1,249 @@
+.mapWrapper {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 120px);
+  min-height: 480px;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  background-color: var(--md-sys-color-surface-container-lowest);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.leafletMap {
+  width: 100%;
+  height: 100%;
+  background-color: var(--md-sys-color-surface-container-lowest);
+  z-index: 1;
+}
+
+/* User Location pulsating marker */
+.userLocationDiv {
+  background: transparent;
+  border: none;
+}
+
+.userPulse {
+  width: 24px;
+  height: 24px;
+  background-color: rgba(130, 211, 224, 0.35);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 2s infinite ease-out;
+}
+
+.userDot {
+  width: 12px;
+  height: 12px;
+  background-color: var(--md-sys-color-primary);
+  border: 2px solid var(--md-sys-color-surface);
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(130, 211, 224, 0.7);
+  }
+  70% {
+    transform: scale(1.6);
+    box-shadow: 0 0 0 10px rgba(130, 211, 224, 0);
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(130, 211, 224, 0);
+  }
+}
+
+/* Custom Cat Pin Markers */
+.catMarkerDiv {
+  background: transparent;
+  border: none;
+}
+
+.markerPinWrapper {
+  position: relative;
+  width: 46px;
+  height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+
+  &:hover {
+    transform: translateY(-4px) scale(1.1);
+  }
+}
+
+.markerAvatarContainer {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid var(--md-sys-color-primary);
+  overflow: hidden;
+  background-color: var(--md-sys-color-surface-container);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.markerImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.markerTail {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid var(--md-sys-color-primary);
+  margin-top: -2px;
+}
+
+/* Rarity Accents for Pins */
+.rare .markerAvatarContainer {
+  border-color: var(--md-sys-color-tertiary);
+}
+.rare .markerTail {
+  border-top-color: var(--md-sys-color-tertiary);
+}
+
+.epic .markerAvatarContainer {
+  border-color: var(--md-sys-color-secondary);
+}
+.epic .markerTail {
+  border-top-color: var(--md-sys-color-secondary);
+}
+
+.legendary .markerAvatarContainer {
+  border-color: rgb(255, 215, 0);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+.legendary .markerTail {
+  border-top-color: rgb(255, 215, 0);
+}
+
+/* Popups */
+:global(.leaflet-popup-content-wrapper) {
+  background-color: var(--md-sys-color-surface-container) !important;
+  color: var(--md-sys-color-on-surface) !important;
+  border: 1px solid var(--md-sys-color-outline-variant) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+:global(.leaflet-popup-content) {
+  margin: 0 !important;
+  line-height: 1.4 !important;
+}
+
+:global(.leaflet-popup-tip) {
+  background-color: var(--md-sys-color-surface-container) !important;
+}
+
+.popupCard {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+}
+
+.popupImg {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+}
+
+.popupInfo {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.popupHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.popupTitle {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--md-sys-color-on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rarityBadge {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface-variant);
+
+  &.common {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+  }
+  &.rare {
+    background-color: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container);
+  }
+  &.epic {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+  }
+  &.legendary {
+    background-color: rgb(70, 50, 0);
+    color: rgb(255, 230, 100);
+    border: 1px solid rgb(255, 215, 0);
+  }
+}
+
+.popupBreed {
+  font-size: 12px;
+  color: var(--md-sys-color-on-surface-variant);
+  margin: 0;
+}
+
+.popupDate {
+  font-size: 11px;
+  color: var(--md-sys-color-outline);
+  margin: 0;
+}
+
+.detailsBtn {
+  margin-top: 6px;
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+
+  &:hover {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+  }
+}
