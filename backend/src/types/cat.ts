@@ -1,0 +1,41 @@
+export type CatRarity = "Common" | "Rare" | "Epic" | "Legendary";
+
+export interface Cat {
+  id: string;
+  user_id: string;
+  name: string;
+  image_url: string;
+  latitude: number;
+  longitude: number;
+  location_name?: string | null;
+  breed?: string | null;
+  rarity?: CatRarity;
+  notes?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CreateCatDto {
+  name: string;
+  image_url: string;
+  latitude: number;
+  longitude: number;
+  location_name?: string;
+  breed?: string;
+  rarity?: CatRarity;
+  notes?: string;
+}
+
+export interface UpdateCatDto {
+  name?: string;
+  location_name?: string;
+  breed?: string;
+  rarity?: CatRarity;
+  notes?: string;
+}
+
+export interface CatStats {
+  total: number;
+  rarityBreakdown: Record<CatRarity, number>;
+  latestCatch?: Cat | null;
+}
