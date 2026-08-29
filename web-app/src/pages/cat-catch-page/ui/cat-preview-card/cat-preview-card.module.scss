@@ -1,0 +1,130 @@
+.cardWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  border-radius: 24px;
+  padding: 3px;
+  background-color: var(--md-sys-color-surface-container);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  overflow: hidden;
+
+  &.common {
+    background: linear-gradient(135deg, var(--md-sys-color-secondary-container), var(--md-sys-color-surface-variant));
+  }
+  &.rare {
+    background: linear-gradient(135deg, var(--md-sys-color-tertiary), var(--md-sys-color-primary));
+    box-shadow: 0 12px 32px rgba(186, 198, 234, 0.25);
+  }
+  &.epic {
+    background: linear-gradient(135deg, var(--md-sys-color-primary), rgb(200, 100, 255));
+    box-shadow: 0 12px 36px rgba(130, 211, 224, 0.4);
+  }
+  &.legendary {
+    background: linear-gradient(135deg, rgb(255, 215, 0), rgb(255, 100, 0), rgb(255, 230, 100));
+    box-shadow: 0 12px 40px rgba(255, 215, 0, 0.5);
+    animation: goldShimmer 4s infinite alternate;
+  }
+}
+
+@keyframes goldShimmer {
+  0% {
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.4));
+  }
+  100% {
+    filter: drop-shadow(0 0 24px rgba(255, 215, 0, 0.8));
+  }
+}
+
+.cardInner {
+  background-color: var(--md-sys-color-surface-container);
+  border-radius: 21px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.catBadge {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.rarityBadge {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 9999px;
+
+  &.common {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+  }
+  &.rare {
+    background-color: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container);
+  }
+  &.epic {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+  }
+  &.legendary {
+    background-color: rgb(80, 55, 0);
+    color: rgb(255, 225, 100);
+    border: 1px solid rgb(255, 215, 0);
+  }
+}
+
+.imageContainer {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--md-sys-color-surface-container-lowest);
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.catPhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.catTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  margin: 0;
+}
+
+.breedSubtitle {
+  font-size: 12px;
+  color: var(--md-sys-color-primary);
+  font-weight: 600;
+}
+
+.locationChip {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--md-sys-color-on-surface-variant);
+  background-color: var(--md-sys-color-surface-container-low);
+  padding: 4px 8px;
+  border-radius: 8px;
+  width: fit-content;
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
