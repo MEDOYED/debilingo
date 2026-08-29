@@ -37,11 +37,11 @@
 
 .selectVariants {
   display: flex;
-  width: 250px;
+  width: 100%;
   flex-direction: column;
   position: absolute;
   top: calc(100% + 2px);
-  left: 0;
+  left: -1px;
   padding: 0 3px;
   box-shadow:
     0 1px 3px rgb(0 0 0 / 30%),
@@ -64,6 +64,7 @@
     visibility: visible;
     transform: translateY(0) scaleY(1);
   }
+  z-index: 10;
 }
 
 .dictionariesVariant {

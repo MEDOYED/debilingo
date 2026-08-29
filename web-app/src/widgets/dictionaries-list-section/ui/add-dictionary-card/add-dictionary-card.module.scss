@@ -1,4 +1,5 @@
 @use "../../styles//common.module.scss" as *;
+@use "@shared/styles/tokens/colors/dark-blue";
 
 .cardAddDictionary {
   gap: 5px;
@@ -10,4 +11,20 @@
 .btnsWrapper {
   display: flex;
   justify-content: space-between;
+}
+
+.mainLanguage {
+  width: 235px !important;
+  min-height: 31px !important;
+}
+
+.dropdownClassName {
+  width: 235px !important;
+  border: 1px solid var(--md-sys-color-surface) !important;
+}
+
+.secondaryLanguage {
+  width: 235px !important;
+  min-height: 31px !important;
+  z-index: 0;
 }
