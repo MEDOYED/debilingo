@@ -29,7 +29,7 @@ import { ChevronDown } from "@shared/ui/icons";
 
 import s from "./dictionary-page.module.scss";
 
-const LOAD_WORDS = 20;
+import { LOAD_WORDS } from "./constants";
 
 export const DictionaryPage = () => {
   const { dictId } = useParams();
@@ -64,6 +64,7 @@ export const DictionaryPage = () => {
       if (isLoadingRef.current) return;
 
       isLoadingRef.current = true;
+      //FIXME: rewrite the logic, as it may cause unnecessary re-renders and side effects
       setOffset(0);
       setHasMore(true);
       setWords([]);
@@ -71,6 +72,7 @@ export const DictionaryPage = () => {
       const sort = isShuffled ? "shuffle" : undefined;
 
       const data = await getWords(dictId, LOAD_WORDS, 0, sort);
+      //FIXME: rewrite the logic, as it may cause unnecessary re-renders and side effects
       setWords(data);
       setHasMore(data.length >= LOAD_WORDS);
       setOffset(data.length);
