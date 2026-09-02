@@ -4,6 +4,7 @@ import type { Dictionary } from "@shared/api/dictionaryApi";
 import { ChevronDown } from "@shared/ui/icons";
 
 import s from "./custom-select.module.scss";
+import { cn } from "@shared/lib/styles";
 
 type CustomSelectProps = {
   dictionaries: Dictionary[];
@@ -27,7 +28,7 @@ export const CustomSelect = ({
       </div>
 
       {/* import { cn } from "@shared/lib/styles";  */}
-      <div className={`${s.selectVariants} ${isOpen ? s.open : ""}`}>
+      <div className={cn(s.selectVariants, isOpen ? s.open : "")}>
         {dictionaries.map((dictionary) => (
           <button
             key={dictionary.id}

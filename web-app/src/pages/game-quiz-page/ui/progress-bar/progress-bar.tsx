@@ -1,10 +1,11 @@
+import { memo } from "react";
 import s from "./progress-bar.module.scss";
 
 type ProgressBarProps = {
   progress: number;
 };
 
-export const ProgressBar = ({ progress }: ProgressBarProps) => {
+const ProgressBarComponent = ({ progress }: ProgressBarProps) => {
   return (
     <div className={s.track}>
       <div
@@ -14,3 +15,5 @@ export const ProgressBar = ({ progress }: ProgressBarProps) => {
     </div>
   );
 };
+
+export const ProgressBar = memo(ProgressBarComponent);

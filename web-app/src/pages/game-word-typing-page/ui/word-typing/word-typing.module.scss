@@ -1,5 +1,3 @@
-@use "@shared/styles/tokens/colors/dark-blue";
-
 .container {
   display: flex;
   flex-direction: column;
@@ -42,7 +40,10 @@
 }
 
 .card {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
   width: 350px;
   height: 250px;
   display: flex;
@@ -65,6 +66,11 @@
     background-color: var(--md-sys-color-error-container);
     color: var(--md-sys-color-on-error-container);
   }
+
+  @media (max-width: 380px) {
+    width: 300px;
+    height: 250px;
+  }
 }
 
 .cardText {
@@ -76,46 +82,28 @@
   padding: 5px;
 }
 
-.speaker {
-  position: absolute;
-  right: 16px;
-  bottom: 16px;
+.inputAnswer {
+  width: 200px;
+  background-color: wheat;
 }
 
-.buttonsContainer {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 45px;
-}
+.nextOrCheckBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-.answers {
-  width: 150px;
-  min-height: 50px;
-  padding: 0 16px;
-  overflow-wrap: break-word;
-  padding: 10px;
+  min-width: 120px;
+  min-height: 48px;
+  padding: 0 24px;
 
-  border: 1px solid var(--md-sys-color-outline);
-  border-radius: 12px;
+  border: none;
+  border-radius: 24px;
 
-  background: var(--md-sys-color-surface-container);
-  color: var(--md-sys-color-on-surface);
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
 
   font: inherit;
+  font-weight: 600;
+
   cursor: pointer;
-
-  transition:
-    background-color 150ms ease,
-    border-color 150ms ease,
-    transform 100ms ease;
-}
-
-.correct {
-  background: var(--md-sys-color-surface-tint);
-  color: var(--md-sys-color-on-primary);
-}
-
-.incorrect {
-  background: var(--md-sys-color-error-container);
-  color: var(--md-sys-color-on-error-container);
 }

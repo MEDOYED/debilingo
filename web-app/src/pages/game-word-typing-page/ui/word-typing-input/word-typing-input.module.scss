@@ -1,0 +1,90 @@
+@use "@shared/styles/tokens/colors/dark-blue";
+
+.wrapper {
+  width: 100%;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-height: 56px;
+
+  padding: 0 8px 0 16px;
+
+  background-color: var(--md-sys-color-surface-container-high);
+
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 16px;
+
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.inputWrapper:focus-within {
+  border-color: var(--md-sys-color-primary);
+  box-shadow: 0 0 0 1px var(--md-sys-color-primary);
+}
+
+.inputWrapper input {
+  flex: 1;
+
+  min-width: 0;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: var(--md-sys-color-on-surface);
+
+  font: inherit;
+  font-size: 16px;
+}
+
+.inputWrapper input::placeholder {
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.recordBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background-color: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+
+  cursor: pointer;
+
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+
+  &:disabled {
+    opacity: 0.38;
+    cursor: default;
+  }
+}
+
+.listening {
+  background-color: var(--md-sys-color-inverse-primary);
+}
+
+.error {
+  margin: 8px 16px 0;
+
+  color: var(--md-sys-color-error);
+
+  font-size: 14px;
+}

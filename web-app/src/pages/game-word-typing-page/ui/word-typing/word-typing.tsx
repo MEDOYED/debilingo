@@ -2,19 +2,19 @@ import { useEffect, useState } from "react";
 
 import { useProfileStore } from "@entities/profile";
 import { getWords, type Word } from "@entities/word";
+import { ProgressBar } from "@pages/game-quiz-page/ui/progress-bar/progress-bar";
 import correctSound from "@shared/assets/sounds/correct.wav";
 import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
+import { cn } from "@shared/lib/styles";
 import { useStudyInfoModalStore } from "@widgets/study-info-modal";
 
-import { ProgressBar } from "../progress-bar/progress-bar";
+import { WordTypingInput } from "../word-typing-input";
 
-import s from "./quiz.module.scss";
-import { useVoicesStore } from "@shared/stores/use-voices-store";
-import { SpeakerWave } from "@shared/ui/icons";
+import s from "./word-typing.module.scss";
 
 const secondsTimeGame = 120;
 
-export const Quiz = ({
+export const WordTyping = ({
   dictionaryId,
   setStartGame,
 }: {
@@ -23,35 +23,22 @@ export const Quiz = ({
 }) => {
   const [allWords, setAllWords] = useState<Word[]>([]);
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
-  const [answers, setAnswers] = useState<string[]>([]);
   const [answerCorrect, setAnswerCorrect] = useState(false);
-  const [incorrectAnswer, setIncorrectAnswer] = useState<string | null>(null);
+  const [answer, setAnswer] = useState<string>("");
+  const [incorrectAnswer, setIncorrectAnswer] = useState<boolean>(false);
   const [isStopTimer, setIsStopTimer] = useState(false);
+
+  const correctAudio = new Audio(correctSound);
+  const inCorrectAudio = new Audio(inCorrectSound);
 
   const {
     timeCounter,
     increaseTimeCounter,
     increaseXpCounter,
-    decreaseXpCounter,
     xpCounter,
     resetCounters,
   } = useStudyInfoModalStore();
   const { updateStudyActivity } = useProfileStore();
-
-  const correctAudio = new Audio(correctSound);
-  const inCorrectAudio = new Audio(inCorrectSound);
-
-  const generateAnswers = (words: Word[], currentWord: Word): string[] => {
-    const correctAnswer = currentWord.translations[0].text;
-
-    const wrongAnswers = words
-      .filter((word) => word.id !== currentWord.id)
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 3)
-      .map((word) => word.translations[0].text);
-
-    return [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
-  };
 
   const currentWordReady = currentWord ? true : false;
   useEffect(() => {
@@ -106,7 +93,6 @@ export const Quiz = ({
       const randomWord = data[randomIndex];
 
       setCurrentWord(randomWord);
-      setAnswers(generateAnswers(data, randomWord));
     };
 
     loadWords();
@@ -118,57 +104,45 @@ export const Quiz = ({
     const randomWord = allWords[randomIndex];
 
     setCurrentWord(randomWord);
-    setAnswers(generateAnswers(allWords, randomWord));
+    setAnswer(""); //  ?
   };
 
-  const correctAnswer = currentWord?.translations[0].text;
-
-  const { voices } = useVoicesStore();
-
-  const speak = (text: string, lang: string = "en-US") => {
-    speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    utterance.lang = lang;
-    utterance.rate = 1;
-    utterance.pitch = 1;
-
-    const samanthaVoice = voices.find((voice) => {
-      const splitedVoiceURI = voice.voiceURI.split(".");
-      const splitedVoiceURILength = splitedVoiceURI.length;
-      const voiceName = splitedVoiceURI[splitedVoiceURILength - 1];
-      const searchedVoice = voiceName === "Samantha";
-
-      return searchedVoice;
-    });
-    if (samanthaVoice) utterance.voice = samanthaVoice;
-
-    speechSynthesis.speak(utterance);
-  };
+  const correctAnswer = currentWord?.source_word;
 
   const handleAnswer = (answer: string) => {
     if (!currentWord) return;
 
-    if (answer === correctAnswer) {
+    if (!answer) {
+      setIncorrectAnswer(true);
+
+      setTimeout(() => {
+        nextQuestion();
+        setIncorrectAnswer(false);
+      }, 2000);
+
+      return;
+    }
+
+    if (
+      answer.toLocaleLowerCase().trim() === correctAnswer?.toLocaleLowerCase()
+    ) {
       setAnswerCorrect(true);
 
       correctAudio.currentTime = 0;
       correctAudio.play();
       console.log("Правильно!");
-      increaseXpCounter(1);
+      increaseXpCounter(3);
       setTimeout(() => {
         nextQuestion();
       }, 1000);
     } else {
-      decreaseXpCounter(1);
-      setIncorrectAnswer(answer);
-      setAnswerCorrect(true);
+      setIncorrectAnswer(true);
+      //   setAnswerCorrect(true);
       inCorrectAudio.currentTime = 0;
       inCorrectAudio.play();
 
       setTimeout(() => {
-        setIncorrectAnswer(null);
+        setIncorrectAnswer(false);
         nextQuestion();
       }, 2000);
     }
@@ -191,31 +165,32 @@ export const Quiz = ({
       </div>
 
       <div
-        className={`${s.card} ${answerCorrect ? s.correctCard : ""} ${incorrectAnswer ? s.incorrectCard : ""}`}
+        className={cn(
+          s.card,
+          answerCorrect ? s.correctCard : "",
+          incorrectAnswer ? s.incorrectCard : ""
+        )}
       >
-        <p className={s.cardText}>{currentWord.source_word}</p>
-        <button
-          type="button"
-          className={s.speaker}
-          onClick={() => speak(currentWord.source_word)}
-        >
-          <SpeakerWave />
-        </button>
+        <p className={s.cardText}>{currentWord?.translations[0].text}</p>
+        <p>{incorrectAnswer && currentWord.source_word}</p>
       </div>
 
-      <div className={s.buttonsContainer}>
-        {answers.map((answer, index) => (
-          <button
-            disabled={answerCorrect}
-            key={index}
-            className={`${s.answers} ${answerCorrect && answer === correctAnswer ? s.correct : ""}
-               ${incorrectAnswer === answer ? `${s.incorrect}` : ""}`}
-            onClick={() => handleAnswer(answer)}
-          >
-            {answer}
-          </button>
-        ))}
-      </div>
+      <WordTypingInput
+        answer={answer}
+        setAnswer={setAnswer}
+      />
+
+      <button
+        type="button"
+        className={s.nextOrCheckBtn}
+        onClick={() => {
+          handleAnswer(answer);
+          console.log(answer);
+          console.log(correctAnswer);
+        }}
+      >
+        {!answer ? "Next" : "Check"}
+      </button>
     </div>
   ) : (
     <div>loading...</div>
