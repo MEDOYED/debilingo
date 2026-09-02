@@ -10,6 +10,17 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
+    version: "0.10.0",
+    date: "02.09.2026",
+    manHours: "10",
+    features: [
+      "Added Word-typing game, added games page with two games Quiz and Word-typing, modified card in Quiz game and add speaker on word in card... ",
+    ],
+    improvements: null,
+    fixes: null,
+    contributors: ["Daniil Riazanov"],
+  },
+  {
     version: "0.9.0",
     date: "30.08.2026",
     manHours: "2",
