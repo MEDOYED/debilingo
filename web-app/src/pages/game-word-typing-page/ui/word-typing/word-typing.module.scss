@@ -40,6 +40,10 @@
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
   width: 350px;
   height: 250px;
   display: flex;

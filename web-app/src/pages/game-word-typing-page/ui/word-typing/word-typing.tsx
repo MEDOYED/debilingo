@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { cn } from "@shared/lib/styles";
+import { useProfileStore } from "@entities/profile";
 import { getWords, type Word } from "@entities/word";
+import { ProgressBar } from "@pages/game-quiz-page/ui/progress-bar/progress-bar";
 import correctSound from "@shared/assets/sounds/correct.wav";
 import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
+import { cn } from "@shared/lib/styles";
 import { useStudyInfoModalStore } from "@widgets/study-info-modal";
-import { ProgressBar } from "@pages/game-quiz-page/ui/progress-bar/progress-bar";
-import { useProfileStore } from "@entities/profile";
 
 import { WordTypingInput } from "../word-typing-input";
 
@@ -113,7 +113,14 @@ export const WordTyping = ({
     if (!currentWord) return;
 
     if (!answer) {
-      return nextQuestion();
+      setIncorrectAnswer(true);
+
+      setTimeout(() => {
+        nextQuestion();
+        setIncorrectAnswer(false);
+      }, 2000);
+
+      return;
     }
 
     if (
@@ -165,6 +172,7 @@ export const WordTyping = ({
         )}
       >
         <p className={s.cardText}>{currentWord?.translations[0].text}</p>
+        <p>{incorrectAnswer && currentWord.source_word}</p>
       </div>
 
       <WordTypingInput
