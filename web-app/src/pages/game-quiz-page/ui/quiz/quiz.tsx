@@ -9,6 +9,8 @@ import { useStudyInfoModalStore } from "@widgets/study-info-modal";
 import { ProgressBar } from "../progress-bar/progress-bar";
 
 import s from "./quiz.module.scss";
+import { useVoicesStore } from "@shared/stores/use-voices-store";
+import { SpeakerWave } from "@shared/ui/icons";
 
 const secondsTimeGame = 120;
 
@@ -121,6 +123,30 @@ export const Quiz = ({
 
   const correctAnswer = currentWord?.translations[0].text;
 
+  const { voices } = useVoicesStore();
+
+  const speak = (text: string, lang: string = "en-US") => {
+    speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    utterance.lang = lang;
+    utterance.rate = 1;
+    utterance.pitch = 1;
+
+    const samanthaVoice = voices.find((voice) => {
+      const splitedVoiceURI = voice.voiceURI.split(".");
+      const splitedVoiceURILength = splitedVoiceURI.length;
+      const voiceName = splitedVoiceURI[splitedVoiceURILength - 1];
+      const searchedVoice = voiceName === "Samantha";
+
+      return searchedVoice;
+    });
+    if (samanthaVoice) utterance.voice = samanthaVoice;
+
+    speechSynthesis.speak(utterance);
+  };
+
   const handleAnswer = (answer: string) => {
     if (!currentWord) return;
 
@@ -168,7 +194,15 @@ export const Quiz = ({
         className={`${s.card} ${answerCorrect ? s.correctCard : ""} ${incorrectAnswer ? s.incorrectCard : ""}`}
       >
         <p className={s.cardText}>{currentWord.source_word}</p>
+        <button
+          type="button"
+          className={s.speaker}
+          onClick={() => speak(currentWord.source_word)}
+        >
+          <SpeakerWave />
+        </button>
       </div>
+
       <div className={s.buttonsContainer}>
         {answers.map((answer, index) => (
           <button
