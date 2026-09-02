@@ -1,8 +1,9 @@
 import { memo, useEffect, useRef, useState } from "react";
 
-import s from "./word-typing-input.module.scss";
 import { cn } from "@shared/lib/styles";
 import { Microphone } from "@shared/ui/icons";
+
+import s from "./word-typing-input.module.scss";
 
 type SpeechRecognitionType = {
   lang: string;
