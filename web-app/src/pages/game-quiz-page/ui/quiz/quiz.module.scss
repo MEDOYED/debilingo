@@ -42,6 +42,7 @@
 }
 
 .card {
+  position: relative;
   width: 350px;
   height: 250px;
   display: flex;
@@ -75,6 +76,12 @@
   padding: 5px;
 }
 
+.speaker {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+}
+
 .buttonsContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -86,6 +93,7 @@
   min-height: 50px;
   padding: 0 16px;
   overflow-wrap: break-word;
+  padding: 10px;
 
   border: 1px solid var(--md-sys-color-outline);
   border-radius: 12px;
