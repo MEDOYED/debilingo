@@ -1,6 +1,10 @@
 import type { IconProps } from "@shared/types";
 
-export const SpeakerWave = ({ className }: IconProps) => {
+type SpeakerWaveProps = {
+  className?: IconProps["className"];
+};
+
+export const SpeakerWave = ({ className }: SpeakerWaveProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
