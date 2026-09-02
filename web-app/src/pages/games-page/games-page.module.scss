@@ -30,6 +30,16 @@
   border-radius: 10px;
   overflow: hidden;
   gap: 10px;
+
+  @media (max-width: 380px) {
+    width: 320px;
+    height: 310px;
+  }
+
+  @media (max-width: 325px) {
+    width: 280px;
+    height: 325px;
+  }
 }
 
 .imageWrapper {
