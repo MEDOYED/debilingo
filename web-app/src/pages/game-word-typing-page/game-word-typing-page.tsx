@@ -1,10 +1,13 @@
-// import { ProgressBar } from "@pages/game-quiz-page/ui/progress-bar/progress-bar";
 import { useEffect, useState } from "react";
-import s from "./game-word-typing-page.module.scss";
+
 import { useDictionariesStore } from "@widgets/dictionaries-list-section";
 import { getDictionaries } from "@shared/api/dictionaryApi";
-import { WordTyping } from "./ui/word-typing/word-typing";
 import { CustomSelect } from "@pages/game-quiz-page/ui/custom-select/custom-select";
+
+import { WordTyping } from "./ui/word-typing";
+
+import s from "./game-word-typing-page.module.scss";
+
 export const GameWordTypingPage = () => {
   const [startGame, setStartGame] = useState(false);
   const { dictionaries, setDictionaries } = useDictionariesStore();
