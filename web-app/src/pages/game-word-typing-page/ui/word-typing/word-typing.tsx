@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import s from "./word-typing.module.scss";
-import { getWords, type Word } from "@entities/word";
-import { cn } from "@shared/lib/styles";
 
+import { cn } from "@shared/lib/styles";
+import { getWords, type Word } from "@entities/word";
 import correctSound from "@shared/assets/sounds/correct.wav";
 import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
 import { useStudyInfoModalStore } from "@widgets/study-info-modal";
 import { ProgressBar } from "@pages/game-quiz-page/ui/progress-bar/progress-bar";
 import { useProfileStore } from "@entities/profile";
+
 import { WordTypingInput } from "../word-typing-input";
+
+import s from "./word-typing.module.scss";
 
 const secondsTimeGame = 120;
 
@@ -110,6 +112,10 @@ export const WordTyping = ({
   const handleAnswer = (answer: string) => {
     if (!currentWord) return;
 
+    if (!answer) {
+      return nextQuestion();
+    }
+
     if (
       answer.toLocaleLowerCase().trim() === correctAnswer?.toLocaleLowerCase()
     ) {
@@ -168,13 +174,14 @@ export const WordTyping = ({
 
       <button
         type="button"
+        className={s.nextOrCheckBtn}
         onClick={() => {
           handleAnswer(answer);
           console.log(answer);
           console.log(correctAnswer);
         }}
       >
-        check
+        {!answer ? "Next" : "Check"}
       </button>
     </div>
   ) : (
