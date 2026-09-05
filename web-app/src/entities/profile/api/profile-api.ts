@@ -2,8 +2,9 @@ import apiClient from "@shared/api/apiClient";
 
 import type {
   Profile,
-  StudyResponse,
+  SaveStudyActivityResponse,
   UpdateUsernameResponse,
+  SaveStudyActivityRequest,
 } from "../model/types";
 
 export const getMyProfile = async (): Promise<Profile> => {
@@ -19,10 +20,10 @@ export const updateMyUsername = async (
   return response.data;
 };
 
-export const studyActivity = async (
-  xpDelta: number,
-  timeDelta: number
-): Promise<StudyResponse> => {
+export const saveStudyActivity = async ({
+  xpDelta,
+  timeDelta,
+}: SaveStudyActivityRequest): Promise<SaveStudyActivityResponse> => {
   const response = await apiClient.post("/profile/study", {
     xpDelta,
     timeDelta,

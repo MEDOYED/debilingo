@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { getMyProfile, studyActivity } from "../api/profile-api";
+import { getMyProfile, saveStudyActivity } from "../api/profile-api";
 
 import type { Profile } from "./types";
 
@@ -11,6 +11,14 @@ type ProfileStore = {
 
   setProfileData: (newProfileData: Profile) => void;
   loadProfile: () => Promise<void>;
+
+  /**
+   * * ⚠️ **DEPRECATED**
+   * Use `useUpdateStudyActivity` hook from `@entities/profile` instead.
+   * This method will be removed in future versions.
+   *
+   * @deprecated
+   */
   updateStudyActivity: (xpDelta: number, timeDelta: number) => Promise<void>;
 };
 
@@ -40,7 +48,7 @@ export const useProfileStore = create<ProfileStore>((set, get) => ({
     set({ status: "loadingStudyActivity", error: null });
 
     try {
-      const data = await studyActivity(xpDelta, timeDelta);
+      const data = await saveStudyActivity({ xpDelta, timeDelta });
       const { profileData } = get();
 
       if (!profileData) {

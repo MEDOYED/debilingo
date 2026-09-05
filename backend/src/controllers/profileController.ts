@@ -126,7 +126,7 @@ export const updateMyUsername = async (req: AuthRequest, res: Response): Promise
   }
 };
 
-export const studyActivity = async (req: AuthRequest, res: Response): Promise<void> => {
+export const saveStudyActivity = async (req: AuthRequest, res: Response): Promise<void> => {
   const userId = req.userId;
 
   if (!userId) {
