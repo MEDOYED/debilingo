@@ -146,6 +146,11 @@ export const saveStudyActivity = async (req: AuthRequest, res: Response): Promis
     return;
   }
 
+  if (xpDelta <= 0) {
+    res.status(400).json({ success: false, dev_message: "xpDelta must be 1 or more" });
+    return;
+  }
+
   if (typeof timeDelta !== "number") {
     res
       .status(400)
@@ -153,8 +158,19 @@ export const saveStudyActivity = async (req: AuthRequest, res: Response): Promis
     return;
   }
 
-  if (xpDelta <= 0) {
-    res.status(400).json({ success: false, dev_message: "xpDelta must be 1 or more" });
+  if (!Number.isInteger(timeDelta)) {
+    res.status(400).json({
+      success: false,
+      dev_message: `This value (timeDelta) should be a integer number! (1, 2, 3 but not 1.2 or 10.5). But timeDelta now ${timeDelta}`,
+    });
+    return;
+  }
+
+  if (!Number.isInteger(xpDelta)) {
+    res.status(400).json({
+      success: false,
+      dev_message: `This value (xpDelta) should be a integer number! (1, 2, 3 but not 1.2 or 10.5). But xpDelta now ${xpDelta}`,
+    });
     return;
   }
 

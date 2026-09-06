@@ -77,7 +77,7 @@ export const Quiz = ({
         }
 
         try {
-          const currectTotalXp = currentXp + secondsTimeGame / 10;
+          const currectTotalXp = currentXp + Math.trunc(currentTime / 10);
           console.log("currectTotalXp: ", currectTotalXp);
 
           await updateStudyActivity({

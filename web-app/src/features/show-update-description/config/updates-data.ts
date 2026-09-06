@@ -10,6 +10,17 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
+    version: "0.10.1",
+    date: "06.09.2026",
+    manHours: "8",
+    features: null,
+    improvements: null,
+    fixes: [
+      "bug: when user get 1 xp for correct selection word and click on stop button he recieve 13xp. 12 xp for game time. But if he play 10 seconds only he must get only 1px for game time. Now it works correct and user get 1px for each 10s of his game",
+    ],
+    contributors: ["Maksym Mokriakov"],
+  },
+  {
     version: "0.10.0",
     date: "02.09.2026",
     manHours: "10",
