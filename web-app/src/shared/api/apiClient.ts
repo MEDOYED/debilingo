@@ -37,24 +37,8 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-// response handling  (обробка відповіді)
-
 apiClient.interceptors.response.use(
-  (response) => {
-    const body = response.data as ApiResponseEnvelope | undefined;
-
-    if (
-      body &&
-      typeof body === "object" &&
-      "data" in body &&
-      body.data !== undefined
-    ) {
-      response.data = body.data;
-    }
-
-    return response;
-  },
-
+  (response) => response,
   (error) => {
     const isLoginRequest = error.config?.url?.includes("/auth/login");
 

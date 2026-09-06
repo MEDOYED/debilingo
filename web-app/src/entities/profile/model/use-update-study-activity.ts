@@ -27,7 +27,7 @@ export const useUpdateStudyActivity = () => {
       try {
         setIsLoading(true);
 
-        const data = await saveStudyActivity({ timeDelta, xpDelta });
+        const response = await saveStudyActivity({ timeDelta, xpDelta });
 
         const currentProfile = useProfileStore.getState().profileData;
 
@@ -40,21 +40,28 @@ export const useUpdateStudyActivity = () => {
           });
         }
 
+        if (!response.data) {
+          throw new ApiError({
+            devMessage: "Failed to get profileData from response.data",
+            clientMessage: "Failed to update study activity",
+          });
+        }
+
         const newProfileData = {
           ...currentProfile,
-          totalXp: data.totalXp,
-          lastStudyDate: data.lastStudyDate,
-          dailyStreak: data.dailyStreak,
-          totalStudyTimeSeconds: data.totalStudyTimeSeconds,
+          totalXp: response.data.totalXp,
+          lastStudyDate: response.data.lastStudyDate,
+          dailyStreak: response.data.dailyStreak,
+          totalStudyTimeSeconds: response.data.totalStudyTimeSeconds,
         };
 
         setProfileData(newProfileData);
 
         addDevSuccessMessage(
-          `Successfull update study activity. \n Add +${xpDelta}xp and +${timeDelta}seconds. \n New profile data: ${data.totalXp}XP and ${data.totalStudyTimeSeconds}seconds`
+          `Successfull update study activity. \n Add +${xpDelta}xp and +${timeDelta}seconds. \n New profile data: ${response.data.totalXp}XP and ${response.data.totalStudyTimeSeconds}seconds`
         );
 
-        return data;
+        return response;
       } catch (error) {
         if (error instanceof ApiError) {
           if (error.devMessage) {

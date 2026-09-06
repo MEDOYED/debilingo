@@ -1,5 +1,7 @@
 import { create } from "zustand";
 
+import { ApiError } from "@shared/api";
+
 import { getMyProfile, saveStudyActivity } from "../api/profile-api";
 
 import type { Profile } from "./types";
@@ -48,7 +50,7 @@ export const useProfileStore = create<ProfileStore>((set, get) => ({
     set({ status: "loadingStudyActivity", error: null });
 
     try {
-      const data = await saveStudyActivity({ xpDelta, timeDelta });
+      const response = await saveStudyActivity({ xpDelta, timeDelta });
       const { profileData } = get();
 
       if (!profileData) {
@@ -61,18 +63,22 @@ export const useProfileStore = create<ProfileStore>((set, get) => ({
         return;
       }
 
+      if (!response.data) {
+        throw new ApiError({
+          devMessage: "Failed to get profileData from response.data",
+          clientMessage: "Failed to update study activity",
+        });
+      }
+
       const newProfileData = {
         ...profileData,
-        totalXp: data.totalXp,
-        lastStudyDate: data.lastStudyDate,
-        dailyStreak: data.dailyStreak,
-        totalStudyTimeSeconds: data.totalStudyTimeSeconds,
+        totalXp: response.data.totalXp,
+        lastStudyDate: response.data.lastStudyDate,
+        dailyStreak: response.data.dailyStreak,
+        totalStudyTimeSeconds: response.data.totalStudyTimeSeconds,
       };
 
       set({ profileData: newProfileData, status: "loaded", error: null });
-
-      // const { resetCounters } = useStudyInfoModalStore.getState();
-      // resetCounters();
     } catch (errorCatched) {
       set({ status: "error", error: "Failed to load profile" });
     }

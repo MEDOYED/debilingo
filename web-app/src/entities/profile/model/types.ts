@@ -14,10 +14,15 @@ export type UpdateUsernameResponse = {
 };
 
 export type SaveStudyActivityResponse = {
-  dailyStreak: Profile["dailyStreak"];
-  lastStudyDate: Profile["lastStudyDate"];
-  totalXp: Profile["totalXp"];
-  totalStudyTimeSeconds: Profile["totalStudyTimeSeconds"];
+  success: boolean;
+  data?: {
+    dailyStreak: Profile["dailyStreak"];
+    lastStudyDate: Profile["lastStudyDate"];
+    totalXp: Profile["totalXp"];
+    totalStudyTimeSeconds: Profile["totalStudyTimeSeconds"];
+  };
+  dev_message?: string;
+  client_message?: string;
 };
 
 export type SaveStudyActivityRequest = {
