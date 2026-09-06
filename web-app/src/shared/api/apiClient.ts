@@ -1,4 +1,19 @@
 import axios from "axios";
+import { ApiError } from "./api-error";
+
+export type ApiResponseEnvelope<T = unknown> = {
+  success?: boolean;
+  data?: T;
+  client_message?: string;
+  dev_message?: string;
+
+  /**
+   * Use client_message or dev_message with success: false to display error message. error: string is deprecated and will be remove in future updates after all backend refactor to new response standart
+   *
+   * @deprecated
+   */
+  error?: string;
+};
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3001/api";
@@ -22,18 +37,46 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-// Обробка помилок
+// response handling  (обробка відповіді)
+
 apiClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    const body = response.data as ApiResponseEnvelope | undefined;
+
+    if (
+      body &&
+      typeof body === "object" &&
+      "data" in body &&
+      body.data !== undefined
+    ) {
+      response.data = body.data;
+    }
+
+    return response;
+  },
+
   (error) => {
     const isLoginRequest = error.config?.url?.includes("/auth/login");
 
     if (error.response?.status === 401 && !isLoginRequest) {
       localStorage.removeItem("token");
       window.location.href = "/login";
+      return Promise.reject(error);
     }
 
-    return Promise.reject(error);
+    const errorData = error.response?.data as ApiResponseEnvelope | undefined;
+
+    const clientMessage = errorData?.client_message;
+    const devMessage =
+      errorData?.dev_message || errorData?.error || error.message;
+
+    return Promise.reject(
+      new ApiError({
+        clientMessage: clientMessage,
+        devMessage: devMessage,
+        status: error.response?.status,
+      })
+    );
   }
 );
 

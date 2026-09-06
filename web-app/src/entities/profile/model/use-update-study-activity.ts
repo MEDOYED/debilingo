@@ -1,19 +1,29 @@
 import { useState, useCallback } from "react";
 
 import { useToastStore } from "@shared/modules/toast";
+import { ApiError } from "@shared/api";
 
 import { saveStudyActivity } from "../api/profile-api";
 import { useProfileStore } from "./profile-store";
 import type { SaveStudyActivityRequest } from "./types";
 
+interface UpdateStudyActivityArgs extends SaveStudyActivityRequest {
+  showClientToast?: boolean;
+}
+
 export const useUpdateStudyActivity = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { setProfileData } = useProfileStore();
-  const { addErrorMessage, addDevErrorMessage } = useToastStore();
+  const { addErrorMessage, addDevErrorMessage, addDevSuccessMessage } =
+    useToastStore();
 
   const updateStudyActivity = useCallback(
-    async ({ xpDelta, timeDelta }: SaveStudyActivityRequest) => {
+    async ({
+      xpDelta,
+      timeDelta,
+      showClientToast = true,
+    }: UpdateStudyActivityArgs) => {
       try {
         setIsLoading(true);
 
@@ -22,13 +32,12 @@ export const useUpdateStudyActivity = () => {
         const currentProfile = useProfileStore.getState().profileData;
 
         if (!currentProfile) {
-          addDevErrorMessage(
-            "Failed to update studyActivity because profileData is not loaded yet"
-          );
-
-          throw new Error(
-            "Failed to update studyActivity because profileData is not loaded yet"
-          );
+          throw new ApiError({
+            clientMessage:
+              "Failed to update studyActivity because profileData is not loaded yet",
+            devMessage:
+              "Failed to update studyActivity because profileData is not loaded yet",
+          });
         }
 
         const newProfileData = {
@@ -41,14 +50,28 @@ export const useUpdateStudyActivity = () => {
 
         setProfileData(newProfileData);
 
+        addDevSuccessMessage(
+          `Successfull update study activity. \n Add +${xpDelta}xp and +${timeDelta}seconds. \n New profile data: ${data.totalXp}XP and ${data.totalStudyTimeSeconds}seconds`
+        );
+
         return data;
       } catch (error) {
-        const message =
-          error instanceof Error
-            ? error.message
-            : "Failed to update study activity profile";
+        if (error instanceof ApiError) {
+          if (error.devMessage) {
+            addDevErrorMessage(error.devMessage);
+          }
 
-        addErrorMessage(message);
+          if (showClientToast === true) {
+            addErrorMessage(
+              error.clientMessage || "Failed to update study activity profile"
+            );
+          }
+        } else if (error instanceof Error && showClientToast === true) {
+          addErrorMessage(error.message);
+        } else if (showClientToast === true) {
+          addErrorMessage("Failed to update study activity profile");
+        }
+
         throw error;
       } finally {
         setIsLoading(false);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useProfileStore } from "@entities/profile";
+import { useUpdateStudyActivity } from "@entities/profile";
 import { getWords, type Word } from "@entities/word";
 import correctSound from "@shared/assets/sounds/correct.wav";
 import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
@@ -36,7 +36,8 @@ export const Quiz = ({
     xpCounter,
     resetCounters,
   } = useStudyInfoModalStore();
-  const { updateStudyActivity } = useProfileStore();
+
+  const { updateStudyActivity } = useUpdateStudyActivity();
 
   const correctAudio = new Audio(correctSound);
   const inCorrectAudio = new Audio(inCorrectSound);
@@ -79,7 +80,11 @@ export const Quiz = ({
           const currectTotalXp = currentXp + secondsTimeGame / 10;
           console.log("currectTotalXp: ", currectTotalXp);
 
-          await updateStudyActivity(currectTotalXp, currentTime);
+          await updateStudyActivity({
+            xpDelta: currectTotalXp,
+            timeDelta: currentTime,
+          });
+
           resetCounters();
         } catch (error) {
           console.error("Failed to save activity", error);
