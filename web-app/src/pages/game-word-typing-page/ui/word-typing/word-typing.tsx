@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useProfileStore } from "@entities/profile";
+import { useUpdateStudyActivity } from "@entities/profile";
 import { getWords, type Word } from "@entities/word";
 import { ProgressBar } from "@pages/game-quiz-page/ui/progress-bar/progress-bar";
 import correctSound from "@shared/assets/sounds/correct.wav";
@@ -38,7 +38,8 @@ export const WordTyping = ({
     xpCounter,
     resetCounters,
   } = useStudyInfoModalStore();
-  const { updateStudyActivity } = useProfileStore();
+
+  const { updateStudyActivity } = useUpdateStudyActivity();
 
   const currentWordReady = currentWord ? true : false;
   useEffect(() => {
@@ -63,10 +64,14 @@ export const WordTyping = ({
         }
 
         try {
-          const currectTotalXp = currentXp + secondsTimeGame / 10;
+          const currectTotalXp = currentXp + Math.trunc(currentTime / 10);
           console.log("currectTotalXp: ", currectTotalXp);
 
-          await updateStudyActivity(currectTotalXp, currentTime);
+          await updateStudyActivity({
+            xpDelta: currectTotalXp,
+            timeDelta: currentTime,
+          });
+
           resetCounters();
         } catch (error) {
           console.error("Failed to save activity", error);

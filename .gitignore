@@ -1,5 +1,9 @@
+# Ignore all files in .vscode folder except settings.json and extensions.json
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
 # IDE
-.vscode/
 .idea/
 
 # OS files
