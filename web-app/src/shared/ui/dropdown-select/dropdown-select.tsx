@@ -58,7 +58,7 @@ export const DropdownSelect = ({
         disabled={disabled}
       >
         <span>{selectedOption?.label || placeholder}</span>
-        <ChevronDown className={s.chevron} />
+        <ChevronDown className={cn(s.chevron, isOpen && s.rotate)} />
       </button>
 
       <div className={cn(s.selectVariants, isOpen ? s.open : "")}>
