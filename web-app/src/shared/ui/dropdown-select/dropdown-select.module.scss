@@ -12,8 +12,8 @@
   border: 1px solid var(--md-sys-color-outline);
   border-radius: 4px;
 
-  // background-color: var(--md-sys-color-surface);
-  // color: var(--md-sys-color-on-surface);
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
 
   font: inherit;
   font-size: 16px;
@@ -33,12 +33,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
 }
 
 .selectVariants {
   display: flex;
-  width: 100%;
   flex-direction: column;
+  gap: 5px;
+  width: 100%;
   position: absolute;
   top: calc(100% + 2px);
   left: 0;
@@ -68,14 +70,20 @@
   }
 }
 
-.dictionariesVariant {
+.selectVariant {
   display: flex;
   border: none;
   border-radius: 15px;
   padding: 16px;
   color: var(--md-sys-color-on-surface);
+  border: 2px solid transparent;
 
   &:hover {
+    background-color: var(--md-sys-color-surface-container-high);
+    border: 2px solid var(--md-sys-color-outline-variant);
+  }
+
+  &.active {
     background-color: var(--md-sys-color-surface-container-high);
   }
 }

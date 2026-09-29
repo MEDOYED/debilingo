@@ -51,7 +51,6 @@ export const DropdownSelect = ({
         e.stopPropagation();
       }}
       className={cn(s.dropdownSelect, className, disabled && s.disabled)}
-      // className={cn(s.dictionarySelect, className, disabled && s.disabled)}
     >
       <button
         className={s.selectedVariant}
@@ -65,7 +64,7 @@ export const DropdownSelect = ({
       <div className={cn(s.selectVariants, isOpen ? s.open : "")}>
         {normalizedOptions.map((item, index) => (
           <button
-            className={s.dictionariesVariant}
+            className={cn(s.selectVariant, selectedOption === item && s.active)}
             onClick={() => {
               onSelect({
                 newSelectedItem: item,
