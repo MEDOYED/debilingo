@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { ChevronDown } from "@shared/ui/icons";
 import { cn } from "@shared/lib/styles";
@@ -34,6 +34,7 @@ export const DropdownSelect = ({
   disabled = false,
 }: DropdownSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const normalizedOptions: DropdownOption[] = dropdownItems.map((item) =>
     typeof item === "string" ? { value: item, label: item } : item
@@ -43,23 +44,37 @@ export const DropdownSelect = ({
     (option) => option.value === selectedValue
   );
 
-  // click outside and escape to close dropdown
+  // close dropdown on Escape or click outside
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setIsOpen(false);
       }
     };
 
+    const handleClickOutside = (e: PointerEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
     document.addEventListener("keydown", handleEscape);
+    document.addEventListener("pointerdown", handleClickOutside);
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("pointerdown", handleClickOutside);
     };
   }, [isOpen]);
 
   return (
     <div
+      ref={containerRef}
       onClick={(e) => {
         if (disabled) return;
         setIsOpen(!isOpen);
@@ -89,7 +104,7 @@ export const DropdownSelect = ({
               onSelect({
                 newSelectedItem: item,
               });
-              setIsOpen(!isOpen);
+              setIsOpen(false);
             }}
             key={index}
           >
@@ -102,7 +117,7 @@ export const DropdownSelect = ({
 };
 
 // this component created 27.09.2026
-// time spends on this component: 6 hours
+// time spends on this component: 8 hours
 
 //  to do:
 // 1. generic types from to-do.md
