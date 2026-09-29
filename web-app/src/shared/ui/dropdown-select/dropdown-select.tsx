@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { ChevronDown } from "@shared/ui/icons";
 import { cn } from "@shared/lib/styles";
@@ -42,6 +42,21 @@ export const DropdownSelect = ({
   const selectedOption = normalizedOptions.find(
     (option) => option.value === selectedValue
   );
+
+  // click outside and escape to close dropdown
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isOpen]);
 
   return (
     <div
@@ -88,3 +103,9 @@ export const DropdownSelect = ({
 
 // this component created 27.09.2026
 // time spends on this component: 6 hours
+
+//  to do:
+// 1. generic types from to-do.md
+// 2. placeholder to label when exist some selected item
+// 3. stories for storybook
+//
