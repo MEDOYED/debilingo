@@ -50,7 +50,12 @@ export const DropdownSelect = ({
         setIsOpen(!isOpen);
         e.stopPropagation();
       }}
-      className={cn(s.dropdownSelect, className, disabled && s.disabled)}
+      className={cn(
+        s.dropdownSelect,
+        className,
+        disabled && s.disabled,
+        isOpen && s.open
+      )}
     >
       <button
         className={s.selectedVariant}

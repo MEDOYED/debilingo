@@ -9,7 +9,7 @@
   min-height: 56px;
   padding: 0 16px;
 
-  border: 1px solid var(--md-sys-color-outline);
+  border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: 4px;
 
   background-color: var(--md-sys-color-surface);
@@ -23,10 +23,14 @@
   transition:
     border-color 150ms ease,
     background-color 150ms ease;
-}
 
-.dictionarySelect:hover {
-  border-color: var(--md-sys-color-on-surface);
+  &:hover {
+    border-color: var(--md-sys-color-outline);
+  }
+
+  &.open {
+    border-color: var(--md-sys-color-outline);
+  }
 }
 
 .selectedVariant {
@@ -48,7 +52,7 @@
   box-shadow:
     0 1px 3px rgb(0 0 0 / 30%),
     0 4px 8px rgb(0 0 0 / 22%);
-  background-color: var(--md-sys-color-surface);
+  background-color: var(--md-sys-color-surface-container-low);
   border-radius: 0 0 15px 15px;
   z-index: 100;
 
@@ -63,7 +67,6 @@
     visibility 150ms ease;
 
   &.open {
-    background-color: var(--md-sys-color-surface);
     opacity: 1;
     visibility: visible;
     transform: translateY(0) scaleY(1);
@@ -75,7 +78,6 @@
   border: none;
   border-radius: 15px;
   padding: 16px;
-  color: var(--md-sys-color-on-surface);
   border: 2px solid transparent;
 
   &:hover {
