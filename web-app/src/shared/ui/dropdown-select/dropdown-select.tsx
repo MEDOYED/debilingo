@@ -50,7 +50,8 @@ export const DropdownSelect = ({
         setIsOpen(!isOpen);
         e.stopPropagation();
       }}
-      className={cn(s.dictionarySelect, className, disabled && s.disabled)}
+      className={cn(s.dropdownSelect, className, disabled && s.disabled)}
+      // className={cn(s.dictionarySelect, className, disabled && s.disabled)}
     >
       <button
         className={s.selectedVariant}
@@ -80,3 +81,6 @@ export const DropdownSelect = ({
     </div>
   );
 };
+
+// this component created 27.09.2026
+// time spends on this component: 6 hours
