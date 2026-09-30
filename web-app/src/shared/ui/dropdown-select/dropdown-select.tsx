@@ -72,6 +72,8 @@ export const DropdownSelect = ({
     };
   }, [isOpen]);
 
+  const isFloating = isOpen || Boolean(selectedOption);
+
   return (
     <div
       ref={containerRef}
@@ -87,12 +89,14 @@ export const DropdownSelect = ({
         isOpen && s.open
       )}
     >
+      <span className={cn(s.label, isFloating && s.floating)}>{label}</span>
+
       <button
         className={s.selectedVariant}
         type="button"
         disabled={disabled}
       >
-        <span>{selectedOption?.label || label}</span>
+        <span>{selectedOption?.label}</span>
         <ChevronDown className={cn(s.chevron, isOpen && s.rotate)} />
       </button>
 
