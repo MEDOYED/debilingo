@@ -20,7 +20,7 @@ type DropdownSelectProps = {
   dropdownItems: DropdownItem[];
   selectedValue: string | null;
   onSelect: ({ newSelectedItem }: OnSelectedItemChangeArgs) => void;
-  placeholder?: string;
+  label?: string;
   className?: string;
   disabled?: boolean;
 };
@@ -29,7 +29,7 @@ export const DropdownSelect = ({
   dropdownItems,
   selectedValue,
   onSelect,
-  placeholder = "Choose value",
+  label = "Choose value",
   className,
   disabled = false,
 }: DropdownSelectProps) => {
@@ -92,7 +92,7 @@ export const DropdownSelect = ({
         type="button"
         disabled={disabled}
       >
-        <span>{selectedOption?.label || placeholder}</span>
+        <span>{selectedOption?.label || label}</span>
         <ChevronDown className={cn(s.chevron, isOpen && s.rotate)} />
       </button>
 
@@ -115,12 +115,3 @@ export const DropdownSelect = ({
     </div>
   );
 };
-
-// this component created 27.09.2026
-// time spends on this component: 8 hours
-
-//  to do:
-// 1. generic types from to-do.md
-// 2. placeholder to label when exist some selected item
-// 3. stories for storybook
-//

@@ -70,7 +70,7 @@ export const GameWordTypingPage = () => {
               onSelect={({ newSelectedItem }) =>
                 setSelectedDictionaryId(newSelectedItem.value)
               }
-              placeholder="Вибери мову"
+              label="Вибери мову"
             />
 
             <DropdownSelect
@@ -78,7 +78,7 @@ export const GameWordTypingPage = () => {
               onSelect={({ newSelectedItem }) =>
                 setSelectedKeyboard(newSelectedItem.label as KeyboardOptions)
               }
-              placeholder="Виберіть клавіатуру"
+              label="Виберіть клавіатуру"
               selectedValue={selectedKeyboard}
             />
           </div>
