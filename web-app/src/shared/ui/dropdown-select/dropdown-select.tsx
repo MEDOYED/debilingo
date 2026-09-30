@@ -20,7 +20,7 @@ type DropdownSelectProps = {
   dropdownItems: DropdownItem[];
   selectedValue: string | null;
   onSelect: ({ newSelectedItem }: OnSelectedItemChangeArgs) => void;
-  label?: string;
+  label: string;
   className?: string;
   disabled?: boolean;
 };
@@ -29,7 +29,7 @@ export const DropdownSelect = ({
   dropdownItems,
   selectedValue,
   onSelect,
-  label = "Choose value",
+  label,
   className,
   disabled = false,
 }: DropdownSelectProps) => {

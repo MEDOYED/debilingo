@@ -10,11 +10,14 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
-    version: "0.10.2",
+    version: "0.10.3",
     date: "06.09.2026",
     manHours: "11",
     features: null,
-    improvements: ["disable scale page using two fingers on mobile devices"],
+    improvements: [
+      "disable scale page using two fingers on mobile devices",
+      "iprove dropdown select component",
+    ],
     fixes: [
       "bug in Quiz and Word Typing games: when user get 1 xp for correct selection word and click on stop button he recieve 13xp. 12 xp for game time. But if he play 10 seconds only he must get only 1px for game time. Now it works correct and user get 1px for each 10s of his game",
     ],
