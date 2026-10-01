@@ -5,39 +5,41 @@ import { cn } from "@shared/lib/styles";
 
 import s from "./dropdown-select.module.scss";
 
-export type DropdownOption = {
-  value: string;
+export type DropdownOption<T extends string | number = string> = {
+  value: T;
   label: string;
 };
 
-type DropdownItem = string | DropdownOption;
+type DropdownItem<T extends string | number = string> = T | DropdownOption<T>;
 
-type OnSelectedItemChangeArgs = {
-  newSelectedItem: DropdownOption;
+type OnSelectedItemChangeArgs<T extends string | number = string> = {
+  newSelectedItem: DropdownOption<T>;
 };
 
-type DropdownSelectProps = {
-  dropdownItems: DropdownItem[];
-  selectedValue: string | null;
-  onSelect: ({ newSelectedItem }: OnSelectedItemChangeArgs) => void;
+type DropdownSelectProps<T extends string | number = string> = {
+  dropdownItems: DropdownItem<T>[];
+  selectedValue: T | null;
+  onSelect: ({ newSelectedItem }: OnSelectedItemChangeArgs<T>) => void;
   label: string;
   className?: string;
   disabled?: boolean;
 };
 
-export const DropdownSelect = ({
+export const DropdownSelect = <T extends string | number = string>({
   dropdownItems,
   selectedValue,
   onSelect,
   label,
   className,
   disabled = false,
-}: DropdownSelectProps) => {
+}: DropdownSelectProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const normalizedOptions: DropdownOption[] = dropdownItems.map((item) =>
-    typeof item === "string" ? { value: item, label: item } : item
+  const normalizedOptions: DropdownOption<T>[] = dropdownItems.map((item) =>
+    typeof item === "object" && item !== null
+      ? item
+      : { value: item as T, label: String(item) }
   );
 
   const selectedOption = normalizedOptions.find(
