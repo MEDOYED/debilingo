@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { getDictionaries, deleteDictionary } from "@entities/dictionary";
-
+import {
+  getDictionaries,
+  deleteDictionary,
+  useDictionariesStore,
+} from "@entities/dictionary";
 import { cn } from "@shared/lib/styles";
 import { FilledButton, TextButton } from "@shared/ui/buttons";
 import { Trash } from "@shared/ui/icons";
 
 import { useAddDictionaryStore } from "./model/use-add-dictionary-store";
-import { useDictionariesStore } from "./model/use-dictionaries-store";
 import { AddDictionaryCard } from "./ui/add-dictionary-card/add-dictionary-card";
 
 import s from "./dictionaries-list-section.module.scss";

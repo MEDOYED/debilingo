@@ -4,15 +4,12 @@ import {
   DropdownSelect,
   type DropdownOption,
 } from "@shared/ui/dropdown-select";
-import { getDictionaries } from "@entities/dictionary";
+import { getDictionaries, useDictionariesStore } from "@entities/dictionary";
 
 import { WordTyping } from "./ui/word-typing";
 import type { GameScreen } from "./model/types";
 
 import s from "./game-word-typing-page.module.scss";
-
-// todo [28.09.2026]: fix this
-import { useDictionariesStore } from "@widgets/dictionaries-list-section";
 
 type KeyboardOptions = "Нативна від телефону" | "Клавіатура від debilingo";
 
