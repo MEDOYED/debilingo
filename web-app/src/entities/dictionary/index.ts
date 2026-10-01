@@ -1,0 +1,7 @@
+export {
+  createDictionary,
+  deleteDictionary,
+  getDictionaries,
+} from "./api/dictionary-api";
+
+export type { Dictionary } from "./model/dictionary-types";

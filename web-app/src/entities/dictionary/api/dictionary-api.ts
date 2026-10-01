@@ -1,7 +1,3 @@
-// import apiClient from "./apiClient";
-
-// import apiClient from "@shared/api/apiClient";
-
 import { apiClient } from "@shared/api";
 
 import type { Dictionary } from "../model/dictionary-types";

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { deleteDictionary, getDictionaries } from "@shared/api/dictionaryApi";
+import { getDictionaries, deleteDictionary } from "@entities/dictionary";
+
 import { cn } from "@shared/lib/styles";
 import { FilledButton, TextButton } from "@shared/ui/buttons";
 import { Trash } from "@shared/ui/icons";

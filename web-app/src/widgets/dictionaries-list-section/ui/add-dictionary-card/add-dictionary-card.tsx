@@ -1,4 +1,4 @@
-import { createDictionary, getDictionaries } from "@shared/api/dictionaryApi";
+import { getDictionaries, createDictionary } from "@entities/dictionary";
 import { cn } from "@shared/lib/styles";
 import { FilledButton, TextButton } from "@shared/ui/buttons";
 
