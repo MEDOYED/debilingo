@@ -1,4 +1,4 @@
-import apiClient from "@shared/api/apiClient";
+import apiClient from "@shared/api/api-client";
 
 import type { HabitSessionsResponse, TimeTrackerWithTag } from "../model/types";
 

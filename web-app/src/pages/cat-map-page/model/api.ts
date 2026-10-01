@@ -1,4 +1,4 @@
-import apiClient from "@shared/api/apiClient";
+import apiClient from "@shared/api/api-client";
 import type { Cat } from "./types";
 
 export const getCats = async (): Promise<Cat[]> => {
