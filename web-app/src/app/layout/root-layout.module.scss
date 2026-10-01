@@ -5,6 +5,6 @@
 
   @media (max-width: 1023px) {
     padding-left: 0;
-    padding-bottom: calc($mobile-navigation-bottombar-height + 10px);
+    padding-bottom: $mobile-navigation-bottombar-height;
   }
 }

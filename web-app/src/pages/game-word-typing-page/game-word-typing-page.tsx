@@ -5,18 +5,25 @@ import {
   type DropdownOption,
 } from "@shared/ui/dropdown-select";
 import { getDictionaries, useDictionariesStore } from "@entities/dictionary";
+import { FilledButton } from "@shared/ui/buttons";
 
 import { WordTyping } from "./ui/word-typing";
+import { ResultsScreen } from "./ui/results-screen/results-screen";
 import type { GameScreen } from "./model/types";
 
 import s from "./game-word-typing-page.module.scss";
-import { ResultsScreen } from "./ui/results-screen/results-screen";
 
 type KeyboardOptions = "System keyboard" | "On-screen keyboard";
 
 const KEYBOARD_OPTIONS: KeyboardOptions[] = [
   "System keyboard",
   "On-screen keyboard",
+];
+
+const GAME_DURATIONS: DropdownOption<number>[] = [
+  { value: 60, label: "1 min." },
+  { value: 120, label: "2 min." },
+  { value: 300, label: "5 min." },
 ];
 
 export const GameWordTypingPage = () => {
@@ -26,8 +33,12 @@ export const GameWordTypingPage = () => {
   const [selectedDictionaryId, setSelectedDictionaryId] = useState<
     string | null
   >(null);
-  const [selectedKeyboard, setSelectedKeyboard] =
-    useState<KeyboardOptions>("System keyboard");
+  const [selectedKeyboard, setSelectedKeyboard] = useState<KeyboardOptions>(
+    KEYBOARD_OPTIONS[0]
+  );
+  const [selectedGameDuration, setSelectedGameDuration] = useState<number>(
+    GAME_DURATIONS[1].value
+  );
 
   const preparedDictionariesToDropdown: DropdownOption[] = dictionaries.map(
     (dictionary) => {
@@ -51,10 +62,10 @@ export const GameWordTypingPage = () => {
   }, []);
 
   return (
-    <main>
+    <main className={s.page}>
       {screen === "setup" && (
         <div className={s.container}>
-          <div className={s.gameNameAndSelect}>
+          <div className={s.titleAndSelectWrapper}>
             <h1 className={s.gameName}>Word Typing</h1>
 
             <DropdownSelect
@@ -67,6 +78,15 @@ export const GameWordTypingPage = () => {
             />
 
             <DropdownSelect
+              dropdownItems={GAME_DURATIONS}
+              label="Game duration"
+              selectedValue={selectedGameDuration}
+              onSelect={({ newSelectedItem }) =>
+                setSelectedGameDuration(newSelectedItem.value)
+              }
+            />
+
+            <DropdownSelect
               dropdownItems={KEYBOARD_OPTIONS}
               onSelect={({ newSelectedItem }) =>
                 setSelectedKeyboard(newSelectedItem.label as KeyboardOptions)
@@ -76,13 +96,14 @@ export const GameWordTypingPage = () => {
             />
           </div>
 
-          <button
-            disabled={!selectedDictionaryId}
-            className={s.startGameButton}
+          <FilledButton
+            as="button"
             onClick={() => setScreen("game")}
+            disabled={!selectedDictionaryId}
+            size="large"
           >
-            Start Game
-          </button>
+            Start game
+          </FilledButton>
         </div>
       )}
 
@@ -90,6 +111,7 @@ export const GameWordTypingPage = () => {
         <WordTyping
           setScreen={setScreen}
           dictionaryId={selectedDictionaryId}
+          gameDuration={selectedGameDuration}
         />
       )}
 

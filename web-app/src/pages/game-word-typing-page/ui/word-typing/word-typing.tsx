@@ -13,14 +13,17 @@ import type { GameScreen } from "../../model/types";
 
 import s from "./word-typing.module.scss";
 
-const secondsTimeGame = 120;
-
 type WordTypingProps = {
   dictionaryId: string;
   setScreen: React.Dispatch<React.SetStateAction<GameScreen>>;
+  gameDuration: number;
 };
 
-export const WordTyping = ({ dictionaryId, setScreen }: WordTypingProps) => {
+export const WordTyping = ({
+  dictionaryId,
+  setScreen,
+  gameDuration,
+}: WordTypingProps) => {
   const [allWords, setAllWords] = useState<Word[]>([]);
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
   const [answerCorrect, setAnswerCorrect] = useState(false);
@@ -51,7 +54,7 @@ export const WordTyping = ({ dictionaryId, setScreen }: WordTypingProps) => {
 
       increaseTimeCounter(1);
 
-      if (seconds >= secondsTimeGame || isStopTimer) {
+      if (seconds >= gameDuration || isStopTimer) {
         clearInterval(interval);
 
         const currentXp = useStudyInfoModalStore.getState().xpCounter;
@@ -156,7 +159,7 @@ export const WordTyping = ({ dictionaryId, setScreen }: WordTypingProps) => {
   return currentWord ? (
     <div className={s.container}>
       <div className={s.infoContainer}>
-        <ProgressBar progress={(timeCounter / secondsTimeGame) * 100} />
+        <ProgressBar progress={(timeCounter / gameDuration) * 100} />
 
         <div className={s.stopButtonAndXpContainer}>
           <div>{xpCounter} xp</div>
