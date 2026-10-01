@@ -9,6 +9,7 @@ import { cn } from "@shared/lib/styles";
 import { useStudyInfoModalStore } from "@widgets/study-info-modal";
 
 import { WordTypingInput } from "../word-typing-input";
+import type { GameScreen } from "../../model/types";
 
 import s from "./word-typing.module.scss";
 
@@ -16,10 +17,10 @@ const secondsTimeGame = 120;
 
 export const WordTyping = ({
   dictionaryId,
-  setStartGame,
+  setScreen,
 }: {
   dictionaryId: string;
-  setStartGame: React.Dispatch<React.SetStateAction<boolean>>;
+  setScreen: React.Dispatch<React.SetStateAction<GameScreen>>;
 }) => {
   const [allWords, setAllWords] = useState<Word[]>([]);
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
@@ -59,7 +60,7 @@ export const WordTyping = ({
 
         if (currentXp === 0) {
           resetCounters();
-          setStartGame(false);
+          setScreen("setup");
           return;
         }
 
@@ -77,7 +78,7 @@ export const WordTyping = ({
           console.error("Failed to save activity", error);
         }
 
-        setStartGame(false);
+        setScreen("results");
       }
     }, 1000);
 

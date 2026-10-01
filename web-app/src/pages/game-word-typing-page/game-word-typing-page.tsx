@@ -7,6 +7,7 @@ import {
 import { useDictionariesStore } from "@widgets/dictionaries-list-section";
 
 import { WordTyping } from "./ui/word-typing";
+import type { GameScreen } from "./model/types";
 
 import s from "./game-word-typing-page.module.scss";
 
@@ -21,7 +22,8 @@ const KEYBOARD_OPTIONS: KeyboardOptions[] = [
 ];
 
 export const GameWordTypingPage = () => {
-  const [startGame, setStartGame] = useState(false);
+  const [screen, setScreen] = useState<GameScreen>("setup");
+
   const { dictionaries, setDictionaries } = useDictionariesStore();
 
   const [selectedDictionaryId, setSelectedDictionaryId] = useState<
@@ -54,12 +56,7 @@ export const GameWordTypingPage = () => {
 
   return (
     <main>
-      {startGame && selectedDictionaryId ? (
-        <WordTyping
-          setStartGame={setStartGame}
-          dictionaryId={selectedDictionaryId}
-        />
-      ) : (
+      {screen === "setup" && (
         <div className={s.container}>
           <div className={s.gameNameAndSelect}>
             <h1 className={s.gameName}>Word Typing</h1>
@@ -86,11 +83,24 @@ export const GameWordTypingPage = () => {
           <button
             disabled={!selectedDictionaryId}
             className={s.startGameButton}
-            onClick={() => setStartGame(true)}
+            onClick={() => setScreen("game")}
           >
             Start Game
           </button>
         </div>
+      )}
+
+      {screen === "game" && selectedDictionaryId && (
+        <WordTyping
+          setScreen={setScreen}
+          dictionaryId={selectedDictionaryId}
+        />
+      )}
+
+      {screen === "results" && (
+        <>
+          <div>results</div>
+        </>
       )}
     </main>
   );
