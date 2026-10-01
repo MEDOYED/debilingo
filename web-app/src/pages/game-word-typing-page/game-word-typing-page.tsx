@@ -10,6 +10,7 @@ import { WordTyping } from "./ui/word-typing";
 import type { GameScreen } from "./model/types";
 
 import s from "./game-word-typing-page.module.scss";
+import { ResultsScreen } from "./ui/results-screen/results-screen";
 
 type KeyboardOptions = "Нативна від телефону" | "Клавіатура від debilingo";
 
@@ -19,10 +20,9 @@ const KEYBOARD_OPTIONS: KeyboardOptions[] = [
 ];
 
 export const GameWordTypingPage = () => {
-  const [screen, setScreen] = useState<GameScreen>("setup");
-
   const { dictionaries, setDictionaries } = useDictionariesStore();
 
+  const [screen, setScreen] = useState<GameScreen>("setup");
   const [selectedDictionaryId, setSelectedDictionaryId] = useState<
     string | null
   >(null);
@@ -94,11 +94,7 @@ export const GameWordTypingPage = () => {
         />
       )}
 
-      {screen === "results" && (
-        <>
-          <div>results</div>
-        </>
-      )}
+      {screen === "results" && <ResultsScreen />}
     </main>
   );
 };
