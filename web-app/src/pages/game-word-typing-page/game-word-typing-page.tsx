@@ -12,11 +12,11 @@ import type { GameScreen } from "./model/types";
 import s from "./game-word-typing-page.module.scss";
 import { ResultsScreen } from "./ui/results-screen/results-screen";
 
-type KeyboardOptions = "Нативна від телефону" | "Клавіатура від debilingo";
+type KeyboardOptions = "System keyboard" | "On-screen keyboard";
 
 const KEYBOARD_OPTIONS: KeyboardOptions[] = [
-  "Нативна від телефону",
-  "Клавіатура від debilingo",
+  "System keyboard",
+  "On-screen keyboard",
 ];
 
 export const GameWordTypingPage = () => {
@@ -26,9 +26,8 @@ export const GameWordTypingPage = () => {
   const [selectedDictionaryId, setSelectedDictionaryId] = useState<
     string | null
   >(null);
-  const [selectedKeyboard, setSelectedKeyboard] = useState<KeyboardOptions>(
-    "Нативна від телефону"
-  );
+  const [selectedKeyboard, setSelectedKeyboard] =
+    useState<KeyboardOptions>("System keyboard");
 
   const preparedDictionariesToDropdown: DropdownOption[] = dictionaries.map(
     (dictionary) => {
@@ -64,7 +63,7 @@ export const GameWordTypingPage = () => {
               onSelect={({ newSelectedItem }) =>
                 setSelectedDictionaryId(newSelectedItem.value)
               }
-              label="Вибери мову"
+              label="Choose language"
             />
 
             <DropdownSelect
@@ -72,7 +71,7 @@ export const GameWordTypingPage = () => {
               onSelect={({ newSelectedItem }) =>
                 setSelectedKeyboard(newSelectedItem.label as KeyboardOptions)
               }
-              label="Виберіть клавіатуру"
+              label="Choose keyboard type"
               selectedValue={selectedKeyboard}
             />
           </div>
