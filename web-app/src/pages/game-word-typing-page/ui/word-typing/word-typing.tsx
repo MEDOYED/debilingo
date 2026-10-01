@@ -15,13 +15,12 @@ import s from "./word-typing.module.scss";
 
 const secondsTimeGame = 120;
 
-export const WordTyping = ({
-  dictionaryId,
-  setScreen,
-}: {
+type WordTypingProps = {
   dictionaryId: string;
   setScreen: React.Dispatch<React.SetStateAction<GameScreen>>;
-}) => {
+};
+
+export const WordTyping = ({ dictionaryId, setScreen }: WordTypingProps) => {
   const [allWords, setAllWords] = useState<Word[]>([]);
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
   const [answerCorrect, setAnswerCorrect] = useState(false);
