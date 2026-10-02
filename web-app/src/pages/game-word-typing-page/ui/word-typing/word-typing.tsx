@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 
 import { useUpdateStudyActivity } from "@entities/profile";
 import { getWords, type Word } from "@entities/word";
-import { ProgressBar } from "@pages/game-quiz-page/ui/progress-bar/progress-bar";
-import correctSound from "@shared/assets/sounds/correct.wav";
-import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
 import { cn } from "@shared/lib/styles";
 import { useStudyInfoModalStore } from "@widgets/study-info-modal";
 
@@ -12,6 +9,11 @@ import { WordTypingInput } from "../word-typing-input";
 import type { GameScreen } from "../../model/types";
 
 import s from "./word-typing.module.scss";
+
+// to do [02.10.2026]: fix
+import { ProgressBar } from "@pages/game-quiz-page/ui/progress-bar/progress-bar";
+import correctSound from "@shared/assets/sounds/correct.wav";
+import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
 
 type WordTypingProps = {
   dictionaryId: string;
@@ -75,7 +77,7 @@ export const WordTyping = ({
             timeDelta: currentTime,
           });
 
-          resetCounters();
+          // resetCounters();
         } catch (error) {
           console.error("Failed to save activity", error);
         }

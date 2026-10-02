@@ -24,6 +24,7 @@ const GAME_DURATIONS: DropdownOption<number>[] = [
   { value: 60, label: "1 min." },
   { value: 120, label: "2 min." },
   { value: 300, label: "5 min." },
+  { value: 10, label: "10s" },
 ];
 
 export const GameWordTypingPage = () => {
@@ -115,7 +116,7 @@ export const GameWordTypingPage = () => {
         />
       )}
 
-      {screen === "results" && <ResultsScreen />}
+      {screen === "results" && <ResultsScreen setScreen={setScreen} />}
     </main>
   );
 };
