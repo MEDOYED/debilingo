@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-import { useProfileStore } from "@entities/profile";
+import { useUpdateStudyActivity } from "@entities/profile";
 import { createWord, useAddWordStore } from "@entities/word";
 import { FilledButton, TextButton } from "@shared/ui/buttons";
 
@@ -29,7 +29,7 @@ export const CreateWordModal = () => {
     setWords,
   } = useAddWordStore();
 
-  const { updateStudyActivity } = useProfileStore();
+  const { updateStudyActivity } = useUpdateStudyActivity();
 
   const handleSubmit = async () => {
     const cleanArray = (arr: string[]): string[] => {
@@ -57,7 +57,7 @@ export const CreateWordModal = () => {
 
     setWords([newWord, ...words]);
 
-    updateStudyActivity(10, 0);
+    updateStudyActivity({ xpDelta: 10, timeDelta: 0 });
 
     resetFields();
     closeCardCreateWord();
