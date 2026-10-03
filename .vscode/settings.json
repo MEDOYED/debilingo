@@ -1,4 +1,14 @@
 {
+  // --- Formatting & Code Cleanup on Save ---
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit",
+    "source.sortMembers": "explicit"
+  },
+
+  "typescript.suggest.autoImports": true,
+  "typescript.preferences.useAliasesForRenames": false,
+
   // suggest something when you start typing if it was already installed in package.json
   "typescript.preferences.includePackageJsonAutoImports": "auto",
 
@@ -6,16 +16,14 @@
   // • "shortest": Picks whichever path has fewer characters (e.g., if ../button is shorter than @shared/ui/button, it picks ../button).
   "typescript.preferences.importModuleSpecifier": "shortest",
 
+  // Path Autocomplete
+  "path-autocomplete.ignoredFilesPattern": "!**/*.scss",
   "[scss]": {
     "editor.quickSuggestions": {
       "other": true,
       "comments": false,
       "strings": true
     },
-
-    // Path Autocomplete
-
-    "path-autocomplete.ignoredFilesPattern": "!**/*.scss",
 
     "path-autocomplete.pathMappings": {
       "@shared": "${folder}/web-app/src/shared",
@@ -25,7 +33,6 @@
       "@widgets": "${folder}/web-app/src/widgets",
       "@app": "${folder}/web-app/src/app"
     },
-
     //  When you select a folder from the suggestion list, enableFolderTrailingSlash: true automatically adds a / at the end and immediately opens the next list of files
     "path-autocomplete.enableFolderTrailingSlash": true
   }
