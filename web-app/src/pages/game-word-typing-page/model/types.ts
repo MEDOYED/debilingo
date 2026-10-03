@@ -1,1 +1,1 @@
-export type GameScreen = "setup" | "game" | "results";
+export type WordTypingGameScreen = "setup" | "game" | "results";

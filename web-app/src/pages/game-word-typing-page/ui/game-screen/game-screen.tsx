@@ -6,9 +6,9 @@ import { cn } from "@shared/lib/styles";
 import { useStudyInfoModalStore } from "@widgets/study-info-modal";
 
 import { WordTypingInput } from "../word-typing-input";
-import type { GameScreen } from "../../model/types";
+import type { WordTypingGameScreen } from "../../model/types";
 
-import s from "./word-typing.module.scss";
+import s from "./game-screen.module.scss";
 
 // to do [02.10.2026]: fix
 import { ProgressBar } from "@pages/game-quiz-page/ui/progress-bar/progress-bar";
@@ -17,11 +17,11 @@ import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
 
 type WordTypingProps = {
   dictionaryId: string;
-  setScreen: React.Dispatch<React.SetStateAction<GameScreen>>;
+  setScreen: React.Dispatch<React.SetStateAction<WordTypingGameScreen>>;
   gameDuration: number;
 };
 
-export const WordTyping = ({
+export const GameScreen = ({
   dictionaryId,
   setScreen,
   gameDuration,

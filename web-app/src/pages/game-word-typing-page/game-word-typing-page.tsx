@@ -7,9 +7,9 @@ import {
 import { getDictionaries, useDictionariesStore } from "@entities/dictionary";
 import { FilledButton } from "@shared/ui/buttons";
 
-import { WordTyping } from "./ui/word-typing";
+import { GameScreen } from "./ui/game-screen/game-screen";
 import { ResultsScreen } from "./ui/results-screen/results-screen";
-import type { GameScreen } from "./model/types";
+import type { WordTypingGameScreen } from "./model/types";
 
 import s from "./game-word-typing-page.module.scss";
 
@@ -30,7 +30,7 @@ const GAME_DURATIONS: DropdownOption<number>[] = [
 export const GameWordTypingPage = () => {
   const { dictionaries, setDictionaries } = useDictionariesStore();
 
-  const [screen, setScreen] = useState<GameScreen>("setup");
+  const [screen, setScreen] = useState<WordTypingGameScreen>("setup");
   const [selectedDictionaryId, setSelectedDictionaryId] = useState<
     string | null
   >(null);
@@ -109,7 +109,7 @@ export const GameWordTypingPage = () => {
       )}
 
       {screen === "game" && selectedDictionaryId && (
-        <WordTyping
+        <GameScreen
           setScreen={setScreen}
           dictionaryId={selectedDictionaryId}
           gameDuration={selectedGameDuration}

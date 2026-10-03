@@ -5,11 +5,11 @@ import { calculateXpByTimeDuration } from "@shared/lib/xp";
 import { FilledButton } from "@shared/ui/buttons";
 import { useProfileStore } from "@entities/profile";
 
-import type { GameScreen } from "../../model/types";
+import type { WordTypingGameScreen } from "../../model/types";
 import s from "./results-screen.module.scss";
 
 type ResultsScreenProps = {
-  setScreen: Dispatch<SetStateAction<GameScreen>>;
+  setScreen: Dispatch<SetStateAction<WordTypingGameScreen>>;
 };
 
 export const ResultsScreen = ({ setScreen }: ResultsScreenProps) => {
