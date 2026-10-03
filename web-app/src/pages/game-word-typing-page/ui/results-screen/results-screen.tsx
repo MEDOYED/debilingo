@@ -1,8 +1,8 @@
 import type { Dispatch, SetStateAction } from "react";
 
 import { useStudyInfoModalStore } from "@widgets/study-info-modal";
+import { calculateXpByTimeDuration } from "@shared/lib/xp";
 import { FilledButton } from "@shared/ui/buttons";
-import { calculateXpByTimeDuration } from "@entities/xp";
 
 import type { GameScreen } from "../../model/types";
 import s from "./results-screen.module.scss";
@@ -23,12 +23,15 @@ export const ResultsScreen = ({ setScreen }: ResultsScreenProps) => {
     durationTimeSeconds: timeCounter,
   });
 
+  const totalXp = xpCounter + xpForTime;
+
   return (
     <div className={s.resultsScreen}>
       <div>Correct answers: +{xpCounter}xp</div>
       <div>
         Game time: {timeCounter}s +{xpForTime}xp
       </div>
+      <div>total xp: {totalXp}xp</div>
 
       <FilledButton
         as="button"
