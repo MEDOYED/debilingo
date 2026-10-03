@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { useStudyInfoModalStore } from "@widgets/study-info-modal";
 import { calculateXpByTimeDuration } from "@shared/lib/xp";
 import { FilledButton } from "@shared/ui/buttons";
+import { useProfileStore } from "@entities/profile";
 
 import type { GameScreen } from "../../model/types";
 import s from "./results-screen.module.scss";
@@ -23,7 +24,16 @@ export const ResultsScreen = ({ setScreen }: ResultsScreenProps) => {
     durationTimeSeconds: timeCounter,
   });
 
-  const totalXp = xpCounter + xpForTime;
+  const lastGameTotalXp = xpCounter + xpForTime;
+
+  const { profileData } = useProfileStore();
+
+  if (!profileData)
+    return (
+      <>
+        <div>Profile loading...</div>
+      </>
+    );
 
   return (
     <div className={s.resultsScreen}>
@@ -31,7 +41,10 @@ export const ResultsScreen = ({ setScreen }: ResultsScreenProps) => {
       <div>
         Game time: {timeCounter}s +{xpForTime}xp
       </div>
-      <div>total xp: {totalXp}xp</div>
+      <div>total xp: {lastGameTotalXp}xp</div>
+      <div>
+        {profileData.totalXp}xp -- {profileData.totalXp + lastGameTotalXp}xp
+      </div>
 
       <FilledButton
         as="button"
