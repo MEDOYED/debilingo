@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { useUpdateStudyActivity } from "@entities/profile";
@@ -10,6 +11,8 @@ import field from "@shared/styles/components/field.module.scss";
 import s from "./create-word-modal.module.scss";
 
 export const CreateWordModal = () => {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
   const { dictId } = useParams();
 
   const {
@@ -32,36 +35,42 @@ export const CreateWordModal = () => {
   const { updateStudyActivity } = useUpdateStudyActivity();
 
   const handleSubmit = async () => {
-    const cleanArray = (arr: string[]): string[] => {
-      return arr.map((t) => t.trim()).filter((t) => t.length > 0);
-    };
+    try {
+      setIsSubmitting(true);
 
-    const translationsClean = cleanArray(translations);
+      const cleanArray = (arr: string[]): string[] => {
+        return arr.map((t) => t.trim()).filter((t) => t.length > 0);
+      };
 
-    const isEmpty = !mainLanguageWord.trim() || translationsClean?.length === 0;
+      const translationsClean = cleanArray(translations);
 
-    if (isEmpty) return;
+      const isEmpty =
+        !mainLanguageWord.trim() || translationsClean?.length === 0;
 
-    const newWordData = {
-      dictionary_id: dictId || "",
-      source_word: mainLanguageWord,
-      note: note,
-      translations: translationsClean,
-      definitions: cleanArray(definitions),
-      examples: cleanArray(examples),
-    };
+      if (isEmpty) return;
 
-    // console.log("SENT:", newWordData);
+      const newWordData = {
+        dictionary_id: dictId || "",
+        source_word: mainLanguageWord,
+        note: note,
+        translations: translationsClean,
+        definitions: cleanArray(definitions),
+        examples: cleanArray(examples),
+      };
 
-    const newWord = await createWord(newWordData);
+      const newWord = await createWord(newWordData);
 
-    setWords([newWord, ...words]);
+      setWords([newWord, ...words]);
 
-    updateStudyActivity({ xpDelta: 10, timeDelta: 0 });
+      updateStudyActivity({ xpDelta: 10, timeDelta: 0 });
 
-    resetFields();
-    closeCardCreateWord();
-    // console.log(translations);
+      resetFields();
+      closeCardCreateWord();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const closeCard = () => {
@@ -78,10 +87,7 @@ export const CreateWordModal = () => {
         action=""
       >
         <div className={s.wordAndTranslationWrapper}>
-          <label
-            className={field.label}
-            htmlFor=""
-          >
+          <label className={field.label}>
             Слово
             <input
               className={field.input}
@@ -130,8 +136,9 @@ export const CreateWordModal = () => {
             onClick={handleSubmit}
             variant="primary"
             size="small"
+            disabled={isSubmitting}
           >
-            Create
+            {isSubmitting ? "Creating..." : "Create"}
           </FilledButton>
         </div>
       </form>

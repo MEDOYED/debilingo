@@ -10,9 +10,9 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
-    version: "0.10.5",
-    date: "01.10.2026",
-    manHours: "16",
+    version: "0.10.6",
+    date: "03.10.2026",
+    manHours: "24",
     features: [
       "In 'Word Typing' game add dropdown select where user can choose game duration: 1min. or 2 min. or 3 min.",
       "In 'Word Typing' game add dropdown select where user can choose keyboard type: system keyboard or debilingo keyboard",
@@ -20,9 +20,11 @@ export const UPDATES_DATA: UpdatesData[] = [
     improvements: [
       "disable scale page using two fingers on mobile devices",
       "iprove dropdown select component",
+      "loading and disable state on submitting loading when creating new word",
     ],
     fixes: [
       "bug in Quiz and Word Typing games: when user get 1 xp for correct selection word and click on stop button he recieve 13xp. 12 xp for game time. But if he play 10 seconds only he must get only 1px for game time. Now it works correct and user get 1px for each 10s of his game",
+      "fix bug: when create new word loading user can click on Create button multiple time and create a few exactly the same words",
     ],
     contributors: ["Maksym Mokriakov"],
   },
