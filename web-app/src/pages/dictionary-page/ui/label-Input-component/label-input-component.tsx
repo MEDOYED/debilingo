@@ -1,6 +1,8 @@
+import { useRef } from "react";
+
 import { cn } from "@shared/lib/styles";
 import { TextButton } from "@shared/ui/buttons";
-import { Clear, Trash } from "@shared/ui/icons";
+import { Clear, CopyPasteIcon, Trash } from "@shared/ui/icons";
 
 import field from "@shared/styles/components/field.module.scss";
 import s from "./label-input-component.module.scss";
@@ -18,6 +20,8 @@ export const LabelInputComponent = ({
   text,
   textInButton,
 }: IProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const handleDelete = (index: number) => {
     const update = [...text];
 
@@ -26,6 +30,30 @@ export const LabelInputComponent = ({
     } else {
       update[index] = "";
       setText(update);
+    }
+  };
+
+  const handlePaste = async (index: number) => {
+    if (!inputRef.current) {
+      return;
+    }
+
+    try {
+      const pastedText = await navigator.clipboard.readText();
+
+      inputRef.current.value = pastedText;
+
+      if (text.length > 1) {
+        const newTextsArr: string[] = text.map((textItem, i) =>
+          i !== index ? textItem : pastedText
+        );
+
+        setText(newTextsArr);
+      } else {
+        setText([pastedText]);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -40,6 +68,14 @@ export const LabelInputComponent = ({
           key={index}
           className={s.textAndButton}
         >
+          <button
+            type="button"
+            className={s.pasteTextButton}
+            onClick={() => handlePaste(index)}
+          >
+            <CopyPasteIcon />
+          </button>
+
           <input
             key={index}
             className={cn(field.input, s.input)}
@@ -51,7 +87,11 @@ export const LabelInputComponent = ({
               update[index] = e.target.value;
               setText(update);
             }}
+            ref={inputRef}
           />
+
+          <div className={s.actionButtonsWrapper}></div>
+
           <button
             type="button"
             className={s.deleteInputButton}

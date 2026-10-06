@@ -10,12 +10,13 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
-    version: "0.10.6",
+    version: "0.10.7",
     date: "03.10.2026",
-    manHours: "24",
+    manHours: "28",
     features: [
       "In 'Word Typing' game add dropdown select where user can choose game duration: 1min. or 2 min. or 3 min.",
       "In 'Word Typing' game add dropdown select where user can choose keyboard type: system keyboard or debilingo keyboard",
+      "In create word modal on dictionary page add paste text button for improve users expireance filled word card",
     ],
     improvements: [
       "disable scale page using two fingers on mobile devices",
