@@ -126,56 +126,74 @@ export const updateMyUsername = async (req: AuthRequest, res: Response): Promise
   }
 };
 
-export const studyActivity = async (req: AuthRequest, res: Response): Promise<void> => {
+export const saveStudyActivity = async (req: AuthRequest, res: Response): Promise<void> => {
   const userId = req.userId;
 
   if (!userId) {
     res.status(401).json({
-      error: "Not authorized",
+      success: false,
+      dev_message: "Not authorized",
     });
     return;
   }
 
-  // ---
-
   const { xpDelta, timeDelta } = req.body;
 
   if (typeof xpDelta !== "number") {
-    res.status(400).json({ error: "This value (xpDelta) should be a number!" });
+    res
+      .status(400)
+      .json({ success: false, dev_message: "This value (xpDelta) should be a number!" });
+    return;
+  }
+
+  if (xpDelta <= 0) {
+    res.status(400).json({ success: false, dev_message: "xpDelta must be 1 or more" });
     return;
   }
 
   if (typeof timeDelta !== "number") {
-    res.status(400).json({ error: "This value (timeDelta) should be a number!" });
+    res
+      .status(400)
+      .json({ success: false, dev_message: "This value (timeDelta) should be a number!" });
     return;
   }
 
-  // ---
-
-  if (xpDelta <= 0) {
-    res.status(400).json({ error: "xpDelta must be 1 or more" });
+  if (!Number.isInteger(timeDelta)) {
+    res.status(400).json({
+      success: false,
+      dev_message: `This value (timeDelta) should be a integer number! (1, 2, 3 but not 1.2 or 10.5). But timeDelta now ${timeDelta}`,
+    });
     return;
   }
 
-  const { data, error } = await supabase
+  if (!Number.isInteger(xpDelta)) {
+    res.status(400).json({
+      success: false,
+      dev_message: `This value (xpDelta) should be a integer number! (1, 2, 3 but not 1.2 or 10.5). But xpDelta now ${xpDelta}`,
+    });
+    return;
+  }
+
+  const { data: profileData, error: profileError } = await supabase
     .from("profiles")
     .select("daily_streak, last_study_date, total_xp, total_study_time_seconds")
     .eq("user_id", userId)
     .single();
 
-  if (error) {
-    res.status(500).json({ error: "Failed to load studyActivity data" });
+  if (profileError) {
+    res.status(500).json({ success: false, dev_message: "Failed to load studyActivity data" });
     return;
   }
 
-  if (!data) {
+  if (!profileData) {
     res.status(404).json({
-      error: "studyActivity data (daily_streak, last_study_date, total_xp) not found",
+      success: false,
+      dev_message: "studyActivity data (daily_streak, last_study_date, total_xp) not found",
     });
     return;
   }
 
-  const { daily_streak, last_study_date, total_xp, total_study_time_seconds } = data;
+  const { daily_streak, last_study_date, total_xp, total_study_time_seconds } = profileData;
 
   const todayStr = new Date().toISOString().slice(0, 10);
   const yesterday = new Date();
@@ -210,14 +228,20 @@ export const studyActivity = async (req: AuthRequest, res: Response): Promise<vo
     .eq("user_id", userId);
 
   if (updateStudyActivityError) {
-    res.status(500).json({ error: "Failed to update study activity" });
+    res.status(500).json({ success: false, dev_message: "Failed to update study activity" });
     return;
   }
 
-  res.json({
+  const data = {
     dailyStreak: updatedStreak,
     lastStudyDate: todayStr,
     totalXp: updatedXp,
     totalStudyTimeSeconds: updatedTime,
+  };
+
+  res.json({
+    success: true,
+    dev_message: "study activity updated successfully",
+    data: data,
   });
 };

@@ -13,9 +13,19 @@ export type UpdateUsernameResponse = {
   newUsernameValue: string;
 };
 
-export type StudyResponse = {
-  dailyStreak: Profile["dailyStreak"];
-  lastStudyDate: Profile["lastStudyDate"];
-  totalXp: Profile["totalXp"];
-  totalStudyTimeSeconds: Profile["totalStudyTimeSeconds"];
+export type SaveStudyActivityResponse = {
+  success: boolean;
+  data?: {
+    dailyStreak: Profile["dailyStreak"];
+    lastStudyDate: Profile["lastStudyDate"];
+    totalXp: Profile["totalXp"];
+    totalStudyTimeSeconds: Profile["totalStudyTimeSeconds"];
+  };
+  dev_message?: string;
+  client_message?: string;
+};
+
+export type SaveStudyActivityRequest = {
+  xpDelta: number;
+  timeDelta: number;
 };

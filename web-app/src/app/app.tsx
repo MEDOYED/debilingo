@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 import { useVoicesStore } from "@shared/stores/use-voices-store";
+import { ToastStack } from "@shared/modules/toast";
 
 function App() {
   const [isAppLoading, setIsAppLoading] = useState<boolean>(true);
@@ -67,7 +68,12 @@ function App() {
     );
   }
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ToastStack />
+    </>
+  );
 }
 
 export default App;

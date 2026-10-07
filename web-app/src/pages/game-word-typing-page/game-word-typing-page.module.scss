@@ -1,71 +1,29 @@
-@use "@shared/styles/tokens/colors/dark-blue";
+@use "@shared/styles/_config.scss" as conf;
+
+.page {
+  height: calc(100vh - conf.$mobile-navigation-bottombar-height);
+}
 
 .container {
-  height: calc(100dvh - 60px);
-  padding: 150px 30px 20px 30px;
+  height: 100%;
+  padding: 60px 30px 20px 30px;
   display: flex;
   flex-direction: column;
-  gap: 200px;
   align-items: center;
 }
 
-.gameNameAndSelect {
+.titleAndSelectWrapper {
   display: flex;
   flex-direction: column;
-  gap: 60px;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  gap: 60px;
+
+  margin-bottom: auto;
 }
 
 .gameName {
   font-weight: 700;
   font-size: 30px;
-}
-
-.dictionarySelect {
-  width: 250px;
-  min-height: 56px;
-  padding: 0 16px;
-
-  border: 1px solid var(--md-sys-color-outline);
-  border-radius: 4px;
-
-  background-color: var(--md-sys-color-surface);
-  color: var(--md-sys-color-on-surface);
-
-  font: inherit;
-  font-size: 16px;
-
-  cursor: pointer;
-
-  transition:
-    border-color 150ms ease,
-    background-color 150ms ease;
-}
-
-.dictionarySelect:hover {
-  border-color: var(--md-sys-color-on-surface);
-}
-
-.dictionariesVariant {
-  width: 250px;
-  max-width: 250px;
-  border: none;
-  border-radius: 10px;
-  background: var(--md-sys-color-surface);
-  color: var(--md-sys-color-on-surface);
-}
-
-.startGameButton {
-  width: 200px;
-  height: 50px;
-  font-size: 20px;
-  background: var(--md-sys-color-primary);
-  border-radius: 10px;
-  color: var(--md-sys-color-on-primary);
-
-  &:disabled {
-    background-color: var(--md-sys-color-surface-variant);
-    color: var(--md-sys-color-on-surface-variant);
-  }
 }

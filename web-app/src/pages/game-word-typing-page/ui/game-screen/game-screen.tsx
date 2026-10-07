@@ -1,0 +1,208 @@
+import { useEffect, useState } from "react";
+
+import { useUpdateStudyActivity } from "@entities/profile";
+import { getWords, type Word } from "@entities/word";
+import { cn } from "@shared/lib/styles";
+import { useStudyInfoModalStore } from "@widgets/study-info-modal";
+
+import { WordTypingInput } from "../word-typing-input";
+import type { WordTypingGameScreen } from "../../model/types";
+
+import s from "./game-screen.module.scss";
+
+// to do [02.10.2026]: fix
+import { ProgressBar } from "@pages/game-quiz-page/ui/progress-bar/progress-bar";
+import correctSound from "@shared/assets/sounds/correct.wav";
+import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
+
+type WordTypingProps = {
+  dictionaryId: string;
+  setScreen: React.Dispatch<React.SetStateAction<WordTypingGameScreen>>;
+  gameDuration: number;
+};
+
+export const GameScreen = ({
+  dictionaryId,
+  setScreen,
+  gameDuration,
+}: WordTypingProps) => {
+  const [allWords, setAllWords] = useState<Word[]>([]);
+  const [currentWord, setCurrentWord] = useState<Word | null>(null);
+  const [answerCorrect, setAnswerCorrect] = useState(false);
+  const [answer, setAnswer] = useState<string>("");
+  const [incorrectAnswer, setIncorrectAnswer] = useState<boolean>(false);
+  const [isStopTimer, setIsStopTimer] = useState(false);
+
+  const correctAudio = new Audio(correctSound);
+  const inCorrectAudio = new Audio(inCorrectSound);
+
+  const {
+    timeCounter,
+    increaseTimeCounter,
+    increaseXpCounter,
+    xpCounter,
+    resetCounters,
+  } = useStudyInfoModalStore();
+
+  const { updateStudyActivity } = useUpdateStudyActivity();
+
+  const currentWordReady = currentWord ? true : false;
+  useEffect(() => {
+    if (!currentWordReady) return;
+    let seconds = 0;
+
+    const interval = setInterval(async () => {
+      seconds++;
+
+      increaseTimeCounter(1);
+
+      if (seconds >= gameDuration || isStopTimer) {
+        clearInterval(interval);
+
+        const currentXp = useStudyInfoModalStore.getState().xpCounter;
+        const currentTime = useStudyInfoModalStore.getState().timeCounter;
+
+        if (currentXp === 0) {
+          resetCounters();
+          setScreen("setup");
+          return;
+        }
+
+        try {
+          const currectTotalXp = currentXp + Math.trunc(currentTime / 10);
+          console.log("currectTotalXp: ", currectTotalXp);
+
+          await updateStudyActivity({
+            xpDelta: currectTotalXp,
+            timeDelta: currentTime,
+          });
+
+          // resetCounters();
+        } catch (error) {
+          console.error("Failed to save activity", error);
+        }
+
+        setScreen("results");
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [currentWordReady, isStopTimer]);
+
+  useEffect(() => {
+    const loadWords = async () => {
+      if (!dictionaryId) return;
+
+      const data = await getWords(dictionaryId, 50, 0);
+
+      setAllWords(data);
+
+      if (data.length === 0) return;
+
+      const randomIndex = Math.floor(Math.random() * data.length);
+      const randomWord = data[randomIndex];
+
+      setCurrentWord(randomWord);
+    };
+
+    loadWords();
+  }, [dictionaryId]);
+
+  const nextQuestion = () => {
+    setAnswerCorrect(false);
+    const randomIndex = Math.floor(Math.random() * allWords.length);
+    const randomWord = allWords[randomIndex];
+
+    setCurrentWord(randomWord);
+    setAnswer(""); //  ?
+  };
+
+  const correctAnswer = currentWord?.source_word;
+
+  const handleAnswer = (answer: string) => {
+    if (!currentWord) return;
+
+    if (!answer) {
+      setIncorrectAnswer(true);
+
+      setTimeout(() => {
+        nextQuestion();
+        setIncorrectAnswer(false);
+      }, 2000);
+
+      return;
+    }
+
+    if (
+      answer.toLocaleLowerCase().trim() === correctAnswer?.toLocaleLowerCase()
+    ) {
+      setAnswerCorrect(true);
+
+      correctAudio.currentTime = 0;
+      correctAudio.play();
+      console.log("Правильно!");
+      increaseXpCounter(3);
+      setTimeout(() => {
+        nextQuestion();
+      }, 1000);
+    } else {
+      setIncorrectAnswer(true);
+      //   setAnswerCorrect(true);
+      inCorrectAudio.currentTime = 0;
+      inCorrectAudio.play();
+
+      setTimeout(() => {
+        setIncorrectAnswer(false);
+        nextQuestion();
+      }, 2000);
+    }
+  };
+
+  return currentWord ? (
+    <div className={s.container}>
+      <div className={s.infoContainer}>
+        <ProgressBar progress={(timeCounter / gameDuration) * 100} />
+
+        <div className={s.stopButtonAndXpContainer}>
+          <div>{xpCounter} xp</div>
+          <div
+            className={s.stopButton}
+            onClick={() => setIsStopTimer(!isStopTimer)}
+          >
+            stop
+          </div>
+        </div>
+      </div>
+
+      <div
+        className={cn(
+          s.card,
+          answerCorrect ? s.correctCard : "",
+          incorrectAnswer ? s.incorrectCard : ""
+        )}
+      >
+        <p className={s.cardText}>{currentWord?.translations[0].text}</p>
+        <p>{incorrectAnswer && currentWord.source_word}</p>
+      </div>
+
+      <WordTypingInput
+        answer={answer}
+        setAnswer={setAnswer}
+      />
+
+      <button
+        type="button"
+        className={s.nextOrCheckBtn}
+        onClick={() => {
+          handleAnswer(answer);
+          console.log(answer);
+          console.log(correctAnswer);
+        }}
+      >
+        {!answer ? "Next" : "Check"}
+      </button>
+    </div>
+  ) : (
+    <div>loading...</div>
+  );
+};

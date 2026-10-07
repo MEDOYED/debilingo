@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getDictionaries } from "@shared/api/dictionaryApi";
-import { useDictionariesStore } from "@widgets/dictionaries-list-section";
+import { getDictionaries, useDictionariesStore } from "@entities/dictionary";
 
 import { CustomSelect } from "./ui/custom-select/custom-select";
 import { Quiz } from "./ui/quiz/quiz";

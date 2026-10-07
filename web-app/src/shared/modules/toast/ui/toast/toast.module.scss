@@ -1,0 +1,22 @@
+.toastModal {
+  width: 300px;
+  padding: 0 10px 20px 10px;
+  border-radius: 10px;
+  white-space: pre-line;
+}
+
+.success {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border: 1px solid var(--md-sys-color-on-primary);
+}
+
+.error {
+  background-color: var(--md-sys-color-error);
+  color: var(--md-sys-color-on-error);
+  border: 1px solid var(--md-sys-color-on-error);
+}
+
+.closeBtn {
+  margin-left: auto;
+}

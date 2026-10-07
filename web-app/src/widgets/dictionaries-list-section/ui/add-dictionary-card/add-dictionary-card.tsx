@@ -1,9 +1,12 @@
-import { createDictionary, getDictionaries } from "@shared/api/dictionaryApi";
+import {
+  getDictionaries,
+  createDictionary,
+  useDictionariesStore,
+} from "@entities/dictionary";
 import { cn } from "@shared/lib/styles";
 import { FilledButton, TextButton } from "@shared/ui/buttons";
 
 import { useAddDictionaryStore } from "../../model/use-add-dictionary-store";
-import { useDictionariesStore } from "../../model/use-dictionaries-store";
 import { LanguageField } from "../language-field/language-field";
 
 import c from "../../styles/common.module.scss";
