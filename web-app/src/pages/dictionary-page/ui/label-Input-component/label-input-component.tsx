@@ -68,14 +68,6 @@ export const LabelInputComponent = ({
           key={index}
           className={s.textAndButton}
         >
-          <button
-            type="button"
-            className={s.pasteTextButton}
-            onClick={() => handlePaste(index)}
-          >
-            <CopyPasteIcon />
-          </button>
-
           <input
             key={index}
             className={cn(field.input, s.input)}
@@ -90,19 +82,25 @@ export const LabelInputComponent = ({
             ref={inputRef}
           />
 
-          <div className={s.actionButtonsWrapper}></div>
+          <div className={s.actionButtonsWrapper}>
+            <button
+              type="button"
+              className={s.pasteTextButton}
+              onClick={() => handlePaste(index)}
+            >
+              <CopyPasteIcon />
+            </button>
 
-          <button
-            type="button"
-            className={s.deleteInputButton}
-            onClick={() => handleDelete(index)}
-          >
-            {text[index] && text[index] !== "" ? (
-              <Clear />
-            ) : (
-              index !== 0 && <Trash />
+            {(text[index] !== "" || index !== 0) && (
+              <button
+                type="button"
+                className={s.deleteInputButton}
+                onClick={() => handleDelete(index)}
+              >
+                {text[index] ? <Clear /> : index !== 0 && <Trash />}
+              </button>
             )}
-          </button>
+          </div>
         </div>
       ))}
       <TextButton
@@ -110,7 +108,7 @@ export const LabelInputComponent = ({
         as="button"
         onClick={() => setText([...text, ""])}
       >
-        + {textInButton}
+        {textInButton}
       </TextButton>
     </label>
   );

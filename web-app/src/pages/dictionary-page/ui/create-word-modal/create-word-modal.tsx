@@ -102,7 +102,7 @@ export const CreateWordModal = () => {
             labelText="Translation"
             setText={setTranslation}
             text={translations}
-            textInButton="Add translation"
+            textInButton="+ Add translation"
           />
         </div>
 
@@ -111,7 +111,7 @@ export const CreateWordModal = () => {
           labelText="Explanation"
           setText={setDefinition}
           text={definitions}
-          textInButton="Add explanation"
+          textInButton="+ Add explanation"
         />
 
         {/* examples  */}
@@ -119,7 +119,7 @@ export const CreateWordModal = () => {
           labelText="Example"
           setText={setExample}
           text={examples}
-          textInButton="Add example"
+          textInButton="+ Add example"
         />
 
         <div className={s.actionRow}>

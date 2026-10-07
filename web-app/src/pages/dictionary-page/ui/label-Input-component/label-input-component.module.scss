@@ -4,11 +4,6 @@
   align-items: center;
 }
 
-.pasteTextButton {
-  position: absolute;
-  right: 40px;
-}
-
 .addInputButton {
   min-width: 30px;
   min-height: 15px;
@@ -18,15 +13,26 @@
   font-weight: 500;
 }
 
-.deleteInputButton {
-  position: absolute;
-  right: 5px;
-  top: -2px;
-  width: 34px;
-  height: 34px;
-  padding: 5px;
+.input {
+  padding-right: 70px;
 }
 
-.input {
-  padding-right: 40px;
+.actionButtonsWrapper {
+  position: absolute;
+  right: 5px;
+
+  display: flex;
+  align-items: center;
+
+  .pasteTextButton {
+    height: fit-content;
+    margin-top: 5px;
+    padding: 5px;
+  }
+
+  .deleteInputButton {
+    width: 34px;
+    height: 34px;
+    padding: 5px;
+  }
 }
