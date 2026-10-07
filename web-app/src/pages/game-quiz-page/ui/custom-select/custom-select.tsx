@@ -1,6 +1,6 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
 
-import type { Dictionary } from "@shared/api/dictionaryApi";
+import type { Dictionary } from "@entities/dictionary";
 import { ChevronDown } from "@shared/ui/icons";
 
 import s from "./custom-select.module.scss";

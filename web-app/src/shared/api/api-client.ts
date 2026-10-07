@@ -18,7 +18,7 @@ export type ApiResponseEnvelope<T = unknown> = {
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
-const apiClient = axios.create({
+export const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
@@ -64,4 +64,11 @@ apiClient.interceptors.response.use(
   }
 );
 
-export default apiClient;
+// it can be removed after full refactor
+/**
+ * @deprecated Default export is deprecated. Use only named import:
+ * import { apiClient } from "@shared/api";
+ */
+const deprecatedDefaultApiClient = apiClient;
+
+export default deprecatedDefaultApiClient;

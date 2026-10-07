@@ -2,25 +2,30 @@ import { useEffect, useState } from "react";
 
 import { useUpdateStudyActivity } from "@entities/profile";
 import { getWords, type Word } from "@entities/word";
-import { ProgressBar } from "@pages/game-quiz-page/ui/progress-bar/progress-bar";
-import correctSound from "@shared/assets/sounds/correct.wav";
-import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
 import { cn } from "@shared/lib/styles";
 import { useStudyInfoModalStore } from "@widgets/study-info-modal";
 
 import { WordTypingInput } from "../word-typing-input";
+import type { WordTypingGameScreen } from "../../model/types";
 
-import s from "./word-typing.module.scss";
+import s from "./game-screen.module.scss";
 
-const secondsTimeGame = 120;
+// to do [02.10.2026]: fix
+import { ProgressBar } from "@pages/game-quiz-page/ui/progress-bar/progress-bar";
+import correctSound from "@shared/assets/sounds/correct.wav";
+import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
 
-export const WordTyping = ({
-  dictionaryId,
-  setStartGame,
-}: {
+type WordTypingProps = {
   dictionaryId: string;
-  setStartGame: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+  setScreen: React.Dispatch<React.SetStateAction<WordTypingGameScreen>>;
+  gameDuration: number;
+};
+
+export const GameScreen = ({
+  dictionaryId,
+  setScreen,
+  gameDuration,
+}: WordTypingProps) => {
   const [allWords, setAllWords] = useState<Word[]>([]);
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
   const [answerCorrect, setAnswerCorrect] = useState(false);
@@ -51,7 +56,7 @@ export const WordTyping = ({
 
       increaseTimeCounter(1);
 
-      if (seconds >= secondsTimeGame || isStopTimer) {
+      if (seconds >= gameDuration || isStopTimer) {
         clearInterval(interval);
 
         const currentXp = useStudyInfoModalStore.getState().xpCounter;
@@ -59,7 +64,7 @@ export const WordTyping = ({
 
         if (currentXp === 0) {
           resetCounters();
-          setStartGame(false);
+          setScreen("setup");
           return;
         }
 
@@ -72,12 +77,12 @@ export const WordTyping = ({
             timeDelta: currentTime,
           });
 
-          resetCounters();
+          // resetCounters();
         } catch (error) {
           console.error("Failed to save activity", error);
         }
 
-        setStartGame(false);
+        setScreen("results");
       }
     }, 1000);
 
@@ -156,7 +161,7 @@ export const WordTyping = ({
   return currentWord ? (
     <div className={s.container}>
       <div className={s.infoContainer}>
-        <ProgressBar progress={(timeCounter / secondsTimeGame) * 100} />
+        <ProgressBar progress={(timeCounter / gameDuration) * 100} />
 
         <div className={s.stopButtonAndXpContainer}>
           <div>{xpCounter} xp</div>

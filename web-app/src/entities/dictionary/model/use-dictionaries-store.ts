@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { Dictionary } from "@shared/api/dictionaryApi";
+import type { Dictionary } from "@entities/dictionary";
 
 type Store = {
   dictionaries: Dictionary[];

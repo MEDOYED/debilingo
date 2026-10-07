@@ -1,13 +1,6 @@
-import apiClient from "./apiClient";
+import { apiClient } from "@shared/api";
 
-export interface Dictionary {
-  id: string;
-  user_id: string;
-  name: string;
-  main_language: string;
-  secondary_language: string;
-  created_at: string;
-}
+import type { Dictionary } from "../model/dictionary-types";
 
 export const getDictionaries = async (): Promise<Dictionary[]> => {
   const response = await apiClient.get<Dictionary[]>("/dictionaries");

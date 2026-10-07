@@ -1,15 +1,17 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { useProfileStore } from "@entities/profile";
+import { useUpdateStudyActivity } from "@entities/profile";
 import { createWord, useAddWordStore } from "@entities/word";
 import { FilledButton, TextButton } from "@shared/ui/buttons";
 
 import { LabelInputComponent } from "../label-Input-component/label-input-component";
 
-import field from "@shared/styles/components/field.module.scss";
 import s from "./create-word-modal.module.scss";
 
 export const CreateWordModal = () => {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
   const { dictId } = useParams();
 
   const {
@@ -29,39 +31,45 @@ export const CreateWordModal = () => {
     setWords,
   } = useAddWordStore();
 
-  const { updateStudyActivity } = useProfileStore();
+  const { updateStudyActivity } = useUpdateStudyActivity();
 
   const handleSubmit = async () => {
-    const cleanArray = (arr: string[]): string[] => {
-      return arr.map((t) => t.trim()).filter((t) => t.length > 0);
-    };
+    try {
+      setIsSubmitting(true);
 
-    const translationsClean = cleanArray(translations);
+      const cleanArray = (arr: string[]): string[] => {
+        return arr.map((t) => t.trim()).filter((t) => t.length > 0);
+      };
 
-    const isEmpty = !mainLanguageWord.trim() || translationsClean?.length === 0;
+      const translationsClean = cleanArray(translations);
 
-    if (isEmpty) return;
+      const isEmpty =
+        !mainLanguageWord.trim() || translationsClean?.length === 0;
 
-    const newWordData = {
-      dictionary_id: dictId || "",
-      source_word: mainLanguageWord,
-      note: note,
-      translations: translationsClean,
-      definitions: cleanArray(definitions),
-      examples: cleanArray(examples),
-    };
+      if (isEmpty) return;
 
-    // console.log("SENT:", newWordData);
+      const newWordData = {
+        dictionary_id: dictId || "",
+        source_word: mainLanguageWord,
+        note: note,
+        translations: translationsClean,
+        definitions: cleanArray(definitions),
+        examples: cleanArray(examples),
+      };
 
-    const newWord = await createWord(newWordData);
+      const newWord = await createWord(newWordData);
 
-    setWords([newWord, ...words]);
+      setWords([newWord, ...words]);
 
-    updateStudyActivity(10, 0);
+      updateStudyActivity({ xpDelta: 10, timeDelta: 0 });
 
-    resetFields();
-    closeCardCreateWord();
-    // console.log(translations);
+      resetFields();
+      closeCardCreateWord();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const closeCard = () => {
@@ -78,25 +86,19 @@ export const CreateWordModal = () => {
         action=""
       >
         <div className={s.wordAndTranslationWrapper}>
-          <label
-            className={field.label}
-            htmlFor=""
-          >
-            Слово
-            <input
-              className={field.input}
-              type="text"
-              value={mainLanguageWord}
-              onChange={(e) => setMainLanguageWord(e.target.value)}
-            />
-          </label>
+          {/* main word */}
+          <LabelInputComponent
+            labelText="Word"
+            setText={([...texts]) => setMainLanguageWord(texts[0])}
+            texts={[mainLanguageWord]}
+          />
 
           {/* translations */}
           <LabelInputComponent
             labelText="Translation"
             setText={setTranslation}
-            text={translations}
-            textInButton="Add translation"
+            texts={translations}
+            textInButton="+ Add translation"
           />
         </div>
 
@@ -104,16 +106,16 @@ export const CreateWordModal = () => {
         <LabelInputComponent
           labelText="Explanation"
           setText={setDefinition}
-          text={definitions}
-          textInButton="Add explanation"
+          texts={definitions}
+          textInButton="+ Add explanation"
         />
 
         {/* examples  */}
         <LabelInputComponent
           labelText="Example"
           setText={setExample}
-          text={examples}
-          textInButton="Add example"
+          texts={examples}
+          textInButton="+ Add example"
         />
 
         <div className={s.actionRow}>
@@ -130,8 +132,9 @@ export const CreateWordModal = () => {
             onClick={handleSubmit}
             variant="primary"
             size="small"
+            disabled={isSubmitting}
           >
-            Create
+            {isSubmitting ? "Creating..." : "Create"}
           </FilledButton>
         </div>
       </form>
