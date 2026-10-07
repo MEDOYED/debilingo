@@ -101,7 +101,7 @@ export const CreateWordModal = () => {
           <LabelInputComponent
             labelText="Translation"
             setText={setTranslation}
-            text={translations}
+            texts={translations}
             textInButton="+ Add translation"
           />
         </div>
@@ -110,7 +110,7 @@ export const CreateWordModal = () => {
         <LabelInputComponent
           labelText="Explanation"
           setText={setDefinition}
-          text={definitions}
+          texts={definitions}
           textInButton="+ Add explanation"
         />
 
@@ -118,7 +118,7 @@ export const CreateWordModal = () => {
         <LabelInputComponent
           labelText="Example"
           setText={setExample}
-          text={examples}
+          texts={examples}
           textInButton="+ Add example"
         />
 

@@ -10,23 +10,23 @@ import s from "./label-input-component.module.scss";
 interface IProps {
   labelText?: string;
   setText: (value: string[]) => void;
-  text: string[];
+  texts: string[];
   textInButton: string;
 }
 
 export const LabelInputComponent = ({
   labelText,
   setText,
-  text,
+  texts,
   textInButton,
 }: IProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleDelete = (index: number) => {
-    const update = [...text];
+    const update = [...texts];
 
     if (update[index] === "") {
-      setText(text.length > 1 ? text.filter((_, i) => i !== index) : [""]);
+      setText(texts.length > 1 ? texts.filter((_, i) => i !== index) : [""]);
     } else {
       update[index] = "";
       setText(update);
@@ -43,8 +43,8 @@ export const LabelInputComponent = ({
 
       inputRef.current.value = pastedText;
 
-      if (text.length > 1) {
-        const newTextsArr: string[] = text.map((textItem, i) =>
+      if (texts.length > 1) {
+        const newTextsArr: string[] = texts.map((textItem, i) =>
           i !== index ? textItem : pastedText
         );
 
@@ -63,7 +63,7 @@ export const LabelInputComponent = ({
       htmlFor=""
     >
       <div className={s.textAndButton}>{labelText}</div>
-      {text.map((value, index) => (
+      {texts.map((value, index) => (
         <div
           key={index}
           className={s.textAndButton}
@@ -74,8 +74,8 @@ export const LabelInputComponent = ({
             type="text"
             value={value || ""}
             onChange={(e) => {
-              if (text.length === 0) return;
-              const update = [...text];
+              if (texts.length === 0) return;
+              const update = [...texts];
               update[index] = e.target.value;
               setText(update);
             }}
@@ -91,13 +91,13 @@ export const LabelInputComponent = ({
               <CopyPasteIcon />
             </button>
 
-            {(text[index] !== "" || index !== 0) && (
+            {(texts[index] !== "" || index !== 0) && (
               <button
                 type="button"
                 className={s.deleteInputButton}
                 onClick={() => handleDelete(index)}
               >
-                {text[index] ? <Clear /> : index !== 0 && <Trash />}
+                {texts[index] ? <Clear /> : index !== 0 && <Trash />}
               </button>
             )}
           </div>
@@ -106,7 +106,7 @@ export const LabelInputComponent = ({
       <TextButton
         className={s.addInputButton}
         as="button"
-        onClick={() => setText([...text, ""])}
+        onClick={() => setText([...texts, ""])}
       >
         {textInButton}
       </TextButton>
