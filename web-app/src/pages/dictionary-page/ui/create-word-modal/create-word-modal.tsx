@@ -88,7 +88,7 @@ export const CreateWordModal = () => {
       >
         <div className={s.wordAndTranslationWrapper}>
           <label className={field.label}>
-            Слово
+            Word
             <input
               className={field.input}
               type="text"
