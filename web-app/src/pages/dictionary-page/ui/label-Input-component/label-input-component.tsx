@@ -11,7 +11,7 @@ interface IProps {
   labelText?: string;
   setText: (value: string[]) => void;
   texts: string[];
-  textInButton: string;
+  textInButton?: string;
 }
 
 export const LabelInputComponent = ({

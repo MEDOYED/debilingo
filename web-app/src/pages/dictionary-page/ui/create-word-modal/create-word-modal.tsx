@@ -7,7 +7,6 @@ import { FilledButton, TextButton } from "@shared/ui/buttons";
 
 import { LabelInputComponent } from "../label-Input-component/label-input-component";
 
-import field from "@shared/styles/components/field.module.scss";
 import s from "./create-word-modal.module.scss";
 
 export const CreateWordModal = () => {
@@ -87,15 +86,12 @@ export const CreateWordModal = () => {
         action=""
       >
         <div className={s.wordAndTranslationWrapper}>
-          <label className={field.label}>
-            Word
-            <input
-              className={field.input}
-              type="text"
-              value={mainLanguageWord}
-              onChange={(e) => setMainLanguageWord(e.target.value)}
-            />
-          </label>
+          {/* main word */}
+          <LabelInputComponent
+            labelText="Word"
+            setText={([...texts]) => setMainLanguageWord(texts[0])}
+            texts={[mainLanguageWord]}
+          />
 
           {/* translations */}
           <LabelInputComponent
