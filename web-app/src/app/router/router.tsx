@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
 import { CatCatchPage } from "@pages/cat-catch-page";
 import { CatCollectionPage } from "@pages/cat-collection-page";
@@ -17,20 +17,8 @@ import { GameQuizPage } from "@pages/game-quiz-page";
 import { GameWordTypingPage } from "@pages/game-word-typing-page";
 import { TrainingPage } from "@pages/training-page";
 
+import { ProtectedRoute } from "./protected-router";
 import RootLayout from "../layout/root-layout";
-
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    return (
-      <Navigate
-        to="/login"
-        replace
-      />
-    );
-  }
-  return <>{children}</>;
-};
 
 export const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
