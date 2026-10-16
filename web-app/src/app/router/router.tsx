@@ -40,10 +40,10 @@ export const router = createBrowserRouter([
 
       {
         path: "/games",
-        element: <GamesPage />,
         children: [
-          { path: "/quiz", element: <GameQuizPage /> },
-          { path: "/word-typing", element: <GameWordTypingPage /> },
+          { index: true, element: <GamesPage /> },
+          { path: "quiz", element: <GameQuizPage /> },
+          { path: "word-typing", element: <GameWordTypingPage /> },
         ],
       },
 
