@@ -13,7 +13,7 @@ import { MoneyEarning } from "@pages/money-earning";
 import { RegisterPage } from "@pages/register-page";
 import { TimeTrackerPage } from "@pages/time-tracker-page";
 import { GamesPage } from "@pages/games-page";
-import { GameQuizPage } from "@pages/game-quiz-page/game-quiz-page";
+import { GameQuizPage } from "@pages/game-quiz-page";
 import { GameWordTypingPage } from "@pages/game-word-typing-page";
 import { TrainingPage } from "@pages/training-page";
 
