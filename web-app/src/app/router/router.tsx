@@ -35,10 +35,17 @@ export const router = createBrowserRouter([
         index: true,
         element: <HomePage />,
       },
-      { path: "/games", element: <GamesPage /> },
-      { path: "/games/quiz", element: <GameQuizPage /> },
-      { path: "/games/word-typing", element: <GameWordTypingPage /> },
+
       { path: "/dictionaries", element: <DictionariesPage /> },
+
+      {
+        path: "/games",
+        element: <GamesPage />,
+        children: [
+          { path: "/quiz", element: <GameQuizPage /> },
+          { path: "/word-typing", element: <GameWordTypingPage /> },
+        ],
+      },
 
       {
         path: "/dictionary/:dictId",
