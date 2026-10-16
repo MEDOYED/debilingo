@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getDictionaries, useDictionariesStore } from "@entities/dictionary";
+import { useDictionariesStore } from "@entities/dictionary";
 
 import { CustomSelect } from "./ui/custom-select/custom-select";
 import { Quiz } from "./ui/quiz/quiz";
@@ -9,20 +9,12 @@ import s from "./game-quiz-page.module.scss";
 
 export const GameQuizPage = () => {
   const [startGame, setStartGame] = useState(false);
-  const { dictionaries, setDictionaries } = useDictionariesStore();
+  const { dictionaries, fetchDictionaries } = useDictionariesStore();
   const [dictionaryId, setDictionaryId] = useState("");
 
   useEffect(() => {
-    const firstLoad = async () => {
-      if (dictionaries.length !== 0) return;
-
-      const data = await getDictionaries();
-
-      setDictionaries(data);
-    };
-
-    firstLoad();
-  }, []);
+    fetchDictionaries();
+  }, [fetchDictionaries]);
 
   return (
     <main>
