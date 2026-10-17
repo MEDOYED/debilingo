@@ -4,7 +4,7 @@ import { useUpdateStudyActivity } from "@entities/profile";
 import { getWords, type Word } from "@entities/word";
 import correctSound from "@shared/assets/sounds/correct.wav";
 import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
-import { useStudyInfoModalStore } from "@widgets/study-info-modal";
+import { useStudySessionStore } from "@entities/study-session";
 
 import { ProgressBar } from "../progress-bar/progress-bar";
 
@@ -35,7 +35,7 @@ export const Quiz = ({
     decreaseXpCounter,
     xpCounter,
     resetCounters,
-  } = useStudyInfoModalStore();
+  } = useStudySessionStore();
 
   const { updateStudyActivity } = useUpdateStudyActivity();
 
@@ -67,8 +67,8 @@ export const Quiz = ({
       if (seconds >= secondsTimeGame || isStopTimer) {
         clearInterval(interval);
 
-        const currentXp = useStudyInfoModalStore.getState().xpCounter;
-        const currentTime = useStudyInfoModalStore.getState().timeCounter;
+        const currentXp = useStudySessionStore.getState().xpCounter;
+        const currentTime = useStudySessionStore.getState().timeCounter;
 
         if (currentXp === 0) {
           resetCounters();

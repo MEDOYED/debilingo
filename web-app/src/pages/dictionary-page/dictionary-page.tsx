@@ -4,11 +4,8 @@ import { useParams } from "react-router-dom";
 import { useAddWordStore, useWordStore } from "@entities/word";
 import { getWords } from "@entities/word/api";
 import { cn } from "@shared/lib/styles";
-
-import {
-  StudyInfoModal,
-  useStudyInfoModalStore,
-} from "@widgets/study-info-modal";
+import { StudyInfoModal } from "@widgets/study-info-modal";
+import { useStudySessionStore } from "@entities/study-session";
 
 import { useLanguageRowStore } from "./model/use-language-row-store";
 import { useSwitchColStore } from "./model/use-switch-col-store";
@@ -39,7 +36,7 @@ export const DictionaryPage = () => {
   const { setWords, words, appendWords } = useAddWordStore();
   const { isReversed } = useSwitchColStore();
 
-  const { xpCounter } = useStudyInfoModalStore();
+  const { xpCounter } = useStudySessionStore();
 
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);

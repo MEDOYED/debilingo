@@ -1,23 +1,20 @@
-import type { Dispatch, SetStateAction } from "react";
-
-import { useStudyInfoModalStore } from "@widgets/study-info-modal";
+import { useStudySessionStore } from "@entities/study-session";
 import { calculateXpByTimeDuration } from "@shared/lib/xp";
 import { FilledButton } from "@shared/ui/buttons";
 import { useProfileStore } from "@entities/profile";
 
-import type { WordTypingGameScreen } from "../../model/types";
-import s from "./results-screen.module.scss";
+import s from "./game-results-screen.module.scss";
 
 type ResultsScreenProps = {
-  setScreen: Dispatch<SetStateAction<WordTypingGameScreen>>;
+  onPlayAgain: () => void;
 };
 
-export const ResultsScreen = ({ setScreen }: ResultsScreenProps) => {
-  const { xpCounter, timeCounter, resetCounters } = useStudyInfoModalStore();
+export const GameResultsScreen = ({ onPlayAgain }: ResultsScreenProps) => {
+  const { xpCounter, timeCounter, resetCounters } = useStudySessionStore();
 
   const handlePlayAgain = () => {
     resetCounters();
-    setScreen("game");
+    onPlayAgain();
   };
 
   const { xpForTime } = calculateXpByTimeDuration({

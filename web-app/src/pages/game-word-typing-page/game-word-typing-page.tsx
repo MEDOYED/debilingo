@@ -8,7 +8,9 @@ import { getDictionaries, useDictionariesStore } from "@entities/dictionary";
 import { FilledButton } from "@shared/ui/buttons";
 
 import { GameScreen } from "./ui/game-screen/game-screen";
-import { ResultsScreen } from "./ui/results-screen/results-screen";
+// import { GameResultsScreen } from "../../widgets/game-results-screen/ui/game-results-screen/game-results-screen";
+
+import { GameResultsScreen } from "@widgets/game-results-screen";
 import type { WordTypingGameScreen } from "./model/types";
 
 import s from "./game-word-typing-page.module.scss";
@@ -116,7 +118,9 @@ export const GameWordTypingPage = () => {
         />
       )}
 
-      {screen === "results" && <ResultsScreen setScreen={setScreen} />}
+      {screen === "results" && (
+        <GameResultsScreen onPlayAgain={() => setScreen("game")} />
+      )}
     </main>
   );
 };

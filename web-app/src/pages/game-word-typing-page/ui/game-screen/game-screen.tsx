@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useUpdateStudyActivity } from "@entities/profile";
 import { getWords, type Word } from "@entities/word";
 import { cn } from "@shared/lib/styles";
-import { useStudyInfoModalStore } from "@widgets/study-info-modal";
+import { useStudySessionStore } from "@entities/study-session";
 
 import { WordTypingInput } from "../word-typing-input";
 import type { WordTypingGameScreen } from "../../model/types";
@@ -42,7 +42,7 @@ export const GameScreen = ({
     increaseXpCounter,
     xpCounter,
     resetCounters,
-  } = useStudyInfoModalStore();
+  } = useStudySessionStore();
 
   const { updateStudyActivity } = useUpdateStudyActivity();
 
@@ -59,8 +59,8 @@ export const GameScreen = ({
       if (seconds >= gameDuration || isStopTimer) {
         clearInterval(interval);
 
-        const currentXp = useStudyInfoModalStore.getState().xpCounter;
-        const currentTime = useStudyInfoModalStore.getState().timeCounter;
+        const currentXp = useStudySessionStore.getState().xpCounter;
+        const currentTime = useStudySessionStore.getState().timeCounter;
 
         if (currentXp === 0) {
           resetCounters();
