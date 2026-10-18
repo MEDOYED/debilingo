@@ -5,13 +5,14 @@ import {
   DropdownSelect,
   type DropdownOption,
 } from "@shared/ui/dropdown-select";
+import type { GameScreen } from "@shared/types";
 
 import { Quiz } from "./ui/quiz/quiz";
 
 import s from "./game-quiz-page.module.scss";
 
 export const GameQuizPage = () => {
-  const [startGame, setStartGame] = useState(false);
+  const [screen, setScreen] = useState<GameScreen>("setup");
   const { dictionaries, fetchDictionaries } = useDictionariesStore();
   const [selectedDictionaryId, setSelectedDictionaryId] = useState<string>("");
 
@@ -30,12 +31,7 @@ export const GameQuizPage = () => {
 
   return (
     <main>
-      {startGame ? (
-        <Quiz
-          setStartGame={setStartGame}
-          dictionaryId={selectedDictionaryId}
-        />
-      ) : (
+      {screen === "setup" && (
         <div className={s.container}>
           <div className={s.gameNameAndSelect}>
             <h1 className={s.gameName}>Quiz</h1>
@@ -53,11 +49,18 @@ export const GameQuizPage = () => {
           <button
             disabled={!selectedDictionaryId}
             className={s.startGameButton}
-            onClick={() => setStartGame(true)}
+            onClick={() => setScreen("game")}
           >
             Start Game
           </button>
         </div>
+      )}
+
+      {screen === "game" && (
+        <Quiz
+          setScreen={setScreen}
+          dictionaryId={selectedDictionaryId}
+        />
       )}
     </main>
   );

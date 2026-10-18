@@ -5,6 +5,7 @@ import { getWords, type Word } from "@entities/word";
 import correctSound from "@shared/assets/sounds/correct.wav";
 import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
 import { useStudySessionStore } from "@entities/study-session";
+import type { GameScreen } from "@shared/types";
 
 import { ProgressBar } from "../progress-bar/progress-bar";
 
@@ -16,10 +17,10 @@ const secondsTimeGame = 120;
 
 export const Quiz = ({
   dictionaryId,
-  setStartGame,
+  setScreen,
 }: {
   dictionaryId: string;
-  setStartGame: React.Dispatch<React.SetStateAction<boolean>>;
+  setScreen: React.Dispatch<React.SetStateAction<GameScreen>>;
 }) => {
   const [allWords, setAllWords] = useState<Word[]>([]);
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
@@ -72,7 +73,7 @@ export const Quiz = ({
 
         if (currentXp === 0) {
           resetCounters();
-          setStartGame(false);
+          setScreen("setup");
           return;
         }
 
@@ -89,8 +90,7 @@ export const Quiz = ({
         } catch (error) {
           console.error("Failed to save activity", error);
         }
-
-        setStartGame(false);
+        setScreen("setup");
       }
     }, 1000);
 
@@ -101,9 +101,13 @@ export const Quiz = ({
     const loadWords = async () => {
       if (!dictionaryId) return;
 
+      console.log("dictionaryId:", dictionaryId);
+
       const data = await getWords(dictionaryId, 50, 0);
 
       setAllWords(data);
+
+      console.log("words get successfullty");
 
       if (data.length === 0) return;
 
