@@ -18,7 +18,7 @@ export const LanguageField = ({
 }: NameFieldProps) => {
   return (
     <label className={cn(field.label, className)}>
-      {variant === "main" ? "Головна мова" : "Другорядна мова"}
+      {variant === "main" ? "Primary language" : "Secondary language"}
       <input
         className={field.input}
         type="text"
