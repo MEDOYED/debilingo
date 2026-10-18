@@ -6,11 +6,11 @@ import {
 } from "@shared/ui/dropdown-select";
 import { getDictionaries, useDictionariesStore } from "@entities/dictionary";
 import { FilledButton } from "@shared/ui/buttons";
+import { GameResultsScreen } from "@widgets/game-results-screen";
+import type { GameScreen as GameScreenType } from "@shared/types";
+import { GAME_DURATIONS } from "@shared/config/games";
 
 import { GameScreen } from "./ui/game-screen/game-screen";
-import { ResultsScreen } from "./ui/results-screen/results-screen";
-import type { WordTypingGameScreen } from "./model/types";
-
 import s from "./game-word-typing-page.module.scss";
 
 type KeyboardOptions = "System keyboard" | "On-screen keyboard";
@@ -20,17 +20,10 @@ const KEYBOARD_OPTIONS: KeyboardOptions[] = [
   "On-screen keyboard",
 ];
 
-const GAME_DURATIONS: DropdownOption<number>[] = [
-  { value: 60, label: "1 min." },
-  { value: 120, label: "2 min." },
-  { value: 300, label: "5 min." },
-  { value: 10, label: "10s" },
-];
-
 export const GameWordTypingPage = () => {
   const { dictionaries, setDictionaries } = useDictionariesStore();
 
-  const [screen, setScreen] = useState<WordTypingGameScreen>("setup");
+  const [screen, setScreen] = useState<GameScreenType>("setup");
   const [selectedDictionaryId, setSelectedDictionaryId] = useState<
     string | null
   >(null);
@@ -116,7 +109,9 @@ export const GameWordTypingPage = () => {
         />
       )}
 
-      {screen === "results" && <ResultsScreen setScreen={setScreen} />}
+      {screen === "results" && (
+        <GameResultsScreen onPlayAgain={() => setScreen("game")} />
+      )}
     </main>
   );
 };

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 
 import { useProfileStore } from "@entities/profile";
+import { useStudySessionStore } from "@entities/study-session";
 
-import { useStudyInfoModalStore } from "../../model/use-study-info-modal-store";
 import s from "./timer.module.scss";
 
 type TimerProps = {
@@ -11,7 +11,7 @@ type TimerProps = {
 
 export const Timer = ({ isStopTimer }: TimerProps) => {
   const { timeCounter, increaseTimeCounter, xpCounter, resetCounters } =
-    useStudyInfoModalStore();
+    useStudySessionStore();
   const { updateStudyActivity } = useProfileStore();
 
   useEffect(() => {
@@ -27,8 +27,8 @@ export const Timer = ({ isStopTimer }: TimerProps) => {
       if (seconds === 20 || isStopTimer) {
         clearInterval(interval);
 
-        const currentXp = useStudyInfoModalStore.getState().xpCounter;
-        const currentTime = useStudyInfoModalStore.getState().timeCounter;
+        const currentXp = useStudySessionStore.getState().xpCounter;
+        const currentTime = useStudySessionStore.getState().timeCounter;
 
         try {
           await updateStudyActivity(currentXp, currentTime);
