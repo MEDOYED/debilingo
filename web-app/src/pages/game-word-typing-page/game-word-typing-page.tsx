@@ -6,13 +6,10 @@ import {
 } from "@shared/ui/dropdown-select";
 import { getDictionaries, useDictionariesStore } from "@entities/dictionary";
 import { FilledButton } from "@shared/ui/buttons";
+import { GameResultsScreen } from "@widgets/game-results-screen";
+import type { GameScreen as GameScreenType } from "@shared/types";
 
 import { GameScreen } from "./ui/game-screen/game-screen";
-// import { GameResultsScreen } from "../../widgets/game-results-screen/ui/game-results-screen/game-results-screen";
-
-import { GameResultsScreen } from "@widgets/game-results-screen";
-import type { WordTypingGameScreen } from "./model/types";
-
 import s from "./game-word-typing-page.module.scss";
 
 type KeyboardOptions = "System keyboard" | "On-screen keyboard";
@@ -32,7 +29,7 @@ const GAME_DURATIONS: DropdownOption<number>[] = [
 export const GameWordTypingPage = () => {
   const { dictionaries, setDictionaries } = useDictionariesStore();
 
-  const [screen, setScreen] = useState<WordTypingGameScreen>("setup");
+  const [screen, setScreen] = useState<GameScreenType>("setup");
   const [selectedDictionaryId, setSelectedDictionaryId] = useState<
     string | null
   >(null);

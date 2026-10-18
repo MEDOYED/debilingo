@@ -4,9 +4,9 @@ import { useUpdateStudyActivity } from "@entities/profile";
 import { getWords, type Word } from "@entities/word";
 import { cn } from "@shared/lib/styles";
 import { useStudySessionStore } from "@entities/study-session";
+import type { GameScreen as GameScreenType } from "@shared/types";
 
 import { WordTypingInput } from "../word-typing-input";
-import type { WordTypingGameScreen } from "../../model/types";
 
 import s from "./game-screen.module.scss";
 
@@ -17,7 +17,7 @@ import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
 
 type WordTypingProps = {
   dictionaryId: string;
-  setScreen: React.Dispatch<React.SetStateAction<WordTypingGameScreen>>;
+  setScreen: React.Dispatch<React.SetStateAction<GameScreenType>>;
   gameDuration: number;
 };
 
