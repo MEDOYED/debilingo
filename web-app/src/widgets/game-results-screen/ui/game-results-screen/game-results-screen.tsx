@@ -36,7 +36,7 @@ export const GameResultsScreen = ({ onPlayAgain }: ResultsScreenProps) => {
     <div className={s.resultsScreen}>
       <div>Correct answers: +{xpCounter}xp</div>
       <div>
-        Game time: {timeCounter}s +{xpForTime}xp
+        {timeCounter}s game time: +{xpForTime}xp
       </div>
       <div>total xp: {lastGameTotalXp}xp</div>
       <div>

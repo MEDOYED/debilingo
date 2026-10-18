@@ -7,6 +7,7 @@ import {
 } from "@shared/ui/dropdown-select";
 import type { GameScreen } from "@shared/types";
 import { GAME_DURATIONS } from "@shared/config/games";
+import { GameResultsScreen } from "@widgets/game-results-screen";
 
 import { QuizGameScreen } from "./ui/quiz-game-screen/quiz-game-screen";
 
@@ -76,6 +77,10 @@ export const GameQuizPage = () => {
           gameDurationInSeconds={selectedGameDuration}
           dictionaryId={selectedDictionaryId}
         />
+      )}
+
+      {screen === "results" && (
+        <GameResultsScreen onPlayAgain={() => setScreen("game")} />
       )}
     </main>
   );

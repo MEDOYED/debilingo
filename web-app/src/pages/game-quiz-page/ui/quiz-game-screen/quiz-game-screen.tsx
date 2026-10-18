@@ -86,12 +86,10 @@ export const QuizGameScreen = ({
             xpDelta: currectTotalXp,
             timeDelta: currentTime,
           });
-
-          resetCounters();
         } catch (error) {
           console.error("Failed to save activity", error);
         }
-        setScreen("setup");
+        setScreen("results");
       }
     }, 1000);
 
