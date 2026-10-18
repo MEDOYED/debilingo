@@ -6,6 +6,7 @@ import {
   type DropdownOption,
 } from "@shared/ui/dropdown-select";
 import type { GameScreen } from "@shared/types";
+import { GAME_DURATIONS } from "@shared/config/games";
 
 import { QuizGameScreen } from "./ui/quiz-game-screen/quiz-game-screen";
 
@@ -13,6 +14,10 @@ import s from "./game-quiz-page.module.scss";
 
 export const GameQuizPage = () => {
   const [screen, setScreen] = useState<GameScreen>("setup");
+  const [selectedGameDuration, setSelectedGameDuration] = useState<number>(
+    GAME_DURATIONS[0].value
+  );
+
   const { dictionaries, fetchDictionaries } = useDictionariesStore();
   const [selectedDictionaryId, setSelectedDictionaryId] = useState<string>("");
 
@@ -44,6 +49,15 @@ export const GameQuizPage = () => {
               }
               selectedValue={selectedDictionaryId}
             />
+
+            <DropdownSelect
+              dropdownItems={GAME_DURATIONS}
+              label="Game duration"
+              selectedValue={selectedGameDuration}
+              onSelect={({ newSelectedItem }) =>
+                setSelectedGameDuration(newSelectedItem.value)
+              }
+            />
           </div>
 
           <button
@@ -59,6 +73,7 @@ export const GameQuizPage = () => {
       {screen === "game" && (
         <QuizGameScreen
           setScreen={setScreen}
+          gameDurationInSeconds={selectedGameDuration}
           dictionaryId={selectedDictionaryId}
         />
       )}

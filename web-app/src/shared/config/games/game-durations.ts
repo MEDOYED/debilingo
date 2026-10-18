@@ -1,7 +1,4 @@
-type GameDurationOption = {
-  value: number;
-  label: string;
-};
+import type { GameDurationOption } from "./types";
 
 export const GAME_DURATIONS: GameDurationOption[] = [
   { value: 60, label: "1 min." },

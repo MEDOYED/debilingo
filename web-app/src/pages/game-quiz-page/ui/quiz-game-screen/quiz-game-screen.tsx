@@ -14,13 +14,13 @@ import s from "./quiz-game-screen.module.scss";
 import { useVoicesStore } from "@shared/stores/use-voices-store";
 import { SpeakerWave } from "@shared/ui/icons";
 
-const secondsTimeGame = 120;
-
 export const QuizGameScreen = ({
   dictionaryId,
+  gameDurationInSeconds,
   setScreen,
 }: {
   dictionaryId: string;
+  gameDurationInSeconds: number;
   setScreen: React.Dispatch<React.SetStateAction<GameScreen>>;
 }) => {
   const [allWords, setAllWords] = useState<Word[]>([]);
@@ -66,7 +66,7 @@ export const QuizGameScreen = ({
 
       increaseTimeCounter(1);
 
-      if (seconds >= secondsTimeGame || isStopTimer) {
+      if (seconds >= gameDurationInSeconds || isStopTimer) {
         clearInterval(interval);
 
         const currentXp = useStudySessionStore.getState().xpCounter;
@@ -187,7 +187,7 @@ export const QuizGameScreen = ({
   return currentWord ? (
     <div className={s.container}>
       <div className={s.infoContainer}>
-        <ProgressBar progress={(timeCounter / secondsTimeGame) * 100} />
+        <ProgressBar progress={(timeCounter / gameDurationInSeconds) * 100} />
 
         <div className={s.stopButtonAndXpContainer}>
           <div>{xpCounter} xp</div>
