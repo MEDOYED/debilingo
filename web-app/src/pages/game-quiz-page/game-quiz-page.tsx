@@ -7,7 +7,7 @@ import {
 } from "@shared/ui/dropdown-select";
 import type { GameScreen } from "@shared/types";
 
-import { Quiz } from "./ui/quiz/quiz";
+import { QuizGameScreen } from "./ui/quiz-game-screen/quiz-game-screen";
 
 import s from "./game-quiz-page.module.scss";
 
@@ -57,7 +57,7 @@ export const GameQuizPage = () => {
       )}
 
       {screen === "game" && (
-        <Quiz
+        <QuizGameScreen
           setScreen={setScreen}
           dictionaryId={selectedDictionaryId}
         />

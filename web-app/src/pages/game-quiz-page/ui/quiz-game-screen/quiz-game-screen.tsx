@@ -9,13 +9,14 @@ import type { GameScreen } from "@shared/types";
 
 import { ProgressBar } from "../progress-bar/progress-bar";
 
-import s from "./quiz.module.scss";
+import s from "./quiz-game-screen.module.scss";
+
 import { useVoicesStore } from "@shared/stores/use-voices-store";
 import { SpeakerWave } from "@shared/ui/icons";
 
 const secondsTimeGame = 120;
 
-export const Quiz = ({
+export const QuizGameScreen = ({
   dictionaryId,
   setScreen,
 }: {
