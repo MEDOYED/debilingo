@@ -11,7 +11,7 @@ type Store = {
   resetCounters: () => void;
 };
 
-export const useStudyInfoModalStore = create<Store>((set, get) => ({
+export const useStudySessionStore = create<Store>((set, get) => ({
   xpCounter: 0,
   timeCounter: 0,
 

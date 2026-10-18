@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@shared/lib/styles";
 import { useVoicesStore } from "@shared/stores/use-voices-store";
 
-import { useStudyInfoModalStore } from "@widgets/study-info-modal/model/use-study-info-modal-store";
+import { useStudySessionStore } from "@entities/study-session";
 import s from "./spoiler.module.scss";
 
 interface SpoilerProps {
@@ -151,7 +151,7 @@ export const Spoiler = ({
     };
   }, [revealed]);
 
-  const { increaseXpCounter } = useStudyInfoModalStore();
+  const { increaseXpCounter } = useStudySessionStore();
 
   // voice
   const { voices } = useVoicesStore();

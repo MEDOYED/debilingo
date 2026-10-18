@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { useUpdateStudyActivity } from "@entities/profile";
 import { getWords, type Word } from "@entities/word";
 import { cn } from "@shared/lib/styles";
-import { useStudyInfoModalStore } from "@widgets/study-info-modal";
+import { useStudySessionStore } from "@entities/study-session";
+import type { GameScreen as GameScreenType } from "@shared/types";
 
 import { WordTypingInput } from "../word-typing-input";
-import type { WordTypingGameScreen } from "../../model/types";
 
 import s from "./game-screen.module.scss";
 
@@ -17,7 +17,7 @@ import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
 
 type WordTypingProps = {
   dictionaryId: string;
-  setScreen: React.Dispatch<React.SetStateAction<WordTypingGameScreen>>;
+  setScreen: React.Dispatch<React.SetStateAction<GameScreenType>>;
   gameDuration: number;
 };
 
@@ -42,7 +42,7 @@ export const GameScreen = ({
     increaseXpCounter,
     xpCounter,
     resetCounters,
-  } = useStudyInfoModalStore();
+  } = useStudySessionStore();
 
   const { updateStudyActivity } = useUpdateStudyActivity();
 
@@ -59,8 +59,8 @@ export const GameScreen = ({
       if (seconds >= gameDuration || isStopTimer) {
         clearInterval(interval);
 
-        const currentXp = useStudyInfoModalStore.getState().xpCounter;
-        const currentTime = useStudyInfoModalStore.getState().timeCounter;
+        const currentXp = useStudySessionStore.getState().xpCounter;
+        const currentTime = useStudySessionStore.getState().timeCounter;
 
         if (currentXp === 0) {
           resetCounters();
@@ -76,8 +76,6 @@ export const GameScreen = ({
             xpDelta: currectTotalXp,
             timeDelta: currentTime,
           });
-
-          // resetCounters();
         } catch (error) {
           console.error("Failed to save activity", error);
         }

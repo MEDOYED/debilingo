@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
 import { CatCatchPage } from "@pages/cat-catch-page";
 import { CatCollectionPage } from "@pages/cat-collection-page";
@@ -13,24 +13,12 @@ import { MoneyEarning } from "@pages/money-earning";
 import { RegisterPage } from "@pages/register-page";
 import { TimeTrackerPage } from "@pages/time-tracker-page";
 import { GamesPage } from "@pages/games-page";
-import { GameQuizPage } from "@pages/game-quiz-page/game-quiz-page";
+import { GameQuizPage } from "@pages/game-quiz-page";
 import { GameWordTypingPage } from "@pages/game-word-typing-page";
 import { TrainingPage } from "@pages/training-page";
 
+import { ProtectedRoute } from "./protected-router";
 import RootLayout from "../layout/root-layout";
-
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    return (
-      <Navigate
-        to="/login"
-        replace
-      />
-    );
-  }
-  return <>{children}</>;
-};
 
 export const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
@@ -47,10 +35,17 @@ export const router = createBrowserRouter([
         index: true,
         element: <HomePage />,
       },
-      { path: "/games", element: <GamesPage /> },
-      { path: "/games/quiz", element: <GameQuizPage /> },
-      { path: "/games/word-typing", element: <GameWordTypingPage /> },
+
       { path: "/dictionaries", element: <DictionariesPage /> },
+
+      {
+        path: "/games",
+        children: [
+          { index: true, element: <GamesPage /> },
+          { path: "quiz", element: <GameQuizPage /> },
+          { path: "word-typing", element: <GameWordTypingPage /> },
+        ],
+      },
 
       {
         path: "/dictionary/:dictId",

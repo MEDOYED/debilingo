@@ -4,22 +4,24 @@ import { useUpdateStudyActivity } from "@entities/profile";
 import { getWords, type Word } from "@entities/word";
 import correctSound from "@shared/assets/sounds/correct.wav";
 import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
-import { useStudyInfoModalStore } from "@widgets/study-info-modal";
+import { useStudySessionStore } from "@entities/study-session";
+import type { GameScreen } from "@shared/types";
 
 import { ProgressBar } from "../progress-bar/progress-bar";
 
-import s from "./quiz.module.scss";
+import s from "./quiz-game-screen.module.scss";
+
 import { useVoicesStore } from "@shared/stores/use-voices-store";
 import { SpeakerWave } from "@shared/ui/icons";
 
-const secondsTimeGame = 120;
-
-export const Quiz = ({
+export const QuizGameScreen = ({
   dictionaryId,
-  setStartGame,
+  gameDurationInSeconds,
+  setScreen,
 }: {
   dictionaryId: string;
-  setStartGame: React.Dispatch<React.SetStateAction<boolean>>;
+  gameDurationInSeconds: number;
+  setScreen: React.Dispatch<React.SetStateAction<GameScreen>>;
 }) => {
   const [allWords, setAllWords] = useState<Word[]>([]);
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
@@ -35,7 +37,7 @@ export const Quiz = ({
     decreaseXpCounter,
     xpCounter,
     resetCounters,
-  } = useStudyInfoModalStore();
+  } = useStudySessionStore();
 
   const { updateStudyActivity } = useUpdateStudyActivity();
 
@@ -64,15 +66,15 @@ export const Quiz = ({
 
       increaseTimeCounter(1);
 
-      if (seconds >= secondsTimeGame || isStopTimer) {
+      if (seconds >= gameDurationInSeconds || isStopTimer) {
         clearInterval(interval);
 
-        const currentXp = useStudyInfoModalStore.getState().xpCounter;
-        const currentTime = useStudyInfoModalStore.getState().timeCounter;
+        const currentXp = useStudySessionStore.getState().xpCounter;
+        const currentTime = useStudySessionStore.getState().timeCounter;
 
         if (currentXp === 0) {
           resetCounters();
-          setStartGame(false);
+          setScreen("setup");
           return;
         }
 
@@ -84,13 +86,10 @@ export const Quiz = ({
             xpDelta: currectTotalXp,
             timeDelta: currentTime,
           });
-
-          resetCounters();
         } catch (error) {
           console.error("Failed to save activity", error);
         }
-
-        setStartGame(false);
+        setScreen("results");
       }
     }, 1000);
 
@@ -101,9 +100,13 @@ export const Quiz = ({
     const loadWords = async () => {
       if (!dictionaryId) return;
 
+      console.log("dictionaryId:", dictionaryId);
+
       const data = await getWords(dictionaryId, 50, 0);
 
       setAllWords(data);
+
+      console.log("words get successfullty");
 
       if (data.length === 0) return;
 
@@ -182,7 +185,7 @@ export const Quiz = ({
   return currentWord ? (
     <div className={s.container}>
       <div className={s.infoContainer}>
-        <ProgressBar progress={(timeCounter / secondsTimeGame) * 100} />
+        <ProgressBar progress={(timeCounter / gameDurationInSeconds) * 100} />
 
         <div className={s.stopButtonAndXpContainer}>
           <div>{xpCounter} xp</div>
