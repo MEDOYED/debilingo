@@ -9,7 +9,7 @@ import type { GameScreen } from "@shared/types";
 import { GAME_DURATIONS } from "@shared/config/games";
 import { GameResultsScreen } from "@widgets/game-results-screen";
 
-import { QuizGameScreen } from "./ui/quiz-game-screen/quiz-game-screen";
+import { QuizGameScreen } from "./quiz-game-screen/quiz-game-screen";
 
 import s from "./game-quiz-page.module.scss";
 
