@@ -4,9 +4,11 @@ import {
   DropdownSelect,
   type DropdownOption,
 } from "@shared/ui/dropdown-select";
-import s from "./setup-screen.module.scss";
 import { useDictionariesStore } from "@entities/dictionary";
 import { GAME_DURATIONS } from "@shared/config/games";
+import { FilledButton } from "@shared/ui/buttons";
+
+import s from "./setup-screen.module.scss";
 
 type SetupScreenProps = {
   selectedDictionaryId: string;
@@ -66,13 +68,13 @@ export const SetupScreen = ({
         />
       </div>
 
-      <button
+      <FilledButton
+        as="button"
         disabled={!selectedDictionaryId}
-        className={s.startGameButton}
         onClick={onStartGame}
       >
         Start Game
-      </button>
+      </FilledButton>
     </div>
   );
 };
