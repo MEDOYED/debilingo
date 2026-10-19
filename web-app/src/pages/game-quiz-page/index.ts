@@ -1,1 +1,1 @@
-export { GameQuizPage } from "./game-quiz-page.tsx";
+export { GameQuizPage } from "./ui/game-quiz-page.tsx";
