@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import { ChevronDown } from "@shared/ui/icons";
-import { TextButton } from "@shared/ui/buttons";
 import { useWindowSize } from "@shared/lib/responsive";
 import { cn } from "@shared/lib/styles";
+import { TextButton } from "@shared/ui/buttons";
+import { ChevronDown } from "@shared/ui/icons";
 
 import { NavLinkItem } from "../nav-link-item/nav-link-item";
 
@@ -32,10 +32,10 @@ export const ExpandableNavItem = ({ dropDownList }: ExpandableNavItemProps) => {
         as="button"
         onClick={() => setIsOpen((prev) => !prev)}
         size={windowWidth > 768 ? "large" : "medium"}
-        className={cn(isOpen === true && s.activeTextButtonWithHoverEffect)}
+        className={cn(isOpen && s.activeTextButtonWithHoverEffect)}
       >
         {dropDownList.text}
-        <ChevronDown className={cn(isOpen === true && s.rotateChevronUp)} />
+        <ChevronDown className={cn(s.chevron, isOpen && s.rotateChevronUp)} />
       </TextButton>
 
       {isOpen && (
