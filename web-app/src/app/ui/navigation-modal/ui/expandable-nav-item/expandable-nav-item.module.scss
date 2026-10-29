@@ -6,6 +6,10 @@
   transform: rotateX(180deg);
 }
 
+.chevron {
+  transition: 0.3s ease-in-out;
+}
+
 .activeTextButtonWithHoverEffect {
   background-color: color-mix(in srgb, currentColor 8%, transparent);
 }
