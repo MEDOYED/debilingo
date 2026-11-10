@@ -25,7 +25,8 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-validator": "^7.2.1",
-    "jsonwebtoken": "^9.0.3"
+    "jsonwebtoken": "^9.0.3",
+    "pg": "8.23.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
@@ -33,6 +34,7 @@
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^22.13.6",
+    "@types/pg": "8.23.1",
     "tsx": "^4.19.2",
     "typescript": "^5.8.3"
   }
