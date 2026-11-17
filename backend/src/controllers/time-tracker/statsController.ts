@@ -4,7 +4,10 @@ import { AuthRequest } from "../../middleware/authMiddleware.js";
 
 export const getTimeStats = async (req: AuthRequest, res: Response): Promise<void> => {
   const userId = req.userId;
-  if (!userId) { res.status(401).json({ error: "Not authorized" }); return; }
+  if (!userId) {
+    res.status(401).json({ error: "Not authorized" });
+    return;
+  }
 
   const { period, start_date, end_date } = req.query as {
     period?: string;
@@ -12,50 +15,71 @@ export const getTimeStats = async (req: AuthRequest, res: Response): Promise<voi
     end_date?: string;
   };
 
-  let startDate: string;
+  // let startDate: string;
+
+  let pStartDate: string | null = null;
+  let pEndDate: string | null = null;
+
   const now = new Date();
 
   switch (period) {
     case "1d":
-      startDate = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+      pStartDate = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
+      pEndDate = now.toISOString();
       break;
     case "7d":
-      startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+      pStartDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
+      pEndDate = now.toISOString();
       break;
     case "30d":
-      startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+      pStartDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString();
+      pEndDate = now.toISOString();
       break;
     case "custom":
-      startDate = start_date || "1970-01-01";
+      pStartDate = start_date || "1970-01-01";
+      pEndDate = end_date ? new Date(end_date + "T23:59:59.999Z").toISOString() : now.toISOString();
       break;
     case "all":
     default:
-      startDate = "1970-01-01";
+      pStartDate = null;
+      pEndDate = null;
       break;
   }
 
-  const endDate = period === "custom" && end_date ? end_date : new Date().toISOString().split("T")[0];
+  const { data: statsData, error: statsError } = await supabase.rpc("get_time_tracker_stats", {
+    p_user_id: userId,
+    p_start_date: pStartDate,
+    p_end_date: pEndDate,
+  });
 
-  const { data: tags } = await supabase
-    .from("tracker_tags")
-    .select("*")
-    .eq("user_id", userId);
+  if (statsError) {
+    res.status(500).json({
+      success: false,
+      dev_message: "[500]: get_time_tracker_stats: failed to fetch stats",
+    });
+    return;
+  }
+
+  const { data: tags } = await supabase.from("tracker_tags").select("*").eq("user_id", userId);
+
+  const statsMap = new Map<string, { total_seconds: number; session_count: number }>();
+  (statsData || []).forEach((row: any) => {
+    statsMap.set(row.tracker_id, {
+      total_seconds: Number(row.total_seconds) || 0,
+      session_count: Number(row.session_count) || 0,
+    });
+  });
 
   const { data: trackers } = await supabase
     .from("time_trackers")
     .select(`*, tag:tracker_tags(*)`)
     .eq("user_id", userId);
 
-  const { data: sessions } = await supabase
-    .from("time_sessions")
-    .select("*")
-    .eq("user_id", userId)
-    .not("ended_at", "is", null)
-    .gte("started_at", startDate)
-    .lte("started_at", endDate + "T23:59:59.999Z");
-
-  if (!trackers || !sessions) {
-    res.status(500).json({ error: "Failed to fetch stats" }); return;
+  if (!trackers) {
+    res
+      .status(404)
+      .json({ success: false, dev_message: "statsController[404]: trackers not founded" });
+    return;
   }
 
   const tagMap = new Map<string, any>();
@@ -70,24 +94,19 @@ export const getTimeStats = async (req: AuthRequest, res: Response): Promise<voi
   });
 
   trackers.forEach((tracker: any) => {
-    const trackerSessions = sessions.filter((s: any) => s.tracker_id === tracker.id);
-    const totalSeconds = trackerSessions.reduce(
-      (sum: number, s: any) => sum + (s.duration_seconds || 0),
-      0
-    );
-    const sessionCount = trackerSessions.length;
+    const stat = statsMap.get(tracker.id) || { total_seconds: 0, session_count: 0 };
 
     const trackerStat = {
       id: tracker.id,
       name: tracker.name,
       color: tracker.color,
-      total_seconds: totalSeconds,
-      session_count: sessionCount,
+      total_seconds: stat.total_seconds,
+      session_count: stat.session_count,
     };
 
     if (tracker.tag_id && tagMap.has(tracker.tag_id)) {
       const tagGroup = tagMap.get(tracker.tag_id);
-      tagGroup.total_seconds += totalSeconds;
+      tagGroup.total_seconds += stat.total_seconds;
       tagGroup.trackers.push(trackerStat);
     } else {
       untaggedTrackers.push(trackerStat);
@@ -107,11 +126,11 @@ export const getTimeStats = async (req: AuthRequest, res: Response): Promise<voi
 
   tagsResult.forEach((t) => t.trackers.sort((a: any, b: any) => b.total_seconds - a.total_seconds));
 
-  const grandTotal = tagsResult.reduce((s, t) => s + t.total_seconds, 0);
+  const allTrackersTotalSeconds = tagsResult.reduce((s, t) => s + t.total_seconds, 0);
 
   res.json({
     period: period || "all",
-    total_seconds: grandTotal,
+    total_seconds: allTrackersTotalSeconds,
     tags: tagsResult,
   });
 };

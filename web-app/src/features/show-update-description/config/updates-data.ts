@@ -5,10 +5,28 @@ type UpdatesData = {
   features: string[] | null;
   improvements: string[] | null;
   fixes: string[] | null;
+  dx?: string[];
   contributors: string[];
 };
 
 export const UPDATES_DATA: UpdatesData[] = [
+  {
+    version: "0.10.15",
+    date: "17.11.2026",
+    manHours: "17",
+    features: null,
+    improvements: [
+      "Optimized time tracking stats calculation: all heavy calculations are now done directly inside the database, making stats load significantly faster with much less server and database load",
+    ],
+    fixes: [
+      "Fixed critical bug on time tracker page where 'all time' period showed 0 hours for newer trackers or cut off total hours for older ones (caused by database query row limits). Now all periods calculate 100% of tracked time accurately",
+      "Fixed issue where trackers without tags could crash or display 00:00:00 time",
+    ],
+    dx: [
+      "Added an automated SQL database migrations system (npm run db:migrate). Now any developer can clone the repository, easily work on the backend, and write/run database migrations locally without the risk of breaking production",
+    ],
+    contributors: ["Maksym Mokriakov"],
+  },
   {
     version: "0.10.11",
     date: "18.10.2026",
