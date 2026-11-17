@@ -226,14 +226,24 @@ export const TimeTrackerPage = () => {
     return () => clearInterval(intervalId);
   }, [activeSession]);
 
-  const todalTimeTrackerTime = (timeTracker: TimeTrackerWithTag) => {
+  const totalTimeTrackerTime = (timeTracker: TimeTrackerWithTag) => {
     const tagsArr = dataTimeStats?.tags;
-    const searchedTagGroup = tagsArr?.find(
-      (item) => item.tag.name === timeTracker.tag.name
-    );
-    const searchedTimeTracker = searchedTagGroup?.trackers.find(
-      (item) => item.id === timeTracker.id
-    );
+
+    let searchedTimeTracker;
+
+    if (tagsArr) {
+      for (const tagGroup of tagsArr) {
+        const found = tagGroup.trackers.find(
+          (item) => item.id === timeTracker.id
+        );
+
+        if (found) {
+          searchedTimeTracker = found;
+          break;
+        }
+      }
+    }
+
     const searchedTimeTrackerTotalSeconds = searchedTimeTracker?.total_seconds;
 
     const { hoursString, minutesString, secondsString } = convertTime(
@@ -283,7 +293,7 @@ export const TimeTrackerPage = () => {
 
                 <div className={s.timeWrapper}>
                   <span className={s.todayTotalTime}>
-                    {todalTimeTrackerTime(timeTracker)}
+                    {totalTimeTrackerTime(timeTracker)}
                   </span>
                   {activeSession?.tracker_id === timeTracker.id && (
                     <span className={s.stopwatch}>
