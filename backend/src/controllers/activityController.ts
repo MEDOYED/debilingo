@@ -1,3 +1,6 @@
+// This contorller (file) is only for money activity.
+// todo [18.11.2026]: rename this file to money-activity.controller.ts
+
 import { Response } from "express";
 import { supabase } from "../config/supabase.js";
 import { AuthRequest } from "../middleware/authMiddleware.js";
