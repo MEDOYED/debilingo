@@ -3,6 +3,8 @@ import { Response } from "express";
 import { supabase } from "../config/supabase.js";
 import { AuthRequest } from "../middleware/authMiddleware";
 
+import { recordLanguageDailyStudyTime } from "./language-learning/language-daily-activity.controller.js";
+
 type ProfileResponse = {
   username: string;
   dailyStreak: number;
@@ -127,121 +129,137 @@ export const updateMyUsername = async (req: AuthRequest, res: Response): Promise
 };
 
 export const saveStudyActivity = async (req: AuthRequest, res: Response): Promise<void> => {
-  const userId = req.userId;
+  try {
+    const userId = req.userId;
 
-  if (!userId) {
-    res.status(401).json({
-      success: false,
-      dev_message: "Not authorized",
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        dev_message: "Not authorized",
+      });
+      return;
+    }
+
+    const { xpDelta, timeDelta } = req.body;
+
+    if (typeof xpDelta !== "number") {
+      res
+        .status(400)
+        .json({ success: false, dev_message: "This value (xpDelta) should be a number!" });
+      return;
+    }
+
+    if (xpDelta <= 0) {
+      res.status(400).json({ success: false, dev_message: "xpDelta must be 1 or more" });
+      return;
+    }
+
+    if (typeof timeDelta !== "number") {
+      res
+        .status(400)
+        .json({ success: false, dev_message: "This value (timeDelta) should be a number!" });
+      return;
+    }
+
+    if (!Number.isInteger(timeDelta)) {
+      res.status(400).json({
+        success: false,
+        dev_message: `This value (timeDelta) should be a integer number! (1, 2, 3 but not 1.2 or 10.5). But timeDelta now ${timeDelta}`,
+      });
+      return;
+    }
+
+    if (!Number.isInteger(xpDelta)) {
+      res.status(400).json({
+        success: false,
+        dev_message: `This value (xpDelta) should be a integer number! (1, 2, 3 but not 1.2 or 10.5). But xpDelta now ${xpDelta}`,
+      });
+      return;
+    }
+
+    const { data: profileData, error: profileError } = await supabase
+      .from("profiles")
+      .select("daily_streak, last_study_date, total_xp, total_study_time_seconds")
+      .eq("user_id", userId)
+      .single();
+
+    if (profileError) {
+      res.status(500).json({ success: false, dev_message: "Failed to load studyActivity data" });
+      return;
+    }
+
+    if (!profileData) {
+      res.status(404).json({
+        success: false,
+        dev_message: "studyActivity data (daily_streak, last_study_date, total_xp) not found",
+      });
+      return;
+    }
+
+    const { daily_streak, last_study_date, total_xp, total_study_time_seconds } = profileData;
+
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const yesterday = new Date();
+
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const yesterdayStr = yesterday.toISOString().slice(0, 10);
+
+    let updatedStreak: number;
+    let xpDeltaWithDailyStreak: number = xpDelta;
+
+    if (last_study_date === todayStr) {
+      updatedStreak = daily_streak;
+    } else if (last_study_date === yesterdayStr) {
+      updatedStreak = daily_streak + 1;
+      xpDeltaWithDailyStreak = xpDelta + updatedStreak;
+    } else {
+      updatedStreak = 1;
+    }
+
+    const updatedXp = total_xp + xpDeltaWithDailyStreak;
+    const updatedTime = total_study_time_seconds + timeDelta;
+
+    const { error: updateStudyActivityError } = await supabase
+      .from("profiles")
+      .update({
+        daily_streak: updatedStreak,
+        last_study_date: todayStr,
+        total_xp: updatedXp,
+        total_study_time_seconds: updatedTime,
+      })
+      .eq("user_id", userId);
+
+    if (updateStudyActivityError) {
+      res.status(500).json({ success: false, dev_message: "Failed to update study activity" });
+      return;
+    }
+
+    const updatedDailyStudyTime = await recordLanguageDailyStudyTime({
+      userId: userId,
+      timeDelta: timeDelta,
     });
-    return;
-  }
 
-  const { xpDelta, timeDelta } = req.body;
+    const data = {
+      dailyStreak: updatedStreak,
+      lastStudyDate: todayStr,
+      totalXp: updatedXp,
+      totalStudyTimeSeconds: updatedTime,
+      updatedDailyStudyTime: updatedDailyStudyTime,
+    };
 
-  if (typeof xpDelta !== "number") {
-    res
-      .status(400)
-      .json({ success: false, dev_message: "This value (xpDelta) should be a number!" });
-    return;
-  }
-
-  if (xpDelta <= 0) {
-    res.status(400).json({ success: false, dev_message: "xpDelta must be 1 or more" });
-    return;
-  }
-
-  if (typeof timeDelta !== "number") {
-    res
-      .status(400)
-      .json({ success: false, dev_message: "This value (timeDelta) should be a number!" });
-    return;
-  }
-
-  if (!Number.isInteger(timeDelta)) {
-    res.status(400).json({
-      success: false,
-      dev_message: `This value (timeDelta) should be a integer number! (1, 2, 3 but not 1.2 or 10.5). But timeDelta now ${timeDelta}`,
+    res.json({
+      success: true,
+      dev_message: "study activity updated successfully",
+      data: data,
     });
-    return;
-  }
+  } catch (error) {
+    console.error("Error in saveStudyActivity:", error);
 
-  if (!Number.isInteger(xpDelta)) {
-    res.status(400).json({
+    res.status(500).json({
       success: false,
-      dev_message: `This value (xpDelta) should be a integer number! (1, 2, 3 but not 1.2 or 10.5). But xpDelta now ${xpDelta}`,
+      client_message: "Failed to update your study activity",
+      dev_message: error instanceof Error ? error.message : "Unknown error in saveStudyActivity",
     });
-    return;
   }
-
-  const { data: profileData, error: profileError } = await supabase
-    .from("profiles")
-    .select("daily_streak, last_study_date, total_xp, total_study_time_seconds")
-    .eq("user_id", userId)
-    .single();
-
-  if (profileError) {
-    res.status(500).json({ success: false, dev_message: "Failed to load studyActivity data" });
-    return;
-  }
-
-  if (!profileData) {
-    res.status(404).json({
-      success: false,
-      dev_message: "studyActivity data (daily_streak, last_study_date, total_xp) not found",
-    });
-    return;
-  }
-
-  const { daily_streak, last_study_date, total_xp, total_study_time_seconds } = profileData;
-
-  const todayStr = new Date().toISOString().slice(0, 10);
-  const yesterday = new Date();
-
-  yesterday.setDate(yesterday.getDate() - 1);
-
-  const yesterdayStr = yesterday.toISOString().slice(0, 10);
-
-  let updatedStreak: number;
-  let xpDeltaWithDailyStreak: number = xpDelta;
-
-  if (last_study_date === todayStr) {
-    updatedStreak = daily_streak;
-  } else if (last_study_date === yesterdayStr) {
-    updatedStreak = daily_streak + 1;
-    xpDeltaWithDailyStreak = xpDelta + updatedStreak;
-  } else {
-    updatedStreak = 1;
-  }
-
-  const updatedXp = total_xp + xpDeltaWithDailyStreak;
-  const updatedTime = total_study_time_seconds + timeDelta;
-
-  const { error: updateStudyActivityError } = await supabase
-    .from("profiles")
-    .update({
-      daily_streak: updatedStreak,
-      last_study_date: todayStr,
-      total_xp: updatedXp,
-      total_study_time_seconds: updatedTime,
-    })
-    .eq("user_id", userId);
-
-  if (updateStudyActivityError) {
-    res.status(500).json({ success: false, dev_message: "Failed to update study activity" });
-    return;
-  }
-
-  const data = {
-    dailyStreak: updatedStreak,
-    lastStudyDate: todayStr,
-    totalXp: updatedXp,
-    totalStudyTimeSeconds: updatedTime,
-  };
-
-  res.json({
-    success: true,
-    dev_message: "study activity updated successfully",
-    data: data,
-  });
 };
