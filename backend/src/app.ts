@@ -2,6 +2,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
 
+// todo [19.11.2026]: refactor all routes to named export from default export
 import activityRoutes from "./routes/activity.js";
 import authRoutes from "./routes/authRoutes.js";
 import catRoutes from "./routes/catRoutes.js";
@@ -14,6 +15,8 @@ import statsRoutes from "./routes/time-tracker/statsRoutes.js";
 import tagRoutes from "./routes/time-tracker/tagRoutes.js";
 import timeTrackerRoutes from "./routes/time-tracker/timeTrackerRoutes.js";
 import wordRoutes from "./routes/wordRoutes.js";
+
+import { languageDailyActivityRoutes } from "./routes/language-learning/language-daily-activity.routes.js";
 
 dotenv.config();
 
@@ -62,6 +65,7 @@ app.use("/api", timeTrackerRoutes);
 app.use("/api", habitTrackerRoutes);
 app.use("/api", sessionRoutes);
 app.use("/api", statsRoutes);
+app.use("/api", languageDailyActivityRoutes);
 
 // 404 handler
 app.use((req: Request, res: Response) => {
