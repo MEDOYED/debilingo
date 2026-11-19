@@ -11,6 +11,15 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
+    version: "0.11.0",
+    date: "19.11.2026",
+    manHours: "11",
+    features: ["Add heatmap for every day study time on home page"],
+    improvements: null,
+    fixes: null,
+    contributors: ["Maksym Mokriakov"],
+  },
+  {
     version: "0.10.15",
     date: "17.11.2026",
     manHours: "17",
