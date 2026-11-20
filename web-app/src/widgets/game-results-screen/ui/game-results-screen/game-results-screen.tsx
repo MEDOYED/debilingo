@@ -1,7 +1,7 @@
+import { useProfileStore } from "@entities/profile";
 import { useStudySessionStore } from "@entities/study-session";
 import { calculateXpByTimeDuration } from "@shared/lib/xp";
 import { FilledButton } from "@shared/ui/buttons";
-import { useProfileStore } from "@entities/profile";
 
 import s from "./game-results-screen.module.scss";
 
@@ -40,7 +40,7 @@ export const GameResultsScreen = ({ onPlayAgain }: ResultsScreenProps) => {
       </div>
       <div>total xp: {lastGameTotalXp}xp</div>
       <div>
-        {profileData.totalXp}xp -- {profileData.totalXp + lastGameTotalXp}xp
+        {profileData.totalXp - lastGameTotalXp}xp -- {profileData.totalXp}xp
       </div>
 
       <FilledButton
