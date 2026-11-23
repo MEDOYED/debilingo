@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 import { useUpdateStudyActivity } from "@entities/profile";
+import { useStudySessionStore } from "@entities/study-session";
 import { getWords, type Word } from "@entities/word";
 import correctSound from "@shared/assets/sounds/correct.wav";
 import inCorrectSound from "@shared/assets/sounds/incorrect.wav";
-import { useStudySessionStore } from "@entities/study-session";
 import type { GameScreen } from "@shared/types";
 
 import { ProgressBar } from "../progress-bar/progress-bar";
@@ -55,6 +55,10 @@ export const QuizGameScreen = ({
 
     return [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
   };
+
+  useEffect(() => {
+    resetCounters();
+  }, []);
 
   const currentWordReady = currentWord ? true : false;
   useEffect(() => {
@@ -107,7 +111,6 @@ export const QuizGameScreen = ({
       setAllWords(data);
 
       console.log("words get successfullty");
-
       if (data.length === 0) return;
 
       const randomIndex = Math.floor(Math.random() * data.length);
