@@ -1,21 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import { useStudySessionStore } from "@entities/study-session";
 import { useAddWordStore, useWordStore } from "@entities/word";
 import { getWords } from "@entities/word/api";
 import { cn } from "@shared/lib/styles";
 import { StudyInfoModal } from "@widgets/study-info-modal";
-import { useStudySessionStore } from "@entities/study-session";
 
-import { useLanguageRowStore } from "./model/use-language-row-store";
-import { useSwitchColStore } from "./model/use-switch-col-store";
+import { useLanguageRowStore } from "../model/use-language-row-store";
+import { useSwitchColStore } from "../model/use-switch-col-store";
 
-import { CreateWordModal } from "./ui/create-word-modal/create-word-modal";
-import { DictionaryTopBar } from "./ui/dictionary-top-bar/dictionary-top-bar";
-import { LanguageRow } from "./ui/language-row/language-row";
-import { Spoiler } from "./ui/spoiler/spoiler";
-import { SwipeWordCard } from "./ui/swipe-word-card/swipe-word-card";
-import { WordDetails } from "./ui/word-details/word-details";
+import { CreateWordModal } from "./create-word-modal/create-word-modal";
+import { DictionaryTopBar } from "./dictionary-top-bar/dictionary-top-bar";
+import { LanguageRow } from "./language-row/language-row";
+import { Spoiler } from "./spoiler/spoiler";
+import { SwipeWordCard } from "./swipe-word-card/swipe-word-card";
+import { WordDetails } from "./word-details/word-details";
 
 import { SubmitEditWordButton } from "@features/edit-word";
 import { EditableMainTranslationInput } from "@features/edit-word/ui/editable-main-translation-input/editable-main-translation-input";
