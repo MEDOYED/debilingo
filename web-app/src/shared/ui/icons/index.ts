@@ -16,6 +16,7 @@ export { LabelTag } from "./label-tag/label-tag";
 export { LoadingCircle } from "./loading-circle/loading-circle";
 export { Microphone } from "./microphone/microphone";
 export { Pin } from "./pin/pin";
+export { Search } from "./search/search";
 export { Shuffle } from "./shuffle/shuffle";
 export { SpeakerWave } from "./speaker-wave/speaker-wave";
 export { Trash } from "./trash/trash";
