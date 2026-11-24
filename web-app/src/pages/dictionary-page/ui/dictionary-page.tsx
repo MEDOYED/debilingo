@@ -121,7 +121,7 @@ export const DictionaryPage = () => {
   return (
     <div>
       {/* <div className="container"> */}
-      <main className={cn(s.dictionaryPage)}>
+      <main className={s.dictionaryPage}>
         <DictionaryTopBar />
         <LanguageRow />
 
