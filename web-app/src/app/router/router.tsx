@@ -5,6 +5,9 @@ import { CatCollectionPage } from "@pages/cat-collection-page";
 import { CatMapPage } from "@pages/cat-map-page";
 import { DictionariesPage } from "@pages/dictionaries-page";
 import { DictionaryPage } from "@pages/dictionary-page";
+import { GameQuizPage } from "@pages/game-quiz-page";
+import { GameWordTypingPage } from "@pages/game-word-typing-page";
+import { GamesPage } from "@pages/games-page";
 import { HabitTrackerPage } from "@pages/habit-tracker-page";
 import { HomePage } from "@pages/home-page";
 import { LeaderboardsPage } from "@pages/leaderboards-page";
@@ -12,13 +15,9 @@ import { LoginPage } from "@pages/login-page";
 import { MoneyEarning } from "@pages/money-earning";
 import { RegisterPage } from "@pages/register-page";
 import { TimeTrackerPage } from "@pages/time-tracker-page";
-import { GamesPage } from "@pages/games-page";
-import { GameQuizPage } from "@pages/game-quiz-page";
-import { GameWordTypingPage } from "@pages/game-word-typing-page";
-import { TrainingPage } from "@pages/training-page";
 
-import { ProtectedRoute } from "./protected-router";
 import RootLayout from "../layout/root-layout";
+import { ProtectedRoute } from "./protected-router";
 
 export const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
@@ -50,10 +49,6 @@ export const router = createBrowserRouter([
       {
         path: "/dictionary/:dictId",
         element: <DictionaryPage />,
-      },
-      {
-        path: "/training",
-        element: <TrainingPage />,
       },
       {
         path: "/time-tracker",
