@@ -1,4 +1,4 @@
-type CxParam = string | boolean;
+type CxParam = string | boolean | undefined | null;
 
 export const cx = (...params: CxParam[]) => {
   const readyParams: string[] = [];

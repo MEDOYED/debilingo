@@ -27,9 +27,22 @@ describe("cx", () => {
       const result = cx("button", "   ", "primary");
       expect(result).toBe("button primary");
     });
+
     it("should trim spaces at the beginning and at the end of class name string", () => {
       const result = cx("  button ", " primary   ");
       expect(result).toBe("button primary");
+    });
+  });
+
+  describe("falsy values", () => {
+    it("should correctly handle and ignore undefined values", () => {
+      const result = cx("button", undefined, "active");
+      expect(result).toBe("button active");
+    });
+
+    it("should correctly handle and ignore null values", () => {
+      const result = cx("button", null, "active");
+      expect(result).toBe("button active");
     });
   });
 
