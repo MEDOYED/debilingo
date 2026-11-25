@@ -27,5 +27,23 @@ describe("cx", () => {
       const result = cx("button", "   ", "primary");
       expect(result).toBe("button primary");
     });
+    it("should trim spaces at the beginning and at the end of class name string", () => {
+      const result = cx("  button ", " primary   ");
+      expect(result).toBe("button primary");
+    });
+  });
+
+  describe("conditions", () => {
+    it("should ignore boolean (false) params when conditions work", () => {
+      const isActive = false;
+      const result = cx(isActive && "active", "button");
+      expect(result).toBe("button");
+    });
+
+    it("should properly handle cases where different conditions are passed", () => {
+      const isActive = true;
+      const result = cx(isActive && "active", "button");
+      expect(result).toBe("active button");
+    });
   });
 });

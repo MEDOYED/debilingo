@@ -1,9 +1,15 @@
-export const cx = (...params: string[]) => {
-  const paramsWithoutEmptyString = params.filter(
-    (param) => param.trim() !== ""
-  );
+type CxParam = string | boolean;
 
-  const readyClassName = paramsWithoutEmptyString.join(" ");
+export const cx = (...params: CxParam[]) => {
+  const readyParams: string[] = [];
+
+  for (const param of params) {
+    if (typeof param === "string" && param.trim() !== "") {
+      readyParams.push(param.trim());
+    }
+  }
+
+  const readyClassName = readyParams.join(" ");
 
   return readyClassName;
 };
