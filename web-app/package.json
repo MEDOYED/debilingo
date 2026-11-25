@@ -1,7 +1,7 @@
 {
   "name": "web-app",
   "private": true,
-  "version": "0.10.10",
+  "version": "0.11.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,7 +13,7 @@
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "vitest"
+    "test": "vitest run --project=unit"
   },
   "dependencies": {
     "@types/leaflet": "^1.9.22",
