@@ -5,6 +5,7 @@ export { CheckCircle } from "./check-circle/check-circle";
 export { ChevronDown } from "./chevron-down/chevron-down";
 export { Clear } from "./clear/clear";
 export { Clock } from "./clock/clock";
+export { CloseCircleOutline } from "./close-circle-outline/close-circle-outline";
 export { CopyPasteIcon } from "./copy-paste-icon/copy-paste-icon";
 export { DictionaryAdd } from "./dictionary-add";
 export { Edit } from "./edit/edit";

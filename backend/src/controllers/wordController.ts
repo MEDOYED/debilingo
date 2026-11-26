@@ -7,6 +7,13 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
     const userId = req.userId;
     const { dictionaryId } = req.params;
     const sort = req.query.sort as string;
+    const search = req.query.search ? (req.query.search as string) : "";
+
+    let query = supabase.from("words").select("*").eq("dictionary_id", dictionaryId);
+
+    if (search) {
+      query = query.ilike("source_word", `%${search}%`);
+    }
 
     // Перевірка чи словник належить користувачу
     const { data: dict } = await supabase
@@ -23,8 +30,6 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
 
     const quantityWords = parseInt(req.query.quantityWords as string) || 10; // 10 is default fallback
     const offset = parseInt(req.query.offset as string) || 0;
-
-    let query = supabase.from("words").select("*").eq("dictionary_id", dictionaryId);
 
     if (sort === "shuffle") {
       query = query

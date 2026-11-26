@@ -8,6 +8,7 @@ import { cn } from "@shared/lib/styles";
 import { StudyInfoModal } from "@widgets/study-info-modal";
 
 import { useLanguageRowStore } from "../model/use-language-row-store";
+import { useSearchStore } from "../model/use-search-store";
 import { useSwitchColStore } from "../model/use-switch-col-store";
 
 import { CreateWordModal } from "./create-word-modal/create-word-modal";
@@ -35,13 +36,14 @@ export const DictionaryPage = () => {
     useLanguageRowStore();
   const { setWords, words, appendWords } = useAddWordStore();
   const { isReversed } = useSwitchColStore();
+  const { searchInputValue } = useSearchStore();
 
   const { xpCounter } = useStudySessionStore();
 
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
 
-  const isLoadingRef = useRef(false);
+  const isFetchingMoreRef = useRef(false);
 
   const {
     openWordId,
@@ -56,26 +58,38 @@ export const DictionaryPage = () => {
   const { unshuffleVersion } = useUnshuffleStore();
 
   useEffect(() => {
+    let isCancelled = false;
+
     const loadWords = async () => {
       if (!dictId) return;
-      if (isLoadingRef.current) return;
 
-      isLoadingRef.current = true;
       setOffset(0);
       setHasMore(true);
       setWords([]);
 
       const sort = isShuffled ? "shuffle" : undefined;
 
-      const data = await getWords(dictId, LOAD_WORDS, 0, sort);
-      setWords(data);
-      setHasMore(data.length >= LOAD_WORDS);
-      setOffset(data.length);
-      isLoadingRef.current = false;
+      const data = await getWords(
+        dictId,
+        LOAD_WORDS,
+        0,
+        sort,
+        searchInputValue
+      );
+
+      if (!isCancelled) {
+        setWords(data);
+        setHasMore(data.length >= LOAD_WORDS);
+        setOffset(data.length);
+      }
     };
 
     loadWords();
-  }, [shuffleVersion, unshuffleVersion, dictId, isShuffled]);
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [shuffleVersion, unshuffleVersion, dictId, isShuffled, searchInputValue]);
 
   //scroll listener
   useEffect(() => {
@@ -84,7 +98,7 @@ export const DictionaryPage = () => {
         document.documentElement.scrollHeight -
         (window.scrollY + window.innerHeight);
 
-      if (distanceToBottom < 500 && hasMore && !isLoadingRef.current) {
+      if (distanceToBottom < 500 && hasMore && !isFetchingMoreRef.current) {
         loadMoreWords();
       }
     };
@@ -92,18 +106,24 @@ export const DictionaryPage = () => {
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [hasMore, offset, dictId, isShuffled]);
+  }, [hasMore, offset, dictId, isShuffled, searchInputValue]);
 
   const loadMoreWords = async () => {
-    if (!dictId || !hasMore || isLoadingRef.current) return;
-    isLoadingRef.current = true;
+    if (!dictId || !hasMore || isFetchingMoreRef.current) return;
+    isFetchingMoreRef.current = true;
 
     const sort = isShuffled ? "shuffle" : undefined;
-    const data = await getWords(dictId, LOAD_WORDS, offset, sort);
+    const data = await getWords(
+      dictId,
+      LOAD_WORDS,
+      offset,
+      sort,
+      searchInputValue
+    );
     appendWords(data);
     setHasMore(data.length >= LOAD_WORDS);
     setOffset((prev) => prev + data.length);
-    isLoadingRef.current = false;
+    isFetchingMoreRef.current = false;
   };
 
   const toggleWord = (id: string) => {

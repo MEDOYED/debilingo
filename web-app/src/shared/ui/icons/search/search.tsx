@@ -1,4 +1,8 @@
-export const Search = () => {
+import type { IconProps } from "@shared/types";
+
+type SearchProps = Pick<IconProps, "onClick">;
+
+export const Search = ({ onClick }: SearchProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,6 +10,9 @@ export const Search = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
+      width={24}
+      height={24}
+      onClick={onClick}
     >
       <path
         strokeLinecap="round"
