@@ -7,16 +7,20 @@ import type { Word } from "../types/word-types";
  * @param dictionaryId
  * @param quantityWords
  * @param offset
+ * @param sort
+ * @param search
  * @returns
  */
 export const getWords = async (
   dictionaryId: string,
   quantityWords: number,
   offset: number,
-  sort?: string
+  sort?: string,
+  search?: string
 ): Promise<Word[]> => {
   const params: Record<string, string | number> = { quantityWords, offset };
   if (sort) params.sort = sort;
+  if (search) params.search = search;
 
   const response = await apiClient.get<Word[]>(
     `/dictionary/${dictionaryId}/words`,

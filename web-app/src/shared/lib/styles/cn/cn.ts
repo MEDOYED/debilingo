@@ -7,6 +7,10 @@ type ClassValue =
   | ClassValue[]
   | { [key: string]: any };
 
+/**
+ * Do not use this function. Use cx instead
+ * @deprecated
+ */
 export function cn(...args: ClassValue[]): string {
   const classes: string[] = [];
 
