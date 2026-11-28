@@ -24,7 +24,7 @@ export const useWindowSize = ({
 
   const debouncedUpdate = useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(updateSize, debounceMs);
+    timeoutRef.current = window.setTimeout(updateSize, debounceMs);
   }, [debounceMs, updateSize]);
 
   useEffect(() => {
