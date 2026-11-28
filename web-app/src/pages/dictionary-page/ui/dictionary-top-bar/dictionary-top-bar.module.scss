@@ -19,12 +19,27 @@
 .topBar {
   display: flex;
   justify-content: flex-end;
-
-  top: 15px;
-  right: 15px;
   border-radius: 20px;
 
   background-color: var(--md-sys-color-surface-container-lowest);
+}
+
+.searchButton {
+  margin-right: auto;
+  flex: 1;
+  max-width: 100%;
+}
+
+.activeSearch {
+  background-color: color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.searchInput {
+  color: currentColor;
+  width: 20px;
+  flex: 1;
+  padding: 10px;
+  font-size: 18px;
 }
 
 .buttonNewWord {

@@ -7,6 +7,17 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
     const userId = req.userId;
     const { dictionaryId } = req.params;
     const sort = req.query.sort as string;
+    const search = req.query.search ? (req.query.search as string) : "";
+
+    // let query = supabase.from("words").select("*").eq("dictionary_id", dictionaryId);
+    let query = supabase
+      .from("words")
+      .select(`*, translations(*), definitions(*), examples(*)`)
+      .eq("dictionary_id", dictionaryId);
+
+    if (search) {
+      query = query.ilike("source_word", `%${search}%`);
+    }
 
     // Перевірка чи словник належить користувачу
     const { data: dict } = await supabase
@@ -24,7 +35,10 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
     const quantityWords = parseInt(req.query.quantityWords as string) || 10; // 10 is default fallback
     const offset = parseInt(req.query.offset as string) || 0;
 
-    let query = supabase.from("words").select("*").eq("dictionary_id", dictionaryId);
+    query = query
+      .order("order_index", { referencedTable: "translations", ascending: true })
+      .order("order_index", { referencedTable: "definitions", ascending: true })
+      .order("order_index", { referencedTable: "examples", ascending: true });
 
     if (sort === "shuffle") {
       query = query
@@ -39,7 +53,7 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
     }
 
     // Отримуємо слова
-    const { data: words, error: wordsError } = await query.range(
+    const { data: wordsData, error: wordsError } = await query.range(
       offset,
       offset + quantityWords - 1
     );
@@ -49,25 +63,19 @@ export const getWords = async (req: AuthRequest, res: Response): Promise<void> =
       return;
     }
 
-    // Для кожного слова отримуємо translations, definitions, examples
-    const wordsWithDetails = await Promise.all(
-      (words || []).map(async (word) => {
-        const [translations, definitions, examples] = await Promise.all([
-          supabase.from("translations").select("*").eq("word_id", word.id).order("order_index"),
-          supabase.from("definitions").select("*").eq("word_id", word.id).order("order_index"),
-          supabase.from("examples").select("*").eq("word_id", word.id).order("order_index"),
-        ]);
+    if (!wordsData) {
+      res.status(404).json({
+        success: false,
+        dev_message: "[404 getWords]: error on fetching words data from db",
+      });
+      return;
+    }
 
-        return {
-          ...word,
-          translations: translations.data || [],
-          definitions: definitions.data || [],
-          examples: examples.data || [],
-        };
-      })
-    );
-
-    res.json(wordsWithDetails);
+    res.json(wordsData);
+    // res.status(200).json({
+    //   success: true,
+    //   data: wordsData,
+    // });
   } catch (error) {
     console.error("Get words error:", error);
     res.status(500).json({ error: "Internal server error" });

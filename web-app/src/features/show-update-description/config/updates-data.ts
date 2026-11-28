@@ -11,6 +11,21 @@ type UpdatesData = {
 
 export const UPDATES_DATA: UpdatesData[] = [
   {
+    version: "0.11.5",
+    date: "28.11.2026",
+    manHours: "20",
+    features: ["Dictionary page: add search source word functionality"],
+    improvements: [
+      "Smooth rotation animation for chevron up/down on open/close state",
+      "Reduce loading words time",
+    ],
+    fixes: [
+      "Quiz Game: stop and reset timers after game is ended",
+      "Quiz Game: show correct XP (before/after game) on results screen",
+    ],
+    contributors: ["Maksym Mokriakov", "stKomendant"],
+  },
+  {
     version: "0.11.0",
     date: "19.11.2026",
     manHours: "11",
